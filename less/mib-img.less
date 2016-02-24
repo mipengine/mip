@@ -1,0 +1,71 @@
+.mib-img {
+    &-container {
+        margin: 16px auto;
+        font-size: 0;
+    }
+    &-subtitle {
+        padding-top: 10px;
+        color: #999;
+        font-size: 13px;
+        line-height: 15px;
+        max-width: 100%;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        text-align: center;
+    }
+    &-box {
+        width:100%;
+        height:100%;
+        position:fixed;
+        left:0;
+        top:0;
+        background:#000;
+        z-index:10;
+
+        .box-line {
+            position:relative;
+            width:100%;
+            height:10000px;
+            top:20%;
+            overflow:hidden;
+        }
+
+        .box-container {
+            height:100%;
+            width:10000px;
+            position:absolute;
+            top:0;
+            left:0;
+        }
+
+        .box-item {
+            float: left;
+
+            img {
+                position:absolute;
+                top:0;
+                left:0;
+            }
+        }
+
+        .box-img-wrap {
+            position: relative;
+            height: 10240px;
+        }
+
+        .mib-box-page {
+            color:#fff;
+            height:30px;
+            width:30px;
+            line-height:30px;
+            text-align:center;
+            position:absolute;
+            z-index:10;
+            bottom:100px;
+            left:20px;
+            font-size:28px;
+            opacity:0.75;
+        }
+    }
+}
