@@ -19,7 +19,7 @@ fis.match('*.js', {
 */
 
 fis.match('mibhtml_main.js', {
-    useHash: false,
+    useHash: true,
     optimizer: fis.plugin('uglify-js', {
         output : {
             max_line_len : 500
@@ -43,7 +43,7 @@ fis.match('*.{less,css}', {
 */
 
 fis.match('mib-common.less', {
-    useHash: false, // default is true
+    useHash: true, // default is true
     optimizer: fis.plugin('clean-css',{
         keepBreaks : true
     }),
@@ -57,7 +57,9 @@ fis.match('/src/(**).js', {
 fis.hook('amd', {
 });
 
+/*
 fis.media('dev').match('*.{js,css,less}', {
     useHash: false,
     optimizer: null
 });
+*/
