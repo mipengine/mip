@@ -273,6 +273,12 @@ MIB页面中用**mib-iframe**代替iframe元素。
 支持布局| 
 示例|
 
+### 说明
+
+```
+<mib-ad tpl="onlyImg" src="//m.baidu.com/s?word=百度" data-size="1242 180" data-img="//m.baidu.com/static/search/ala/ad_1.png" class="mib-element"><a href="//m.baidu.com/s?word=百度">
+```
+
 ## mib-img
 
 描述|用自定义的mib-img标签封装了html原生img标签
@@ -281,12 +287,6 @@ MIB页面中用**mib-iframe**代替iframe元素。
 所需脚本|
 支持布局| 
 示例|
-
-### 行为
-
-```
-<mib-ad tpl="onlyImg" src="//m.baidu.com/s?word=百度" data-size="1242 180" data-img="//m.baidu.com/static/search/ala/ad_1.png" class="mib-element"><a href="//m.baidu.com/s?word=百度">
-```
 
 ### 属性
 
