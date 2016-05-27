@@ -1,4 +1,4 @@
-#MIB HTML规范
+# MIB HTML规范
 
 ### 头部适用规范
 
