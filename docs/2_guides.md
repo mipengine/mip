@@ -1,6 +1,41 @@
 # MIB入门教程
 
-## 创建MIB页面
+## 创建响应式MIB页面(暂未支持)
+
+在MIB页面中，只需要在页面元素中加上属性`layout=responsive`，它就是响应式的了。
+
+- 创建响应式图片
+- 在页面中引入样式
+- 尺寸和位置元素
+- 验证样式和布局
+
+### 1. 创建响应式图片
+
+所有从外部引入的资源（也包括图片），在引入的时候都比如指定其大小和位置，这样才不会引起页面的跳转和回流。
+
+在创建响应式图片的时候，需要明确图片的长，宽，同时要设置属性layout是responsive；并且，为了适应不同的窗口尺寸，需要指明图片的srcset。如下例：
+
+```
+<mib-img
+    src="/img/narrow.jpg"
+    srcset="/img/wide.jpg" 640w,
+           "/img/narrow.jpg" 320w
+    width="1698"
+    height="2911"
+    layout="responsive"
+    alt="an image">
+</mib-img>
+```
+`mib-img`会自动适应其父容器的宽度，图片的高度会根据图片的宽度进行等比例缩放。
+
+### 2. 在页面中引入样式（暂未支持）
+
+所有的自定义样式都要加在头部的`<style mib-custom>`标签中，如：
+
+```
+    
+```
+
 
 ### CSS布局
 
@@ -14,11 +49,11 @@
 
 ## Iframes 和 Media的使用介绍
 
-### iframe
+### 1. iframe
 
 MIB页面中用**mib-iframe**代替iframe元素。
 
-### Media
+### 2. Media
 
 包括img，animate img，video以及audio资源。
 
@@ -30,7 +65,7 @@ MIB页面中用**mib-iframe**代替iframe元素。
 
 在某些情况下，你可能希望页面有MIB页面样式和非MIB页面样式，例如在一片新闻文章，在百度搜索中看到的是一个非MIB页面的样子，那么你该如何才能有一个MIB页面的样式呢？
 
-### 通过<link>标签连接页面
+#### 1） 通过<link>标签连接页面
 
 通过在页面的head中添加<link>来解决上述问题。
 
@@ -41,166 +76,65 @@ MIB页面中用**mib-iframe**代替iframe元素。
 
 - mib页面直接通过`<html mib>`表明
 
+#### 2） 如果只有一个页面
+
+如果你只有一个MIB页面，那么也需要通过`<html mib>`表明
+
+### 1. 通过增加meta标签使MIB集成到第三方页面中
+
+对于一些第三方的站点，这些站点嵌入了mib或者引入了mib，他们除了要只知道这是一个mib页面之外还要了解一些mib页面的开发的细节。比如：这个页面是一个新闻文章，还是一个视频，因此页面需要有一个摘要来进行简短的描述，同时也需要一个小的示意图。
+
+不只是mib页面有这个问题，所有的web页面都有这个问题。在一些平台上，meta标签不是必须的，但也有一些平台确实一定要加的，如果没有按照规范添加正确的meta标签，平台就不会正确展现你的页面内容。
+
+### 1）Schema.org
+
+Schema.org能够适用于大多数搜索引擎，对meta标签中的各种情况，它都提供了开放词汇进行添加。
+
+在MIB页面中，meta可以包含特定的上下文内容，比如一篇新闻文章，他就可以添加标题，发布日期以及预览图像
+
+示例：
+
+```
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": "http://cdn.ampproject.org/article-metadata.html",
+    "headline": "Lorem Ipsum",
+    "datePublished": "1907-05-05T12:02:41Z",
+    "dateModified": "1907-05-05T12:02:41Z",
+    "description": "The Catiline Orations continue to beguile engineers and designers alike -- but can it stand the test of time?",
+    "author": {
+      "@type": "Person",
+      "name": "Jordan M Adler"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Google",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "http://cdn.ampproject.org/logo.jpg",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "image": {
+      "@type": "ImageObject",
+      "url": "http://cdn.ampproject.org/leader.jpg",
+      "height": 2000,
+      "width": 800
+    }
+  }
+</script>
+```
+
+#### 2) 适用与更多平台的meta标签
+
+可以通过网络来学习其他方法
+
+
 ## MIB页面校验（暂未支持）
 
 ## 配置分析（暂未支持）
 
 
-# MIB API说明 
-
-## mib-ad
-
-描述|提供了一个广告容器用来显示广告，目前只支持https的广告
-----|----
-可用性|稳定
-支持布局| 
-示例|
-
-### 说明
-
-```
-<mib-ad tpl="onlyImg" src="//m.baidu.com/s?word=百度" data-size="1242 180" data-img="//m.baidu.com/static/search/ala/ad_1.png" class="mib-element"><a href="//m.baidu.com/s?word=百度">
-```
-
-## mib-img
-
-描述|用自定义的mib-img标签封装了html原生img标签
-----|----
-可用性|稳定
-所需脚本|
-支持布局| 
-示例|
-
-### 属性
-
-- **tpl**
-
-    广告类型（无图，单图，多图，目前只有单图类型）
-
-- **src**
-
-    跳转地址
-
-- **data-size**
-
-    图片大小
-
-- **data-img**
-
-    图片地址
-   
-
-### 样式
-
-mib-img暂时不支持css重写样式
-
-### 验证
-
-
-
-
-## mib-pix
-
-描述|用通用https代理组件
-----|----
-可用性|稳定
-示例|
-
-### 说明
-
-接入方提供一个接收请求的服务地址，例如：//yourselfdomain/mib/tj.gif，如果服务地址不支持HTTPS，可以使用百度提供的HTTPS代理服务使用MIB提供的插件，向服务地址定向发送请求。如：
-
-```
-    <mib-pix src="//yourselfdomain/miburl/tj.gif?t={TIME}&title={TITLE}&host={HOST}&from=baidu"></mib-pix>
-```
-
-MIB会自动匹配参数，生成请求地址，例如：//yourselfdomain/miburl/tj.gif?t=1459415529464&title=MIB_PIX_DEMO&host=mib.bdstatic.com&from=baidu
-
-- 目前支持的参数: {TIME}，{TITLE}，{HOST}
-
-### 属性
-
-- **src**
-
-	资源方服务地址
-	
-## mib-baidu-tj
-    
-描述|百度统计组件，用于统计页面数据
-----|----
-可用性|稳定
-示例|
-
-### 说明
-
-MIB提供百度统计的插件，便于分析页面数据，需要提前到百度统计这边创建站点，会自动生成js代码
-使用提取工具提取token，并使用MIB提供的插件，代码示例：
-
-```
-    <mib-baidu-tj token="02890d4a309827eb62bc3335b2b28f7f"></mib-baidu-tj>
-```
-
-## mib-recommend
-
-描述|推荐热词组件
-----|----
-可用性|稳定
-示例|
-
-### 说明
-
-**mib-recommend**组件提供统一样式的相关推荐和新闻热点模块，需求方只需要根据规范在dom结构中加入组件即可。代码示例：
-
-```
-    <mib-recommend></mib-recommend>
-    <div class="recommends">
-        <div class="recommends-header">相关推荐</div>
-    </div>
-    <div class="hotpoint">
-        <div class="hotpoint-header">新闻热点</div>
-    </div>
-```
-
-## 组件扩展（暂未支持）
-
-## 实验组件（暂未支持）
-
-## MIB HTML规范
-
-### 头部适用规范
-
-- 起始标签使用`<!doctype html>`
-- 标签必须(MUST)加上mib标记，如:`
-- 必须(MUST)包含<head>和<body>标签
-- 必须(MUST)在head标签中包含字符集申明：`<meta charset="utf-8">`，字符集统一为`utf-8`
-- 必须(MUST)在head标签中包含viewport设置标签：`<meta name="viewport" content="width=device-width,minimum-scale=1">`，推荐(RECOMMENDED)包含`initial-scale=1`
-- 必须(MUST)在head标签中包含`<script async src="https://m.baidu.com/mibhtml/v0.js"></script>`
-- 必须(MUST)在head标签中包含`<style>body {opacity: 0}</style><noscript><style>body {opacity: 1}</style></noscript>`
-
-### 页面元素使用规范
-
-在MIB HTML中，我们将禁止使用部分对页面性能以及安全有较大影响的标签，并将部分html标签做替换，使用mib的特有标签（例如标签会被标签代替）:
-
-标签|使用范围
-----|----
-img|替换为mib-img标签
-video|替换为mib-video
-audio|替换为mib-audio
-iframe|替换为mib-iframe
-style|仅允许在head标签中的style标签中使用
-svg|允许使用svg标签
-button|允许使用
-frame|禁止使用
-frameset|禁止使用
-object|禁止使用
-param|禁止使用
-applet|禁止使用
-embed|禁止使用
-form|禁止使用
-input elements|禁止使用，包括：input,textareaa,select,option
-link|不允许使用link标签进行样式表的加载
-a|href属性不允许使用javascript:协议，使用时，跳转便签的target属性需要设置为`_blank`
-
-## MIB验证错误 
-
-# MIB 规范文档&校验list
