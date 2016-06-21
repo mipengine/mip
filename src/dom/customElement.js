@@ -14,18 +14,18 @@ define(function(){
     }
 //    var customElement =  Object.create(HTMLElement.prototype); 
        
-    customElement.prototype.mibCreatedCallback = function(){
+    customElement.prototype.mipCreatedCallback = function(){
          
     };
     
-    customElement.prototype.mibAttachedCallback = function(){
+    customElement.prototype.mipAttachedCallback = function(){
     };
     
-    customElement.prototype.mibDetachedCallback = function(){
+    customElement.prototype.mipDetachedCallback = function(){
     
     };
 
-    customElement.prototype.mibAttributeChangedCallback = function(){
+    customElement.prototype.mipAttributeChangedCallback = function(){
     };
     
     //自定义元素进入可视区域的默认处理函数，此处可以覆写，如果有特殊逻辑

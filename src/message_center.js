@@ -10,7 +10,7 @@ define(function(){
     var messageObserver = require('observable');
 
     var isListener = false;
-    var sentinel = '__MIB__';
+    var sentinel = '__MIP__';
     var sentinelRequest = sentinel + 'REQUEST'; 
     var sentinelResponse = sentinel + 'RESPONSE'; 
     /**

@@ -5,10 +5,10 @@ define(['deps/emit'], function (EventEmitter) {
         height: $win.height()
     };
 
-    function MibViewer(opt) {
+    function MipViewer(opt) {
         this.opt = $.extend({
             selector: '[data-carousel]',
-            viewerClass: '.mib-viewer',
+            viewerClass: '.mip-viewer',
             // 影藏header的延迟
             timeoutHideHeader: 3000,
             // 竖屏滑动阈值
@@ -24,7 +24,7 @@ define(['deps/emit'], function (EventEmitter) {
         this.bindEv();
     }
 
-    $.extend(MibViewer.prototype, {
+    $.extend(MipViewer.prototype, {
         init: function () {
             this.imgs = $(this.opt.selector);
             this.urlList = [];
@@ -32,23 +32,23 @@ define(['deps/emit'], function (EventEmitter) {
             this.wrapper = $(this.opt.viewerClass);
 
             if (!this.wrapper.length) {
-                this.wrapper = $('<div class="mib-viewer"/>');
+                this.wrapper = $('<div class="mip-viewer"/>');
                 $('body').append(this.wrapper);
             }
 
             this.updateDirection();
         },
         createDom: function () {
-            var tplSidebar = '<div class="mib-viewer-header">' +
-                                '<a href="javascript:;" class="mib-viewer-header-ret"><i class="c-icon">&#xe783</i></a>' +
-                                '<div class="mib-viewer-header-inner">' +
-                                    '<span class="mib-viewer-header-txt"></span>' +
+            var tplSidebar = '<div class="mip-viewer-header">' +
+                                '<a href="javascript:;" class="mip-viewer-header-ret"><i class="c-icon">&#xe783</i></a>' +
+                                '<div class="mip-viewer-header-inner">' +
+                                    '<span class="mip-viewer-header-txt"></span>' +
                                 '</div>' +
                              '</div>';
-            var tplHeader = '<div class="mib-viewer-viewer">' +
-                                '<div class="mib-viewer-list mib-viewer-normal">';
-            var tplItem = '<div class="mib-viewer-item">' +
-                            '<div class="mib-viewer-item-inner">' +
+            var tplHeader = '<div class="mip-viewer-viewer">' +
+                                '<div class="mip-viewer-list mip-viewer-normal">';
+            var tplItem = '<div class="mip-viewer-item">' +
+                            '<div class="mip-viewer-item-inner">' +
                                 '<img src="" />' +
                             '</div>' +
                           '</div>';
@@ -67,14 +67,14 @@ define(['deps/emit'], function (EventEmitter) {
             html += tplFooter;
 
             this.wrapper.html(html);
-            this.viewer = this.wrapper.find('.mib-viewer-viewer');
-            this.list = this.viewer.find('.mib-viewer-list');
-            this.items = this.list.find('.mib-viewer-item');
+            this.viewer = this.wrapper.find('.mip-viewer-viewer');
+            this.list = this.viewer.find('.mip-viewer-list');
+            this.items = this.list.find('.mip-viewer-item');
 
-            this.header = this.wrapper.find('.mib-viewer-header');
-            this.pager = this.header.find('.mib-viewer-header-txt');
+            this.header = this.wrapper.find('.mip-viewer-header');
+            this.pager = this.header.find('.mip-viewer-header-txt');
             // 关闭按钮
-            this.ret = this.header.find('.mib-viewer-header-ret');
+            this.ret = this.header.find('.mip-viewer-header-ret');
         },
         show: function () {
             var self = this;
@@ -109,7 +109,7 @@ define(['deps/emit'], function (EventEmitter) {
             }, '*');
         },
         updateDirection: function () {
-            var horizonClassName = 'mib-viewer-horizon';
+            var horizonClassName = 'mip-viewer-horizon';
             if (winInfo.width > winInfo.height) {
                 this.phoneDirection = 'horizontal';
                 this.wrapper.addClass(horizonClassName);
@@ -268,7 +268,7 @@ define(['deps/emit'], function (EventEmitter) {
                 this._goNormal();
                 return;
             }
-            this.list.removeAttr('style').addClass('mib-viewer-toright');
+            this.list.removeAttr('style').addClass('mip-viewer-toright');
             this.carouselId++;
         },
         _goPrev: function () {
@@ -277,15 +277,15 @@ define(['deps/emit'], function (EventEmitter) {
                 this._goNormal();
                 return;
             }
-            this.list.removeAttr('style').addClass('mib-viewer-toleft');
+            this.list.removeAttr('style').addClass('mip-viewer-toleft');
             this.carouselId--;
         },
         _goCommon: function () {
-            this.list.removeAttr('style').removeClass('mib-viewer-toright mib-viewer-toleft');
+            this.list.removeAttr('style').removeClass('mip-viewer-toright mip-viewer-toleft');
         },
         destroy: function () {
         }
     }, EventEmitter.prototype);
 
-    return MibViewer;
+    return MipViewer;
 });
