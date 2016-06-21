@@ -1,6 +1,6 @@
-# MIB 校验list
+# MIP 校验list
 
-## MIB HTML 标签和属性错误
+## MIP HTML 标签和属性错误
 
 ### 1. 缺少强制性标签
 
@@ -9,14 +9,14 @@
 |错误说明|"The mandatory tag '%1' is missing or incorrect."|
 |修复方法|添加（或者更正）强制性html标签|
 
-在MIB HTML中，强制性标签包括：
+在MIP HTML中，强制性标签包括：
 
 - `<!doctype html>`
-- `<html mib>`
+- `<html mip>`
 - `<head>`
 - `<meta charset="utf-8">`
 - `<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">`
-- `<script async src="https://m.baidu.com/mibhtml/v0.js"></script>`
+- `<script async src="https://m.baidu.com/miphtml/v0.js"></script>`
 - `<body>`
 
 ### 2. 缺少引用文件
@@ -26,9 +26,9 @@
 |错误说明|"The '%1' tag is missing or incorrect, but required by '%2'."|
 |修复方法|添加（或者更正）正确的引用文件|
 
-当MIB dom中用了一个mib扩展组件，却没有引用这个组件所需要的js文件，校验器就会报`TAG_REQUIRED_BY_MISSING`的异常。
+当MIP dom中用了一个mip扩展组件，却没有引用这个组件所需要的js文件，校验器就会报`TAG_REQUIRED_BY_MISSING`的异常。
 
-在MIB dom中，扩展组件被看做页面的自定义元素而引入，当碰到上述问题的时候，可以提供一个连接，跳转到组件的使用说明页面， 将所需要的js文件拷过来即可。
+在MIP dom中，扩展组件被看做页面的自定义元素而引入，当碰到上述问题的时候，可以提供一个连接，跳转到组件的使用说明页面， 将所需要的js文件拷过来即可。
 
 ### 3. 禁用标签
 
@@ -48,7 +48,7 @@
 
 当html标签有属性值不正确的时候，会报这个错误。例如，当url地址不符合规范的时候，就会报这个错。url规范可以参考<a href="http://www.w3schools.com/tags/att_a_href.asp" target="_blank">w3cschool规范参考</a> 
 
-**注意：** MIB HTML中的url强制是https的
+**注意：** MIP HTML中的url强制是https的
 
 ### 5. 禁用属性
 
@@ -139,10 +139,10 @@
 
 当标签中含有互斥属性的时候需要报错，例如以下示例中的属性，同时只能出现一个：
 
-- **mib-twitter**: data-tweetid or src
-- **mib-instagram**: data-shortcode or src
-- **mib-iframe**: src or srcdoc
-- **mib-youtube**: src or data-videoid
+- **mip-twitter**: data-tweetid or src
+- **mip-instagram**: data-shortcode or src
+- **mip-iframe**: src or srcdoc
+- **mip-youtube**: src or data-videoid
 
 ### 15. 缺少强制性属性
 
@@ -153,10 +153,10 @@
 
 当标签中缺少必须的属性时需要报错，例如：
 
-- **mib-twitter**: data-tweetid or src
-- **mib-instagram**: data-shortcode or src
-- **mib-iframe**: src or srcdoc
-- **mib-youtube**: src or data-videoid
+- **mip-twitter**: data-tweetid or src
+- **mip-instagram**: data-shortcode or src
+- **mip-iframe**: src or srcdoc
+- **mip-youtube**: src or data-videoid
 
 ### 16. 直接父标签错误
 
@@ -172,10 +172,10 @@
 - **body** 的直接父标签是 **html**
 - **link** 的直接父标签是 **head**
 - **meta** 的直接父标签是 **head**
-- **style mib-custom** 的直接父标签是 **head**
+- **style mip-custom** 的直接父标签是 **head**
 - **style** 的直接父标签是 **boilerplate**
 - **script** 的直接父标签是 **head**
-- 资源的直接父标签是媒体标签（mib-audio,mib-video,等）
+- 资源的直接父标签是媒体标签（mip-audio,mip-video,等）
 
 ### 17. 非法父级标签
 
@@ -205,14 +205,14 @@
 以下是唯一标签列表：
 
 - `<doctype html>`
-- `<html mib>`
+- `<html mip>`
 - `<head>`
 - `<link rel=canonical href=...>`
 - `<link rel=amphtml href=...>`
 - `<meta charset="utf-8">`
 - `<meta viewport>`
-- `<style mib-custom>`
-- `<script async src="https://m.baidu.com/mibhtml/v0.js"></script>`
+- `<style mip-custom>`
+- `<script async src="https://m.baidu.com/miphtml/v0.js"></script>`
 - `<body>`
 
 ## 样式和布局错误
@@ -231,7 +231,7 @@
 |错误说明|"CSS syntax error in tag '%1' - saw invalid at rule '%2'."|
 |修复方法|修复错误的css语法|
 
-### 3. 隐藏布局不支持mib
+### 3. 隐藏布局不支持mip
 
 |提示|IMPLIED_LAYOUT_INVALID|
 |---|---|

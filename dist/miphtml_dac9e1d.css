@@ -188,32 +188,32 @@ h3{margin-top:10px;padding:20px 20px 0;line-height:35px;font-size:22px;word-brea
 a{text-decoration:none;color:#333}
 img{width:100%;margin:0 auto}
 header{background-color:#f5f5f5}
-.mib-element{display:inline-block}
-.mib-text{display:block;line-height:26px;color:#333;padding:10px 0;font-size:16px;text-align:justify;word-wrap:break-word;word-break:break-word}
-.mib-img-container{margin:16px auto;font-size:0}
-.mib-img-subtitle{padding-top:10px;color:#999;font-size:13px;line-height:15px;max-width:100%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;text-align:center}
-.mib-img-box{width:100%;height:100%;position:fixed;left:0;top:0;background:#000;z-index:10}
-.mib-img-box .box-line{position:relative;width:100%;height:10000px;top:20%;overflow:hidden}
-.mib-img-box .box-container{height:100%;width:10000px;position:absolute;top:0;left:0}
-.mib-img-box .box-item{float:left}
-.mib-img-box .box-item img{position:absolute;top:0;left:0}
-.mib-img-box .box-img-wrap{position:relative;height:10240px}
-.mib-img-box .mib-box-page{color:#fff;height:30px;width:30px;line-height:30px;text-align:center;position:absolute;z-index:10;bottom:100px;left:20px;font-size:28px;opacity:.75}
-.mib-html{line-height:26px;font-size:14px;color:#333;text-align:justify}
-.mib-html h3{margin:0;padding:15px 0;line-height:20px;font-size:15px}
-.mib-html ol,.mib-html ul{padding:10px 0 10px 20px}
-.mib-html blockquote{margin:20px 0;padding-left:8px;border-left:4px solid #e9e9e9}
-.mib-html p{padding:10px 0;word-break:break-word;word-wrap:break-word}
-.mib-viewer{display:none;position:fixed;width:100%;height:100%;left:0;top:0;background:#000;z-index:10}
-.mib-viewer-normal{transition-duration:0ms;-webkit-transition-duration:0ms;transform:translateX(-33.33333333%);-webkit-transform:translateX(-33.33333333%)}
-.mib-viewer-toright{transition-duration:400ms;-webkit-transition-duration:400ms;transform:translateX(-66.66666667%);-webkit-transform:translateX(-66.66666667%)}
-.mib-viewer-toleft{transition-duration:400ms;-webkit-transition-duration:400ms;transform:translateX(0);-webkit-transform:translateX(0)}
-.mib-viewer-header{position:absolute;left:0;top:0;width:100%;height:40px;line-height:40px;background:rgba(0,0,0,.8);padding:0 40px;color:#fff;text-align:center;font-size:22px;z-index:100;box-sizing:border-box;-webkit-box-sizing:border-box}
-.mib-viewer-header-inner{font-size:18px}
-.mib-viewer-header-ret{display:block;width:40px;height:100%;position:absolute;left:0;top:0;color:#fff}
-.mib-viewer-viewer{width:100%;height:100%;overflow:hidden}
-.mib-viewer-list{width:300%;height:100%;font-size:0}
-.mib-viewer-item{float:left;width:33.3333%;height:100%;display:flex;display:box;display:-webkit-box;display:-webkit-flex;box-orient:vertical;-webkit-box-orient:vertical;box-pack:center;-webkit-box-pack:center;box-align:center;-webkit-box-align:center;align-items:center;-webkit-align-items:center;justify-content:center;-webkit-justify-content:center}
-.mib-viewer-item-inner{width:100%;max-height:100%;position:relative;display:inline-block;line-height:1}
-.mib-viewer-item img{width:100%;max-height:100%;vertical-align:middle;border:0 none;outline:0}
-.mib-viewer-horizon .mib-viewer-item-inner,.mib-viewer-horizon .mib-viewer-item-inner img{width:auto;height:100%;max-width:100%;max-height:auto}
+.mip-element{display:inline-block}
+.mip-text{display:block;line-height:26px;color:#333;padding:10px 0;font-size:16px;text-align:justify;word-wrap:break-word;word-break:break-word}
+.mip-img-container{margin:16px auto;font-size:0}
+.mip-img-subtitle{padding-top:10px;color:#999;font-size:13px;line-height:15px;max-width:100%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;text-align:center}
+.mip-img-box{width:100%;height:100%;position:fixed;left:0;top:0;background:#000;z-index:10}
+.mip-img-box .box-line{position:relative;width:100%;height:10000px;top:20%;overflow:hidden}
+.mip-img-box .box-container{height:100%;width:10000px;position:absolute;top:0;left:0}
+.mip-img-box .box-item{float:left}
+.mip-img-box .box-item img{position:absolute;top:0;left:0}
+.mip-img-box .box-img-wrap{position:relative;height:10240px}
+.mip-img-box .mip-box-page{color:#fff;height:30px;width:30px;line-height:30px;text-align:center;position:absolute;z-index:10;bottom:100px;left:20px;font-size:28px;opacity:.75}
+.mip-html{line-height:26px;font-size:14px;color:#333;text-align:justify}
+.mip-html h3{margin:0;padding:15px 0;line-height:20px;font-size:15px}
+.mip-html ol,.mip-html ul{padding:10px 0 10px 20px}
+.mip-html blockquote{margin:20px 0;padding-left:8px;border-left:4px solid #e9e9e9}
+.mip-html p{padding:10px 0;word-break:break-word;word-wrap:break-word}
+.mip-viewer{display:none;position:fixed;width:100%;height:100%;left:0;top:0;background:#000;z-index:10}
+.mip-viewer-normal{transition-duration:0ms;-webkit-transition-duration:0ms;transform:translateX(-33.33333333%);-webkit-transform:translateX(-33.33333333%)}
+.mip-viewer-toright{transition-duration:400ms;-webkit-transition-duration:400ms;transform:translateX(-66.66666667%);-webkit-transform:translateX(-66.66666667%)}
+.mip-viewer-toleft{transition-duration:400ms;-webkit-transition-duration:400ms;transform:translateX(0);-webkit-transform:translateX(0)}
+.mip-viewer-header{position:absolute;left:0;top:0;width:100%;height:40px;line-height:40px;background:rgba(0,0,0,.8);padding:0 40px;color:#fff;text-align:center;font-size:22px;z-index:100;box-sizing:border-box;-webkit-box-sizing:border-box}
+.mip-viewer-header-inner{font-size:18px}
+.mip-viewer-header-ret{display:block;width:40px;height:100%;position:absolute;left:0;top:0;color:#fff}
+.mip-viewer-viewer{width:100%;height:100%;overflow:hidden}
+.mip-viewer-list{width:300%;height:100%;font-size:0}
+.mip-viewer-item{float:left;width:33.3333%;height:100%;display:flex;display:box;display:-webkit-box;display:-webkit-flex;box-orient:vertical;-webkit-box-orient:vertical;box-pack:center;-webkit-box-pack:center;box-align:center;-webkit-box-align:center;align-items:center;-webkit-align-items:center;justify-content:center;-webkit-justify-content:center}
+.mip-viewer-item-inner{width:100%;max-height:100%;position:relative;display:inline-block;line-height:1}
+.mip-viewer-item img{width:100%;max-height:100%;vertical-align:middle;border:0 none;outline:0}
+.mip-viewer-horizon .mip-viewer-item-inner,.mip-viewer-horizon .mip-viewer-item-inner img{width:auto;height:100%;max-width:100%;max-height:auto}
