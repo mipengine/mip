@@ -4,7 +4,7 @@
 
 #### 编译环境
 
-依赖fis3，需要插件`fis3-hook-module`、`fis-parse-less`
+ 依赖fis3，需要插件`fis3-hook-module`、`fis-parse-less`
 
 ```
 npm install -g fis3
