@@ -18,14 +18,14 @@ fis.match('*.js', {
 });
 */
 
-fis.match('mibhtml_main.js', {
+fis.match('Miphtml_main.js', {
     useHash: true,
     optimizer: fis.plugin('uglify-js', {
         output : {
             max_line_len : 500
         }
     }),
-    release: 'mibhtml.js'
+    release: 'Miphtml.js'
 });
 
 fis.match('*.less', {
@@ -42,12 +42,12 @@ fis.match('*.{less,css}', {
 });
 */
 
-fis.match('mib-common.less', {
+fis.match('Mip-common.less', {
     useHash: true, // default is true
     optimizer: fis.plugin('clean-css',{
         keepBreaks : true
     }),
-    release: 'mibhtml.css'
+    release: 'Miphtml.css'
 });
 
 fis.match('/src/(**).js', {
