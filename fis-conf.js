@@ -1,7 +1,6 @@
 fis.config.set("project.watch.usePolling", true);
 
 fis.match('*', {
-    release: false
 });
 /*
  * 线上需要把代码压缩打开
@@ -29,8 +28,8 @@ fis.match('Miphtml_main.js', {
 });
 
 fis.match('*.less', {
-    parser: fis.plugin('less'),
-    rExt: '.css'
+    //parser: fis.plugin('less'),
+    //rExt: '.css'
 });
 
 /*

@@ -9,14 +9,14 @@ __inline('/src/gesture.js');
 __inline('/src/viewport.js');
 __inline('/src/mip.js');
 __inline('/src/deps/document-register-element.max.js');
-__inline('/src/dom/customElement.js');
-__inline('/src/dom/registerMipElement.js');
-__inline('/src/dom/mip-img.js');
-__inline('/src/dom/mip-gif.js');
-__inline('/src/dom/mip-pix.js');
-__inline('/src/dom/mip-carousel.js');
-__inline('/src/dom/recommend.js');
-__inline('/src/dom/img-viewer.js');
+__inline('/buildins/customElement.js');
+__inline('/buildins/registerMipElement.js');
+__inline('/buildins/mip-img.js');
+__inline('/buildins/mip-gif.js');
+__inline('/buildins/mip-pix.js');
+__inline('/buildins/mip-carousel.js');
+__inline('/buildins/recommend.js');
+__inline('/buildins/img-viewer.js');
 require(['mip']);
 
 
