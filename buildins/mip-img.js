@@ -1,5 +1,5 @@
 define(function(){
-    var customElem = require('dom/customElement');
+    var customElem = require('./customElement');
        var build = function(){
             if(this.isRender){
                 return; 

@@ -6,7 +6,7 @@
 * @copyright 2015 Baidu.com, Inc. All Rights Reserved
 */
 define(function(){
-    var customElem = require('dom/customElement');
+    var customElem = require('./customElement');
 
     function build(){
         if(this.isRender){

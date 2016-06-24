@@ -54,7 +54,7 @@ define(function(){
     /**
      *  web compenent组件初始化
      * */
-    require(['dom/registerMipElement']);
+    require(['../buildins/registerMipElement']);
     
     /***
      *  注册统计组件
@@ -66,14 +66,14 @@ define(function(){
     /*
      *注册mip-gif组件
      */
-    require(['dom/mip-gif'],function(mipGif){
+    require(['../buildins/mip-gif'],function(mipGif){
         window.registerMipElement('mip-gif',mipGif);
     });
 
     /*
      * 注册mip-img组件
      */
-    require(['dom/mip-img'],function(mipImg){
+    require(['../buildins/mip-img'],function(mipImg){
         window.registerMipElement('mip-img',mipImg);
     }); 
 
