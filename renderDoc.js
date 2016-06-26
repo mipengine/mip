@@ -3,7 +3,7 @@ var config = {
     nameMap:{
       '1_getstarted':'简介',
       '2_guides':'教程',
-      'reference':'参考文档',
+      '3_reference':'参考规范',
       '3_API':'接口文档',
       '4_support':'技术支持',
       '1_join_guied':'接入指南',
