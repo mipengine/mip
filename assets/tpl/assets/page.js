@@ -55,7 +55,7 @@ $(function(){
         var hash = location.hash;
         var element = $('#sidebar-container a').filter(function() {
             return this.href == url;
-        }).addClass('active').parent().parent().addClass('in').parent();
+        }).parent().parent().addClass('in').parent();
         if (element.is('li')) {
             element.addClass('active');
         }
@@ -69,7 +69,7 @@ $(function(){
             // 不使用缓存可以让每次请求命中最新文件内容
             cache: false,
             success: function (doc) {
-                scrollTo(0, 0);
+                 scrollTo(0, 0);  
                 //设置标题
                 var title = "";
                 var mdTitleReg = /# +([^\n]+)/;
@@ -103,7 +103,7 @@ $(function(){
             if (hash.length > 0) {
                 renderDoc(hash); 
             } else {
-                $.get('./docs/0_standard.md', function(doc) {
+                $.get('./docs/1_getstarted/started.md', function(doc) {
                     $('#con-doc').html(marked(doc));
                 });
             }
@@ -142,3 +142,42 @@ $(function() {
         }
     });    
 });
+
+$(window).on('scroll',function(){
+    var width = (this.window.innerWidth > 0) ? this.window.innerWidth : this.screen.width;
+    if(width < 768 ) return;
+    if (pageYOffset > 50){
+        $('#sidebar-wrapper').css({
+            'position': 'fixed', 
+            'top': 0
+        });
+    }else{
+         $('#sidebar-wrapper').css({
+            'position': 'static', 
+          });
+    }
+
+});
+
+//设置右侧导航栏浮动
+/*
+$(window).on('scroll', function(){
+                if (pageYOffset > 50) {
+                    $('#device').css({
+                        'position': 'fixed',
+                        'top': $(window).height() < 870 ? '-85px' : '15px'
+                    });
+                } else {
+                    $('#header').css({
+                        'top': '0'
+                    });
+                    $('#con-menu ul').css({
+                        'margin-top': '80px'
+                    });
+                    $('#device').css({
+                        'position': 'static'
+                    });
+                };
+            });
+        });
+*/

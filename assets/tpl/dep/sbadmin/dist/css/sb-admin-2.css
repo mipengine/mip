@@ -13,17 +13,31 @@ body {
 }
 
 #page-wrapper {
-    padding: 0 15px;
+    margin: 0 auto;
     min-height: 568px;
-    background-color: #fff;
+    max-width: 1100px
+}
+.nav_wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.foot-content{
+    max-width: 1100px;
+    margin: 0 auto;
+}
+footer{
+    background-color: #f8f8f8;:;
 }
 
 @media(min-width:768px) {
     #page-wrapper {
+        border-left: 1px solid #e7e7e7;
+    }
+    .container-doc{
         position: inherit;
         margin: 0 0 0 250px;
         padding: 0 30px;
-        border-left: 1px solid #e7e7e7;
     }
 }
 
@@ -148,9 +162,8 @@ body {
 @media(min-width:768px) {
     .sidebar {
         z-index: 1;
-        position: absolute;
         width: 250px;
-        margin-top: 51px;
+        float: left;
     }
 
     .navbar-top-links .dropdown-messages,
