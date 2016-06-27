@@ -1,0 +1,92 @@
+
+
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+        <title>文章大标题</title>
+        <link rel="stylesheet" type="text/css" href="/dist/miphtml.css">
+        <style>
+
+            /* 建议样式 */
+
+            /* 头部信息 */
+            .o-head-info {
+                display: block;
+                padding: 20px 17px 0;
+                color: #6a6a6a;
+                font-size: 13px;
+                overflow: hidden;
+            }
+            /* 发布来源 */
+            .o-head-tag {
+                float: left;
+            }
+            /* 发布时间 */
+            .o-head-time {
+                float: right;
+            }
+            /* 文章大标题 */
+            .o-head-title h3 {
+                margin-top: 0;
+                line-height: 34px;
+                text-align: justify;
+                font-size: 22px;
+                color: #333;
+            }
+
+            /* 其他自定义样式（自己的样式写在这里，使用 o-page- 开头）*/
+
+            .o-page-test01 {
+                background: yellow;
+                font-style: italic;
+            }
+
+        </style>
+    </head>
+    <body>
+        <!-- 页面主体 -->
+        <div class="main">
+
+            <!-- 页面头部（非框架部分，可使用建议样式） -->
+            <header>
+
+                <div class="o-head-info">
+                    <!-- 发布来源 -->
+                    <span class="o-head-tag">发布来源</span>
+                    <!-- 发布时间：格式（月-日 时:分） -->
+                    <span class="o-head-time">03-20 11:11</span>
+                </div>
+
+                <div class="o-head-title">
+                    <!-- 文章大标题 -->
+                    <h3>文章大标题</h3>
+                </div>
+
+            </header>
+
+            <!-- 文章部分 -->
+            <div class="article">
+
+                <!-- 图片（请在容器外层标注图片尺寸） -->
+                <div class="mip-img-container" width="350" height="109">
+                    <!-- 图片地址 -->
+                    <mip-img data-carousel="carousel" class="mip-img" src="//m.baidu.com/static/index/plus/plus_logo.png"></mip-img>
+                    <!-- 图片标题 -->
+                    <p class="mip-img-subtitle">图标标题</p>
+                </div>
+
+            </div>
+
+            <!-- 通用分享 -->
+            <div class="mip-share-container">
+                <mip-share url="//m.baidu.com"></mip-share>
+            </div>
+
+
+        </div>
+
+        <script src="/dist/miphtml_main.js"></script>
+    </body>
+</html>
