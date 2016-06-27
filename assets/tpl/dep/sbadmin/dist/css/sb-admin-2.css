@@ -5,7 +5,6 @@
  */
 
 body {
-    background-color: #f8f8f8;
 }
 
 #wrapper {
@@ -27,7 +26,8 @@ body {
     margin: 0 auto;
 }
 footer{
-    background-color: #f8f8f8;:;
+    background-color: #f8f8f8;
+    border-top: 1px solid #eee;
 }
 
 @media(min-width:768px) {
