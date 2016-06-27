@@ -5,6 +5,7 @@
     font-size: 14px;
     line-height: 1.6;
     word-wrap: break-word;
+    color:#333;
 }
 .markdown-body a{
     color: #4183c4; 
@@ -57,15 +58,16 @@
     font-size: inherit;
 }
 .markdown-body h1 {
-    color: #000000;
+    color: #337ab7;
     font-size: 28px;
 }
 .markdown-body h2 {
     border-bottom: 1px solid #CCCCCC;
-    color: #000000;
+    color: #337AB5;
     font-size: 24px;
 }
 .markdown-body h3 {
+    color: #337AB5;
     font-size: 18px;
 }
 .markdown-body h4 {
