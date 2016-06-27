@@ -2206,12 +2206,14 @@ define('olympic/mip-link', ['require', 'dom/customElement'], function(require) {
         if (!href) { return; }
 
         if (window.parent !== window) {
+
+            var elem = $(this);
             var message = {
                 'event': 'loadiframe',
                 'data': {
                     'url': href,
-                    'title': this.getAttribute('title'),
-                    'click': $(this).data('click')
+                    'title': (elem.attr('title') || elem.text().trim().split('\n')[0]),
+                    'click': elem.data('click')
                 }
             };
 
