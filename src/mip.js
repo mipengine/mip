@@ -4,7 +4,7 @@
  * @version 1.0
  * @copyright 2015 Baidu.com, Inc. All Rights Reserved
  */
-define(function(){
+define(function(require){
     /**
     * 初始化相关JS
     */
@@ -41,21 +41,21 @@ define(function(){
         var isSub = false;
         $('.subscrib-action').on("click",function(ev){
             var clickEv = ev;
-            $this = $(this); 
+            $this = $(this);
             $this.children("div").fadeOut(400,"linear",function(){
                 $this.children(".subscrib-ok").fadeIn(200);
                 clickEv.stopPropagation();
             });
-        });  
+        });
     }
     $(subscribe);
     */
-    
+
     /**
      *  web compenent组件初始化
      * */
-    require(['../buildins/registerMipElement']);
-    
+    require('dom/registerMipElement');
+
     /***
      *  注册统计组件
      * /
@@ -66,16 +66,22 @@ define(function(){
     /*
      *注册mip-gif组件
      */
-    require(['../buildins/mip-gif'],function(mipGif){
-        window.registerMipElement('mip-gif',mipGif);
-    });
+    window.registerMipElement('mip-gif', require('dom/mip-gif'));
 
     /*
      * 注册mip-img组件
      */
-    require(['../buildins/mip-img'],function(mipImg){
-        window.registerMipElement('mip-img',mipImg);
-    }); 
+    window.registerMipElement('mip-img',require('dom/mip-img'));
+
+    /*
+     * 注册mip-link组件
+     */
+    window.registerMipElement('mip-link', require('olympic/mip-link'));
+
+    /*
+     * 注册mip-share 组件
+     */
+    window.registerMipElement('mip-share', require('olympic/mip-share'));
 
     //页面初始化后，处理可视区域内元素
     $(function(){
@@ -92,13 +98,13 @@ define(function(){
             this.inviewCallback();
         });
     });
-    
+
     /**
      *  初始化图片浏览组件，并处理viewport中的事件冲突
      * */
     /*
     require(['dom/mip-carousel'],function(mipCarousel){
-        mipCarousel.initData(); 
+        mipCarousel.initData();
         $(window).bind("mip.carousel.open", function() {
             viewport.setViewportNormal(false);
         });

@@ -1,5 +1,6 @@
 __inline('/src/deps/jquery.js');
 __inline('/src/deps/esl.js');
+__inline('/src/deps/esl_config.js');
 __inline('/src/deps/emit.js');
 
 __inline('/src/observable.js');
@@ -17,6 +18,10 @@ __inline('/buildins/mip-pix.js');
 __inline('/buildins/mip-carousel.js');
 __inline('/buildins/recommend.js');
 __inline('/buildins/img-viewer.js');
+__inline('/extensions/olympic/mip-link.js');
+__inline('/extensions/olympic/share.js');
+__inline('/extensions/olympic/mip-share.js');
+
 require(['mip']);
 
 
