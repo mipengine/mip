@@ -28,6 +28,9 @@ body {
 footer{
     background-color: #f8f8f8;
     border-top: 1px solid #eee;
+    padding: 10px;
+    font-size: 0.9em;
+    text-align: center;
 }
 
 @media(min-width:768px) {
