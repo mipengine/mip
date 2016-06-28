@@ -3,12 +3,15 @@ var config = {
     nameMap:{
       '1_getstarted':'简介',
       '2_guides':'教程',
-      '3_reference':'参考规范',
+      'reference':'参考文档',
       '3_API':'接口文档',
       '4_support':'技术支持',
       '1_join_guied':'接入指南',
       '2_dev_guied':'开发指南',
-      '3_frame_guied':'框架基础'
+      '3_frame_guied':'框架基础',
+      '1_dev_card': '卡片开发',
+      '2_dev_service': '应用服务开发',
+      '3_dev_act':'JS模块开发'
     }
 };
 var fs = require('fs'),
@@ -64,7 +67,7 @@ function renderSideMenu(fileList,level){
     if(level == 0){
       preStr = '<ul class="nav" id="side-menu">';
     } else {
-      preStr = '<ul class="nav nav-' + (level + 1) + '-level" >';
+      preStr = '<ul class="nav nav-' + (level + 1) + '-level" data-level = "'+(level + 1)+'">';
     }
     var contStr = '';
     var menuStr = '';
