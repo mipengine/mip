@@ -1,4 +1,4 @@
-define(function(){
+define(['../src/utils/util'], function(util){
     var customElem = require('./customElement');
        var build = function(){
             if(this.isRender){
@@ -6,7 +6,7 @@ define(function(){
             }
             this.isRender = true;
             var _img = new Image();
-            var src = this.getAttribute('src');
+            var src = util.urlToCacheUrl (document.location.href, this.getAttribute('src'), 'img');
            
             _img.src = src;
             if(this.getAttribute('width')){

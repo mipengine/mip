@@ -12,6 +12,7 @@ __inline('/src/mip.js');
 __inline('/src/deps/document-register-element.max.js');
 __inline('/buildins/customElement.js');
 __inline('/buildins/registerMipElement.js');
+__inline('/src/utils/util.js');
 __inline('/buildins/mip-img.js');
 __inline('/buildins/mip-gif.js');
 __inline('/buildins/mip-pix.js');

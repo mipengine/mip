@@ -66,12 +66,12 @@ define(function(require){
     /*
      *注册mip-gif组件
      */
-    window.registerMipElement('mip-gif', require('dom/mip-gif'));
+    window.registerMipElement('mip-gif', require('../buildins/mip-gif'));
 
     /*
      * 注册mip-img组件
      */
-    window.registerMipElement('mip-img',require('dom/mip-img'));
+    window.registerMipElement('mip-img',require('../buildins/mip-img'));
 
     /*
      * 注册mip-link组件
