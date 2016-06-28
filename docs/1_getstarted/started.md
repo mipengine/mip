@@ -1,8 +1,8 @@
 # 开始
-> MIP team
+> 天下武功 唯快不攻
 
 **什么是MIP:**
-MIP（Mobile Instant Baidu）是一个构建web页面的方法，他能够快速的渲染出静态内容。MIP主要由三部分组织成：
+MIP（Mobile Instant Baidu）: 前端网页加速器，是一个构建web页面的方法，他能够快速的渲染出静态内容。MIP主要由三部分组织成：
 - MIP HTML
 - MIP JS
 - MIP Cache
