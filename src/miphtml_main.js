@@ -16,7 +16,7 @@ __inline('/buildins/mip-img.js');
 __inline('/buildins/mip-gif.js');
 __inline('/buildins/mip-pix.js');
 __inline('/buildins/mip-carousel.js');
-__inline('/buildins/recommend.js');
+__inline('/extensions/recommend.js');
 __inline('/buildins/img-viewer.js');
 __inline('/extensions/olympic/mip-link.js');
 __inline('/extensions/olympic/share.js');
