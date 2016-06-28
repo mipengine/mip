@@ -1,7 +1,6 @@
 # 开始
 
 **什么是MIP:**
-
 MIP（Mobile Instant Baidu）是一个构建web页面的方法，他能够快速的渲染出静态内容。MIP主要由三部分组织成：
 
 - MIP HTML
