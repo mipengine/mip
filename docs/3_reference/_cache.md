@@ -7,10 +7,15 @@
 ## 了解MIP缓存URL格式，需要写相对路径
 
 假设您的网站域名：http://domain
+
 	您的mip页地址：http://domain/page/mip/1011.html
+
 	您的图片或其他资源地址：http://domain/page/mip/static/img/xx.png
+
 	对应资源地址填写成：<mip-img src="static/img/xx.png"></mip-img>
+
 	您的图片或其他资源地址：http://domain/page/static/img/xx.png
+
 	对应资源地址填写成：<mip-img src="../static/img/xx.png"></mip-img>
 
 	由此类推的相对路径
