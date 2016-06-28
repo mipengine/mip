@@ -55,14 +55,18 @@ $(function(){
          $('#side-menu').metisMenu();
          defaultLoad();
          //设置默认右侧菜单
-         var url = window.location;
+        var url = window.location;
         var hash = location.hash;
+        if(hash == '') url = url + '#' + globalConf.firstDoc;
         var element = $('#sidebar-container a').filter(function() {
             return this.href == url;
-        }).parent().parent().addClass('in').parent();
-        if (element.is('li')) {
-            element.addClass('active');
-        }
+        }).addClass('active');
+        var parentUl = element.parents('ul').filter(function(){
+            if($(this).attr('data-level')){
+                $(this).addClass('in');
+                $(this).parent().addClass('active');
+            }
+        });
     });
     function renderDoc(path) {
         // 切换导航hover状态
@@ -73,7 +77,19 @@ $(function(){
             // 不使用缓存可以让每次请求命中最新文件内容
             cache: false,
             success: function (doc) {
-                 scrollTo(0, 0);  
+                var element = $('#sidebar-container a').filter(function() {
+                       //设置默认选中的active逻辑
+                        var url = window.location;
+                        var hash = location.hash;  
+                        if(hash == '') url = url + '#' + globalConf.firstDoc;
+                        $this = $(this);
+                        if(this.href == url){
+                          $this.addClass('active');
+                        }else{
+                            $this.removeClass('active');
+                        }
+                    })
+                scrollTo(0, 0);  
                 //设置标题
                 var title = "";
                 var mdTitleReg = /# +([^\n]+)/;
@@ -85,7 +101,7 @@ $(function(){
 
                 $('#con-doc').html(marked(doc)).css({
                     'position': 'relative',
-                    'left': '-50px',
+                    'left': '-30px',
                     'opacity': '0.5'
                 }).animate({
                     'left': '0',
@@ -104,15 +120,12 @@ $(function(){
     function defaultLoad() {
             var hash = window.location.hash.replace('#', '');
             curentPath = hash.replace(/[^/]*.md/,'');
-            if (hash.length > 0) {
-                renderDoc(hash); 
-            } else {
-                $.get(globalConf.firstDoc, function(doc) {
-                    $('#con-doc').html(marked(doc));
-                });
+            var defaultDoc = hash;
+            if (hash.length == 0) {
+                defaultDoc = globalConf.firstDoc;
             }
+            renderDoc(defaultDoc);
         }
-
 
   $(window).on('hashchange', function() {
             var hash = location.hash;
