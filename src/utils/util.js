@@ -6,9 +6,10 @@ define(function() {
      *  @return url
      *  by lilangbo@baidu.com
      * */
-    function urlToCacheUrl (pageUrl, url, type) {
+    function urlToCacheUrl (pageUrl, url, type) { 
+        //线下联调 http://cq02-super-god.cq02.baidu.com   mipcache.bdstatic.com
         // 不合法的url 或 pageUrl非mip cache域名 直接return 
-        if (pageUrl.indexOf('mipcache.bdstatic.com') > 0 
+        if (pageUrl.indexOf('cq02-super-god.cq02.baidu.com') < 0 
             || (url && url.length < 8) 
             || !(url.indexOf('http') == 0 || url.indexOf('//') == 0)) {
             return url;
