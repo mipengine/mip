@@ -19,7 +19,7 @@ define(function() {
             prefix += 's/';
         }
         //去掉http头
-        urlParas = url.split('//');
+        var urlParas = url.split('//');
         urlParas.shift();
         url = urlParas.join('//');
         return prefix + url;
