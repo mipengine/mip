@@ -5,3 +5,5 @@ default:
 dev:
 	 fis3 server start --root=./ --port=8056
 	 fis3 release dev -d dist -w
+doc:
+	node renderDoc.js
