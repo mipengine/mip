@@ -49,22 +49,24 @@ fis.match('mip-common.less', {
     }),
     release: 'miphtml.css'
 });
+fis.hook('amd', {
+});
+
+
 
 fis.match('/src/(**).js', {
     moduleId: '$1'
 });
 
+/*
 fis.match('/buildins/(**).js', {
     moduleId: 'dom/$1'
 });
+*/
 
 fis.match('/extensions/(**).js', {
     moduleId: '$1'
 });
-
-fis.hook('amd', {
-});
-
 
 fis.media('dev').match('*.{js,css,less}', {
     useHash: false,

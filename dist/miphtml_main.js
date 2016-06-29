@@ -592,7 +592,7 @@ define('viewport', ['require', 'observable', 'gesture'], function(require){
  * @version 1.0
  * @copyright 2015 Baidu.com, Inc. All Rights Reserved
  */
-define('mip', ['require', 'gesture', 'viewport', 'dom/registerMipElement', 'dom/mip-gif', 'dom/mip-img', 'olympic/mip-link', 'olympic/mip-share'], function(require){
+define('mip', ['require', 'gesture', 'viewport', 'buildins/registerMipElement', 'buildins/mip-gif', 'buildins/mip-img', 'olympic/mip-link', 'olympic/mip-share'], function(require){
     /**
     * 初始化相关JS
     */
@@ -642,7 +642,7 @@ define('mip', ['require', 'gesture', 'viewport', 'dom/registerMipElement', 'dom/
     /**
      *  web compenent组件初始化
      * */
-    require('dom/registerMipElement');
+    require('buildins/registerMipElement');
 
     /***
      *  注册统计组件
@@ -654,12 +654,12 @@ define('mip', ['require', 'gesture', 'viewport', 'dom/registerMipElement', 'dom/
     /*
      *注册mip-gif组件
      */
-    window.registerMipElement('mip-gif', require('dom/mip-gif'));
+    window.registerMipElement('mip-gif', require('buildins/mip-gif'));
 
     /*
      * 注册mip-img组件
      */
-    window.registerMipElement('mip-img',require('dom/mip-img'));
+    window.registerMipElement('mip-img',require('buildins/mip-img'));
 
     /*
      * 注册mip-link组件
@@ -1395,7 +1395,7 @@ document[REGISTER_ELEMENT] = function registerElement(type, options) {
  * @version 1.0
  * @copyright 2015 Baidu.com, Inc. All Rights Reserved
  */
-define('dom/customElement', ['require'], function(require){
+define('buildins/customElement', ['require'], function(require){
    
     function customElement(){
         if(this.init){
@@ -1445,7 +1445,7 @@ define('dom/customElement', ['require'], function(require){
  * @version 1.0
  * @copyright 2015 Baidu.com, Inc. All Rights Reserved
  */
-define('dom/registerMipElement', ['require'], function(require){
+define('buildins/registerMipElement', ['require'], function(require){
     if(window['registerMipElement']){
         return window['registerMipElement'];
     }
@@ -1503,15 +1503,45 @@ define('dom/registerMipElement', ['require'], function(require){
 
 });
 ;
-define('dom/mip-img', ['require', 'dom/customElement'], function(require){
-    var customElem = require('dom/customElement');
+define('utils/util', ['require'], function(require) {
+    /**
+     *  页面资源url转成可用的cache url
+     *  @pageUrl 当前页面url地址
+     *  @url 需要替换的url地址，默认全局路径
+     *  @return url
+     *  by lilangbo@baidu.com
+     * */
+    function urlToCacheUrl (pageUrl, url, type) {
+        // 不合法的url 或 pageUrl非mip cache域名 直接return 
+        if (pageUrl.indexOf('mipcache.bdstatic.com') > 0 
+            || (url && url.length < 8) 
+            || !(url.indexOf('http') == 0 || url.indexOf('//') == 0)) {
+            return url;
+        }
+        var prefix = (type === 'img') ? '/i/' : '/c/';
+        if (url.indexOf('//') == 0 || url.indexOf('https') == 0) {
+            prefix += 's/';
+        }
+        //去掉http头
+        urlParas = url.split('//');
+        urlParas.shift();
+        url = urlParas.join('//');
+        return prefix + url;
+    }
+    return {
+        urlToCacheUrl : urlToCacheUrl
+    }
+});
+;
+define('buildins/mip-img', ['utils/util', 'buildins/customElement'], function(util){
+    var customElem = require('buildins/customElement');
        var build = function(){
             if(this.isRender){
                 return; 
             }
             this.isRender = true;
             var _img = new Image();
-            var src = this.getAttribute('src');
+            var src = util.urlToCacheUrl (document.location.href, this.getAttribute('src'), 'img');
            
             _img.src = src;
             if(this.getAttribute('width')){
@@ -1540,8 +1570,8 @@ define('dom/mip-img', ['require', 'dom/customElement'], function(require){
 
 });
 ;
-define('dom/mip-gif', ['require', 'dom/customElement'], function(require){
-    var customGif = require('dom/customElement');
+define('buildins/mip-gif', ['require', 'buildins/customElement'], function(require){
+    var customGif = require('buildins/customElement');
    function build(){
         if(this.isRender){
             return; 
@@ -1591,8 +1621,8 @@ define('dom/mip-gif', ['require', 'dom/customElement'], function(require){
 * @version 1.0
 * @copyright 2015 Baidu.com, Inc. All Rights Reserved
 */
-define('dom/mip-pix', ['require', 'dom/customElement'], function(require){
-    var customElem = require('dom/customElement');
+define('buildins/mip-pix', ['require', 'buildins/customElement'], function(require){
+    var customElem = require('buildins/customElement');
 
     function build(){
         if(this.isRender){
@@ -1626,7 +1656,7 @@ define('dom/mip-pix', ['require', 'dom/customElement'], function(require){
     return customElem;
 });
 ;
-define('dom/mip-carousel', ['require', 'gesture'], function(require){
+define('buildins/mip-carousel', ['require', 'gesture'], function(require){
     /**
     * 说明,如果需要触发图片浏览，需要在对应图片上加data-carousel="carousel' 属性
     * 在图片浏览模式打开时候，会触发：mip.carousel.open;在图片浏览模式关闭时候，会触发：mip.carousel.close
@@ -1890,7 +1920,7 @@ define('dom/mip-carousel', ['require', 'gesture'], function(require){
 });
 ;
 ;
-define('dom/img-viewer', ['deps/emit'], function (EventEmitter) {
+define('buildins/img-viewer', ['deps/emit'], function (EventEmitter) {
     var $win = $(window);
     var winInfo = {
         width: $win.width(),
@@ -2188,9 +2218,9 @@ define('dom/img-viewer', ['deps/emit'], function (EventEmitter) {
  * @time 2016.06.21
  */
 
-define('olympic/mip-link', ['require', 'dom/customElement'], function(require) {
+define('olympic/mip-link', ['require', 'buildins/customElement'], function(require) {
 
-    var customElem = require('dom/customElement');
+    var customElem = require('buildins/customElement');
 
     /**
      * 点击链接事件
@@ -2490,9 +2520,9 @@ define('olympic/share', ['require'], function (require) {
  * @time 2016.06.21
  */
 
-define('olympic/mip-share', ['require', 'dom/customElement', 'activity/yaohao_share/share'], function(require) {
+define('olympic/mip-share', ['require', 'buildins/customElement', 'activity/yaohao_share/share'], function(require) {
 
-    var customElem = require('dom/customElement');
+    var customElem = require('buildins/customElement');
 
 
     // require('//m.baidu.com/se/static/activity/yaohao_share/share_8053019');

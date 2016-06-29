@@ -6,7 +6,7 @@
 
 define(function() {
 
-    var customElem = require('dom/customElement');
+    var customElem = require('/buildins/customElement');
 
 
     // require('//m.baidu.com/se/static/activity/yaohao_share/share_8053019');

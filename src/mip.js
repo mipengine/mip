@@ -54,7 +54,7 @@ define(function(require){
     /**
      *  web compenent组件初始化
      * */
-    require('dom/registerMipElement');
+    require('../buildins/registerMipElement');
 
     /***
      *  注册统计组件

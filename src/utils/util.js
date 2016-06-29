@@ -7,16 +7,15 @@ define(function() {
      *  by lilangbo@baidu.com
      * */
     function urlToCacheUrl (pageUrl, url, type) {
-        console.log('OK');
         // 不合法的url 或 pageUrl非mip cache域名 直接return 
-        if (pageUrl.indexOf('mipcache.bdstatic.com') < 0 
+        if (pageUrl.indexOf('mipcache.bdstatic.com') > 0 
             || (url && url.length < 8) 
             || !(url.indexOf('http') == 0 || url.indexOf('//') == 0)) {
             return url;
         }
-        var prefix = (type === 'img') ? '/i' : '/c';
+        var prefix = (type === 'img') ? '/i/' : '/c/';
         if (url.indexOf('//') == 0 || url.indexOf('https') == 0) {
-            prefix += '/s/';
+            prefix += 's/';
         }
         //去掉http头
         urlParas = url.split('//');
