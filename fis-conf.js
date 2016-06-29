@@ -28,6 +28,17 @@ fis.match('src/miphtml_main.js', {
     release: 'miphtml_main.js'
 });
 
+fis.match('src/mip_ad.js', {
+    useHash: true,
+    optimizer: fis.plugin('uglify-js', {
+        output : {
+            max_line_len : 500
+        }
+    }),
+    release: 'mip_ad.js'
+});
+
+
 fis.match('*.less', {
     parser: fis.plugin('less'),
     rExt: '.css'
