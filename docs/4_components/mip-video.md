@@ -21,7 +21,7 @@
 
 ## 行为描述
 
-mip-video 根据标签的src在组件的runtime中进行懒加载，能够想html5的video标签一样控制
+mip-video 根据标签的src在组件的runtime中进行懒加载，能够像html5的video标签一样控制
 
 
 ## 使用示例:
@@ -40,7 +40,7 @@ mip-video 根据标签的src在组件的runtime中进行懒加载，能够想htm
 
 **src**
 
-需要是https，若http则播放可能会被退化成另外一种方式
+视频源地址，必须是https资源
 
 **poster**
 
