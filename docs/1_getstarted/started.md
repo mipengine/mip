@@ -178,7 +178,7 @@ MIP文档会帮助你学习如何创建一个基本的**MIP HTML**页面，如�
 **MIPs**是web页面，页面中的任何元素的样式都可以通过普通的css属性来设计。使用时，在页面的head部分引入css样式，在css中，可以通过类或者元素选择器进行选择要修改样式的dom元素。例如：
 
 ```
-    <style amp-custom>
+    <style mip-custom>
         /* any custom style goes here */
       body {
           background-color: white;
@@ -198,7 +198,7 @@ MIP文档会帮助你学习如何创建一个基本的**MIP HTML**页面，如�
 
 ### 4. 预览和验证
 
-你可以通过一下方法，就像预览其他惊天html站点一样预览mip页面：
+你可以通过一下方法，就像预览其他html站点一样预览mip页面：
 
 - 直浏览其中打开（由于XMLHttpRequests失败可能会导致某些元素预览失败）
 - 在本地起一个服务，像apache，nginx（tips: python -m SimpleHTTPServer 能够快速的在本地启一个服务器）
@@ -207,7 +207,7 @@ MIP文档会帮助你学习如何创建一个基本的**MIP HTML**页面，如�
 
 &nbsp;&nbsp;&nbsp;&nbsp;1） 在浏览其中打开页面
 
-&nbsp;&nbsp;&nbsp;&nbsp;2） 在url中 添加'#development=1', 如：`http://localhost:8000/released.amp.html#development=1`
+&nbsp;&nbsp;&nbsp;&nbsp;2） 在url中 添加'#development=1', 如：`http://localhost:8000/released.mips.html#development=1`
 
 &nbsp;&nbsp;&nbsp;&nbsp;3）打开控制台， 验证错误
 

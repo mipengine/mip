@@ -210,7 +210,6 @@ MIP页面会有严格的规范校验，不允许存在任何校验不通过的�
 - `<html mip>`
 - `<head>`
 - `<link rel=canonical href=...>`
-- `<link rel=amphtml href=...>`
 - `<meta charset="utf-8">`
 - `<meta viewport>`
 - `<style mip-custom>`
