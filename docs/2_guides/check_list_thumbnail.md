@@ -21,9 +21,7 @@
 - `<meta charset="utf-8">`
 	 
 - `<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">`
-	 
-- `<script async src="https://m.baidu.com/miphtml/v0.js"></script>`
-	 
+	 	 
 - `<link rel="stylesheet" type="text/css" href="//m.baidu.com/static/ala/sf/static/css/miphtml_xxxxxx.css">`xxx会根据版本不同而不同
 	 
 - `<script src="//m.baidu.com/static/ala/sf/static/js/miphtml_main_xxxxxx.js"></script>`xxx会根据版本不同而不同
@@ -76,7 +74,6 @@
 img|mip-img
 video|mip-video（暂未开放）
 audio|mip-audio（暂未开放）
-iframe|mip-iframe
 
 其他说明：
 
@@ -112,7 +109,7 @@ iframe|mip-iframe
     - 如果不支持https适用百度提供的https代理，url中带t={TIME}&title={TITLE}&host={HOST}&from=baidu"
 
 - mip-ad
-    - tpl：onlyImg, noneImg, moreImg(只能是这三个)
+    - tpl：banner, onlyImg, noneImg, moreImg(只能是这三个)
     - src：必须是url
     - data-size："1242 180", 两个数字中间用空格隔开
     - data-img：必须是url
@@ -190,7 +187,6 @@ mip html中具有强制性属性的标签及其强制性属性有：
 - mip-ad
     - tpl
     - src
-    - data-size
     - data-img
 
 ### 7. 直接父标签错误
@@ -256,5 +252,4 @@ mip html中具有强制性属性的标签及其强制性属性有：
 - `<meta charset="utf-8">`
 - `<meta viewport>`
 - `<style mip-custom>`
-- `<script async src="https://m.baidu.com/miphtml/v0.js"></script>`
 - `<body>`
