@@ -23,8 +23,9 @@ define(function() {
         this.isRender = true;
 
         new Share({
-            title: document.title,
+            title: this.getAttribute('title') || document.title,
             url: this.getAttribute('url'),
+            content: this.getAttribute('content'),
             iconUrl: this.getAttribute('icon')
         }, $(this));
 
