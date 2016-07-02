@@ -59,8 +59,9 @@ define(function() {
          */
         removeFake: function() {
             if (this.fakeHandler) {
-                document.body.removeEventListener(CLICK_EVENT);
+                document.body.removeEventListener(CLICK_EVENT, this.fakeHandlerCallback);
                 this.fakeHandler = null;
+                this.fakeHandlerCallback = null;
             }
 
             if (this.fakeElem) {
@@ -98,7 +99,8 @@ define(function() {
 
             this.removeFake();
 
-            this.fakeHandler = document.body.addEventListener(CLICK_EVENT, this.removeFake.bind(this));
+            this.fakeHandlerCallback = this.removeFake.bind(this);
+            this.fakeHandler = document.body.addEventListener(CLICK_EVENT, this.fakeHandlerCallback);
 
             this.fakeElem = document.createElement('textarea');
             // Prevent zooming on iOS
