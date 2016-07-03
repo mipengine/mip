@@ -4,18 +4,20 @@
 ----|----
 可用性|稳定
 所需脚本|mip-ad.js
-支持布局|banner, noneImg, oneImg, moreImg 
+支持布局|banner, 无图, 单图, 多图 
 示例|  // 连接待定
 
 ## 1. 使用
 
+基础广告组件有四种样式，四种样式通过tpl参数进行区分，分别是：banner（onlyImg），无图（noneImg），单图（oneImg），多图（moreImg），下面是组件的使用代码示例：
+
 ```
 - banner
 <mip-ad 
-    tpl="banner" 
+    tpl="onlyImg" 
     src="//m.baidu.com/s?word=百度" 
     data-size="1242 180" 
-    data-img="//m.baidu.com/static/search/ala/ad_1.png" >
+    data-img="//m.baidu.com/static/search/ala/ad_1.png">
 </mip-ad>
 
 - 无图
@@ -23,7 +25,7 @@
     tpl="noneImg" 
     src="//m.baidu.com/s?word=百度" 
     data-size="1242 180" 
-    data-img="//m.baidu.com/static/search/ala/ad_1.png" >
+    data-img="//m.baidu.com/static/search/ala/ad_1.png">
 </mip-ad>
 
 - 单图
@@ -31,7 +33,7 @@
     tpl="oneImg" 
     src="//m.baidu.com/s?word=百度" 
     data-size="1242 180" 
-    data-img="//m.baidu.com/static/search/ala/ad_1.png" >
+    data-img="//m.baidu.com/static/search/ala/ad_1.png">
 </mip-ad>
 
 -多图
@@ -39,23 +41,33 @@
     tpl="moreImg" 
     src="//m.baidu.com/s?word=百度" 
     data-size="1242 180" 
-    data-img="//m.baidu.com/static/search/ala/ad_1.png" >
+    data-img="//m.baidu.com/static/search/ala/ad_1.png">
 </mip-ad>
 ```
 ## 2. 属性
 
-- **tpl**
+基础广告组件所涉及的属性有：类型（tpl），跳转地址（src），图片大小（data-size）以及图片地址（data-img）
 
-    广告类型（无图，单图，多图，目前只有单图类型）
+- **广告类型（tpl）**
+    
+    - 是否必填：是
 
-- **src**
+    - 说明：广告类型（banner，无图，单图，多图）
 
-    跳转地址
+- **跳转地址（src）**
 
-- **data-size**
+    - 是否必填：是
 
-    图片大小
+    - 说明：跳转地址
 
-- **data-img**
+- **图片大小（data-size）**
 
-    图片地址
+    - 是否必填：否（广告类型为banner时，必填）
+
+    - 说明：图片大小, 用来设定图片的宽高比，只在banner类型下适用，其他类型所需图片固定比例
+
+- **图片地址（data-img）**
+
+    - 是否必填：是
+
+    - 说明：图片地址，在多图类型下，多张图片的地址用半角分号分隔开
