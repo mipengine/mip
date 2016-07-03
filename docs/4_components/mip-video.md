@@ -77,3 +77,4 @@ mip-video 根据标签的src在组件的runtime中进行懒加载，能够像htm
 ## 5. 是否基础组件
 
 是
+
