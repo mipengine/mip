@@ -20,6 +20,7 @@ __inline('../buildins/mip-carousel.js');
 __inline('../extensions/recommend.js');
 __inline('../buildins/img-viewer.js');
 __inline('../extensions/olympic/mip-link.js');
+__inline('../extensions/olympic/clipboard.js');
 __inline('../extensions/olympic/share.js');
 __inline('../extensions/olympic/mip-share.js');
 

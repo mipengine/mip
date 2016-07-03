@@ -8,9 +8,8 @@ define(function() {
 
     var customElem = require('/buildins/customElement');
 
+    var Share = require('./share');
 
-    // require('//m.baidu.com/se/static/activity/yaohao_share/share_8053019');
-    var Share = require('activity/yaohao_share/share');
 
     /**
      * build
@@ -24,8 +23,10 @@ define(function() {
         this.isRender = true;
 
         new Share({
-            title: document.title,
-            url: this.getAttribute('url')
+            title: this.getAttribute('title') || document.title,
+            url: this.getAttribute('url'),
+            content: this.getAttribute('content'),
+            iconUrl: this.getAttribute('icon')
         }, $(this));
 
     }

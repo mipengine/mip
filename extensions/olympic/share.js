@@ -1,18 +1,23 @@
 /**
- * share
+ * @file 分享
  *
- * fork from:  yaohao_share
+ * @description
+ * fork from:  yaohao_share by yuanxueran
+ *
+ * @update
+ * 2017-07-02 by menglingjun
+ * 着急上，先在别人的东西上改，有空重写
+ *
  */
 
 
 define(function () {
 
-    function getUrl (name) {
-        return '//m.baidu.com/se'
-    }
+    var Clipboard = require('./clipboard');
 
-    var isBaidubox = (navigator.userAgent.indexOf('baiduboxapp') > -1) ? true : false;
-    var isBaidubox =true;
+    var isBaiduHost = /badiu.com$/.test(location.host);
+    var isBaidubox = /baiduboxapp/.test(navigator.userAgent) && isBaiduHost;
+
     var defaultOpt = {
         url: window.location.href,
         title: '百度搜索有惊喜',
@@ -37,6 +42,7 @@ define(function () {
     }
 
     var nativeShare = function (cfg, encode) {
+
         if (encode) {
             cfg.url = encodeURIComponent(cfg.url);
             cfg.linkUrl = encodeURIComponent(cfg.url);
@@ -45,6 +51,8 @@ define(function () {
             Box.android.invokeApp('Bdbox_android_utils', 'callShare', [JSON.stringify(cfg), window.successFnName || 'console.log', window.errorFnName || 'console.log']);
         }
         else {
+            console.log(cfg);
+
             Box.ios.invokeApp('callShare', {
                 options: encodeURIComponent(JSON.stringify(cfg)),
                 errorcallback: 'onFail',
@@ -54,7 +62,6 @@ define(function () {
     }
 
     var qzone = {
-        icon: getUrl('/static/aladdin/yaohao_share/qzone.png'),
         type: 'qzone',
         title: 'QQ空间',
         cb: (function () {
@@ -82,7 +89,6 @@ define(function () {
     };
 
     var sinaweibo = {
-        icon: getUrl('/static/aladdin/yaohao_share/sinaweibo.png'),
         type: 'sinaweibo',
         title: '新浪微博',
         cb: (function () {
@@ -111,7 +117,6 @@ define(function () {
     };
 
     var pyq = {
-        icon: getUrl('/static/aladdin/yaohao_share/pyq.png'),
         type: 'pyq',
         title: '朋友圈',
         cb: function (opt) {
@@ -125,7 +130,6 @@ define(function () {
     };
 
     var wxfriend = {
-        icon: getUrl('/static/aladdin/yaohao_share/weixin.png'),
         type: 'wxfriend',
         title: '微信好友',
         cb: function (opt) {
@@ -137,14 +141,13 @@ define(function () {
             nativeShare(cfg, false);
         }
     };
+
+
     var copylink = {
-        icon: getUrl('/static/aladdin/yaohao_share/copy.png'),
-        title: '微信好友',
-        cb: function (opt) {
-            opt.mediaType = 'copylink';
-            opt.pannel = 'copylink';
-            var cfg = opt;
-            nativeShare(cfg, false);
+        type: 'copylink',
+        title: '复制链接',
+        cb: function () {
+            alert('复制成功');
         }
     };
 
@@ -168,22 +171,28 @@ define(function () {
         }
         list.push(qzone);
         list.push(sinaweibo);
+        list.push(copylink);
 
         list = list.concat(this.opt.custom);
+
+        // 小屏幕就少一个吧
+        if (window.innerWidth < 400 && list.length > 4) {
+            list.splice(4, 10);
+        }
+
         this.list = list;
 
         var str = '',
             num = list.length,
             obj;
 
-        str += '<div class="waui-yaohao-share-list" style="width: 100%; margin: 0 auto;">';
+        str += '<div class="mip-share-list">';
+
         for (var i = 0; i < num; i++) {
             obj = list[i];
-            str += '<span class="waui-yaohao-share-btn" style="display:inline-block;margin-right:.14rem;text-align: center;">';
+            str += '<span class="mip-share-btn">';
             if (obj) {
-                str += '<div class="c-img c-img-s  c-gap-top-small c-gap-bottom-small" style="width: 51px; height: 51px; padding-bottom: 0;background:#fff;">';
-                str += '    <img src="' + obj.icon + '" />';
-                str += '</div>';
+                str += '<div class="mip-share-icon mip-share-icon-' + obj.type + '"></div>';
                 str += '<div class="c-line-clamp1 c-gray">' + obj.title + '</div>';
             }
             str += '</span>';
@@ -203,27 +212,60 @@ define(function () {
             this.share();
         },
         share: function (cb) {
+
             var _this = this;
+
             var me = null;
-            $('.waui-yaohao-share-btn').off();
-            $('.waui-yaohao-share-btn').each(function (i) {
+
+            var hasCopy;
+
+            $('.mip-share-btn', this.container).off();
+            $('.mip-share-btn', this.container).each(function (i) {
                 me = $(this);
 
-                if (_this.list[i]) {
+                var handler = _this.list[i];
+
+                if (handler) {
+
+                    // 初始化复制
+                    if (handler.type == 'copylink') {
+
+                        new Clipboard(
+                            {
+                                el: me,
+                                text: _this.opt.linkUrl,
+                                success: function () {
+                                    handler.cb(_this.opt);
+                                    _this.logfn(handler, isBaidubox ? 0 : 1)
+                                },
+                                error: function () {
+                                    alert('复制失败');
+                                }
+                            }
+                        );
+
+                        return;
+
+                    }
+
                     me.on('click', function () {
                         if (isBaidubox) {
-                            _this.logfn(_this.list[i], 1);
+                            _this.logfn(handler, 1);
                         }
-                        _this.list[i].cb(_this.opt);
+                        handler.cb(_this.opt);
                     });
+
                     // 非手百，统计绑定到touchend上
                     if (!isBaidubox) {
                         me.on('touchend', function () {
-                            _this.logfn(_this.list[i], 0);
+                            _this.logfn(handler[i], 0);
                         });
                     }
+
+
                 }
             });
+
         }
     };
 
