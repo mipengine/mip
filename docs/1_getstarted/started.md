@@ -7,65 +7,39 @@ MIP（Mobile Instant Page）: 前端网页加速器，是一个构建web页面�
 - MIP JS
 - MIP Cache
 
-为了提高性能，**MIP HTML** 对基础的HTML做了一些限制，也进行了一些扩展，它能够在基础的HTML上构建更佳丰富的内容。**MIP JS**库是用来保证MIP HTML页面的快速渲染。**MIP Cache**用于MIP页面的高速缓存。
+为了提高页面的性能，MIP HTML 对HTML中的基础标签制定了一套规范，用来限制基础标签的使用，同时对其进行了功能扩展；使HTML能够展现更佳丰富的内容。MIP JS 库是用来保证 MIP HTML 页面的快速渲染。MIP Cache 用于MIP页面的高速缓存。
 
-### 1. MIP HTML
+## 1. MIP HTML
 
-**MIP HTML**用定制的MIP特性对基础的HTML进行了扩展，下面是一段最简单的MIP HTML代码示例：
+通过自定义MIP特性，**MIP HTML**用对HTML进行了扩展，下面是一段最简单的MIP HTML代码示例：
 
 ```
 <!DOCTYPE html>
-<html lang="zh">
+<html mip>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
         <link rel="stylesheet" type="text/css" href="//m.baidu.com/static/ala/sf/static/js/miphtml_e49a9cb.css">
-        <style>
-            /* 头部信息 */
-            .o-head-info {display: block;padding: 20px 17px 0;color: #6a6a6a;font-size: 13px; overflow: hidden;
-            }
-            /* 发布来源 */
-            .o-head-tag {
-                float: left;
-            }
-            /* 发布时间 */
-            .o-head-time {
-                float: right;
-            }
-            /* 文章大标题 */
-            .o-head-title h3 {
-                margin-top: 0;
-                line-height: 34px;
-                text-align: justify;
-                font-size: 22px;
-                color: #333;
-            }
-            /* 其他自定义样式（自己的样式写在这里，使用 o-page- 开头）*/
-            .o-page-test01 {
-                background: yellow;
-                font-style: italic;
-            }
-        </style>
     </head>
     <body>Hello World!</body>
     <script src="//www.baidu.com/nocache/zhixin/mip/miphtml_main_56aa51e.js"></script>   
 </html>
 ```
-**MIP HTML**页面中的标签有两种，一种是常规的HTML标签，另一种是替代常规标签的MIP特异性标签。MIP特异性标签叫做MIP组件，MIP组件的作用是提高页面的性能。
+MIP HTML 页面中的标签有两种，一种是常规的HTML标签，另一种是替代常规标签的MIP标签。MIP标签也叫做 MIP HTML 组件，它能在一定成都上提高页面的性能。
 
-例如，`mip-img`标签，及时在不支持响应式图片的浏览器中也能够完全支持响应式图片的srcset属性。
+例如，`mip-img`标签，它能使图片在需要时才进行加载，减少了页面渲染时间，节省了用户流量。
 
-### 2. MIP JS
+## 2. MIP JS
 
-**MIP JS**库能够管理资源的加载，并提供上面提到过的自定义MIP标签，用这种方式确保页面的快速渲染，提高页面的各个方面的性能。
+**MIP JS** 库能够管理资源的加载，并提供上面提到过的自定义MIP标签，用这种方式确保页面的快速渲染，提高页面的各个方面的性能。
 
-**MIP JS**最大的优点是，他能够异步加载所有外部资源，因此页面渲染不会被页面中的元素阻塞，从而提高了页面渲染的速度。
+**MIP JS** 最大的优点是，他能够异步加载所有外部资源，因此页面渲染不会被页面中的元素阻塞，从而提高了页面渲染的速度。
 
-**MIP JS**还包括所有iframe的沙盒、在资源加载之前提前计算出页面元素的布局以及禁用缓慢css选择器等技术性能。
+**MIP JS** 还包括所有iframe的沙盒、在资源加载之前提前计算出页面元素的布局以及禁用缓慢css选择器等技术性能。
 
 如果你不满足于只了解**MIP JS**的优点，可以通过阅读**MIP HTML**说明来充分了解MIP的优缺点。
 
-### 3. MIP CDN
+## 3. MIP CDN
 
 **MIP CDN**就是基于代理的内容分发网络（Content Delivery Network, CND），是用来提供所有的MIP文档的。它可以读取病缓存MIP HTML页面，并自动提升页面性能。在使用MIP Cache的时候，所有的文档，js文件都是通过HTTP2.0的最大效率从同一来源加载的。
 
