@@ -7,12 +7,17 @@
 支持布局|banner, noneIm.g, oneImg, moreIng 
 示例|  // 连接待定
 
-### 1. 使用
+## 1. 使用
 
 ```
-<mip-ad tpl="onlyImg" src="//m.baidu.com/s?word=百度" data-size="1242 180" data-img="//m.baidu.com/static/search/ala/ad_1.png" class="mip-element"><a href="//m.baidu.com/s?word=百度">
+<mip-ad 
+    tpl="onlyImg" 
+    src="//m.baidu.com/s?word=百度" 
+    data-size="1242 180" 
+    data-img="//m.baidu.com/static/search/ala/ad_1.png" 
+></mip-ad>
 ```
-### 2. 属性
+## 2. 属性
 
 - **tpl**
 
