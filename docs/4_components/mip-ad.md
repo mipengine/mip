@@ -4,18 +4,43 @@
 ----|----
 可用性|稳定
 所需脚本|mip-ad.js
-支持布局|banner, noneIm.g, oneImg, moreIng 
+支持布局|banner, noneImg, oneImg, moreImg 
 示例|  // 连接待定
 
 ## 1. 使用
 
 ```
+- banner
 <mip-ad 
-    tpl="onlyImg" 
+    tpl="banner" 
     src="//m.baidu.com/s?word=百度" 
     data-size="1242 180" 
-    data-img="//m.baidu.com/static/search/ala/ad_1.png" 
-></mip-ad>
+    data-img="//m.baidu.com/static/search/ala/ad_1.png" >
+</mip-ad>
+
+- 无图
+<mip-ad 
+    tpl="noneImg" 
+    src="//m.baidu.com/s?word=百度" 
+    data-size="1242 180" 
+    data-img="//m.baidu.com/static/search/ala/ad_1.png" >
+</mip-ad>
+
+- 单图
+<mip-ad 
+    tpl="oneImg" 
+    src="//m.baidu.com/s?word=百度" 
+    data-size="1242 180" 
+    data-img="//m.baidu.com/static/search/ala/ad_1.png" >
+</mip-ad>
+
+-多图
+<mip-ad 
+    tpl="moreImg" 
+    src="//m.baidu.com/s?word=百度" 
+    data-size="1242 180" 
+    data-img="//m.baidu.com/static/search/ala/ad_1.png" >
+</mip-ad>
 ```
 ## 2. 属性
 
