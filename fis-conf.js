@@ -104,3 +104,9 @@ fis.media('dev').match('*.{js,css,less}', {
     optimizer: null
 });
 
+
+fis.media('prod').match('*.{js,css,less}', {
+    useHash: false
+});
+
+
