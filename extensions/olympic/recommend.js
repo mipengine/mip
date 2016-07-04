@@ -13,28 +13,7 @@ define(function() {
     * 推荐模块
     */
     function render(data) {
-        //相关标签导流
-        if(data.recommend_tag && data.recommend_tag.length > 0) {
-            var keywordString = '';
-            var tpl = '<a class="recommends-keywords-href c-urljump" href="#{url}" data-urljump=\'#{urljump}\'>' +
-                        '<span>#{text}</span>' +
-                      '</a>';
-            for(var i in data.recommend_tag) {
-                keywordString += _.format(tpl, {
-                    url: data.recommend_tag[i].url,
-                    text: data.recommend_tag[i].query,
-                    urljump: JSON.stringify({
-                        t: 'mdd_k',
-                        lid: window.B ? B.comm.lid : 0
-                    })
-                });
-            }
-            $(".recommends").append(
-                '<div class="recommends-keywords">' +
-                keywordString +
-                '</div>'
-            );
-        }
+
         //相关推荐
         var recommendData = data.recommend ? data.recommend : data;
         var logClass = window.parent !== window ? '' : 'MIP_LOG_BTN';
