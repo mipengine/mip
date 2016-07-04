@@ -28,6 +28,16 @@ fis.match('src/miphtml_main.js', {
     release: 'miphtml_main.js'
 });
 
+fis.match('src/miphtml_olympic.js', {
+    useHash: true,
+    optimizer: fis.plugin('uglify-js', {
+        output : {
+            max_line_len : 500
+        }
+    }),
+    release: 'miphtml_olympic.js'
+});
+
 fis.match('src/mip_ad.js', {
     useHash: true,
     optimizer: fis.plugin('uglify-js', {
@@ -60,6 +70,16 @@ fis.match('mip-common.less', {
     }),
     release: 'miphtml.css'
 });
+
+fis.match('mip-olympic.less', {
+    useHash: true, // default is true
+    optimizer: fis.plugin('clean-css',{
+        keepBreaks : true
+    }),
+    release: 'miphtml_olympic.css'
+});
+
+
 fis.hook('amd', {
 });
 

@@ -73,15 +73,6 @@ define(function(require){
      */
     window.registerMipElement('mip-img',require('../buildins/mip-img'));
 
-    /*
-     * 注册mip-link组件
-     */
-    window.registerMipElement('mip-link', require('olympic/mip-link'));
-
-    /*
-     * 注册mip-share 组件
-     */
-    window.registerMipElement('mip-share', require('olympic/mip-share'));
 
     //页面初始化后，处理可视区域内元素
     $(function(){
