@@ -24,9 +24,9 @@ define(function() {
 
         new Share({
             title: this.getAttribute('title') || document.title,
-            url: this.getAttribute('url'),
-            content: this.getAttribute('content'),
-            iconUrl: this.getAttribute('icon')
+            url: this.getAttribute('url') || location.href,
+            content: this.getAttribute('content') || '',
+            iconUrl: this.getAttribute('icon') || ''
         }, $(this));
 
     }
