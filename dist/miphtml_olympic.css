@@ -1141,6 +1141,21 @@ header {
   font-size: 28px;
   opacity: 0.75;
 }
+.mip-img-popUp-wrapper {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+.mip-img-popUp-wrapper img {
+  position: absolute;
+}
+.mip-img-popUp-bg {
+  height: 100%;
+  background: #000;
+}
 .mip-html {
   line-height: 26px;
   font-size: 14px;
