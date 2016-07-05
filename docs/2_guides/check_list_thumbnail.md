@@ -206,7 +206,6 @@ mip html中具有强制性属性的标签及其强制性属性有：
 - **meta** 的直接父标签是 **head**
 - **style mip-custom** 的直接父标签是 **head**
 - **style** 的直接父标签是 **boilerplate**
-- **script** 的直接父标签是 **head**
 
 ### 8. 非法父级标签
 
