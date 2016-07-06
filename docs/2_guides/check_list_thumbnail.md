@@ -14,14 +14,14 @@
 
 |标签|备注|
 |---|---|
-|`<!doctype html>`||
-
-
-- `<html mip>`或`<html>`
+|`<!doctype html>`|不区分大小写|
+|`<html mip>`|不区分大小写|
+|`<head>`||
+|`<meta charset="utf-8">`| utf-8 不区分大小写|
 	 
-- `<head>`
+- 
 	 
-- `<meta charset="utf-8">`
+- 
 	 
 - `<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">`
 	 	 
