@@ -25,6 +25,10 @@ MIP主要由三部分组织成：
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
         <link rel="stylesheet" type="text/css" href="//m.baidu.com/static/ala/sf/static/js/miphtml_e49a9cb.css">
+        <!-- 在standard html中添加 -->
+        <link rel="miphtml" href="页面h5 url">
+		<!-- 在mip html中添加 -->
+        <link rel="standardhtml" href="页面h5 url">
     </head>
     <body>Hello World!</body>
     <script src="//www.baidu.com/nocache/zhixin/mip/miphtml_main_56aa51e.js"></script>   
