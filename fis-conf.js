@@ -21,8 +21,12 @@ fis.match('*.js', {
 fis.match('src/miphtml_main.js', {
     useHash: true,
     optimizer: fis.plugin('uglify-js', {
-        output : {
+        output: {
+            comments: /^!/,
             max_line_len : 500
+        },
+        mangle: {
+            except: 'exports, module, require, define'
         }
     }),
     release: 'miphtml_main.js'
@@ -31,8 +35,12 @@ fis.match('src/miphtml_main.js', {
 fis.match('src/miphtml_olympic.js', {
     useHash: true,
     optimizer: fis.plugin('uglify-js', {
-        output : {
+        output: {
+            comments: /^!/,
             max_line_len : 500
+        },
+        mangle: {
+            except: 'exports, module, require, define'
         }
     }),
     release: 'miphtml_olympic.js'
@@ -103,4 +111,10 @@ fis.media('dev').match('*.{js,css,less}', {
     useHash: false,
     optimizer: null
 });
+
+
+fis.media('prod').match('*.{js,css,less}', {
+    useHash: false
+});
+
 

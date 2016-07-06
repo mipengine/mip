@@ -1,3 +1,9 @@
+/*!
+ * MIP(Mobile page In Baidu)
+ *
+ * @copyright 2016 Baidu.com, Inc. All Rights Reserved
+ */
+
 __inline('./deps/jquery.js');
 __inline('./deps/esl.js');
 __inline('./deps/esl_config.js');
