@@ -1,4 +1,4 @@
-# mip-video 视频组件
+# mip-video 视频组件 （ToDo）
 
 描述|替换html5的video标签; 只用于能直接用HTML5播放的视频文件.
 ----|----

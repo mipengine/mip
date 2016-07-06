@@ -8,11 +8,13 @@ MIP组件有两种：基础组件和个性化组件。
     - 视频组件（mip-video）
     - mip-pix组件（mip-pix）
 
+
 - 扩展通用组件
 
     - 轮播组件（mip-carousel）
     - iframe组件（mip-iframe）
     - 广告组件（mip-ad）
+
 
 - 个性化组件
 	
