@@ -5,7 +5,7 @@ var config = {
       '2_guides':'教程',
       '3_reference':'规范和接口',
       '3_API':'接口文档',
-      '4_components':'组件及示例',
+      '4_components':'组件和示例',
       '5_support':'技术支持',
       '1_join_guied':'接入指南',
       '2_dev_guied':'开发指南',
