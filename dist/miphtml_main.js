@@ -590,7 +590,7 @@ define('viewport', ['require', 'observable', 'gesture'], function(require){
  * @version 1.0
  * @copyright 2015 Baidu.com, Inc. All Rights Reserved
  */
-define('mip', ['require', 'gesture', 'viewport', 'buildins/registerMipElement', 'buildins/mip-gif', 'buildins/mip-img'], function(require){
+define('mip', ['require', 'gesture', 'viewport', 'buildins/registerMipElement', 'buildins/mip-gif', 'buildins/mip-img', 'buildins/mip-carousel'], function(require){
     /**
     * 初始化相关JS
     */
@@ -658,6 +658,11 @@ define('mip', ['require', 'gesture', 'viewport', 'buildins/registerMipElement', 
      * 注册mip-img组件
      */
     window.registerMipElement('mip-img',require('buildins/mip-img'));
+
+    /*
+     * 注册mip-carousel组件
+     */
+    window.registerMipElement('mip-carousel',require('buildins/mip-carousel'));
 
 
     //页面初始化后，处理可视区域内元素
@@ -1535,20 +1540,12 @@ define('buildins/mip-img', ['utils/util', 'buildins/customElement'], function(ut
         var src = this.getAttribute('src');
         _img.src = src;
 
-        if(this.getAttribute('width')){
-            _img.setAttribute('width',this.getAttribute('width'));
-        }
-        if(this.getAttribute('height')){
-            _img.setAttribute('height',this.getAttribute('height'));
-        }
         if(this.getAttribute('alt')) {
             _img.setAttribute('alt', this.getAttribute('alt'));
         }
 
-        //this.appendChild(_img);
         this.insertBefore(_img, this.firstChild);
-
-        if (this.getAttribute('popup') !== null) {
+        if ($(this).attr('popup') === '' || $(this).attr('popup') === 'popup') {
             // 弹层dom
             var popUpDom = [
                 '<div class="mip-img-popUp-wrapper">',
@@ -1558,6 +1555,7 @@ define('buildins/mip-img', ['utils/util', 'buildins/customElement'], function(ut
             ].join('');
 
             var $img = $(_img);
+            var $mipImg = $(this);
 
             var $popUp = $(popUpDom).insertAfter($img);
             var $popUpBg = $popUp.find('.mip-img-popUp-bg');
@@ -1589,17 +1587,11 @@ define('buildins/mip-img', ['utils/util', 'buildins/customElement'], function(ut
                 // 图片原始宽高
                 var oWid = _img.width;
                 var oHei = _img.height;
-                // 用户设置的图片宽高
-                var uWid = $img.attr('width');
-                var uHei = $img.attr('height');
 
                 // 获取弹层中的图片最终需要的位置和大小
                 var info = getPopUpImgInfo({
                     oWid: oWid,
-                    oHei: oHei,
-                    uWid: uWid,
-                    uHei: uHei,
-                    $wrapper: $popUp
+                    oHei: oHei
                 });
 
                 // 页面原始图片当前的位置，弹层图片出现时需要与原始图片保持一致的大小和位置，营造一种原始图片弹出的效果
@@ -1645,23 +1637,15 @@ define('buildins/mip-img', ['utils/util', 'buildins/customElement'], function(ut
      */
     function getPopUpImgInfo(opt) {
         // 计算前图片的宽高 before width && before height
-        var bWid;
-        var bHei;
+        var bWid = +opt.oWid;
+        var bHei = +opt.oHei;
 
-        if (opt.uWid && opt.uHei) {
-            bWid = +opt.uWid;
-            bHei = +opt.uHei;
-        }
-        else {
-            bWid = +opt.oWid;
-            bHei = +opt.oHei;
-        }
-
+        var $win = $(window);
         // 计算后图片的宽高 after width && after height
-        var aWid = opt.$wrapper.width();
+        var aWid = $win.width();
         var aHei = Math.round(aWid * bHei / bWid);
 
-        var top = (opt.$wrapper.height() - aHei) / 2;
+        var top = ($win.height() - aHei) / 2;
 
         return {
             wid: aWid,
@@ -1766,267 +1750,148 @@ define('buildins/mip-pix', ['require', 'buildins/customElement'], function(requi
     return customElem;
 });
 ;
-define('buildins/mip-carousel', ['require', 'gesture'], function(require){
-    /**
-    * 说明,如果需要触发图片浏览，需要在对应图片上加data-carousel="carousel' 属性
-    * 在图片浏览模式打开时候，会触发：mip.carousel.open;在图片浏览模式关闭时候，会触发：mip.carousel.close
-    */
-    var index = 0;
-    var itemNum = 0;
-    var left = 0;
-    var screenWidth = $(window).width();
-    var perDistance = screenWidth;
-    var switchMinDist = 200;
-    var maxSlidDist = 0;
-    var curentLeft = 0;
-    var urlList = [];
-    var isDisplay = false;
-    var isRender = false;
-    var gesture = require('gesture');
+define('buildins/mip-carousel', ['require', 'buildins/customElement', 'gesture'], function(require){
+    var customElem = require('buildins/customElement');
 
-    /**
-    * 组件初始化工作
-    */
-    function init(url){
-        for(var i =0;i<urlList.length;i++){
-            if(urlList[i] == url){
-                index = i;
-                break;
-            } 
-        }
-        itemNum = urlList.length; 
-        maxSlidDist = perDistance * (itemNum - 1)
-        left = perDistance*index;
-
-        if($('.mip-img-box').length <= 0) {
-            $('body').append('<div class="mip-img-box" style="display:none">');
-        }
-
-        render();
-        $('.mip-img-box').attr("style",'display:block');
-        $('.box-item').each(function(){
-            this.style.width = perDistance + 'px';
-        });
-        $('.box-img-wrap img').each(function(){
-            this.style.width = perDistance + 'px';
-        });
-        moveTo(-1*index*perDistance,0);   
-        isDisplay = true;
-        $(window).trigger('mip.carousel.open');
-        gesture.init();
-        gesture.bind(bindGesture);
-    }
-
-    /*
-    * 初始化事件工作，组件require后，需要初始化数据
-    */
-
-    function initData(){
-        $('[data-carousel]').each(function(){
-            var src = this.getAttribute('src');
-            urlList.push(src);
-            $(this).on('click',function(){
-                var src = this.getAttribute('src');
-                init(src);
-            });
-        })
-    }
-
-    function render(){
-        var resultStr =  "";
-        for(var i=0; i<urlList.length;i++){
-            resultStr = resultStr + '<div class = "box-item"><div class="box-img-wrap"> <img src="'+ urlList[i] +'"> </div> </div>';
-        }
-        var renderStr = '<div class = "box-line"><div class = "box-container">' + resultStr + '</div></div>'+ '<div class="mip-box-page">'+(index+1)+'/'+itemNum+'</div>';
-        $('.mip-img-box').html(renderStr); 
-    }
-
-    function close(){
-        $('.mip-img-box').attr("style","display:none");
-        $(window).trigger('mip.carousel.close');
-        isDisplay = false;
-        gesture.unbind(bindGesture);
-    }
-
-    /*
-    * 左右移动函数，移动到对应的距离
-    */
-    function moveTo(x,y){
-        $('.box-container').attr('style','transform:translate3d('+x+'px, '+ y +'px, 0px);');
-        $('.box-container').attr('style','-webkit-transform:translate3d('+ x +'px, '+ y +'px, 0px);');
-    }
-
-    function positionTo(imgEle,x,y){
-        imgEle.style.top = x+'px';
-        imgEle.style.left = y+'px';
-    }
-/**
- * 拖动
- * */
-    function dragTo(event,data){
-        var ele = event.srcElement;
-        if(data.x>0 && data.x < x){
-           ele.style.left = -1*(x - data.x)+'px';
-           return true;
-        }else{
-            if(data.x <0 &&(Math.abs(data.x)+x+srcWidth)<startWidth){
-                ele.style.left = (-1*x + data.x)+'px';
-                return true;
-            }else {
-                return false;
-            }
-        }
-    }
-    /*
-    *  处理左右滑动，切换图片
-    */
-
-    function switchItem(data,event){
-        if(data.event == 'touchmove'){
-            var ele = event.srcElement;
-            var distance = (-1 * data.x) + left;
-            if(distance > -perDistance && distance < maxSlidDist + perDistance){
-                moveTo(-1*distance,0);
-                var ele = event.srcElement;
-                if(srcWidth !=0){
-                    resetStaus(ele);
-                    srcWidth = 0;
-                }
-            }
-        }else if(data.event == 'touchend'){
-            if(Math.abs(data.x) < 10){
-                close(); 
-            } 
-            if(Math.abs(data.x) > switchMinDist && left >= 0 && left <= maxSlidDist){
-                if(data.x > 0 && left !=0){
-                    left = left - perDistance;
-                }else if(data.x <0 && left != maxSlidDist){
-                    left = left + perDistance;
-                }
-            }
-            var num = Math.abs(left/perDistance);
-            moveTo(-1*left,0);
-            $('.mip-box-page').html((num+1)+"/"+itemNum);
-        }
-        event.stopPropagation();
-        event.preventDefault();
-
-    }
-    /*
-    * 获取触摸移动距离，
-    *dist: 2点间距离，x、y为横坐标、纵坐标移动距离
-    */
-    function calTouchDist(e) {
-        var x1 = 0,
-        y1 = 0,
-        x2 = 0,
-        y2 = 0,
-        x3 = 0,
-        y3 = 0,
-        result = {};
-        x1 = e.touches[0].pageX;
-        x2 = e.touches[1].pageX;
-        y1 = e.touches[0].pageY - document.body.scrollTop;
-        y2 = e.touches[1].pageY - document.body.scrollTop;
-        if (!x1 || !x2) return;
-        if (x1 <= x2) {
-            x3 = (x2 - x1) / 2 + x1;
-        } else {
-            x3 = (x1 - x2) / 2 + x2;
-        }
-        if (y1 <= y2) {
-            y3 = (y2 - y1) / 2 + y1;
-        } else {
-            y3 = (y1 - y2) / 2 + y2;
-        }
-        result = {
-            dist: Math.round(Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2))),
-            x: Math.round(x3),
-            y: Math.round(y3)
-        };
-        return result;
-
-    }
-    /*
-    * 重置放到的缩放状态
-    */
-    function resetStaus(ele){
-        ele.style.width = srcWidth+"px";
-        ele.style.left = "0";
-        ele.style.top = "0";
-    }
-
-    /*
-    * 缩放服务
-    */
-    var startDist = {};
-    var startWidth = 0;
-    var srcWidth = 0;
-    var srcHeight = 0;
-    var startHeight = 0;
-    var x = 0;
-    var y = 0;
-    var isZoom = false;
-    var maxZoomNum = 2;
-
-    function zoom(data,event){
-        if(data.event == "touchstart"){
-            isZoom = true;
-            startDist = calTouchDist(event);
-            var ele = event.srcElement;
-            startWidth = ele.clientWidth;
-            startHeight = ele.clientHeight;
-            if(srcWidth ==0){
-                srcWidth = startWidth;
-                srcHeight = startHeight;
-            }
-        }
-        if(data.event == "touchmove"){
-            var ele = event.srcElement;
-            var moveDist = calTouchDist(event);
-            var ratio = moveDist.dist/startDist.dist;
-            var newWidth = Math.round(ratio * startWidth);
-            var newHeight = Math.round(ratio * startHeight);
-
-            if(newWidth < srcWidth || newWidth > srcWidth*maxZoomNum){
-                return; 
-            }
-             
-            x = (newWidth - srcWidth)/2;
-           console.log(startDist);
-           console.log(ratio);
-            ele.style.left = -1* x + 'px';
-            ele.style.width = newWidth+"px";
-        }
-        if(data.event =="touchend"){
-            if(event.targetTouches.length == 0){
-                isZoom = false;
-            }
-            var ele = event.srcElement;
-            startWidth = ele.clientWidth;
-        }
-        event.preventDefault();
-        event.stopPropagation();
-    }
-
-    /*
-    * 手势识别统一处理
-    */
-
-    function bindGesture(event,data){
-        if(!isDisplay){
+    var build = function () {
+        // 避免多次渲染
+        if(this.isRender){
             return; 
         }
-        if(event.targetTouches.length>1 || isZoom == true){
-            zoom(data,event); 
-        }else{
-            switchItem(data,event);
-        } 
+        this.isRender = true;
 
-    }
-    return{
-        initData:initData
-    }
+        var $this = $(this);
+
+        // 如果子节点少于2个，则不需要轮播
+        var $childs = $this.children();
+        if ($childs.length < 2) {
+            return;
+        }
+
+        // 当前展示的图片序号
+        var currentIndex = 0;
+
+        // 被隐藏的图片的left属性值
+        var HIDE_LEFT = -9999;
+
+        // 轮播动画时长
+        var DURATION = 800;
+
+        // 轮播思路：轮播只涉及2张图片，分别是当前图片和下一张要出现的图片，把下一张图片放到当前图片的前面或者后面，
+        //         然后移动到当前图片的位置，其余不涉及的图片全部设置left:-9999px，具体可以看效果
+        $childs.css({
+            'position': 'absolute',
+            'left': HIDE_LEFT,
+            'top': 0,
+        });
+        $childs.eq(currentIndex).css('left', 0);
+
+        // 如果mip-carousel里子节点是mip-img，并且mip-img弹出了浮层
+        var isMipImgPop = false;
+
+        /**
+         * 切换图片函数
+         *
+         * @param  {Boolean} forward 前进(true)或者后退(false)
+         *
+         * @return {Object}         Deferred/Promise对象
+         */
+        var switchItem = function (forward) {
+            var index = forward ? (currentIndex + 1) : (currentIndex - 1);
+            if (index < 0) {
+                index = $childs.length - 1;
+            }
+            else if (index >= $childs.length) {
+                index = 0;
+            }
+            // 图片占据的一屏宽度
+            var perWid = $this.width();
+            var left = (forward ? 1 : -1) * perWid;
+            $childs.filter(function (i) {
+                return (i !== currentIndex && i !== index);
+            }).css('left', HIDE_LEFT);
+            $childs.css({
+                'display': 'inline-block',
+                'opacity': 1,
+                'z-index': 1
+            });
+            $childs.eq(index).css({
+                'left': left,
+                'z-index': 2
+            });
+            var def = $.Deferred();
+            $childs.eq(index).animate({
+                left: 0
+            }, DURATION, function () {
+                currentIndex = index;
+                isMipImgPop ? def.reject() : def.resolve();
+            });
+            $childs.eq(currentIndex).fadeOut(DURATION);
+            return def.promise();
+        };
+
+        // 是否需要自动轮播
+        var autoTimer;
+
+        function autoPlay(time) {
+            autoTimer = setTimeout(function () {
+                switchItem(true).then(function () {
+                    autoPlay(time);
+                });
+            }, time);
+        }
+
+        var defer;
+        var isAutoPlay = false;
+        if ($this.attr('autoplay') === 'autoplay' || $this.attr('autoplay') === '') {
+            if (typeof +this.getAttribute('defer') === 'number') {
+                defer = +this.getAttribute('defer');
+            }
+            else {
+                defer = 2000;
+            }
+            isAutoPlay = true;
+            autoPlay(defer);
+        }
+
+        var gesture = require('gesture');
+        gesture.init();
+        gesture.bind(function (evt, data) {
+            // 用户手指滑动结束且手势为横向滑动
+            if (data.event === 'touchend' && Math.abs(data.x) > Math.abs(data.y)) {
+                autoTimer && clearTimeout(autoTimer);
+                // 向右滑（上一张）or 向左滑(下一张)
+                var forward = !(data.x > 0);
+                switchItem(forward).then(function () {
+                    if (isAutoPlay) {
+                        autoPlay(defer);
+                    }
+                });
+            }
+        });
+
+        if (isAutoPlay) {
+            $this.delegate('mip-img', 'click', function () {
+                if ($(this).attr('popup') === 'popup' || $(this).attr('popup') === '') {
+                    autoTimer && clearTimeout(autoTimer);
+                    isMipImgPop = true;
+                }
+            });
+
+            $this.delegate('.mip-img-popUp-wrapper', 'click', function () {
+                autoPlay(defer);
+                isMipImgPop = false;
+                return false;
+            });
+        }
+
+    };
+
+    customElem.prototype.init = function () {
+        this.build = build;
+    };
+
+    return customElem;
 });
 ;
 ;
