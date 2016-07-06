@@ -10,20 +10,12 @@ define(['../src/utils/util'], function(util){
         var src = this.getAttribute('src');
         _img.src = src;
 
-        if(this.getAttribute('width')){
-            _img.setAttribute('width',this.getAttribute('width'));
-        }
-        if(this.getAttribute('height')){
-            _img.setAttribute('height',this.getAttribute('height'));
-        }
         if(this.getAttribute('alt')) {
             _img.setAttribute('alt', this.getAttribute('alt'));
         }
 
-        //this.appendChild(_img);
         this.insertBefore(_img, this.firstChild);
-
-        if (this.getAttribute('popup') !== null) {
+        if ($(this).attr('popup') === '' || $(this).attr('popup') === 'popup') {
             // 弹层dom
             var popUpDom = [
                 '<div class="mip-img-popUp-wrapper">',
@@ -33,6 +25,7 @@ define(['../src/utils/util'], function(util){
             ].join('');
 
             var $img = $(_img);
+            var $mipImg = $(this);
 
             var $popUp = $(popUpDom).insertAfter($img);
             var $popUpBg = $popUp.find('.mip-img-popUp-bg');
@@ -64,17 +57,11 @@ define(['../src/utils/util'], function(util){
                 // 图片原始宽高
                 var oWid = _img.width;
                 var oHei = _img.height;
-                // 用户设置的图片宽高
-                var uWid = $img.attr('width');
-                var uHei = $img.attr('height');
 
                 // 获取弹层中的图片最终需要的位置和大小
                 var info = getPopUpImgInfo({
                     oWid: oWid,
-                    oHei: oHei,
-                    uWid: uWid,
-                    uHei: uHei,
-                    $wrapper: $popUp
+                    oHei: oHei
                 });
 
                 // 页面原始图片当前的位置，弹层图片出现时需要与原始图片保持一致的大小和位置，营造一种原始图片弹出的效果
@@ -120,23 +107,15 @@ define(['../src/utils/util'], function(util){
      */
     function getPopUpImgInfo(opt) {
         // 计算前图片的宽高 before width && before height
-        var bWid;
-        var bHei;
+        var bWid = +opt.oWid;
+        var bHei = +opt.oHei;
 
-        if (opt.uWid && opt.uHei) {
-            bWid = +opt.uWid;
-            bHei = +opt.uHei;
-        }
-        else {
-            bWid = +opt.oWid;
-            bHei = +opt.oHei;
-        }
-
+        var $win = $(window);
         // 计算后图片的宽高 after width && after height
-        var aWid = opt.$wrapper.width();
+        var aWid = $win.width();
         var aHei = Math.round(aWid * bHei / bWid);
 
-        var top = (opt.$wrapper.height() - aHei) / 2;
+        var top = ($win.height() - aHei) / 2;
 
         return {
             wid: aWid,

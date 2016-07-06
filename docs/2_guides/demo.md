@@ -3,13 +3,13 @@
 * 引入css样式
 
 ```
-<link type="text/css" rel="stylesheet" href="//m.baidu.com/static/ala/sf/static/css/miphtml_4613619.css">
+<link type="text/css" rel="stylesheet" href="//m.baidu.com/static/ala/sf/static/css/miphtml_xxxxxx.css">
 ```
 
 * 引入js组件（已包含jq、amd）
 
 ```
-<script src="//m.baidu.com/static/ala/sf/static/js/miphtml_main_3fe4ed9.js"></script>
+<script src="//m.baidu.com/static/ala/sf/static/js/miphtml_main_xxxxxx.js"></script>
 ```
 
 * 一个完整的例子

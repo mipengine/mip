@@ -1156,6 +1156,13 @@ header {
   height: 100%;
   background: #000;
 }
+mip-img {
+  width: 100%;
+}
+mip-carousel {
+  position: relative;
+  width: 100%;
+}
 .mip-html {
   line-height: 26px;
   font-size: 14px;
