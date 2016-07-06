@@ -14,11 +14,18 @@ MIP页面会有严格的规范校验，不允许存在任何校验不通过的�
 
 在MIP HTML中，强制性标签包括：
 
-|提示|MANDATORY_TAG_MISSING|
+|说明|备注|
 |---|---|
-|&lt; link rel="stylesheet" type="text/css" href="//m.baidu.com/static/ala/sf/static/css/miphtml_xxxxxx.css" &gt; |xxx会根据版本不同而不同|
-
-- `<!doctype html>`
+|&lt;!doctype html&gt; | 强制小写|
+|&lt;html mip&gt; |强制小写|
+|&lt;head&gt; |强制小写|
+|&lt;meta charset="utf-8"&gt; |utf-8不区分大小写，无单引号或者双引号限制|
+|&lt;meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1"&gt; |强制小写，无单引号或者双引号限制|
+|&lt; link rel="stylesheet" type="text/css" href="//m.baidu.com/static/ala/sf/static/css/miphtml_xxxxxx.css" &gt; |强制小写，无单引号或者双引号限制，xxx会根据版本不同而不同|
+|&lt;script src="//m.baidu.com/static/ala/sf/static/js/miphtml_main_xxxxxx.js"&gt;&lt;/script&gt; |强制小写，无单引号或者双引号限制，xxx会根据版本不同而不同|
+|&lt;body&gt; ||
+强制小写
+<!-- - ``
 - `<html mip>`
 - `<head>`
 - `<meta charset="utf-8">`
@@ -36,9 +43,9 @@ MIP页面会有严格的规范校验，不允许存在任何校验不通过的�
 2. charset属性utf-8可以小写，也可以大写成UTF-8<br>
 3. 其他强制小写<br>
 4. 无单引号或者双引号限制（单引号或者双休引号均可）<br>
-5. 属性无顺序要求
+5. 属性无顺序要求 -->
 
-</font>
+<!-- </font> -->
 
 ### 2. 禁用标签
 
