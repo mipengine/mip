@@ -1,4 +1,4 @@
-# MIP 校验list（正在使用）
+# MIP 校验list
 
 ## MIP HTML 标签和属性错误
 
@@ -62,7 +62,6 @@
 - embed
 - form
 - input
-- input
 - textarea
 - select
 - option
@@ -109,7 +108,7 @@ audio|mip-audio（暂未开放）
     - 如果不支持https适用百度提供的https代理，url中带t={TIME}&title={TITLE}&host={HOST}&from=baidu"
 
 - mip-ad
-    - tpl：banner, onlyImg, noneImg, moreImg(只能是这三个)
+    - tpl：onlyImg, noneImg, oneImg, moreImg(只能是这三个)
     - src：必须是url
     - data-size："1242 180", 两个数字中间用空格隔开
     - data-img：必须是url
