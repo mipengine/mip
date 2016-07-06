@@ -12,7 +12,11 @@ var config = {
       '3_frame_guied':'框架基础',
       '1_dev_card': '卡片开发',
       '2_dev_service': '应用服务开发',
-      '3_dev_act':'JS模块开发'
+      '3_dev_act':'JS模块开发',
+      '2_buildin':'内置组件',
+      '3_extensions': '扩展通用组件',
+      '4_customize': '个性化组件',
+      '5_advertisement': '广告组件'
     }
 };
 var fs = require('fs'),
