@@ -22,6 +22,10 @@
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
     <title>MIP DEMO</title>
     <link rel="stylesheet" href="//m.baidu.com/static/ala/sf/static/css/miphtml_4613619.css">
+    <!-- 在standard html中添加 -->
+    <link rel="miphtml" href="页面h5 url">
+    <!-- 在mip html中添加 -->
+    <link rel="standardhtml" href="页面h5 url">
 </head>
 <body>
     <p class="mip-text">这是一个段落，纯文本形式</p>
