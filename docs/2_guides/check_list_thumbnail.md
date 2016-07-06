@@ -18,11 +18,7 @@
 |`<html mip>`|强制小写|
 |`<head>`|强制小写|
 |`<meta charset="utf-8">`| utf-8 不区分大小写，无单引号或者双引号限制（单引号或者双休引号均可）|	 
-|```
-   <meta name="viewport" 
-   content="width=device-width,minimum-scale=1,initial-scale=1">
- ```
-|强制小写，无单引号或者双引号限制（单引号或者双休引号均可）|
+|`<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">`|强制小写，无单引号或者双引号限制（单引号或者双休引号均可）|
 |`<link rel="stylesheet" type="text/css" href="//m.baidu.com/static/ala/sf/static/css/miphtml_xxxxxx.css">`|xxx会根据版本不同而不同，无单引号或者双引号限制（单引号或者双休引号均可）|
 |`<script src="//m.baidu.com/static/ala/sf/static/js/miphtml_main_xxxxxx.js"></script>`|xxx会根据版本不同而不同，无单引号或者双引号限制（单引号或者双休引号均可）|
 |`<body>`|强制小写，无单引号或者双引号限制（单引号或者双休引号均可）|
