@@ -1,4 +1,4 @@
-# mip-carousel图片组件
+# mip-carousel轮播组件
 
 描述|用自定义的mip-carousel标签实现了子节点的轮播效果
 ----|----
