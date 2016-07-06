@@ -1,5 +1,5 @@
 /*!
- * MIP(Mobile page In Baidu)
+ * MIP(Mobile Instant Page)
  *
  * @copyright 2016 Baidu.com, Inc. All Rights Reserved
  */
