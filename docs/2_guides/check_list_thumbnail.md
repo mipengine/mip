@@ -12,7 +12,10 @@
 
 在MIP HTML中，强制性标签包括：
 
-- `<!doctype html>`
+|标签|备注|
+|---|---|
+|`<!doctype html>`||
+
 
 - `<html mip>`或`<html>`
 	 
