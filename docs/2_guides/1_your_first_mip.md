@@ -58,7 +58,7 @@ MIP HTML 是web页面，页面中的任何元素的样式都可以通过普通�
 </style>
 ```
 
-需要注意的是：每个 MIP HTML 页面只允许有一个嵌入的css样式，并且`<style>` 标签需要标记自定义样式，即写成 `<style mip-custo>`。
+需要注意的是：每个 MIP HTML 页面只允许有一个嵌入的css样式，并且`<style>` 标签需要标记自定义样式，即写成 `<style mip-custom>`。
 
 ### 2)控件的布局
 

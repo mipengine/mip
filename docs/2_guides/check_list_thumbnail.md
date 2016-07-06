@@ -1,5 +1,7 @@
 # MIP 校验list
 
+MIP页面会有严格的规范校验，不允许存在任何校验不通过的问题存在，本文档意在帮助开发者找到校验的内容和规则，快速定位校验不通过的原因
+
 ## MIP HTML 标签和属性错误
 
 ### 1. 缺少强制性标签
@@ -12,22 +14,18 @@
 
 在MIP HTML中，强制性标签包括：
 
-- `<!doctype html>`
+|提示|MANDATORY_TAG_MISSING|
+|---|---|
+|&lt; link rel="stylesheet" type="text/css" href="//m.baidu.com/static/ala/sf/static/css/miphtml_xxxxxx.css" &gt; |xxx会根据版本不同而不同|
 
-- `<html mip>`或`<html>`
-	 
+- `<!doctype html>`
+- `<html mip>`
 - `<head>`
-	 
 - `<meta charset="utf-8">`
-	 
 - `<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">`
-	 	 
-- `<link rel="stylesheet" type="text/css" href="//m.baidu.com/static/ala/sf/static/css/miphtml_xxxxxx.css">`xxx会根据版本不同而不同
-	 
+- &lt; link rel="stylesheet" type="text/css" href="//m.baidu.com/static/ala/sf/static/css/miphtml_xxxxxx.css" $gt; xxx会根据版本不同而不同
 - `<script src="//m.baidu.com/static/ala/sf/static/js/miphtml_main_xxxxxx.js"></script>`xxx会根据版本不同而不同
-	 
 - `<body>`
-	 
 - 也就是说上述标签如果缺失或者错误需要给出提示，并且校验不能通过。
 
 <font color="red">
