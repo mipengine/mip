@@ -25,6 +25,10 @@ MIP主要由三部分组织成：
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
         <link rel="stylesheet" type="text/css" href="//m.baidu.com/static/ala/sf/static/js/miphtml_e49a9cb.css">
+        <!-- 在standard html中添加 -->
+        <link rel="miphtml" href="页面h5 url">
+		<!-- 在mip html中添加 -->
+        <link rel="standardhtml" href="页面h5 url">
     </head>
     <body>Hello World!</body>
     <script src="//www.baidu.com/nocache/zhixin/mip/miphtml_main_56aa51e.js"></script>   
@@ -43,6 +47,6 @@ MIP HTML 页面中的标签有两种，一种是常规的HTML标签，另一种�
 
 ### 3. MIP Cache
 
-**MIP Cache** 用来缓存mip页面。用户在访问 MIP 页面的时候，会先从 MIP Cache 中查询，如果有则直接展现，如果没有再向服务器发请求。在使用MIP Cache 时，所有的静态文件，外部资源都会被缓存，并且转换为相对地址，很大程度上提升了页面渲染速度。每一个MIP页面都会绑定一个验证系统，在页面进行渲染时，这种验证器可以直接在浏览器控制台中输出页面的错误；并且随着代码逻辑的变化，向你展示其对页面性能以及用户体验的影响。
+**MIP Cache** 是通过 CDN(Content Delivery Network) 服务器缓存 MIP 页面的。用户在访问 MIP 页面的时候，请求首先会发到 CDN 服务器，如果页面存在，则从CDN返回，如果 CDN 上不存在，则会请求第三方服务器。同时 MIP Cache 服务器会抓取页面缓存到CDN上。在使用 MIP Cache 时，MIP 页面所需要的所有的静态文件和外部资源都会被缓存到 CDN 上，并且页面中的资源链接会被转换为相对地址，很大程度上提升了页面渲染速度。每一个 MIP 页面都会绑定一个验证系统，在页面进行渲染时，这种验证器可以直接在浏览器控制台中输出页面的错误；并且随着代码逻辑的变化，能够展示其对页面性能以及用户体验的影响。
 
 

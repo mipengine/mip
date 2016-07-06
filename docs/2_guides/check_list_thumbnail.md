@@ -1,4 +1,6 @@
-# MIP 校验list（正在使用）
+# MIP 校验list
+
+MIP页面会有严格的规范校验，不允许存在任何校验不通过的问题存在，本文档意在帮助开发者找到校验的内容和规则，快速定位校验不通过的原因
 
 ## MIP HTML 标签和属性错误
 
@@ -12,35 +14,16 @@
 
 在MIP HTML中，强制性标签包括：
 
-- `<!doctype html>`
-
-- `<html mip>`或`<html>`
-	 
-- `<head>`
-	 
-- `<meta charset="utf-8">`
-	 
-- `<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">`
-	 	 
-- `<link rel="stylesheet" type="text/css" href="//m.baidu.com/static/ala/sf/static/css/miphtml_xxxxxx.css">`xxx会根据版本不同而不同
-	 
-- `<script src="//m.baidu.com/static/ala/sf/static/js/miphtml_main_xxxxxx.js"></script>`xxx会根据版本不同而不同
-	 
-- `<body>`
-	 
-- 也就是说上述标签如果缺失或者错误需要给出提示，并且校验不能通过。
-
-<font color="red">
-	 
-**注意**：
-	 
-1. 上述强制标签没有顺序或者位置的要求<br>
-2. charset属性utf-8可以小写，也可以大写成UTF-8<br>
-3. 其他强制小写<br>
-4. 无单引号或者双引号限制（单引号或者双休引号均可）<br>
-5. 属性无顺序要求
-
-</font>
+|说明|备注|
+|---|---|
+|&lt;!doctype html&gt; | 强制小写|
+|&lt;html mip&gt; |强制小写|
+|&lt;head&gt; |强制小写|
+|&lt;meta charset="utf-8"&gt; |utf-8不区分大小写，无单引号或者双引号限制|
+|&lt;meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1"&gt; |强制小写，无单引号或者双引号限制|
+|&lt; link rel="stylesheet" type="text/css" href="//m.baidu.com/static/ala/sf/static/css/miphtml_xxxxxx.css" &gt; |强制小写，无单引号或者双引号限制，xxx会根据版本不同而不同|
+|&lt;script src="//m.baidu.com/static/ala/sf/static/js/miphtml_main_xxxxxx.js"&gt;&lt;/script&gt; |强制小写，无单引号或者双引号限制，xxx会根据版本不同而不同|
+|&lt;body&gt; |强制小写|
 
 ### 2. 禁用标签
 
@@ -61,7 +44,6 @@
 - applet
 - embed
 - form
-- input
 - input
 - textarea
 - select
@@ -109,7 +91,7 @@ audio|mip-audio（暂未开放）
     - 如果不支持https适用百度提供的https代理，url中带t={TIME}&title={TITLE}&host={HOST}&from=baidu"
 
 - mip-ad
-    - tpl：banner, onlyImg, noneImg, moreImg(只能是这三个)
+    - tpl：onlyImg, noneImg, oneImg, moreImg(只能是这三个)
     - src：必须是url
     - data-size："1242 180", 两个数字中间用空格隔开
     - data-img：必须是url
