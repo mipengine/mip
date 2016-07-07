@@ -78,6 +78,11 @@ define(function(require){
      */
     window.registerMipElement('mip-carousel',require('../buildins/mip-carousel'));
 
+    /*
+     * 注册mip-iframe组件
+     */
+    window.registerMipElement('mip-iframe',require('../buildins/mip-iframe'));
+
 
     //页面初始化后，处理可视区域内元素
     $(function(){

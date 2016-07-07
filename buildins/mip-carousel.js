@@ -37,6 +37,9 @@ define(function(){
         // 如果mip-carousel里子节点是mip-img，并且mip-img弹出了浮层
         var isMipImgPop = false;
 
+        // 当前是否处于轮播动画中
+        var isAnimating = false;
+
         /**
          * 切换图片函数
          *
@@ -59,7 +62,7 @@ define(function(){
                 return (i !== currentIndex && i !== index);
             }).css('left', HIDE_LEFT);
             $childs.css({
-                'display': 'inline-block',
+                'display': 'block',
                 'opacity': 1,
                 'z-index': 1
             });
@@ -68,11 +71,13 @@ define(function(){
                 'z-index': 2
             });
             var def = $.Deferred();
+            isAnimating = true;
             $childs.eq(index).animate({
                 left: 0
             }, DURATION, function () {
                 currentIndex = index;
                 isMipImgPop ? def.reject() : def.resolve();
+                isAnimating = false;
             });
             $childs.eq(currentIndex).fadeOut(DURATION);
             return def.promise();
@@ -105,8 +110,8 @@ define(function(){
         var gesture = require('gesture');
         gesture.init();
         gesture.bind(function (evt, data) {
-            // 用户手指滑动结束且手势为横向滑动
-            if (data.event === 'touchend' && Math.abs(data.x) > Math.abs(data.y)) {
+            // 用户手指滑动结束且手势为横向滑动且当前不处于动画播放状态
+            if (data.event === 'touchend' && Math.abs(data.x) > Math.abs(data.y) && !isAnimating) {
                 autoTimer && clearTimeout(autoTimer);
                 // 向右滑（上一张）or 向左滑(下一张)
                 var forward = !(data.x > 0);
