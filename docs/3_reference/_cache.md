@@ -79,6 +79,16 @@
 
 ```
 
+## 页面强制不使用mip cache
+
+需在head中添加
+
+```
+
+<meta property="mip:use_cache" content="no">
+
+```
+
 
 
 

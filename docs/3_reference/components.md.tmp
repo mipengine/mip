@@ -32,7 +32,7 @@
 │   ├── grid #栅格
 │   └── mip-common.less #mip base css
 ├── docs #说明文档
-└── renderDoc.js #文档结构生成代码
+└── assets #docs依赖文件
 ```
 
 ## 步骤
