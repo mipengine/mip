@@ -39,34 +39,24 @@
 
 ### 1、 [新建需求ISUUE](http://gitlab.baidu.com/MIP/mipmain/issues)
 
+        注：外部合作伙伴前期有mip开发小组成员代为建立
+
 ### 2、 通过MIP开发小组审核，确认组件类型后进入开发阶段
 
 ### 3、 若无权限，需申请权限（mailto:lilangbo@baidu.com/shenzhou@baidu.com）
 
-### 4、 clone代码库 git clone ssh://g@gitlab.baidu.com:8022/MIP/mipmain.git
+### 4、 clone代码库 git clone ssh://g@gitlab.baidu.com:8022/MIP/mipmain.git 
+        
+        注：外部合作伙伴前期提供代码包的形式合作，后期有开源计划
 
 ### 5、 环境准备
 
 #### 编译环境
 
-依赖fis3，需要插件`fis3-hook-module`、`fis-parse-less`
+依赖node和npm
 
-```
-npm install -g fis3
-npm install -g fis3-hook-module
-npm install -g fis-parse-less
-```
+root目录下直接执行 node install.js 完成环境依赖安装（todo 7.12号ready）
 
-注：公司内网服务器，没有外网权限安装fis3的方法
-
-```
-1. 安装nodejs：jumbo安装nodejs（如果不知道，babel.baidu.com搜索一下）
-2. npm config set registry http://registry.npm.baidu.com
-    文档http://npm.baidu.com/
-    如有问题尝试如下备用镜像：
-    http://db-bldev.db01.baidu.com:8282/
-    文档：http://pip.baidu.com/
-```
 
 ### 6、根据组件类型到相应js目录下开发源码
 
@@ -82,9 +72,13 @@ js目录下：
     
     个性化： 
         
-        增加 personalDirectoryName.js（注册 后面有示例） 
+        #增加 personalDirectoryName.js（注册 后面有示例）
 
         组件.js 
+
+        组件.less  
+
+        组件.md  #组件说明文档
 
     内置、扩展：
 
@@ -94,15 +88,10 @@ js目录下：
 
         src/mip.js 注册组件
 
-less目录下：
-    
-    个性化：
-        
-        personalDirectoryName/组件.less  
-           
-        personalDirectoryName/personalDirectoryName.less (后面有示例)
-    
-    内置、扩展：组件.less  mip-common.less(注册)
+        less/组件.less  mip-common.less 注册
+
+    注: 注册需要考虑用脚本直接搞定 todo
+
 
 
 ### 编译
@@ -119,6 +108,13 @@ make dev
 # todo 个性化编辑：2016.7.12 ready
 ```
 
+### 上线
+
+走上线版本，每周三20点前准备版本代码，周四发版
+
+## 版本控制
+
+初始1（重大升级扩展）.0(功能扩展).0（bug fix），分别对应的情况进行相应升级
 
 
 
