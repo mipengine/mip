@@ -1919,7 +1919,6 @@ define('buildins/mip-iframe', ['require', 'buildins/customElement'], function (r
         }
         this.isRender = true;
         var $this = $(this);
-        console.log($this.attr('sandbox'));
         // 获取src属性的值，如果用户传递了srcdoc，则将src内容转为base64编码用于iframe的src
         var src = $this.attr('src');
         if ($this.attr('srcdoc')) {
