@@ -160,9 +160,3 @@ require(['mip'], function () {
 @import 'mip-share.less';
 @import 'mip-recommend.less';
 ```
-
-## roadmap
-
-—— 编译支持grunt
-
-—— 做js拆分，支持轻量级js，提供comb
