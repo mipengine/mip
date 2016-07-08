@@ -33,7 +33,10 @@ var check = (function() {
 				return "The tag " + tag + " is disallowed.";
 				break;
 			case '06200201':
-				return "The tag " + tag + " appears more than once in the document."
+				return "The tag " + tag + " appears more than once in the document.";
+				break;
+			case '06200801':
+				return "The page " + tag + " is used to forbid mip cache"
 		}
 		
 	}
@@ -427,15 +430,35 @@ var check = (function() {
 		}
 	}
 
+	function cache_forbiden() {
+
+		var _STATUS = '06200801';
+		var _TIPS ='CACHE_FORBIDEN';
+		var error_info = [];
+		var index = 0;
+		var selector = 'meta[property="mip:use_cache"]';
+		var cache_meta = document.querySelector(selector);
+
+		if(cache_meta && cache_meta.getAttribute('content') === 'no') {
+			error_info.push(getErrorInfo(_STATUS, selector));
+		}
+
+		if(error_info.length) {
+			response_data.status = _STATUS;
+			response_data.errors.duplicate_unique_tag.error_info = error_info;
+		}
+	}
+
 	function init() {
-		mandatory_tag_missing()
-		disallowed_tag()
-		invalid_attr_value()
-		invalid_property_value_in_attr_value()
-		mandatory_oneof_attr_missing()
-		wrong_parent_tag()
-		duplicate_unique_tag()
-		console.error(response_data)	
+		mandatory_tag_missing();
+		disallowed_tag();
+		invalid_attr_value();
+		invalid_property_value_in_attr_value();
+		mandatory_oneof_attr_missing();
+		wrong_parent_tag();
+		duplicate_unique_tag();
+		cache_forbiden();
+		console.error(response_data);	
 	}
 	init()
 })();  

@@ -55,7 +55,7 @@
 
 依赖node和npm
 
-root目录下直接执行 node install.js 完成环境依赖安装（todo 7.12号ready）
+root目录下直接执行 npm install 完成环境依赖安装
 
 
 ### 6、根据组件类型到相应js目录下开发源码
