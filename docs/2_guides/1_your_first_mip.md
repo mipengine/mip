@@ -8,7 +8,6 @@
 - 引入图片
 - 调整样式和布局
 - 预览和验证
-- 做好最终页面
 - 最后一步
 
 ## 1. 创建基础 MIP HTML 页面
@@ -64,26 +63,24 @@ MIP HTML 是web页面，页面中任何元素的样式都可以通过普通的cs
 
 ## 4. 预览和验证
 
-首先，在页面开发的过程中需要严格注意 [MIP HTML 规范](http://mip.baidu.com/#../docs/3_reference/standard.md)，和[校验规则](http://mip.baidu.com/#../docs/2_guides/check_list_thumbnail.md)。这样才能确保所开发的 MIP 页面是一个有效页面，否则第三方平台无法检索到你的页面。
+首先，在页面开发的过程中需要严格注意[校验规则](http://mip.baidu.com/#../docs/2_guides/check_list_thumbnail.md)。这样才能确保所开发的 MIP 页面是一个有效页面。
 
 然后，页面开发完成后，就可以像预览普通HTML站点一样预览 MIP HTML 页面，有如下方法：
 
 - 直接在浏览器中打开（由于XML Http Requests失败可能会导致某些元素预览失败）
-- 在本地部署一个服务，如apache，nginx（tips: python -m Simple HTTP Server 能够快速在本地启一个服务器）
+- 在本地部署一个服务，如apache，nginx等
 
 最后，在开发过程中难免会出现一些细节性错误，可以按如下步骤进行验证 MIP 页面是否合格：
 
 - 1） 在浏览器中打开页面
 - 2）打开控制台， 验证错误
 
-## 5. 如何在搜索引擎检索到你的页面
-
-请参考[让搜索发现你的页面](http://mip.baidu.com/#../docs/2_guides/mippagediscover.md)。
-
-## 6. 最后一步
+## 5. 最后一步
 
 恭喜你！到达这一步表明你已经完成了页面的本地测试，并修复了所有验证错误，这意味着你的第一个**MIP**页面已经准备就绪。
 
 通过阅读更详细的教程，你将了解**MIP**的工作原理以及详细的组件说明等，这些都可以帮助你更好的开发MIP页面。
+
+如果想让搜索引擎检索到你自己的 MIP 页面，请参考[让搜索发现你的页面](http://mip.baidu.com/#../docs/2_guides/mippagediscover.md)。
 
 
