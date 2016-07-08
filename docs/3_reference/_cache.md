@@ -37,11 +37,13 @@
 
 强制使用UTF-8编码
 
-## MIP cache 缓存更新
+## MIP Cache 缓存更新
 
 走站长平台统一提交页面更新，详细说明待扩展
 
-## 图片资源：
+## MIP Cache 页面资源地址替换规则
+
+### 图片资源：
 
 1、http资源：
 	
@@ -55,7 +57,7 @@
 
 	cdnMipUrl：/i/s/ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=1415218912,1828974222&fm=58
 
-## 网页地址或css、js
+### 网页地址或css、js
 
 1、http资源：
 	
