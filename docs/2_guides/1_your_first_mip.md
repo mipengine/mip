@@ -17,7 +17,7 @@
 
 ```
 <!DOCTYPE html>
-<html lang="zh">
+<html mip>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">

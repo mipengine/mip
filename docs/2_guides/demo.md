@@ -16,7 +16,7 @@
 
 ```
 <!DOCTYPE html>
-<html lang="en">
+<html mip>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
@@ -30,10 +30,10 @@
 <body>
     <p class="mip-text">这是一个段落，纯文本形式</p>
     <div class="mip-img-container">
-        <mip-img data-carousel="carousel" class="mip-element mip-img" src="http://ztd00.photos.bdimg.com/ztd/w%3D350%3Bq%3D70/sign=e3bb1c4b97ef76c6d0d2fd2ead2d8cc7/f703738da9773912b57d4b0bff198618367ae205.jpg"></mip-img>
+        <mip-img data-carousel="carousel" class="mip-element mip-img" src="//m.baidu.com/static/index/plus/plus_logo.png"></mip-img>
     </div>
     <div class="mip-img-container">
-        <mip-img data-carousel="carousel" class="mip-element mip-img" src="http://ztd00.photos.bdimg.com/ztd/w%3D350%3Bq%3D70/sign=e3bb1c4b97ef76c6d0d2fd2ead2d8cc7/f703738da9773912b57d4b0bff198618367ae205.jpg">
+        <mip-img data-carousel="carousel" class="mip-element mip-img" src="//m.baidu.com/static/index/plus/plus_logo.png">
             <p class="mip-img-subtitle">带图片标题的类型</p>
         </mip-img>
     </div>
@@ -51,7 +51,7 @@
             <span><strong>自定义的加粗字体</strong></span>
         </p>
     </div>
-<script src="http://cq02-wise-sftc6.cq02.baidu.com:8524/static/js/miphtml_main.js"></script>
+<script src="//m.baidu.com/static/ala/sf/static/js/miphtml_main_91d6a5e.js"></script>
 </body>
 </html>
 ```
