@@ -1,18 +1,18 @@
 # demo示例
 
-* 引入css样式
+## 引入css样式
 
 ```
 <link type="text/css" rel="stylesheet" href="//m.baidu.com/static/ala/sf/static/css/miphtml_xxxxxx.css">
 ```
 
-* 引入js组件（已包含jq、amd）
+## 引入js组件（已包含jq、amd）
 
 ```
 <script src="//m.baidu.com/static/ala/sf/static/js/miphtml_main_xxxxxx.js"></script>
 ```
 
-* 一个完整的例子
+## 一个完整的例子
 
 ```
 <!DOCTYPE html>
@@ -58,7 +58,7 @@
 
 其中，`p.mip-img-subtitle`是可选的，表示图片的信息
 
-#### 插入文本
+## 插入文本
 
 对应mip规范中的纯文本，和后面的`mip-html`兼容
 
@@ -68,7 +68,7 @@
 <p class="mip-text">我是一段文本</p>
 ```
 
-#### 自定义样式
+## 自定义样式
 
 为了满足个性化需求，`mip-html`的方式承接所有需要自定义的标签 & 样式。封装了常用的文本对齐、文本加粗、背景、字号、有序列表、无序列表、引用、下划线等
 
