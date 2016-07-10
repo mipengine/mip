@@ -1,5 +1,7 @@
 # 组件开发规范
 
+说明文字
+
 ## 组件类型划分及代码所处目录
 
 1、内置组件(root/buildins/)：
@@ -116,4 +118,51 @@ make dev
 
 ## 版本控制
 
+<<<<<<< HEAD
 初始1（重大升级扩展）.0(功能扩展).0（bug fix），分别对应的情况进行相应升级
+=======
+初始1（重大升级扩展）.0(功能扩展).0（bug fix），分别对应的情况进行相应升级
+
+
+
+## personalDirectoryName.js 示例
+
+```
+__inline('./miphtml_base.js');
+
+__inline('../extensions/personalDirectoryName/util.js');
+__inline('../extensions/personalDirectoryName/mip-link.js');
+__inline('../extensions/personalDirectoryName/clipboard.js');
+
+require(['mip'], function () {
+
+    var regME = window.registerMipElement;
+
+    /*
+     * 注册mip-link组件
+     */
+    require(['personalDirectoryName/mip-link'], regME.bind(this, 'mip-link'));
+
+    /*
+     * 注册mip-share 组件
+     */
+    require(['personalDirectoryName/mip-share'], regME.bind(this, 'mip-share'));
+
+    /*
+     * 注册mip-recommend 组件
+     */
+    require(['personalDirectoryName/mip-recommend'], regME.bind(this, 'mip-recommend'));
+
+});
+```
+
+## personalDirectoryName.less示例
+
+```
+# 引入mip common less
+@import '../mip-common.less'; 
+# 引入个性化组件的less
+@import 'mip-share.less';
+@import 'mip-recommend.less';
+```
+>>>>>>> df73ab9732b58b57f06be188073200423cd6ace5

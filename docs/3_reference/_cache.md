@@ -1,4 +1,4 @@
-# MIP Cache
+# MIP Cache 规范
 
 百度MIP cache给所有符合规范的MIP页面提供cache服务，能够主动的提高页面加载速度，为使用MIP cache服务的页面上的图片、CSS文件等资源提供缓存服务，这样能做到所有HTTP请求来自于同源，能够加速加载速度。同时，MIP cache会提供完整的更新流程，保障页面在cache中的更新需求。
 
@@ -37,11 +37,13 @@
 
 强制使用UTF-8编码
 
-## MIP cache 缓存更新
+## MIP Cache 缓存更新
 
 走站长平台统一提交页面更新，详细说明待扩展
 
-## 图片资源：
+## MIP Cache 页面资源地址替换规则
+
+### 图片资源：
 
 1、http资源：
 	
@@ -55,7 +57,7 @@
 
 	cdnMipUrl：/i/s/ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=1415218912,1828974222&fm=58
 
-## 网页地址或css、js
+### 网页地址或css、js
 
 1、http资源：
 	
