@@ -1,5 +1,9 @@
 define(function () {
+<<<<<<< HEAD:buildins/mip-iframe.js
     var customElem = require('buildins/customElement');
+=======
+    var customElem = require('../buildins/customElement');
+>>>>>>> 0d74e9075ea888568b9f3cdf5c6055c11991bcd2:extensions/mip-iframe.js
     var build = function () {
         // 防止多次渲染
         if(this.isRender){
@@ -12,11 +16,13 @@ define(function () {
         if ($this.attr('srcdoc')) {
             src = 'data:text/html;charset=utf-8;base64,' + window.btoa($this.attr('srcdoc'));
         }
-        if (!src) {
-            return;
-        }
         var hei = $this.attr('height');
         var wid = $this.attr('width');
+
+        if (!src || !wid || !hei) {
+            return;
+        }
+
         if (hei && wid && typeof +hei === 'number' && typeof +wid === 'number') {
             // padding-bottom
             var pdb = +hei / +wid * 100 + '%';

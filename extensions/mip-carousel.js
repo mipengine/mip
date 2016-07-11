@@ -1,5 +1,9 @@
 define(function(){
+<<<<<<< HEAD:buildins/mip-carousel.js
     var customElem = require('buildins/customElement');
+=======
+    var customElem = require('../buildins/customElement');
+>>>>>>> 0d74e9075ea888568b9f3cdf5c6055c11991bcd2:extensions/mip-carousel.js
 
     var build = function () {
         // 避免多次渲染
@@ -9,6 +13,17 @@ define(function(){
         this.isRender = true;
 
         var $this = $(this);
+
+        var hei = $this.attr('height');
+        var wid = $this.attr('width');
+
+        if (!wid || !hei || typeof +hei !== 'number' || typeof +wid !== 'number') {
+            return;
+        }
+
+        // padding-bottom
+        var pdb = +hei / +wid * 100 + '%';
+        $this.css('padding-bottom', pdb);
 
         // 如果子节点少于2个，则不需要轮播
         var $childs = $this.children();
