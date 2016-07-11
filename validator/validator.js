@@ -19,7 +19,7 @@ var check = (function() {
 	var tagMipImg = document.getElementsByTagName('mip-img');
 	var tagMipPix = document.getElementsByTagName('mip-pix');
 	var tagMipAd = document.getElementsByTagName('mip-ad');
-	var tagMipBaiduTj = document.getElementsByTagName('mip-baidu-tj');
+	var tagMipBaiduTj = document.getElementsByTagName('mip-baidu-stats');
 
 	// status号待定
 

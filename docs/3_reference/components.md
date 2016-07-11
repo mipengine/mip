@@ -72,7 +72,7 @@ root目录下直接执行 npm install 完成环境依赖安装
 
 js目录下：
     
-    个性化： 
+    个性化（大众需求）、扩展： 
         
         增加 
 
@@ -80,11 +80,15 @@ js目录下：
 	        
 	        2、版本目录 两位数字 如0.1
 
-	        3、版本目录下：组件.js 、组件.less  
+	        3、版本目录下：组件.js 、组件.less 
 
-        
+	 demo示例
+	        
+	 ```
+	 todo 7.11ready
+	 ```
 
-    内置、扩展：
+    内置(基本完成，比较稳定)：
 
         增加 组件.js  
 
@@ -93,8 +97,6 @@ js目录下：
         src/mip.js 注册组件
 
         less/组件.less  mip-common.less 注册
-
-    注: 注册需要考虑用脚本直接搞定 todo
 
 
 
@@ -109,7 +111,7 @@ make dev
 
 查看效果：http://127.0.0.1:8056/examples/yourexamplesname.html
 
-# todo 个性化编辑：2016.7.12 ready
+# 组件编译： make personalDirectoryName 2016.7.12 ready
 ```
 
 ### 上线
