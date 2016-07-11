@@ -9,19 +9,19 @@ define(function() {
 
     var customElem = require('/buildins/customElement');
 
-    // suda config
-    window.sudaLogConfig = {
-        uId: '',
-        url: '',
-        prevPageClickTime: ''
-    };
-
     // SUDA地图统计
     window.sudaMapConfig = {
         uId: '', // 用户uid，如果用户没登陆，可以为空
         pageId: '' // 必填
     };
 
+    /**
+     * elemKeysToObj
+     *
+     * @param  {HTMLElement} elem elem
+     * @param  {Array} keys keys
+     * @param  {Object} obj  obj
+     */
     function elemKeysToObj(elem, keys, obj) {
         var $elem = $(elem);
         $.each(keys, function (i, key) {
@@ -33,7 +33,38 @@ define(function() {
         this.build = build;
     };
 
-    var SINA_TONGJI_ROOT = 'https://mjss.sinaimg.cn/wap/public/suda/201604140930/';
+    /**
+     * protocol
+     *
+     * @type {string}
+     */
+    var protocol = location.protocol;
+
+    /**
+     * SINA_TONGJI_ROOT
+     *
+     * @type {string}
+     */
+    var SINA_TONGJI_ROOT = ''
+        + protocol
+        + '//mjs'
+        + (protocol === 'https' ? 's' : '')
+        + '.sinaimg.cn/wap/public/suda/201607111020/';
+
+    /**
+     * getScript promise
+     *
+     * @param  {string} src 地址
+     * @return {promise}     promise
+     */
+    function getScriptPromise (src) {
+        var dfd = $.Deferred();
+        $.getScript(src, function () {
+            dfd.resolve();
+        });
+        return dfd;
+    }
+
 
     function build() {
 
@@ -43,12 +74,19 @@ define(function() {
 
         this.isRender = true;
 
-        elemKeysToObj(this, ['uId', 'url', 'prevPageClickTime'], window.sudaLogConfig);
-        $.getScript(SINA_TONGJI_ROOT + 'suda_log.min.js');
+        var elem = this;
 
+        $.when(
+            getScriptPromise(SINA_TONGJI_ROOT + 'suda_log.min.js'),
+            getScriptPromise(SINA_TONGJI_ROOT + 'suda_map.min.js')
+        ).then(function () {
+            elemKeysToObj(elem, ['uId', 'pageId'], window.sudaMapConfig);
 
-        elemKeysToObj(this, ['uId', 'pageId'], window.sudaMapConfig);
-        $.getScript(SINA_TONGJI_ROOT + 'suda_map.min.js');
+            if (window.suda_init) {
+                window.suda_init(window.sudaMapConfig.pageId, 100);
+            }
+
+        });
 
     }
 
