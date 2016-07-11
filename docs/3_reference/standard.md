@@ -3,8 +3,8 @@
 ### 头部适用规范
 
 - 起始标签使用`<!doctype html>`
-- 标签必须加上mip标记，如:`
-- 必须包含<head>和<body>标签
+- `<html>`标签必须加上mip标记，即:`<html mip>`
+- 必须包含`<head>`和`<body>`标签
 - 必须在head标签中包含字符集申明：`<meta charset="utf-8">`，字符集统一为`utf-8`
 - 必须在head标签中包含viewport设置标签：`<meta name="viewport" content="width=device-width,minimum-scale=1">`，推荐(RECOMMENDED)包含`initial-scale=1`
 - 必须在head标签中包含`<script async src="https://m.baidu.com/miphtml/v0.js"></script>`
