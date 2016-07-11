@@ -12,7 +12,7 @@
 在MIP HTMl中，示例如下：
 
 ```
-<mip-carousel autoplay defer="1000">
+<mip-carousel autoplay defer="1000" width="500" height="200">
     <mip-img 
         class="mip-img" 
         popup 
@@ -45,3 +45,14 @@
 
     - 说明：每次轮播的时间间隔，单位ms，如果设置了`autoplay`，可以添加`defer`来指定轮播的时间间隔，默认值2000
 
+- **宽度(width)**
+
+    - 是否必填：是
+
+    - 说明：与高度（height）的比值被mip-carousel用来计算区域的比例和大小
+
+- **高度(height)**
+
+    - 是否必填：是
+
+    - 说明：与宽度（width）的比值被mip-carousel用来计算区域的比例和大小
