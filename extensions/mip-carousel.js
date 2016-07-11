@@ -1,5 +1,5 @@
 define(function(){
-    var customElem = require('./customElement');
+    var customElem = require('../buildins/customElement');
 
     var build = function () {
         // 避免多次渲染
@@ -9,6 +9,17 @@ define(function(){
         this.isRender = true;
 
         var $this = $(this);
+
+        var hei = $this.attr('height');
+        var wid = $this.attr('width');
+
+        if (!wid || !hei || typeof +hei !== 'number' || typeof +wid !== 'number') {
+            return;
+        }
+
+        // padding-bottom
+        var pdb = +hei / +wid * 100 + '%';
+        $this.css('padding-bottom', pdb);
 
         // 如果子节点少于2个，则不需要轮播
         var $childs = $this.children();

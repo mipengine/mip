@@ -76,12 +76,12 @@ define(function(require){
     /*
      * 注册mip-carousel组件
      */
-    window.registerMipElement('mip-carousel',require('../buildins/mip-carousel'));
+    window.registerMipElement('mip-carousel',require('../extensions/mip-carousel'));
 
     /*
      * 注册mip-iframe组件
      */
-    window.registerMipElement('mip-iframe',require('../buildins/mip-iframe'));
+    window.registerMipElement('mip-iframe',require('../extensions/mip-iframe'));
 
 
     //页面初始化后，处理可视区域内元素
