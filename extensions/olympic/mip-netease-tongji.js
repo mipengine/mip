@@ -7,7 +7,7 @@
 
 define(function() {
 
-    var customElem = require('/buildins/customElement');
+    var customElem = require('buildins/customElement');
 
     customElem.prototype.init = function() {
         this.build = render;

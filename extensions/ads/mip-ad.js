@@ -7,7 +7,7 @@
 */
 
 define(function(){
-    var customElem = require('../../buildins/customElement');
+    var customElem = require('buildins/customElement');
     
     function render() {
         if (this.isRender) {

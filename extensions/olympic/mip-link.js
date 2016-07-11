@@ -6,7 +6,7 @@
 
 define(function() {
 
-    var customElem = require('/buildins/customElement');
+    var customElem = require('buildins/customElement');
 
     /**
      * 点击链接事件

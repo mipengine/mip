@@ -7,7 +7,7 @@
 
 define(function() {
 
-    var customElem = require('/buildins/customElement');
+    var customElem = require('buildins/customElement');
 
     // suda config
     window.sudaLogConfig = {

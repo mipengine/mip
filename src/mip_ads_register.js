@@ -19,7 +19,7 @@ define(function(require){
     /**
      *  web compenent组件初始化
      * */
-    require('../buildins/registerMipElement');
+    require('buildins/registerMipElement');
 
     /*
      * 注册mip-ad 组件
