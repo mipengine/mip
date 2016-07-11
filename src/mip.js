@@ -80,20 +80,12 @@ define(function(require){
     /*
      * 注册mip-carousel组件
      */
-<<<<<<< HEAD
-    MIP.registerMipElement('mip-carousel',require('buildins/mip-carousel'));
-=======
-    window.registerMipElement('mip-carousel',require('../extensions/mip-carousel'));
->>>>>>> 0d74e9075ea888568b9f3cdf5c6055c11991bcd2
+    MIP.registerMipElement('mip-carousel',require('extensions/mip-carousel'));
 
     /*
      * 注册mip-iframe组件
      */
-<<<<<<< HEAD
-    MIP.registerMipElement('mip-iframe',require('buildins/mip-iframe'));
-=======
-    window.registerMipElement('mip-iframe',require('../extensions/mip-iframe'));
->>>>>>> 0d74e9075ea888568b9f3cdf5c6055c11991bcd2
+    MIP.registerMipElement('mip-iframe',require('extensions/mip-iframe'));
 
     /*
      * 注册mip-video组件
