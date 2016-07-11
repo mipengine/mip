@@ -24,7 +24,7 @@ __inline('src/utils/cssLoader.js');
 __inline('buildins/mip-img.js');
 __inline('buildins/mip-gif.js');
 __inline('buildins/mip-pix.js');
-__inline('buildins/mip-carousel.js');
+__inline('extensions/mip-carousel.js');
 __inline('buildins/mip-iframe.js');
 __inline('extensions/recommend.js');
 __inline('buildins/img-viewer.js');
