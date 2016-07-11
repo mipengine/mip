@@ -69,10 +69,4 @@
 
     - 说明：与原生iframe的`allowtransparency`属性作用一致
 
-## 3. 样式
 
-mip-iframe暂时不支持css重写样式
-
-## 4. 是否基础组件
-
-是

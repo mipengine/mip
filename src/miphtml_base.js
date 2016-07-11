@@ -26,3 +26,7 @@ __inline('../extensions/mip-carousel.js');
 __inline('../extensions/mip-iframe.js');
 __inline('../extensions/recommend.js');
 __inline('../buildins/img-viewer.js');
+__inline('../buildins/video/mip-video.js');
+__inline('../buildins/video/player.js');
+__inline('../buildins/video/popup.js');
+

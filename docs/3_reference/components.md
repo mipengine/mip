@@ -1,5 +1,7 @@
 # 组件开发规范
 
+说明文字
+
 ## 组件类型划分及代码所处目录
 
 1、内置组件(root/buildins/)：
@@ -70,17 +72,23 @@ root目录下直接执行 npm install 完成环境依赖安装
 
 js目录下：
     
-    个性化： 
+    个性化（大众需求）、扩展： 
         
-        #增加 personalDirectoryName.js（注册 后面有示例）
+        增加 
 
-        组件.js 
+	        1、组件.md  #组件说明文档
+	        
+	        2、版本目录 两位数字 如0.1
 
-        组件.less  
+	        3、版本目录下：组件.js 、组件.less 
 
-        组件.md  #组件说明文档
+	 demo示例
+	        
+	 ```
+	 todo 7.11ready
+	 ```
 
-    内置、扩展：
+    内置(基本完成，比较稳定)：
 
         增加 组件.js  
 
@@ -89,8 +97,6 @@ js目录下：
         src/mip.js 注册组件
 
         less/组件.less  mip-common.less 注册
-
-    注: 注册需要考虑用脚本直接搞定 todo
 
 
 
@@ -105,7 +111,7 @@ make dev
 
 查看效果：http://127.0.0.1:8056/examples/yourexamplesname.html
 
-# todo 个性化编辑：2016.7.12 ready
+# 组件编译： make personalDirectoryName 2016.7.12 ready
 ```
 
 ### 上线
@@ -115,52 +121,3 @@ make dev
 ## 版本控制
 
 初始1（重大升级扩展）.0(功能扩展).0（bug fix），分别对应的情况进行相应升级
-
-
-
-## personalDirectoryName.js 示例
-
-```
-__inline('./miphtml_base.js');
-
-__inline('../extensions/personalDirectoryName/util.js');
-__inline('../extensions/personalDirectoryName/mip-link.js');
-__inline('../extensions/personalDirectoryName/clipboard.js');
-
-require(['mip'], function () {
-
-    var regME = window.registerMipElement;
-
-    /*
-     * 注册mip-link组件
-     */
-    require(['personalDirectoryName/mip-link'], regME.bind(this, 'mip-link'));
-
-    /*
-     * 注册mip-share 组件
-     */
-    require(['personalDirectoryName/mip-share'], regME.bind(this, 'mip-share'));
-
-    /*
-     * 注册mip-recommend 组件
-     */
-    require(['personalDirectoryName/mip-recommend'], regME.bind(this, 'mip-recommend'));
-
-});
-```
-
-## personalDirectoryName.less示例
-
-```
-# 引入mip common less
-@import '../mip-common.less'; 
-# 引入个性化组件的less
-@import 'mip-share.less';
-@import 'mip-recommend.less';
-```
-
-## roadmap
-
-—— 编译支持grunt
-
-—— 做js拆分，支持轻量级js，提供comb

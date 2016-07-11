@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh" mip>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="/dist/miphtml.css">
+    </head>
+    <body>
+    <p>纯图结构</p>
+    <!-- adInfo="[[{type: 'video/mp4',src: 'http://v1.bdstatic.com/7217528220198269875/mp4/7217528220198269875.mp4'}],[{type: 'video/mp4',src: 'http://v1.bdstatic.com/8aa369effe2cc6280c1bd413723ce0ac/mp4/8aa369effe2cc6280c1bd413723ce0ac.mp4'}]]" -->
+    <mip-video class="mip-video" 
+    poster="http://pic3.qiyipic.com/common/lego/20160627/aa41f1003f4b40afb4f6b52d394e03d4.jpg"
+    src="http://v1.bdstatic.com/7e313590bc0d1eb605c376b326538356/mp4/7e313590bc0d1eb605c376b326538356.mp4"
+    controls=""
+    adInfo="[[{type: 'video/mp4',src: 'http://v1.bdstatic.com/7217528220198269875/mp4/7217528220198269875.mp4'}],[{type: 'video/mp4',src: 'http://v1.bdstatic.com/8aa369effe2cc6280c1bd413723ce0ac/mp4/8aa369effe2cc6280c1bd413723ce0ac.mp4'}]]"
+    type="video/mp4"
+    >
+        <source type="video/mp4" src="http://v1.bdstatic.com/7e313590bc0d1eb605c376b326538356/mp4/7e313590bc0d1eb605c376b326538356.mp4"></source>
+        <mip-img class="mip-video-container" src="http://p1.bdstatic.com/7217528220198269875.jpg">
+            <div class="mip-video-icon"></div>
+        </mip-img>
+    </mip-video>
+
+
+    <p>纯文字结构</p>
+    <mip-video class="mip-video" 
+    poster="http://pic3.qiyipic.com/common/lego/20160627/aa41f1003f4b40afb4f6b52d394e03d4.jpg"
+    src="http://v1.bdstatic.com/7e313590bc0d1eb605c376b326538356/mp4/7e313590bc0d1eb605c376b326538356.mp4"
+    android-mode="fullscreen" ios-mode="hide"
+    >
+        立即播放
+    </mip-video>
+
+
+   <!--  <p>图文结构</p>
+    <mip-video class="mip-video" 
+    data-poster="http://pic3.qiyipic.com/common/lego/20160627/aa41f1003f4b40afb4f6b52d394e03d4.jpg"
+    data-src="http://pic3.qiyipic.com/common/lego/20160627/aa41f1003f4b40afb4f6b52d394e03d4.jpg"
+    >
+        <mip-img class="mip-video-container" src="http://pic3.qiyipic.com/common/lego/20160627/aa41f1003f4b40afb4f6b52d394e03d4.jpg">
+            <div class="mip-video-icon"></div>
+        </mip-img>
+        <p class="mip-video-subtitle">带图片标题的类型</p>
+    </mip-video> -->
+
+
+    <!-- <p>播放按钮类型</p>
+    <mip-video class="mip-video mip-video-container" 
+    data-poster="http://pic3.qiyipic.com/common/lego/20160627/aa41f1003f4b40afb4f6b52d394e03d4.jpg"
+    data-src="http://pic3.qiyipic.com/common/lego/20160627/aa41f1003f4b40afb4f6b52d394e03d4.jpg"
+    >
+        <div class="mip-video-icon"></div>
+    </mip-video> -->
+
+    
+
+
+    <style type="text/css">
+    body {
+        margin: 0;
+        padding: 0;
+    }
+    .wa-bdplayer {
+        height: 210px;
+        position: relative;
+        margin-bottom: 10px;
+    }
+    .wa-bdplayer img {
+        width: 100%;
+        height: 100%;
+    }
+    .wa-play-icon {
+         
+    }
+    .wa-video-box {
+        width: 100%;
+        height: 210px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 99;
+    } 
+    video {
+        background: #000;
+    }
+</style>
+
+<!-- <p>默认样式</p> -->
+<!-- <div class="wa-bdplayer wa-bdplayer-inline">
+    <img src="http://p1.bdstatic.com/7217528220198269875.jpg">
+    <video height="20" width="90%" src="http://v1.bdstatic.com/7e313590bc0d1eb605c376b326538356/mp4/7e313590bc0d1eb605c376b326538356.mp4" controls></video>
+    <div class="wa-play-icon"></div>
+    <div class="wa-video-box"></div>
+</div> -->
+</body>
+    <script src="/dist/miphtml_main.js"></script>
+</html>

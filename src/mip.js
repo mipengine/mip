@@ -83,6 +83,11 @@ define(function(require){
      */
     window.registerMipElement('mip-iframe',require('../extensions/mip-iframe'));
 
+    /*
+     * 注册mip-video组件
+     */
+    window.registerMipElement('mip-video',require('../buildins/video/mip-video'));
+
 
     //页面初始化后，处理可视区域内元素
     $(function(){
