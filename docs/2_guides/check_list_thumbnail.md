@@ -164,7 +164,7 @@ mip html中具有强制性属性的标签及其强制性属性有：
     - src
 - mip-pix
     - src
-- mip-baidu-stats
+- mip-baidu-tj
     - token
 - mip-ad
     - tpl
