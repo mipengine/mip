@@ -81,8 +81,8 @@ js目录下:
 
         2、版本目录 两位数字 如0.1 
 
-<<<<<<< HEAD
-	 demo示例
+
+	demo示例
 	        
 	 ```
 	 /**
@@ -131,11 +131,6 @@ js目录下:
 
 
     内置(基本完成，比较稳定)：
-=======
-        3、版本目录下: 组件.js 、组件.less 
-
-- 内置:
->>>>>>> 0d74e9075ea888568b9f3cdf5c6055c11991bcd2
 
     增加 
 
@@ -157,12 +152,8 @@ make
 
 # 开发者模式: 包括文件监听
 make dev
-
-<<<<<<< HEAD
-查看效果：http://127.0.0.1:8056/examples/yourexamplesname.html
-=======
 查看效果: http://127.0.0.1:8056/examples/yourexamplesname.html
->>>>>>> 0d74e9075ea888568b9f3cdf5c6055c11991bcd2
+
 ```
 
 ## 上线
