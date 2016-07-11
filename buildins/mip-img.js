@@ -1,5 +1,5 @@
-define(['../src/utils/util'], function(util){
-   var customElem = require('./customElement');
+define(['src/utils/util'], function(util){
+   var customElem = require('buildins/customElement');
    var build = function(){
         if(this.isRender){
             return; 

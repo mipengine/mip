@@ -9,6 +9,10 @@ define(function(require){
     * 初始化相关JS
     */
 
+    window.MIP = {};
+
+    MIP.css = {};
+
     /**
      *  初始化touch手势
      * */
@@ -54,7 +58,7 @@ define(function(require){
     /**
      *  web compenent组件初始化
      * */
-    require('../buildins/registerMipElement');
+    require('buildins/registerMipElement');
 
     /***
      *  注册统计组件
@@ -66,27 +70,36 @@ define(function(require){
     /*
      *注册mip-gif组件
      */
-    window.registerMipElement('mip-gif', require('../buildins/mip-gif'));
+    MIP.registerMipElement('mip-gif', require('buildins/mip-gif'));
 
     /*
      * 注册mip-img组件
      */
-    window.registerMipElement('mip-img',require('../buildins/mip-img'));
+    MIP.registerMipElement('mip-img',require('buildins/mip-img'));
 
     /*
      * 注册mip-carousel组件
      */
-    window.registerMipElement('mip-carousel',require('../buildins/mip-carousel'));
+<<<<<<< HEAD
+    MIP.registerMipElement('mip-carousel',require('buildins/mip-carousel'));
+=======
+    window.registerMipElement('mip-carousel',require('../extensions/mip-carousel'));
+>>>>>>> 0d74e9075ea888568b9f3cdf5c6055c11991bcd2
 
     /*
      * 注册mip-iframe组件
      */
-    window.registerMipElement('mip-iframe',require('../buildins/mip-iframe'));
+<<<<<<< HEAD
+    MIP.registerMipElement('mip-iframe',require('buildins/mip-iframe'));
+=======
+    window.registerMipElement('mip-iframe',require('../extensions/mip-iframe'));
+>>>>>>> 0d74e9075ea888568b9f3cdf5c6055c11991bcd2
 
     /*
      * 注册mip-video组件
      */
-    window.registerMipElement('mip-video',require('../buildins/video/mip-video'));
+    MIP.registerMipElement('mip-video',require('buildins/video/mip-video'));
+
 
 
     //页面初始化后，处理可视区域内元素

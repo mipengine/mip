@@ -2,15 +2,11 @@
 
 ## 引入css样式
 
-```
-<link type="text/css" rel="stylesheet" href="//m.baidu.com/static/ala/sf/static/css/miphtml_xxxxxx.css">
-```
+&lt; link type="text/css" rel="stylesheet" href="//m.baidu.com/static/ala/sf/static/css/miphtml_xxxxxx.css" &gt;
 
 ## 引入js组件（已包含jq、amd）
 
-```
-<script src="//m.baidu.com/static/ala/sf/static/js/miphtml_main_xxxxxx.js"></script>
-```
+&lt;script src="//m.baidu.com/static/ala/sf/static/js/miphtml_main_xxxxxx.js"&gt;&lt;/script&gt;
 
 ## 一个完整的例子
 
@@ -80,7 +76,7 @@
 </div>
 ```
 
-__注：__所有用户的自定义内容都必须在`.mip-html`中
+注：所有用户的自定义内容都必须在`.mip-html`中
 
 * 加粗
 

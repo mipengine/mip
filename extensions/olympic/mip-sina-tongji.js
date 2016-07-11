@@ -7,7 +7,7 @@
 
 define(function() {
 
-    var customElem = require('/buildins/customElement');
+    var customElem = require('buildins/customElement');
 
     // SUDA地图统计
     window.sudaMapConfig = {
