@@ -1,9 +1,5 @@
 define(function () {
-<<<<<<< HEAD:buildins/mip-iframe.js
     var customElem = require('buildins/customElement');
-=======
-    var customElem = require('../buildins/customElement');
->>>>>>> 0d74e9075ea888568b9f3cdf5c6055c11991bcd2:extensions/mip-iframe.js
     var build = function () {
         // 防止多次渲染
         if(this.isRender){

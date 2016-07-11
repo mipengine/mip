@@ -1,9 +1,5 @@
 define(function(){
-<<<<<<< HEAD:buildins/mip-carousel.js
     var customElem = require('buildins/customElement');
-=======
-    var customElem = require('../buildins/customElement');
->>>>>>> 0d74e9075ea888568b9f3cdf5c6055c11991bcd2:extensions/mip-carousel.js
 
     var build = function () {
         // 避免多次渲染
