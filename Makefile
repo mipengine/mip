@@ -7,3 +7,9 @@ dev:
 	 fis3 release dev -d dist -wL
 doc:
 	node renderDoc.js
+mip:
+	fis3 release --dest=./build --file=buildconf/src.js --root=./newsrc
+buildins:
+	fis3 release --dest=./dist --file=buildins.js --root=./newbuildins
+extensions:
+	fis3 release --dest=./dist --file=buildins.js --root=./newextensions
