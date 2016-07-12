@@ -228,8 +228,8 @@ mip html中具有强制性属性的标签及其强制性属性有：
 - `<doctype html>`
 - `<html mip>`
 - `<head>`
-- `<link rel=canonical href=...>`
-- `<link rel=amphtml href=...>`
+- `<link rel="standardhtml" href=...>`
+- `<link rel="amphtml" href=...>`
 - `<meta charset="utf-8">`
 - `<meta viewport>`
 - `<style mip-custom>`
