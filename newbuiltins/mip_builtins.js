@@ -4,6 +4,17 @@
  * @version 1.0
  * @copyright 2015 Baidu.com, Inc. All Rights Reserved
  */
+__inline('./mip-img.js');
+__inline('./mip-gif.js');
+__inline('./mip-pix.js');
+__inline('../newextensions/mip-carousel.js');
+__inline('../newextensions/mip-iframe.js');
+__inline('../newextensions/recommend.js');
+__inline('./img-viewer.js');
+__inline('./mip-video.js');
+__inline('./video/player.js');
+__inline('./video/popup.js');
+
 define(function(require){
     /**
     * 初始化相关JS
@@ -69,27 +80,27 @@ define(function(require){
     /*
      *注册mip-gif组件
      */
-    MIP.registerMipElement('mip-gif', require('buildins/mip-gif'));
+    MIP.registerMipElement('mip-gif', require('newbuiltins/mip-gif'));
 
     /*
      * 注册mip-img组件
      */
-    MIP.registerMipElement('mip-img',require('buildins/mip-img'));
+    MIP.registerMipElement('mip-img',require('newbuiltins/mip-img'));
 
     /*
      * 注册mip-carousel组件
      */
-    MIP.registerMipElement('mip-carousel',require('extensions/mip-carousel'));
+    MIP.registerMipElement('mip-carousel',require('newextensions/mip-carousel'));
 
     /*
      * 注册mip-iframe组件
      */
-    MIP.registerMipElement('mip-iframe',require('extensions/mip-iframe'));
+    MIP.registerMipElement('mip-iframe',require('newextensions/mip-iframe'));
 
     /*
      * 注册mip-video组件
      */
-    MIP.registerMipElement('mip-video',require('buildins/video/mip-video'));
+    MIP.registerMipElement('mip-video',require('newbuiltins/mip-video'));
 
 
 
@@ -131,3 +142,4 @@ define(function(require){
     */
 
 });
+require(['mip_builtins']);

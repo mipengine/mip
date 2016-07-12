@@ -4,7 +4,7 @@
  * @version 1.0
  * @copyright 2015 Baidu.com, Inc. All Rights Reserved
  */
-define(function(require){
+define('mip', ['require', 'gesture', 'viewport', 'registerMipElement', 'buildins/mip-gif', 'buildins/mip-img', 'extensions/mip-carousel', 'extensions/mip-iframe', 'buildins/video/mip-video'], function(require){
     /**
     * 初始化相关JS
     */
