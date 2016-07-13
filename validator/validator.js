@@ -15,6 +15,7 @@ var check = (function() {
 	var linkTag = document.getElementsByTagName('link');
 	var metaTag = document.getElementsByTagName('meta');
 	var styleMipCustom = document.getElementsByTagName('style mip-custom');
+	var viewport = document.getElementsByTagName('meta').viewport;
 
 	var tagMipImg = document.getElementsByTagName('mip-img');
 	var tagMipPix = document.getElementsByTagName('mip-pix');
@@ -32,7 +33,7 @@ var check = (function() {
 			case '06200201':
 				return "The tag " + tag + " is disallowed.";
 				break;
-			case '06200201':
+			case '06200701':
 				return "The tag " + tag + " appears more than once in the document.";
 				break;
 			case '06200801':
@@ -82,7 +83,7 @@ var check = (function() {
 			// v0 = (src === 'https://m.baidu.com/miphtml/v0.js');
 		}
 
-		if(miphtml_main > -1) { 
+		if(miphtml_main < -1) { 
 			error_info.push('The js file "https://m.baidu.com/static/ala/sf/static/js/miphtml_main_xxxxxx.js" is missing or incorrect');
 		}
 
@@ -124,6 +125,7 @@ var check = (function() {
 		var errorLinkInfo = errorLink();
 
 		var index = 0;
+		var flag = false;
 
 		if(htmlMip < 0) {
 			error_info.push(getErrorInfo(_STATUS, 'html mip'));
@@ -131,6 +133,21 @@ var check = (function() {
 
 		if(!hasDoctype()) {
 			error_info.push(getErrorInfo(_STATUS, '!doctype'));
+		}
+
+		for(index = 0; index < metaTag.length; index ++) {
+			var contentstr = metaTag[index].content || '';
+			var charsetstr = metaTag[index].getAttribute('charset') || '';
+			if(contentstr.toLowerCase().indexOf('utf-8')) {
+				flag = true;
+			} else if(charsetstr.toLowerCase().indexOf('utf-8')){
+				flag = true;
+			}
+			
+		}
+
+		if(!flag) {
+			error_info.push(getErrorInfo(_STATUS , 'utf-8'));
 		}
 
 		for(index = 0; index < tags.length; index ++) {
@@ -216,7 +233,7 @@ var check = (function() {
 		if(error_info.length) {
 			response_data.status = _STATUS;
 			response_data.errors.disallowed_tag = {};
-			response_data.errors.disallowed_tag.tips = "DISALLOWED_TAG";
+			response_data.errors.disallowed_tag.tips = _TIPS;
 			response_data.errors.disallowed_tag.error_info = error_info;
 		}
 	}
@@ -230,12 +247,25 @@ var check = (function() {
 	 */
 	function invalid_attr_value() {
 		var _STATUS = '06200301';
-		var _TIPS = 'DISALLOWED_TAG'
+		var _TIPS = 'INVALID_ATTR_VALUE';
 		var error_info = [];
 
 		var index = 0;
 		var ordinal = 0;
 
+		var tagA = document.getElementsByTagName('a');
+
+		for(index = 0; index < tagA.length; index ++) {
+			var href = tagA[index].getAttribute('href');
+			var target = tagA[index].getAttribute('target');
+			if(href.indexOf('javascript') > -1) {
+				error_info.push(getMoreParamsErrorInfo(_STATUS, 'href', 'a', href));
+			}
+
+			if(target != '_blank') {
+				error_info.push(getMoreParamsErrorInfo(_STATUS, 'target', 'a', href));
+			}
+		}
 		
 		
 		for(index = 0; index < tagMipImg.length; index ++) {
@@ -250,7 +280,7 @@ var check = (function() {
 			var tplName = tagMipAd[index].getAttribute('tpl');
 			var dataSize = tagMipAd[index].getAttribute('data-size');
 
-			if(tplName && (tplName != 'oneImg' || tplName != 'noneImg' || tplName != 'moreImg')) {
+			if(tplName && !(tplName == 'oneImg' || tplName == 'noneImg' || tplName == 'moreImg' || tplName == 'onlyImg')) {
 				error_info.push(getMoreParamsErrorInfo(_STATUS, 'tpl', 'mip-ad', tplName));
 			}
 
@@ -260,11 +290,12 @@ var check = (function() {
 			}
 		}
 
+
 		if(error_info.length) {
 			response_data.status = _STATUS;
 			response_data.errors.invalid_attr_value = {};
 			response_data.errors.invalid_attr_value.tips = _TIPS;
-			response_data.errors.disallowed_tag.error_info = error_info;
+			response_data.errors.invalid_attr_value.error_info = error_info;
 		}
 	}
 	/********************************************************************/
@@ -287,8 +318,8 @@ var check = (function() {
 		var error_info = [];
 		var index = 0;
 
-		var viewport = document.getElementsByTagName('meta').viewport;
-		var content = viewport.content.split(',');
+		
+		var content = viewport ? viewport.content.split(',') : [];
 		var check = new Array();
 		
 		for(index = 0; index < content.length; index ++) {
@@ -333,25 +364,25 @@ var check = (function() {
 				error_info.push(getErrorInfowithTwoParams('mip-pix', 'src'));
 			}
 		}
-
+		
 		for(index = 0; index < tagMipBaiduTj.length; index ++) {
 			if(!tagMipBaiduTj[index][0].getAttribute('src')) {
-				error_info.push(getErrorInfowithTwoParams('mip-pix', 'src'));
+				error_info.push(getErrorInfowithTwoParams('mip-baidu-tj', 'src'));
 			}
 		}
 
 		for(index = 0; index < tagMipAd.length; index ++) {
-			if(!tagMipAd[index][0].getAttribute('src')) {
-				error_info.push(getErrorInfowithTwoParams('mip-pix', 'src'));
+			if(!tagMipAd[index].getAttribute('src')) {
+				error_info.push(getErrorInfowithTwoParams('mip-ad', 'src'));
 			}
-			if(!tagMipAd[index][0].getAttribute('tpl')) {
-				error_info.push(getErrorInfowithTwoParams('mip-pix', 'tpl'));
+			if(!tagMipAd[index].getAttribute('tpl')) {
+				error_info.push(getErrorInfowithTwoParams('mip-ad', 'tpl'));
 			}
-			if(!tagMipAd[index][0].getAttribute('data-size')) {
-				error_info.push(getErrorInfowithTwoParams('mip-pix', 'data-size'));
-			}
-			if(!tagMitagMipAdpPix[index][0].getAttribute('data-img')) {
-				error_info.push(getErrorInfowithTwoParams('mip-pix', 'data-img'));
+			// if(!tagMipAd[index].getAttribute('data-size')) {
+			// 	error_info.push(getErrorInfowithTwoParams('mip-ad', 'data-size'));
+			// }
+			if(!tagMipAd[index].getAttribute('data-img')) {
+				error_info.push(getErrorInfowithTwoParams('mip-ad', 'data-img'));
 			}
 		}
 
@@ -370,6 +401,7 @@ var check = (function() {
 		var error_info = [];
 		var index = 0;
 
+		var doctypeParent = doctype ? doctype.parentNode.tagName : null;
 		var headParent = headTag[0] ? headTag[0].parentNode.tagName : null;
 		var bodyParent = bodyTag[0] ? bodyTag[0].parentNode.tagName : null;
 		var linkParent = linkTag.length && linkTag[0] ? linkTag[0].parentNode.tagName : null;
@@ -377,7 +409,9 @@ var check = (function() {
 		var metaParent = metaTag[0] ? metaTag[0].parentNode.tagName : null;
 		var styleMipParent = styleMipCustom[0] ? styleMipCustom[0].parentNode.tagName : null;
 
-
+		if(doctypeParent) {
+			error_info.push(getMoreParamsErrorInfo(_STATUS, '!doctype', headParent, 'root'));
+		}
 		if(headParent.indexOf('HTML') <= -1) {
 			error_info.push(getMoreParamsErrorInfo(_STATUS, 'head', headParent, 'html'));
 		}
@@ -387,8 +421,8 @@ var check = (function() {
 		if(linkParent && linkParent.indexOf('HEAD') <= -1) {
 			error_info.push(getMoreParamsErrorInfo(_STATUS, 'link', linkParent, 'head'));
 		}
-		if(scriptParent.indexOf('HEAD') <= -1) {
-			error_info.push(getMoreParamsErrorInfo(_STATUS, 'script', scriptParent, 'head'));
+		if(scriptParent.indexOf('BODY') <= -1) {
+			error_info.push(getMoreParamsErrorInfo(_STATUS, 'script', scriptParent, 'body'));
 		}
 		if(metaParent.indexOf('HEAD') <= -1) {
 			error_info.push(getMoreParamsErrorInfo(_STATUS, 'meta', metaParent, 'head'));
@@ -409,17 +443,56 @@ var check = (function() {
 	function duplicate_unique_tag() {
 
 		var _STATUS = '06200701';
-		var _TIPS ='WRONG_PARENT_TAG';
+		var _TIPS ='DUPLICATE_UNIQUE_TAG';
 		var error_info = [];
 		var index = 0;
+		var cnt = 0;
 
-		var tags = [doctype, htmlMip, headTag, bodyTag];
-		var tagNames = ['!docutype', 'html', 'head', 'body'];
+		var tags = [doctype, htmlMip, headTag, bodyTag, viewport, styleMipCustom];
+		var tagNames = ['!docutype', 'html mip', 'head', 'body', '<meta viewport>', '<style mip-custom>'];
 
 		for(index = 0; index < tags.length; index ++) {
 			if(tags[index] && tags[index].length > 1) {
 				error_info.push(getErrorInfo(_STATUS, tagNames[index]));
 			}
+		}
+
+		for(index = 0; index < metaTag.length; index ++) {
+			var contentstr = metaTag[index].content || '';
+			var charsetstr = metaTag[index].getAttribute('charset') || '';
+			if(contentstr.toLowerCase().indexOf('utf-8')) {
+				cnt ++;
+			} else if(charsetstr.toLowerCase().indexOf('utf-8')){
+				cnt ++;
+			}
+		}
+
+		if(cnt > 1) {
+			error_info.push(getErrorInfo(_STATUS, '<meta charset="utf-8">'));
+		}
+
+		cnt = 0;
+		var viewportname = document.getElementsByTagName('meta');
+		for(index = 0; index < viewportname.length; index ++) {
+			var name = viewportname.name || '';
+			if(name.toLowerCase().indexOf('viewport')) {
+				cnt ++;
+			} 
+		}
+		if(cnt > 1) {
+			error_info.push(getErrorInfo(_STATUS, '<meta name="viewport">'));
+		}
+
+		cnt = 0;
+		var stan = document.getElementsByTagName('link');
+		for(index = 0; index < stan.length; index ++) {
+			var rel = stan.rel || '';
+			if(rel.toLowerCase().indexOf('standardhtml')) {
+				cnt ++;
+			} 
+		}
+		if(cnt > 1) {
+			error_info.push(getErrorInfo(_STATUS, '<link rel="miphtml" >'));
 		}
 
 		if(error_info.length) {
@@ -445,7 +518,7 @@ var check = (function() {
 
 		if(error_info.length) {
 			response_data.status = _STATUS;
-			response_data.errors.duplicate_unique_tag.error_info = error_info;
+			response_data.errors.cache_forbiden.error_info = error_info;
 		}
 	}
 
