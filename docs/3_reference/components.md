@@ -86,47 +86,49 @@ js目录下:
 	        
 	 ```
 	 /**
-		 * @file 组件demo示例
-		 * @author lilangbo
-		 * @time 2016.07.11
-		 */
+	 * @file 组件demo示例
+	 * @author lilangbo
+	 * @time 2016.07.11
+	 */
 
-		require(['src/mip'], function (mip){
-		    var customElem = require('buildins/customElement');
-		    /**
-		     * demoFun
-		     *
-		     * @param  {Event} e event
-		     */
-		    function demoFun (e) {
-		        console.log('This is a mip componnents demo');
-		    }
+	define(function (){
+	    var customElem = require('customElement');
+	    /**
+	     * demoFun
+	     *
+	     * @param  {Event} e event
+	     */
+	    function demoFun (e) {
+	        console.log('This is a mip componnents demo');
+	    }
 
-		    /**
-		     * 初始化
-		     *
-		     */
-		    customElem.prototype.init = function() {
-		        this.createdCallback = function () {
-		            //创建节点回调
-		        };
-		        this.attachedCallback = function () {
-		            //插入节点回调
-		        };
-		        //如果在build里面定义渲染,用户在可视区域内，才会渲染
-		        this.build = demoFun;
-		        this.detachedCallback = function () {
-		            //销毁事件
-		        };
-		    };
+	    /**
+	     * 初始化
+	     *
+	     */
+	    customElem.prototype.init = function() {
+	        this.createdCallback = function () {
+	            //创建节点回调
+	        };
+	        this.attachedCallback = function () {
+	            //插入节点回调
+	        };
+	        //如果在build里面定义渲染,用户在可视区域内，才会渲染
+	        this.build = demoFun;
+	        this.detachedCallback = function () {
+	            //销毁事件
+	        };
+	    };
+	    return customElem;
+	});
+	require(["组件名称"], function(demo) {
+	    // 引入组件需要的css文件，选填
+	    MIP.css.组件名称 = __inline('./组件名称.less');
+	    //注册组件
+	    MIP.registerMipElement('组件名称', demo, MIP.css.mipDemo);
+	});
 
-		    // 引入组件需要的css文件，选填
-		    MIP.css.mipDemo = __inline('extensions/demo/0.1/demo.less');
-		    //注册组件
-		    MIP.registerMipElement('mip-demo', customElem, MIP.css.mipDemo);
-		});
-
-	 ```
+	```
 
 
 
