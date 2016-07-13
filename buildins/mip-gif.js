@@ -1,5 +1,5 @@
 define(function(){
-    var customGif = require('./customElement');
+    var customGif = require('buildins/customElement');
    function build(){
         if(this.isRender){
             return; 

@@ -56,6 +56,15 @@ fis.match('src/mip_ad.js', {
     release: 'mip_ad.js'
 });
 
+fis.match('extensions/*/*/*.js', {
+    useHash: true,
+    optimizer: fis.plugin('uglify-js', {
+      output : {
+          max_line_len : 500
+      }
+    }),
+    release: '$0'
+});
 
 fis.match('*.less', {
     parser: fis.plugin('less'),

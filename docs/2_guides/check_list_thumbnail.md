@@ -16,7 +16,7 @@ MIP页面会有严格的规范校验，不允许存在任何校验不通过的�
 
 |说明|备注|
 |---|---|
-|&lt;!doctype html&gt; | 强制小写|
+|&lt;!doctype html&gt; | 大小写均可|
 |&lt;html mip&gt; |强制小写|
 |&lt;head&gt; |强制小写|
 |&lt;meta charset="utf-8"&gt; |utf-8不区分大小写，无单引号或者双引号限制|
@@ -164,7 +164,7 @@ mip html中具有强制性属性的标签及其强制性属性有：
     - src
 - mip-pix
     - src
-- mip-baidu-stats
+- mip-baidu-tj
     - token
 - mip-ad
     - tpl
@@ -228,8 +228,8 @@ mip html中具有强制性属性的标签及其强制性属性有：
 - `<doctype html>`
 - `<html mip>`
 - `<head>`
-- `<link rel=canonical href=...>`
-- `<link rel=amphtml href=...>`
+- `<link rel="standardhtml" href=...>`
+- `<link rel="miphtml" href=...>`
 - `<meta charset="utf-8">`
 - `<meta viewport>`
 - `<style mip-custom>`
