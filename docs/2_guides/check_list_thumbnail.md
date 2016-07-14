@@ -24,6 +24,7 @@ MIP页面会有严格的规范校验，不允许存在任何校验不通过的�
 |&lt; link rel="stylesheet" type="text/css" href="//m.baidu.com/static/ala/sf/static/css/miphtml_xxxxxx.css" &gt; |强制小写，无单引号或者双引号限制，xxx会根据版本不同而不同|
 |&lt;script src="//m.baidu.com/static/ala/sf/static/js/miphtml_main_xxxxxx.js"&gt;&lt;/script&gt; |强制小写，无单引号或者双引号限制，xxx会根据版本不同而不同|
 |&lt;body&gt; |强制小写|
+|&lt;link rel="standardhtml" href="xxx"&gt; |强制小写|
 
 ### 2. 禁用标签
 

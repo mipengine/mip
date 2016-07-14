@@ -126,6 +126,7 @@ var check = (function() {
 
 		var index = 0;
 		var flag = false;
+		var flag_stand = false;
 
 		if(htmlMip < 0) {
 			error_info.push(getErrorInfo(_STATUS, 'html mip'));
@@ -135,19 +136,31 @@ var check = (function() {
 			error_info.push(getErrorInfo(_STATUS, '!doctype'));
 		}
 
+		// 是否缺失utf-8编码 
 		for(index = 0; index < metaTag.length; index ++) {
 			var contentstr = metaTag[index].content || '';
 			var charsetstr = metaTag[index].getAttribute('charset') || '';
-			if(contentstr.toLowerCase().indexOf('utf-8')) {
+			if(contentstr.toLowerCase().indexOf('utf-8') > -1) {
 				flag = true;
-			} else if(charsetstr.toLowerCase().indexOf('utf-8')){
+			} else if(charsetstr.toLowerCase().indexOf('utf-8') > -1){
 				flag = true;
 			}
-			
 		}
 
 		if(!flag) {
 			error_info.push(getErrorInfo(_STATUS , 'utf-8'));
+		}
+
+		// 是否缺失rel="standardhtml"
+		for(index = 0; index < linkTag.length; index ++) {
+			var stand = linkTag[index].rel;
+			if(stand && stand !== 'standardhtml') {
+				flag_stand = true;
+			}
+		}
+
+		if(flag_stand) {
+			error_info.push(getErrorInfo(_STATUS , 'link rel="standardhtml" href=""'));
 		}
 
 		for(index = 0; index < tags.length; index ++) {
@@ -460,9 +473,10 @@ var check = (function() {
 		for(index = 0; index < metaTag.length; index ++) {
 			var contentstr = metaTag[index].content || '';
 			var charsetstr = metaTag[index].getAttribute('charset') || '';
-			if(contentstr.toLowerCase().indexOf('utf-8')) {
+			if(contentstr.toLowerCase().indexOf('utf-8') > -1) {
 				cnt ++;
-			} else if(charsetstr.toLowerCase().indexOf('utf-8')){
+			}
+			if(charsetstr.toLowerCase().indexOf('utf-8') > -1){
 				cnt ++;
 			}
 		}
@@ -475,7 +489,7 @@ var check = (function() {
 		var viewportname = document.getElementsByTagName('meta');
 		for(index = 0; index < viewportname.length; index ++) {
 			var name = viewportname.name || '';
-			if(name.toLowerCase().indexOf('viewport')) {
+			if(name.toLowerCase().indexOf('viewport') > -1) {
 				cnt ++;
 			} 
 		}
@@ -487,12 +501,12 @@ var check = (function() {
 		var stan = document.getElementsByTagName('link');
 		for(index = 0; index < stan.length; index ++) {
 			var rel = stan.rel || '';
-			if(rel.toLowerCase().indexOf('standardhtml')) {
+			if(rel.toLowerCase().indexOf('standardhtml') > -1) {
 				cnt ++;
 			} 
 		}
 		if(cnt > 1) {
-			error_info.push(getErrorInfo(_STATUS, '<link rel="miphtml" >'));
+			error_info.push(getErrorInfo(_STATUS, '<link rel="standardhtml" >'));
 		}
 
 		if(error_info.length) {
