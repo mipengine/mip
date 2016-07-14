@@ -92,7 +92,10 @@ define(function(require){
      */
     MIP.registerMipElement('mip-video',require('buildins/video/mip-video'));
 
-
+    /**
+     * 注册网盟mip-adbaidu组件
+     */
+    MIP.registerMipElement('mip-adbaidu',require('extensions/ads/mip-ad-baidu'));
 
     //页面初始化后，处理可视区域内元素
     $(function(){
