@@ -45,7 +45,7 @@ define(function () {
             }
 
             // 结果页日志发送接口
-            console && console.log(obj);
+            // console && console.log(obj);
         }
     };
 
