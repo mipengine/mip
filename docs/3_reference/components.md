@@ -84,7 +84,7 @@ js目录下:
 
 	demo示例
 	        
-	 ```
+	```
 	 /**
 	 * @file 组件demo示例
 	 * @author lilangbo
