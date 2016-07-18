@@ -120,6 +120,14 @@ define(function(require){
         });
     });
 
+    //页面传递消息给父页面
+    window.parent.postMessage({
+        event: 'mippageload',
+        data: {
+            time: new Date().getTime()
+        }
+    }, '*');
+
     /**
      *  初始化图片浏览组件，并处理viewport中的事件冲突
      * */
