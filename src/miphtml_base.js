@@ -29,4 +29,6 @@ __inline('buildins/img-viewer.js');
 __inline('buildins/video/mip-video.js');
 __inline('buildins/video/player.js');
 __inline('buildins/video/popup.js');
+__inline('extensions/ads/mip-ad-baidu.js');
+
 

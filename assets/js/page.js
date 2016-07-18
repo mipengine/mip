@@ -165,6 +165,9 @@ $(window).on('scroll',function(){
     var width = (this.window.innerWidth > 0) ? this.window.innerWidth : this.screen.width;
     if(width < 768 ) return;
     if (pageYOffset > 50){
+        var pageHeight = $(window).height();
+        var sidebarHeight = pageHeight - 50;
+        $('.sidebar-nav').css({'max-height':sidebarHeight+'px','overflow-y':'auto'});
         $('#sidebar-wrapper').css({
             'position': 'fixed', 
             'top': 0

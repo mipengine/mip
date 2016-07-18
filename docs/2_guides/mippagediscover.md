@@ -1,6 +1,7 @@
 # 让搜索发现你的页面
 
-在某些情况下，站点对于同一个html页面，可能存在两种，一个是mip html，一个是standard html。如果百度搜索发现了你的standard html，怎么让她发现你的对应的mip html，请往下看
+在某些情况下，站点对于同一个html页面，可能存在两种，一个是mip html，一个是standard html。
+当百度检索到你页面的standard html时，你可以通过在mip中添加如下的代码，以保证百度更好的检索到你的mip html，同时也可以让你的mip html更好的继承standard html的权重等相关策略信息。
 
 ## 在head中添加link标签让百度搜索发现你的页面
 
