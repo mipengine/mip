@@ -1,10 +1,10 @@
 define(['../../src/utils/util'], function(util){
-    console.log('dfd');
+    // console.log('dfd');
     var customElem = require('../customElement');
     var player = require('./player');
     var build = function () {
         if (this.isRender) {
-            return; 
+            return;
         }
         this.isRender = true;
 
@@ -87,7 +87,7 @@ define(['../../src/utils/util'], function(util){
     };
 
     customElem.prototype.init = function(){
-        this.build = build; 
+        this.build = build;
     };
 
     return customElem;
