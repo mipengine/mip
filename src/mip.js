@@ -97,6 +97,14 @@ define(function(require){
      */
     MIP.registerMipElement('mip-adbaidu',require('extensions/ads/mip-ad-baidu'));
 
+    //页面传递消息给父页面
+    window.parent.postMessage({
+        event: 'mippageload',
+        data: {
+            time: new Date().getTime()
+        }
+    }, '*');
+
     //页面初始化后，处理可视区域内元素
     $(function(){
         window.setTimeout(function(){
