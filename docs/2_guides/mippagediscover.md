@@ -68,4 +68,4 @@ Schema.org 是一份公开的、标准的 schema 词汇表，它能够给站长�
   }
 </script>
 ```
-可以通过[资源引入/schema](http://sfe.baidu.com/#/资源引入/schema)了解更多。
+可以通过[资源引入/schema](http://sfe.baidu.com/#/资源引入/Schemas标记)了解更多。
