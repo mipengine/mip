@@ -1,27 +1,30 @@
-/* * 线上需要把代码压缩打开
- *
- */
-/*
-fis.match('*.js', {
-    useHash: false, // default is true
-    optimizer: fis.plugin('uglify-js', {
-    output : {
-        max_line_len : 500
-    }
-    })
-});
-*/
 fis.set('project.files', [
    'newbuiltins/mip_builtins.js'     
 ]);
+
 fis.hook('amd', {
 });
 
+fis.match('*.js', {
+  // fis-optimizer-uglify-js 插件进行压缩，已内置
+  optimizer: fis.plugin('uglify-js')
+});
 fis.match('*', {
     release: false
 });
-
 fis.match('newbuiltins/mip_builtins.js', {
-    release: true
+    useHash: false,
+    optimizer: fis.plugin('uglify-js', {
+        output: {
+            comments: /^!/,
+            max_line_len : 500
+        },
+        mangle: {
+            except: 'exports, module, require, define'
+        }
+    }),
+    release: 'mip_builtins.js'
 });
+
+
 

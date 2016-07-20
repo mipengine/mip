@@ -4,6 +4,10 @@ fis.set('project.files', [
 fis.hook('amd', {
 });
 
+fis.match('/(**).js', {
+    moduleId: '$1'
+});
+
 fis.match('*', {
     release: false
 });

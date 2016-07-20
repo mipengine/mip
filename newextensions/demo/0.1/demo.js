@@ -32,11 +32,12 @@ define(function (){
             //销毁事件
         };
     };
+    return customElem;
 });
-
-// 引入组件需要的css文件，选填
-MIP.css.mipDemo = __inline('./demo.less');
-//注册组件
-MIP.registerMipElement('mip-demo', customElem, MIP.css.mipDemo);
-
+require(['demo'], function (demo) {
+    // 引入组件需要的css文件，选填
+    MIP.css.mipDemo = __inline('./demo.less');
+    //注册组件
+    MIP.registerMipElement('mip-demo', demo, MIP.css.mipDemo);
+});
 
