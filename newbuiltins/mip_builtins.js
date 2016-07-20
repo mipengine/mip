@@ -10,6 +10,7 @@ __inline('./mip-pix.js');
 __inline('../newextensions/mip-carousel.js');
 __inline('../newextensions/mip-iframe.js');
 __inline('../newextensions/recommend.js');
+__inline('./mip-appdl.js');
 __inline('./img-viewer.js');
 __inline('./mip-video.js');
 __inline('./video/player.js');
@@ -101,6 +102,13 @@ define(function(require){
      * 注册mip-video组件
      */
     MIP.registerMipElement('mip-video',require('newbuiltins/mip-video'));
+
+    /**
+     * 注册mip-appdl下载组件
+     */
+    
+    MIP.registerMipElement('mip-appdl',require('newbuiltins/mip-appdl'));
+
 
 
 

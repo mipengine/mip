@@ -5,7 +5,7 @@ default:
 dev:
 	 fis3 server start --root=./ --port=8056
 	 fis3 release dev -d dist -wL
-doc:
+doc:bbaid
 	node renderDoc.js
 mip:
 	fis3 release --dest=./build --file=buildconf/src.js --root=./newsrc

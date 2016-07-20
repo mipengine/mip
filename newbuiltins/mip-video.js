@@ -1,7 +1,8 @@
 define(['utils/util'], function(util){
-    console.log('dfd');
     var customElem = require('customElement');
-    var player = require('video/player');
+    var player = require('./video/player');
+
+    var bdPlayer;
     var build = function () {
         if (this.isRender) {
             return; 
@@ -12,7 +13,14 @@ define(['utils/util'], function(util){
         var $me = $(this);
 
         $(this).on('click', function (event) {
-            var bdPlayer = new player({});
+            // 如果有视屏正在播放，则移除视屏
+            bdPlayer && bdPlayer.remove();
+            // if(bdPlayers.length) {
+            //     for(var index = 0; index < bdPlayers.length; index ++) {
+            //         bdPlayers[index].pause();
+            //     }
+            // }
+            bdPlayer = new player({});
 
             // video容器  如果未设置的话  则传入me
             var container = $me.attr('container');
@@ -22,6 +30,8 @@ define(['utils/util'], function(util){
                 container = me;
             }
 
+            var mip_video = $(container).parent().find('mip-video');
+            
             // 广告数据信息
             var adInfo = [];
             var adInfoString = $me.attr('adInfo');
@@ -76,6 +86,7 @@ define(['utils/util'], function(util){
                 playInfo: playInfo
                 // src: 'http://v1.bdstatic.com/8aa369effe2cc6280c1bd413723ce0ac/mp4/8aa369effe2cc6280c1bd413723ce0ac.mp4'
             });
+            // bdPlayers.push(bdPlayer);
         });
 
         // 防止点击video区域时 造成重播

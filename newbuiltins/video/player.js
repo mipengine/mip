@@ -411,14 +411,15 @@ define(function() {
             var options = self.options;
             var eventNS = self.eventNS + 'fullscreen';
 
+            //注释原有功能
             // QQ browser由于自有实现的播放器问题 特殊处理
             // 避免2次点击关闭按钮
-            if (navigator.userAgent.match(/(android.+mqqbrowser)/i)) {
-                return;
-            }
+            // if (navigator.userAgent.match(/(android.+mqqbrowser)/i)) {
+            //     return;
+            // }
 
             // 引用通用弹窗组件
-            require(['popup'], function (Popup) {
+            require(['./popup'], function (Popup) {
                 var popup = new Popup({
                     title: options.title || '',
                     content: '',
