@@ -10,6 +10,8 @@ doc:bbaid
 mip:
 	fis3 release --dest=./build --file=buildconf/src.js --root=./newsrc
 builtins:
-	fis3 release --dest=./dist --file=buildconf/builtins.js --root=./
+	fis3 release --dest=./build --file=buildconf/builtins.js --root=./
 ext:
 	fis3 release --dest=./dist --file=buildconf/extensions.js --root=./
+mipmain:
+	fis3 release --dest=./dist --file=buildconf/main.js --root=./
