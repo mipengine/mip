@@ -40,14 +40,14 @@ Schema.org 是一份公开的、标准的 schema 词汇表，它能够给站长�
   {
     "@context": "http://schema.org",
     "@type": "NewsArticle",
-    "mainEntityOfPage": "http://cdn.ampproject.org/article-metadata.html",
-    "headline": "Lorem Ipsum",
+    "mainEntityOfPage": "https://www.baidu.com/nocache/zhixin/mib/mip-demo.html",
+    "headline": "标题",
     "datePublished": "1907-05-05T12:02:41Z",
     "dateModified": "1907-05-05T12:02:41Z",
-    "description": "The Catiline Orations continue to beguile engineers and designers alike -- but can it stand the test of time?",
+    "description": "百度 MIP 页面 demo",
     "author": {
       "@type": "Person",
-      "name": "Jordan M Adler"
+      "name": "Baidu"
     },
     "publisher": {
       "@type": "Organization",
