@@ -1,17 +1,17 @@
 fis.set('project.files', [
-   'newextensions/**'     
+   'extensions/**'     
 ]);
 fis.hook('amd', {
-});
-
-fis.match('/(**).js', {
-    moduleId: '$1'
 });
 
 fis.match('*', {
     release: false
 });
 
-fis.match('newextensions/*/*/*.js', {
+fis.match('extensions/*/*/*.js', {
     release: true
+});
+fis.media('dev').match('*.{js,css,less}', {
+    useHash: false,
+    optimizer: null
 });

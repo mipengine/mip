@@ -1,5 +1,5 @@
 define(function(){
-    var customElem = require('customElement');
+    var customElem = require('buildins/customElement');
 
     var build = function () {
         // 避免多次渲染
@@ -121,6 +121,9 @@ define(function(){
         var gesture = require('gesture');
         gesture.init();
         gesture.bind(function (evt, data) {
+            if(navigator.control.gesture) {
+                navigator.control.gesture(false);
+            }
             // 用户手指滑动结束且手势为横向滑动且当前不处于动画播放状态
             if (data.event === 'touchend' && Math.abs(data.x) > Math.abs(data.y) && !isAnimating) {
                 autoTimer && clearTimeout(autoTimer);
@@ -132,6 +135,7 @@ define(function(){
                     }
                 });
             }
+            return false;
         });
 
         if (isAutoPlay) {

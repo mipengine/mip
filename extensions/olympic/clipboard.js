@@ -7,13 +7,15 @@
 
 define(function() {
 
+    var isBaidubox = /baiduboxapp/.test(navigator.userAgent);
+
     /**
      * CLICK_EVENT
      * 也许手机需要 touchend
      *
      * @type {String}
      */
-    var CLICK_EVENT = 'click';
+    var CLICK_EVENT = isBaidubox ? 'touchstart' : 'click';
 
     /**
      * Clipboard
@@ -31,18 +33,6 @@ define(function() {
 
         this.bind();
     }
-
-    var detect = require('./share/detect');
-
-
-    /**
-     * 安卓 非手百 能用
-     *
-     * @type {Boolean}
-     */
-    Clipboard.support = true
-        && detect.os.n == 'android'
-        && detect.browser.n !== 'zbios';
 
     Clipboard.prototype = {
 

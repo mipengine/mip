@@ -1,5 +1,5 @@
 fis.set('project.files', [
-   'newbuiltins/mip_builtins.js'     
+   'builtins/mip_builtins.js'     
 ]);
 
 fis.hook('amd', {
@@ -12,7 +12,7 @@ fis.match('*.js', {
 fis.match('*', {
     release: false
 });
-fis.match('newbuiltins/mip_builtins.js', {
+fis.match('builtins/mip_builtins.js', {
     useHash: false,
     optimizer: fis.plugin('uglify-js', {
         output: {
@@ -25,6 +25,9 @@ fis.match('newbuiltins/mip_builtins.js', {
     }),
     release: 'mip_builtins.js'
 });
-
+fis.media('dev').match('*.{js,css,less}', {
+    useHash: false,
+    optimizer: null
+});
 
 

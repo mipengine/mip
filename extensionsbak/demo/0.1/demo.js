@@ -4,8 +4,8 @@
  * @time 2016.07.11
  */
 
-define(function (){
-    var customElem = require('customElement');
+require(['src/mip'], function (mip){
+    var customElem = require('buildins/customElement');
     /**
      * demoFun
      *
@@ -32,12 +32,11 @@ define(function (){
             //销毁事件
         };
     };
-    return customElem;
-});
-require(['demo'], function (demo) {
+
     // 引入组件需要的css文件，选填
-    MIP.css.mipDemo = __inline('./demo.less');
+    MIP.css.mipDemo = __inline('extensions/demo/0.1/demo.less');
     //注册组件
-    MIP.registerMipElement('mip-demo', demo, MIP.css.mipDemo);
+    MIP.registerMipElement('mip-demo', customElem, MIP.css.mipDemo);
 });
+
 

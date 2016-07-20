@@ -7,9 +7,9 @@
 __inline('./mip-img.js');
 __inline('./mip-gif.js');
 __inline('./mip-pix.js');
-__inline('../newextensions/mip-carousel.js');
-__inline('../newextensions/mip-iframe.js');
-__inline('../newextensions/recommend.js');
+__inline('../extensions/mip-carousel.js');
+__inline('../extensions/mip-iframe.js');
+__inline('../extensions/recommend.js');
 __inline('./mip-appdl.js');
 __inline('./img-viewer.js');
 __inline('./mip-video.js');
@@ -81,33 +81,33 @@ define(function(require){
     /*
      *注册mip-gif组件
      */
-    MIP.registerMipElement('mip-gif', require('newbuiltins/mip-gif'));
+    MIP.registerMipElement('mip-gif', require('builtins/mip-gif'));
 
     /*
      * 注册mip-img组件
      */
-    MIP.registerMipElement('mip-img',require('newbuiltins/mip-img'));
+    MIP.registerMipElement('mip-img',require('builtins/mip-img'));
 
     /*
      * 注册mip-carousel组件
      */
-    MIP.registerMipElement('mip-carousel',require('newextensions/mip-carousel'));
+    MIP.registerMipElement('mip-carousel',require('extensions/mip-carousel'));
 
     /*
      * 注册mip-iframe组件
      */
-    MIP.registerMipElement('mip-iframe',require('newextensions/mip-iframe'));
+    MIP.registerMipElement('mip-iframe',require('extensions/mip-iframe'));
 
     /*
      * 注册mip-video组件
      */
-    MIP.registerMipElement('mip-video',require('newbuiltins/mip-video'));
+    MIP.registerMipElement('mip-video',require('builtins/mip-video'));
 
     /**
      * 注册mip-appdl下载组件
      */
     
-    MIP.registerMipElement('mip-appdl',require('newbuiltins/mip-appdl'));
+    MIP.registerMipElement('mip-appdl',require('builtins/mip-appdl'));
 
 
 
