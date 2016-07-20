@@ -58,7 +58,6 @@ define(function() {
                 "<div class='mip-appdl-closebutton'></div>"+
             "</div>"+
         "</div>";
-        console.log(str)
         $(this).append(str)
     }
 
