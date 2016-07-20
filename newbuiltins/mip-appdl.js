@@ -17,6 +17,7 @@ define(function() {
 
         this.isRender = true;
         getallconfig.call(this)
+        BindClose.call(this)
     }
 
     function getallconfig() {
@@ -104,6 +105,15 @@ define(function() {
             domstr+="<p>"+tarray[i]+"</p>";
         }
         return domstr+"</div>";
+    }
+
+    /**
+     * 绑定关闭事件
+     */
+    function BindClose() {
+        $(this).on("click",".mip-appdl-closebutton",function(){
+            $(this).parents(".mip-element").remove()
+        })
     }
 
     /**
