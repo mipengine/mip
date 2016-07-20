@@ -89,9 +89,7 @@ define(function(require){
     /*
      * 注册mip-video组件
      */
-    MIP.registerMipElement('mip-video',require('buildins/video/mip-video'));
-
-
+    MIP.registerMipElement('mip-video',require('builtins/video/mip-video'));
 
     //页面初始化后，处理可视区域内元素
     $(function(){
