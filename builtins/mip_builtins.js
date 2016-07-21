@@ -103,15 +103,6 @@ define(function(require){
      */
     MIP.registerMipElement('mip-video',require('builtins/mip-video'));
 
-    /**
-     * 注册mip-appdl下载组件
-     */
-    
-    MIP.registerMipElement('mip-appdl',require('builtins/mip-appdl'));
-
-
-
-
     //页面初始化后，处理可视区域内元素
     $(function(){
         window.setTimeout(function(){
