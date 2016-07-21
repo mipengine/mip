@@ -40,6 +40,7 @@ define(function() {
 });
 require(['mip-stats-netease'], function (netease) {
     //注册组件
+    MIP.registerMipElement('mip-stats-netease', netease);
     MIP.registerMipElement('mip-netease-tongji', netease);
 });
 
