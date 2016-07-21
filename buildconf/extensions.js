@@ -11,7 +11,11 @@ fis.match('*', {
 fis.match('extensions/*/*/*.js', {
     release: true
 });
-fis.media('dev').match('*.{js,css,less}', {
+fis.media('debug').match('*.{js,css,less}', {
     useHash: false,
     optimizer: null
+});
+fis.match('*.less', {
+    parser: fis.plugin('less'),
+    rExt: '.css'
 });
