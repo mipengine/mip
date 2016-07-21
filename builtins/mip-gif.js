@@ -6,7 +6,7 @@ define(function(){
         }
         this.isRender = true;
         var _img = new Image();
-        var src = this.getAttribute('framesrc');
+        var src = this.getAttribute('src');
         _img.src = src;
         if(this.getAttribute('width')){
             _img.setAttribute('width',this.getAttribute('width'));
