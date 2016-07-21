@@ -6,7 +6,7 @@
 
 define(function() {
 
-    var customElem = require('buildins/customElement');
+    var customElem = require('customElement');
 
     /**
      * 点击链接事件
@@ -66,4 +66,9 @@ define(function() {
 
     return customElem;
 
+});
+
+require(['mip-link'], function (link) {
+    //注册组件
+    MIP.registerMipElement('mip-link', link);
 });

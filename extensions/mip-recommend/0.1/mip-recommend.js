@@ -1,3 +1,7 @@
+/* inline dep */
+__inline('./util');
+__inline('./recommend');
+
 /**
  * @file 新闻推荐组件
  *
@@ -7,7 +11,7 @@
 
 define(function() {
 
-    var customElem = require('buildins/customElement');
+    var customElem = require('customElement');
     var recommend = require('./recommend');
 
     customElem.prototype.init = function() {
@@ -44,4 +48,9 @@ define(function() {
     return customElem;
 
 });
-
+require(['mip-recommend'], function (recommend) {
+    // 引入组件需要的css文件，选填
+    MIP.css.mipRecommend = __inline('./mip-recommend.less');
+    //注册组件
+    MIP.registerMipElement('mip-recommend', recommend, MIP.css.mipRecommend);
+});

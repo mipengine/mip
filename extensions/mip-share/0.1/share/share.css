@@ -1,0 +1,49 @@
+/* 分享列表容器 */
+.c-share-list {
+    overflow: hidden;
+}
+
+.c-share-list .c-share-btn {
+    color: #333;
+    text-align: center;
+    font-size: 12px;
+}
+
+.c-share-list .c-share-btn .c-img {
+    background: #fff;
+    border: 1px solid #f0f0f0;
+    border-radius: 50%;
+}
+
+
+/* 分享取消按钮,只在popup打开时展现 */
+.c-share-cancel-btn {
+    border-color: #f0f0f0;
+}
+
+
+/* 微信分享提示tips */
+.c-share-wechat-tips {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6) url(//m.baidu.com/se/static/pmd/pmd/share/images/wxtips.png) right 32px top 10px/50% no-repeat;
+}
+
+
+/* popup打开时自定义容器背景色,需要提高选择器优先级 */
+.c-popup-wrapper .c-share-popup-modal {
+    background-color: #f0f0f0;
+}
+
+.c-share-popup-modal .c-popup-head {
+    display: none;
+}
+
+.c-share-popup-modal .c-popup-content {
+    margin: 0 auto;
+    padding: 21px;
+}

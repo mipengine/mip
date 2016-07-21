@@ -7,7 +7,7 @@
 
 define(function() {
 
-    var customElem = require('buildins/customElement');
+    var customElem = require('customElement');
 
     // SUDA地图统计
     window.sudaMapConfig = {
@@ -94,3 +94,7 @@ define(function() {
 
 });
 
+require(['mip-stats-sina'], function (sina) {
+    //注册组件
+    MIP.registerMipElement('mip-sina-tongji', sina);
+});

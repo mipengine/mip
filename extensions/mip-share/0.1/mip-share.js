@@ -1,3 +1,11 @@
+/* inline dep */
+
+__inline('./share/aio');
+__inline('./share/detect');
+__inline('./share/share');
+__inline('./clipboard');
+__inline('./share');
+
 /**
  * @file 分享
  * @author junmer
@@ -6,7 +14,7 @@
 
 define(function() {
 
-    var customElem = require('buildins/customElement');
+    var customElem = require('customElement');
 
     var Share = require('./share');
 
@@ -41,4 +49,11 @@ define(function() {
 
     return customElem;
 
+});
+
+require(['mip-share'], function (share) {
+    // 引入组件需要的css文件，选填
+    MIP.css.mipShare = __inline('./mip-share.less');
+    //注册组件
+    MIP.registerMipElement('mip-share', share, MIP.css.mipShare);
 });
