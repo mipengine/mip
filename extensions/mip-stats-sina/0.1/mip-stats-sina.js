@@ -97,5 +97,5 @@ define(function() {
 require(['mip-stats-sina'], function (sina) {
     //注册组件
     MIP.registerMipElement('mip-sina-tongji', sina);
-    MIP.registerMipElement('mip-stats-sina', netease);
+    MIP.registerMipElement('mip-stats-sina', sina);
 });
