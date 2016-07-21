@@ -4,6 +4,7 @@ fis.set('project.files', [
 ]);
 fis.match('::package', {
     packager: fis.plugin('map', {
+      useTrack : false,
       'mipmain.js': [
           'build/mipframe.js',
           'build/mip_builtins.js'

@@ -38,8 +38,8 @@ define(function(){
     return customElem;
 
 });
-require(["mip-stats-bidu"], function(mip-stats-bidu) {
+require(["mip-stats-bidu"], function(statsbidu) {
     //注册组件
-    MIP.registerMipElement('mip-stats-bidu', mip-stats-bidu);
+    MIP.registerMipElement('mip-stats-bidu', statsbidu);
 });
 

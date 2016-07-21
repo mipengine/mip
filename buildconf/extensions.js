@@ -9,6 +9,7 @@ fis.match('*', {
 });
 
 fis.match('extensions/*/*/*.js', {
+	optimizer: fis.plugin('uglify-js'),
     release: true
 });
 fis.media('debug').match('*.{js,css,less}', {
