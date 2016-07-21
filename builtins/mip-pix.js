@@ -15,8 +15,15 @@ define(function(){
         this.isRender = true;
         var _img = new Image();
         var src = this.getAttribute('src');
+        var proxy = this.getAttribute("proxy-title");
         var time = (new Date().getTime());
-        _img.src = src+"?"+time;
+        var _src = "";
+        if(proxy) { //如果是要开启代理
+            src = _src+"?t="+time+"&"+"title="+proxy+"&host=mip.bdstatic.com&from=baidu";
+        }else {
+            src = _src+"?t="+time;
+        }
+        _img.src= src;
         _img.setAttribute('width',0);
         _img.setAttribute('height',0);
         this.setAttribute('width','');

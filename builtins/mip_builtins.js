@@ -73,10 +73,9 @@ define(function(require){
 
     /***
      *  注册统计组件
-     * /
-    require(['dom/mip-pix'],function(mipPix){
-        window.registerMipElement('mip-pix',mipPix);
-    });
+     */
+
+    MIP.registerMipElement('mip-pix', require('builtins/mip-pix'));
 
     /*
      *注册mip-gif组件
