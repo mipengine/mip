@@ -17,7 +17,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
     <title>MIP DEMO</title>
-    <link rel="stylesheet" href="//m.baidu.com/static/ala/sf/static/css/miphtml_4613619.css">
+    <link rel="stylesheet" href="https://mipcache.bdstatic.com/static/mipmain-v0.0.1.css">
     <!-- 在standard html中添加 -->
     <link rel="miphtml" href="页面h5 url">
     <!-- 在mip html中添加 -->
@@ -47,7 +47,7 @@
             <span><strong>自定义的加粗字体</strong></span>
         </p>
     </div>
-<script src="//m.baidu.com/static/ala/sf/static/js/miphtml_main_91d6a5e.js"></script>
+<script src="https://mipcache.bdstatic.com/static/mipmain-v0.0.1.js"></script>
 </body>
 </html>
 ```

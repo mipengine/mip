@@ -7,6 +7,7 @@ mip-ad-baidu 用来支持在 mip 中添加网盟广告。
 可用性|稳定
 支持布局| 响应式
 示例|官网上线后增加示例
+所需脚本|https://mipcache.bdstatic.com/static/mip-ads.js
 
 ## 1. 使用
 

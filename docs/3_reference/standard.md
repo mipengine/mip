@@ -12,13 +12,11 @@
 
 - 必须在head标签中包含viewport设置标签:  &lt;meta name="viewport" content="width=device-width,minimum-scale=1"&gt;，推荐包含`initial-scale=1`
 
-- 必须在head标签中包含 &lt; link rel="stylesheet" type="text/css" href="//m.baidu.com/static/ala/sf/static/css/miphtml_xxxxxx.css" &gt;
-
-- 必须在head标签中包含 &lt;script async src="https://m.baidu.com/miphtml/v0.js"&gt; &lt;/script&gt;
+- 必须在head标签中包含 &lt; link rel="stylesheet" type="text/css" href="/https://mipcache.bdstatic.com/static/mipmain-v0.0.1.css" &gt;
 
 - 必须在head标签中包含` &lt;style&gt;body {opacity: 0} &lt;/style&gt; &lt;noscript&gt;<style&gt;body {opacity: 1} &lt;/style&gt; &lt;/noscript&gt;
 
-- 必须在body标签中包含 &lt;script src="//m.baidu.com/static/ala/sf/static/js/miphtml_main_xxxxxx.js"&gt;&lt;/script&gt;
+- 必须在body标签中包含 &lt;script src="https://mipcache.bdstatic.com/static/mipmain-v0.0.1.js"&gt;&lt;/script&gt;
 
 ##页面元素使用规范
 

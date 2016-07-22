@@ -14,7 +14,7 @@
 
 下面这段代码是一个基础的 MIP HTML 的 demo 。将它复制到html文件中，并根据规范添加你想要的元素。
 
-需要注意，页面中必须加载css文件`//m.baidu.com/static/ala/sf/static/css/miphtml_xxxxxx.css` 和 js文件`//m.baidu.com/static/ala/sf/static/js/miphtml_main_xxxxxx.js`，`xxxxxx`是版本号，版本号会根据功能的升级而不同，开发中可以根据文档中的说明进行加载。
+需要注意，页面中必须加载css文件`https://mipcache.bdstatic.com/static/mipmain-v0.0.1.css` 和 js文件`https://mipcache.bdstatic.com/static/mipmain-v0.0.1.js`，`v0.0.1`是版本号，版本号会根据功能的升级而不同，开发中可以根据文档中的说明进行加载。
 
 ```
 <!DOCTYPE html>
@@ -23,12 +23,12 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
         <title>文章大标题</title>
-        <link rel="stylesheet" type="text/css" href="//m.baidu.com/static/ala/sf/static/css/miphtml_c0c6e10.css">
+        <link rel="stylesheet" type="text/css" href="https://mipcache.bdstatic.com/static/mipmain-v0.0.1.css">
     </head>
     <body>
         <h1>欢迎使用MIP，这是你的第一个MIP页面！</h1>        
     </body>
-    <script src="//m.baidu.com/static/ala/sf/static/js/miphtml_main_91d6a5e.js"></script>   
+    <script src="https://mipcache.bdstatic.com/static/mipmain-v0.0.1.js"></script>   
 </html>
 ```
 
