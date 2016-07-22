@@ -14,7 +14,7 @@ define(function(){
         }
         this.isRender = true;
         var $this = $(this);
-        var cproID = $this.data("cproid");
+        var cproID = this.getAttribute("cproid");
         
         if(!cproID) {
             return;
