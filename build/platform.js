@@ -1,1 +1,0 @@
-var platform=function(){function n(){return/iPhone|iPad|iPod/i.test(window.navigator.userAgent)}function i(){return/Safari/i.test(window.navigator.userAgent)&&!r()}function r(){return/Chrome|CriOS/i.test(window.navigator.userAgent)}function t(){return/UCBrowser/i.test(window.navigator.userAgent)}return{isIos:n,isSafari:i,isChrome:r,isUc:t,needSpecialScroll:n()&&!t()}}();

@@ -1,1 +1,0 @@
-define("utils/util",["require"],function(){function i(i,t,e){if(i.indexOf("mipcache.bdstatic.com")<0||t&&t.length<8||0!=t.indexOf("http")&&0!=t.indexOf("//"))return t;var n="img"===e?"/i/":"/c/";(0==t.indexOf("//")||0==t.indexOf("https"))&&(n+="s/");var r=t.split("//");return r.shift(),t=r.join("//"),n+t}return{urlToCacheUrl:i}});
