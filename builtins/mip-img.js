@@ -6,8 +6,8 @@ define(['../utils/util'], function(util){
         }
         this.isRender = true;
         var _img = new Image();
-        //var src = util.urlToCacheUrl (document.location.href, this.getAttribute('src'), 'img');
-        var src = this.getAttribute('src');
+        var src = util.urlToCacheUrl (document.location.href, this.getAttribute('src'), 'img');
+        //var src = this.getAttribute('src');
         _img.src = src;
 
         if(this.getAttribute('alt')) {

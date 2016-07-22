@@ -10,7 +10,6 @@ __inline('./mip-pix.js');
 __inline('../extensions/mip-carousel.js');
 __inline('../extensions/mip-iframe.js');
 __inline('../extensions/recommend.js');
-__inline('./mip-appdl.js');
 __inline('./img-viewer.js');
 __inline('./mip-video.js');
 __inline('./video/player.js');
@@ -118,13 +117,23 @@ define(function(require){
         });
     });
 
-    //页面传递消息给父页面
-    window.parent.postMessage({
-        event: 'mippageload',
-        data: {
-            time: new Date().getTime()
+    if (window.parent !== window) {
+        // IOS非UC解决方案
+        if (platform.needSpecialScroll) {
+            $('body,html').css({
+                height: '100%',
+                overflow: 'auto',
+                '-webkit-overflow-scrolling': 'touch'
+            });
         }
-    }, '*');
+        //页面传递消息给父页面
+        window.parent.postMessage({
+            event: 'mippageload',
+            data: {
+                time: new Date().getTime()
+            }
+        }, '*');
+    }
 
     /**
      *  初始化图片浏览组件，并处理viewport中的事件冲突
