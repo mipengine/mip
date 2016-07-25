@@ -32,7 +32,7 @@
 </html>
 ```
 
-MIP HTML中的标签规范请参考[MIP HTML 规范](http://mip.baidu.com/#./docs/3_reference/standard.md)。
+MIP HTML中的标签规范请参考[MIP HTML 规范](https://www.mipengine.org/doc.html#../docs/3-tech/MIP-html.md)。
 
 ## 2. 引入图片
 
