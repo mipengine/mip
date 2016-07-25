@@ -25,7 +25,7 @@ mip-iframe 是用来支持在 mip 中嵌入第三方内容的一种方式，需�
 ```
 ## 2. 属性
 
-轮播组件所涉及的属性有：宽度（width），高度（height），允许全屏（allowfullscreen），引用内容（srcdoc），引用地址（src），沙盒权限（sandbox），允许透明（allowtransparency）
+mip-iframe 组件所涉及的属性有：宽度（width），高度（height），允许全屏（allowfullscreen），引用内容（srcdoc），引用地址（src），沙盒权限（sandbox），允许透明（allowtransparency）
 
 - **宽度(width)**
 
