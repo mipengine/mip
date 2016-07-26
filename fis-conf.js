@@ -1,129 +1,76 @@
-fis.config.set("project.watch.usePolling", true);
+var option = fis.get('options')['_'][1];
+
+var fileList = {
+    css: [
+        '/less/mipmain.less'
+    ],
+    extensions: [
+        '/extensions/**'
+    ],
+    mipmain: [
+        '/src/mipmain.js'
+    ]
+};
+if (option && fileList[option]) {
+    fis.set('project.files', fileList[option]);
+} else {
+    var result = [];
+    for (var i in fileList) {
+        result = result.concat(fileList[i]);
+    }
+    fis.set('project.files', result);
+}
+
+
+
 
 fis.match('*', {
     release: false
 });
-/*
- * 线上需要把代码压缩打开
- *
- */
-/*
-fis.match('*.js', {
-    useHash: false, // default is true
-    optimizer: fis.plugin('uglify-js', {
-    output : {
-        max_line_len : 500
-    }
-    })
-});
-*/
+fis.hook('amd');
 
-fis.match('src/miphtml_main.js', {
-    useHash: true,
-    optimizer: fis.plugin('uglify-js', {
-        output: {
-            comments: /^!/,
-            max_line_len : 500
-        },
-        mangle: {
-            except: 'exports, module, require, define'
-        }
-    }),
-    release: 'miphtml_main.js'
-});
-
-fis.match('src/miphtml_olympic.js', {
-    useHash: true,
-    optimizer: fis.plugin('uglify-js', {
-        output: {
-            comments: /^!/,
-            max_line_len : 500
-        },
-        mangle: {
-            except: 'exports, module, require, define'
-        }
-    }),
-    release: 'miphtml_olympic.js'
-});
-
-fis.match('src/mip_ad.js', {
-    useHash: true,
-    optimizer: fis.plugin('uglify-js', {
-        output : {
-            max_line_len : 500
-        }
-    }),
-    release: 'mip_ad.js'
-});
-
-fis.match('extensions/*/*/*.js', {
-    useHash: true,
-    optimizer: fis.plugin('uglify-js', {
-      output : {
-          max_line_len : 500
-      }
-    }),
-    release: '$0'
-});
-
-fis.match('*.less', {
+/* css 配置 */
+fis.match('/less/(**).less', {
     parser: fis.plugin('less'),
-    rExt: '.css'
-});
-
-/*
-fis.match('*.{less,css}', {
-    useHash: true, // default is true
     optimizer: fis.plugin('clean-css',{
-        keepBreaks : true
-    })
-});
-*/
-
-fis.match('mip-common.less', {
-    useHash: true, // default is true
-    optimizer: fis.plugin('clean-css',{
-        keepBreaks : true
+        keepBreaks : false
     }),
-    release: 'miphtml.css'
+    rExt: '.css',
+    release: 'css/$1'
 });
 
-fis.match('mip-olympic.less', {
-    useHash: true, // default is true
+/* extension */
+fis.match('extensions/*/**.js', {
+    optimizer: fis.plugin('uglify-js'),
+    release: true
+});
+fis.match('extensions/*/**.less', {
+    parser: fis.plugin('less'),
     optimizer: fis.plugin('clean-css',{
-        keepBreaks : true
+        keepBreaks : false
     }),
-    release: 'miphtml_olympic.css'
+    rExt: '.css',
+    release: true
 });
 
 
-fis.hook('amd', {
-});
-
-
-
-fis.match('/src/(**).js', {
+/* builtins && src */
+fis.match('src/(**).js', {
+    optimizer: fis.plugin('uglify-js'),
     moduleId: '$1'
 });
-
-/*
-fis.match('/buildins/(**).js', {
-    moduleId: 'dom/$1'
-});
-*/
-
-fis.match('/extensions/(**).js', {
-    moduleId: '$1'
+fis.match('src/mipmain.js', {
+    release: 'mipmain.js'
 });
 
-fis.media('dev').match('*.{js,css,less}', {
+
+
+fis.media('mipmain');
+fis.media('css');
+fis.media('extensions');
+
+
+fis.media('debug').match('*.{js,css,less}', {
     useHash: false,
     optimizer: null
 });
-
-
-fis.media('prod').match('*.{js,css,less}', {
-    useHash: false
-});
-
-

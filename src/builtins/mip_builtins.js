@@ -4,16 +4,6 @@
  * @version 1.0
  * @copyright 2015 Baidu.com, Inc. All Rights Reserved
  */
-__inline('./mip-img.js');
-__inline('./mip-gif.js');
-__inline('./mip-pix.js');
-__inline('../extensions/mip-carousel.js');
-__inline('../extensions/mip-iframe.js');
-__inline('../extensions/recommend.js');
-__inline('./img-viewer.js');
-__inline('./mip-video.js');
-__inline('./video/player.js');
-__inline('./video/popup.js');
 
 define(function(require){
     /**
