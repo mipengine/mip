@@ -2,3 +2,4 @@
 *.~
 server.log
 test
+dist
