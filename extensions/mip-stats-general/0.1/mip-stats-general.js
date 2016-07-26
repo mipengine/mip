@@ -37,8 +37,6 @@ define(function(){
 
         this.appendChild(img);
 
-        console.log(url);
-
         img.src = ''
             + url
             + (url.indexOf('?') > -1 ? '&' : '?')
