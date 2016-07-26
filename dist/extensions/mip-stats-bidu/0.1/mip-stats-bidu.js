@@ -6,7 +6,7 @@
 * @copyright 2016 Baidu.com, Inc. All Rights Reserved
 */
 
-define(function(){
+define('extensions/mip-stats-bidu/0.1/mip-stats-bidu', ['require', 'customElement'], function(require){
 
     var customElem = require('customElement');
 
@@ -38,7 +38,7 @@ define(function(){
     return customElem;
 
 });
-require(["mip-stats-bidu"], function(statsbidu) {
+require(["extensions/mip-stats-bidu/0.1/mip-stats-bidu"], function(statsbidu) {
     //注册组件
     MIP.registerMipElement('mip-stats-bidu', statsbidu);
 });

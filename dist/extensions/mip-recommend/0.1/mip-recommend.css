@@ -1,0 +1,84 @@
+.recommends {
+  width: 100%;
+  min-height: 230px;
+  padding: 16px 0 14px;
+  margin-top: 13px;
+  background-color: #fff;
+  overflow: hidden;
+  text-align: left;
+}
+.recommends > div {
+  margin: 0 16px;
+}
+.recommends-box a {
+  display: block;
+  overflow: hidden;
+  text-decoration: none;
+  color: #333333;
+}
+.recommends-header {
+  font-size: 13px;
+  color: #999;
+}
+div.recommends-keywords {
+  display: block;
+  margin-top: 12px;
+  padding: 10px 0;
+  overflow: hidden;
+}
+.recommends-keywords-href {
+  padding: 6px 13px;
+  overflow: hidden;
+  border-radius: 20px;
+  margin-right: 14px;
+  border: 1px solid #e6e6e6;
+}
+.recommends-keywords span {
+  font-size: 14px;
+  color: #666;
+}
+.recommends-box {
+  overflow: hidden;
+  padding: 16px 0 15px;
+  border-bottom: #eee 1px solid;
+}
+.recommends-box-first {
+  padding-top: 15px;
+}
+.recommends-box:last-child {
+  border-bottom: none;
+  padding-bottom: 5px;
+}
+.recommends-title {
+  font-size: 16px;
+  margin-bottom: 10px;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.recommends-info {
+  font-size: 13px;
+  color: #999;
+}
+.recommends-more {
+  text-align: center;
+  line-height: 45px;
+  font-size: 13px;
+  color: #999;
+}
+.recommends-provider {
+  padding-left: 18px;
+}
+.recommends-entry {
+  text-align: center;
+  font-size: 16px;
+  padding: 15px 0 0;
+}
+.recommends-entry-tag {
+  color: #0099ff;
+}
+.recommends-entry-link {
+  color: #999;
+  display: block;
+}

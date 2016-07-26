@@ -1,0 +1,38 @@
+.adv {
+  margin: 10px 0;
+  font-size: 13px;
+  background-color: #fff;
+}
+.mip-ad-bannerbox {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+.mip-ad-bannerbox img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+}
+.mip-ad-box {
+  padding: 6px 21px;
+  font-size: 13px;
+  line-height: 22px;
+  text-align: justify;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+}
+.mip-ad-imgbox {
+  position: relative;
+}
+.mip-ad-abs {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  line-height: 20px;
+  font-size: 12px;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #fff;
+}
