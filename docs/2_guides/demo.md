@@ -2,11 +2,11 @@
 
 ## 引入css样式
 
-&lt; link type="text/css" rel="stylesheet" href="//m.baidu.com/static/ala/sf/static/css/miphtml_xxxxxx.css" &gt;
+&lt; link type="text/css" rel="stylesheet" href="https://mipcache.bdstatic.com/static/mipmain-v0.0.1.css" &gt;
 
 ## 引入js组件（已包含jq、amd）
 
-&lt;script src="//m.baidu.com/static/ala/sf/static/js/miphtml_main_xxxxxx.js"&gt;&lt;/script&gt;
+&lt;script src="https://mipcache.bdstatic.com/static/mipmain-v0.0.1.js"&gt;&lt;/script&gt;
 
 ## 一个完整的例子
 
