@@ -1,5 +1,5 @@
 /**
-* CNZZ统计插件
+* 百度统计插件
 * @exports modulename
 * @author chenrui09@baidu.com
 * @version 1.0
@@ -18,17 +18,17 @@ define(function(){
 
     function render() {
         if (this.isRender) {
-            return; 
+            return;
         }
 
         this.isRender = true;
-        
+
         var token = this.getAttribute('token');
 
         var $this = $(this);
         var html = [
             '<script type="text/javascript">',
-                'var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id=\'cnzz_stat_icon_'+token+'\'%3E%3C/span%3E%3Cscript src=\'" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D'+token+'\' type=\'text/javascript\'%3E%3C/script%3E"));',
+                'var _hmt = _hmt || []; (function() { var hm = document.createElement("script"); hm.src = "//hm.baidu.com/hm.js?'+token+'"; var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s); })();',
             '</script>'
         ];
 
@@ -36,8 +36,10 @@ define(function(){
     }
 
     return customElem;
+
 });
-require(['mip-stats-cnzz'], function (statscnzz) {
+require(["mip-stats-bidu"], function(statsbidu) {
     //注册组件
-    MIP.registerMipElement('mip-stats-cnzz', statscnzz);
+    MIP.registerMipElement('mip-stats-bidu', statsbidu);
 });
+

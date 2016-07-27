@@ -1,0 +1,5 @@
+window.require.config({
+    paths: {
+        'searchbox/openjs/aio': '//m.baidu.com/static/searchbox/openjs/aio.js?v=201606'
+    }
+});
