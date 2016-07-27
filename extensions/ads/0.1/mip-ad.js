@@ -12,8 +12,8 @@
  */
 require.config({
     paths: {
-        "extensions/ads/0.1/mip-comm": "https://mipcache.bdstatic.com/static/v0.1/ads/mip-comm",
-        "extensions/ads/0.1/mip-ad-baidu": "https://mipcache.bdstatic.com/static/v0.1/ads/mip-ad-baidu",
+        "extensions/ads/0.1/mip-comm": "http://172.20.176.119:8056/dist/extensions/ads/0.1/mip-comm",
+        "extensions/ads/0.1/mip-ad-baidu": "http://172.20.176.119:8056/dist/extensions/ads/0.1/mip-ad-baidu",
     }
 });
 

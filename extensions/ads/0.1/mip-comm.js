@@ -105,7 +105,7 @@ define(function (){
 
         var html = [
             '<a class="c-blocka mip-ad-box" href="'+ url +'" class="c-urljump">',
-            '    <div class="c-row">',
+            '    <div class="mip-ad-row">',
             '        <div class="c-span4">',
             '            <div class="c-img c-img-x" style="padding-bottom:'+ ratio +'%;">',
             '                <img src="'+ src +'">',
@@ -116,7 +116,7 @@ define(function (){
             '        </div>',
             '    </div>',
             '</a>'
-        ].join('');
+        ].join(''); 
 
         $this.append(html);
     }
@@ -158,10 +158,10 @@ define(function (){
 
             var html = [
                 '<a class="c-blocka  mip-ad-box" href="'+ url +'" class="c-urljump">',
-                '    <div class="c-row c-gap-bottom-small">',
+                '    <div class="mip-ad-row c-gap-bottom-small">',
                 '        <div class="c-span12 c-title">' + title + '</div>',
                 '    </div>',
-                '    <div class="c-row">',
+                '    <div class="mip-ad-row">',
                 '         ' + img_html,
                 '    </div>',
                 '</a>'
