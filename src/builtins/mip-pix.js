@@ -15,20 +15,26 @@ define(function(){
         this.isRender = true;
         var _img = new Image();
         var src = this.getAttribute('src');
-        var proxy = this.getAttribute("proxy-title");
+        var host = window.location.href;
+        var title = (document.querySelector('title') || {}).innerHTML || '';
         var time = (new Date().getTime());
-        var _src = "";
-        if(proxy) { //如果是要开启代理
-            src = _src+"?t="+time+"&"+"title="+proxy+"&host=mip.bdstatic.com&from=baidu";
-        }else {
-            src = _src+"?t="+time;
-        }
+        src = addParas(src, 't', time);
+        src = addParas(src, 'title', encodeURIComponent(title));
+        src = addParas(src, 'host', encodeURIComponent(host));
         _img.src= src;
         _img.setAttribute('width',0);
         _img.setAttribute('height',0);
         this.setAttribute('width','');
         this.setAttribute('height','');
         this.appendChild(_img);
+    }
+
+    function addParas(src, paraName, paraVal) {
+        if (src.indexOf('?'+paraName) > -1 || src.indexOf('&'+paraName) > -1) {
+            return src;
+        }
+        src += src.indexOf('?') > -1 ? '&' : '?';
+        return src + paraName + '=' + paraVal;
     }
 
     customElem.prototype.init = function(){
