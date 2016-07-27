@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>mip广告组件</title>
     <meta name="viewport" content="width=device-width,user-scalable=no">
-    <link rel="stylesheet" type="text/css" href="https://mipcache.bdstatic.com/static/mipmain-v0.0.1.css">
+    <link rel="stylesheet" type="text/css" href="/dist/css/mipmain.css">
   </head>
   <body>
     <div class="article">
@@ -16,6 +16,7 @@
     <!-- banner 样式 -->
     <div class="adv">
         <mip-ad 
+            type="comm"
             tpl="onlyImg" 
             href="//m.baidu.com/s?word=百度" 
             data-size="1242 180" 
@@ -26,9 +27,9 @@
     <!-- 纯文本样式 -->
     <div class="adv">
         <mip-ad 
+            type="comm"
             tpl="noneImg" 
             href="//m.baidu.com/s?word=百度" 
-            data-size="1242 180" 
             data-title="这里是广告标题这里是广告标题这里是广告标题这里是广告标题标这里是广告标题标这里是广告标题标">
         </mip-ad>
     </div>
@@ -36,18 +37,22 @@
     <!-- 单图样式 -->
     <div class="adv">
         <mip-ad 
-            tpl="oneImg" 
+            type="comm"
+            tpl="oneImg"
+            data-size="200 200" 
             href="//m.baidu.com/s?word=百度" 
-            src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2357051511,2286288825&fm=11&gp=0.jpg" 
+            src="https://ss0.bdstatic.com/9bA1vGfa2gU2pMbfm9GUKT-w/timg?wisealaddin&size=u200_200&quality=80&sec=1469518568&di=33505318ce4826c6383fe452b7b0aa7a&src=http%3A%2F%2Fi7.baidu.com%2Fit%2Fu%3D495004443%2C598658325%26fm%3D78%26s%3D349C569748023257C8ED93A603006005" 
             data-title="这里是广告标题这里是广告标题这里是广告标题标这里是广告标题标这里是广告标题标"></mip-ad>
     </div>
 
     <!-- 多图样式 1 -->
     <div class="adv">
         <mip-ad 
+            type="comm"
             tpl="moreImg" 
             href="//m.baidu.com/s?word=百度" 
-            src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=4009078664,3186400936&fm=111&gp=0.jpg;https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=521986262,2379149184&fm=21&gp=0.jpg;https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=195400779,4163278668&fm=21&gp=0.jpg" 
+            data-size="200 200" 
+            src="https://ss0.bdstatic.com/9bA1vGfa2gU2pMbfm9GUKT-w/timg?wisealaddin&size=8&quality=60&sec=1469520067&di=4336252f313256b8acfe5e24df33daad&src=http%3A%2F%2Ft12.baidu.com%2Fit%2Fu%3D1481817128%2C2646696851%26fm%3D58;https://ss0.bdstatic.com/9bA1vGfa2gU2pMbfm9GUKT-w/timg?wisealaddin&size=8&quality=60&sec=1469520067&di=4336252f313256b8acfe5e24df33daad&src=http%3A%2F%2Ft12.baidu.com%2Fit%2Fu%3D1481817128%2C2646696851%26fm%3D58;https://ss0.bdstatic.com/9bA1vGfa2gU2pMbfm9GUKT-w/timg?wisealaddin&size=8&quality=60&sec=1469520067&di=4336252f313256b8acfe5e24df33daad&src=http%3A%2F%2Ft12.baidu.com%2Fit%2Fu%3D1481817128%2C2646696851%26fm%3D58" 
             data-ads="这里是广告摘要;这里是广告摘要" 
             data-txt="这里是图片标题;这里是图片标题;这里是图片标题啊啊啊"
             data-title="这里是广告标题这里是广告标题标">
@@ -57,9 +62,11 @@
     <!-- 多图样式 2 -->
     <div class="adv">
         <mip-ad 
+            type="comm"
             tpl="moreImg" 
             href="//m.baidu.com/s?word=百度" 
-            src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=4009078664,3186400936&fm=111&gp=0.jpg;https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=521986262,2379149184&fm=21&gp=0.jpg;https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=195400779,4163278668&fm=21&gp=0.jpg" 
+            data-size="200 200" 
+            src="https://ss0.bdstatic.com/9bA1vGfa2gU2pMbfm9GUKT-w/timg?wisealaddin&size=8&quality=60&sec=1469520067&di=4336252f313256b8acfe5e24df33daad&src=http%3A%2F%2Ft12.baidu.com%2Fit%2Fu%3D1481817128%2C2646696851%26fm%3D58;https://ss0.bdstatic.com/9bA1vGfa2gU2pMbfm9GUKT-w/timg?wisealaddin&size=8&quality=60&sec=1469520067&di=4336252f313256b8acfe5e24df33daad&src=http%3A%2F%2Ft12.baidu.com%2Fit%2Fu%3D1481817128%2C2646696851%26fm%3D58;https://ss0.bdstatic.com/9bA1vGfa2gU2pMbfm9GUKT-w/timg?wisealaddin&size=8&quality=60&sec=1469520067&di=4336252f313256b8acfe5e24df33daad&src=http%3A%2F%2Ft12.baidu.com%2Fit%2Fu%3D1481817128%2C2646696851%26fm%3D58" 
             data-ads="这里是广告摘要;这里是广告摘要" 
             data-txt="这里是图片标题;这里是图片标题;这里是图片标题啊啊啊">
         </mip-ad>
@@ -68,14 +75,16 @@
     <!-- 多图样式 2 -->
     <div class="adv">
         <mip-ad 
+            type="comm"
             tpl="moreImg" 
             href="//m.baidu.com/s?word=百度" 
-            src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=4009078664,3186400936&fm=111&gp=0.jpg;https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=521986262,2379149184&fm=21&gp=0.jpg;https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=195400779,4163278668&fm=21&gp=0.jpg" 
+            data-size="200 200" 
+            src="https://ss0.bdstatic.com/9bA1vGfa2gU2pMbfm9GUKT-w/timg?wisealaddin&size=8&quality=60&sec=1469520067&di=4336252f313256b8acfe5e24df33daad&src=http%3A%2F%2Ft12.baidu.com%2Fit%2Fu%3D1481817128%2C2646696851%26fm%3D58;https://ss0.bdstatic.com/9bA1vGfa2gU2pMbfm9GUKT-w/timg?wisealaddin&size=8&quality=60&sec=1469520067&di=4336252f313256b8acfe5e24df33daad&src=http%3A%2F%2Ft12.baidu.com%2Fit%2Fu%3D1481817128%2C2646696851%26fm%3D58;https://ss0.bdstatic.com/9bA1vGfa2gU2pMbfm9GUKT-w/timg?wisealaddin&size=8&quality=60&sec=1469520067&di=4336252f313256b8acfe5e24df33daad&src=http%3A%2F%2Ft12.baidu.com%2Fit%2Fu%3D1481817128%2C2646696851%26fm%3D58" 
             data-txt="这里是图片标题;这里是图片标题;这里是图片标题啊啊啊">
         </mip-ad>
     </div>
 
     <script src="/dist/mipmain.js"></script>
-    <script src="/dist/extensions/ads/0.1/mip-ads.js"></script>
+    <script src="/dist/extensions/ads/0.1/mip-ad.js"></script>
   </body>
 </html>
