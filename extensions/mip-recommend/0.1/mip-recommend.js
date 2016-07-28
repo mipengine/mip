@@ -14,12 +14,55 @@ define(function() {
     var customElem = require('customElement');
     var recommend = require('./recommend');
 
+    /**
+     * 初始化
+     *
+     */
     customElem.prototype.init = function() {
-
         this.build = render;
-
     };
 
+    /**
+     * isHttps
+     *
+     * @type {boolean}
+     */
+    var isHttps = /^https/.test(location.protocol);
+
+    /**
+     * 数据源类型
+     *
+     * @type {Object}
+     */
+    var serverMap = {
+        'olympic': (isHttps
+            ? 'https://sp0.baidu.com/5LMDcjW6BwF3otqbppnN2DJv/olympic.pae.baidu.com'
+            : 'http://olympic.pae.baidu.com')
+            + '/pae/olympic/api/reclist',
+        'headline': '//headline.baidu.com/doc/recommended'
+    };
+
+    /**
+     * 异步取数据
+     *
+     * @param  {string}   url      url
+     * @return {Promise}
+     */
+    function fetchData(url) {
+        return $.ajax({
+            'url': url,
+            'dataType': 'jsonp',
+            'jsonp': 'cb',
+            'data': {
+                'url_key': location.href
+            }
+        });
+    }
+
+
+    /**
+     * 渲染
+     */
     function render() {
 
         if (this.isRender) {
@@ -28,19 +71,19 @@ define(function() {
 
         this.isRender = true;
 
-        var url = this.getAttribute('src') || '//headline.baidu.com/doc/recommended';
+        var url = this.getAttribute('src');
+        var server = this.getAttribute('server') || 'olympic';
 
-        $.ajax({
-            'url': url,
-            'dataType': 'jsonp',
-            'jsonp': 'cb',
-            'data': {
-                'url_key': location.href
-            },
-            'success': function (res) {
-                recommend.init();
-                recommend.render(res.data);
-            }
+        if (!url) {
+            url = serverMap[server];
+        }
+
+        recommend.init();
+
+        // 推荐列表
+        fetchData(url).then(function(res) {
+            recommend.render(res.data);
+            recommend.renderHot(res.data);
         });
 
     }
