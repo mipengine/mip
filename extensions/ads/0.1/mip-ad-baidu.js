@@ -6,23 +6,22 @@
  * @copyright 2016 Baidu.com, Inc. All Rights Reserved
  */
 define(function(){
-    var customElem = require('customElement');
     
-    function render() {
-        if (this.isRender) {
-            return;
-        }
-        this.isRender = true;
-        var $this = $(this);
-        var cproID = this.getAttribute("cproid");
-        
+    var render = function(_this) {
+        // if (this.isRender) {
+        //     return;
+        // }
+        // this.isRender = true;
+        // 
+        var $this = $(_this);
+        var cproID = _this.getAttribute("cproid");
         if(!cproID) {
             return;
         }
         
         initJs();
         initadbaidu($this, cproID);
-    }
+    };
 
     /**
      * [initJs JS初始化函数]
@@ -60,17 +59,9 @@ define(function(){
         });
     }
 
-    customElem.prototype.init = function() {
-        this.build = render;
-    };
-
-    return customElem;
-
+    return {
+        render: render
+    }
 });
 
-require(['mip-ad-baidu'], function (mipAdBaidu) {
-    // 引入组件需要的css文件，选填
-    //注册组件
-    MIP.registerMipElement('mip-ad-baidu', mipAdBaidu);
-});
 

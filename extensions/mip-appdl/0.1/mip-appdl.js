@@ -1,7 +1,6 @@
 /**
  * @file 下载
  * @author fengchuantao
- * 样式尚未确定。
  * 
  * @time 2016.06.21
  */
@@ -43,24 +42,28 @@ define(function() {
         var textdom = buildtextdom.call(this);
         var downtext = $(this).attr("downbtntext");
         var downsrc  = $(this).attr(recognition()+"-downsrc");
-        var imgsrc = $(this).attr("imgsrc");
+        var imgsrc = $(this).attr("src");
         var postiontye = "'mip-appdl-box mip-appdl-"+$(this).attr("postiontye")+ "'";
 
         var str = "<div class= "+postiontye+" >"+
             "<div class='mip-appdl-content'>"+
-                "<div class='mip-appdl-contentcell'>"+
+                "<div class='mip-appdl-imgbox'>"+
                     "<img src="+imgsrc+" class='mip-appdl-downimg'>"+
                 "</div>"+
-                "<div class='mip-appdl-textbox mip-appdl-contentcell'>"+
+                "<div class='mip-appdl-textbox'>"+
                     textdom+
                 "</div>"+
-                "<div class='mip-appdl-downloadbbutton mip-appdl-contentcell'>"+
-                    "<a target='_blank' href="+downsrc+" download='测试'>"+downtext+"</a>"+
+                "<div class='mip-appdl-downbtn '>"+
+                    "<a href="+downsrc+" >"+downtext+"</a>"+
                 "</div>"+
                 "<div class='mip-appdl-closebutton'></div>"+
             "</div>"+
         "</div>";
-        $(this).append(str)
+
+        
+        if(downsrc) {
+            $(this).append(str)
+        }
     }
 
     /**
@@ -70,21 +73,22 @@ define(function() {
         var textdom = buildtextdom.call(this);
         var downtext = $(this).attr("downbtntext");
         var downsrc  = $(this).attr(recognition()+"-downsrc");
-        var postiontye = "'mip-appdl-box mip-appdl-"+$(this).attr("postiontye")+"'";
-
+        var postiontye = "'mip-appdl-box mip-appdl-pm10 mip-appdl-"+$(this).attr("postiontye")+"'";
         var str = "<div class= "+postiontye+" >"+
             "<div class='mip-appdl-content'>"+
-                "<div class='mip-appdl-textbox mip-appdl-contentcell'>"+
+                "<div class='mip-appdl-textbox'>"+
                     textdom+
                 "</div>"+
-                "<div class='mip-appdl-downloadbbutton mip-appdl-contentcell'>"+
-                    "<a target='_blank' href="+downsrc+" download='测试'>"+downtext+"</a>"+
+                "<div class=' mip-appdl-downbtn'>"+
+                    "<a target='_blank' href="+downsrc+">"+downtext+"</a>"+
                 "</div>"+
                 "<div class='mip-appdl-closebutton'></div>"+
             "</div>"+
         "</div>";
 
-        $(this).append(str)
+        if(downsrc) {
+            $(this).append(str)
+        }
     }
 
     /**
@@ -142,7 +146,6 @@ require(['mip-appdl'], function (appdl) {
     // 引入组件需要的css文件，选填
     MIP.css.mipAppdl = __inline('./mip-appdl.less');
     //注册组件
-    console.log(MIP.registerMipElement.toString())
     MIP.registerMipElement('mip-appdl', appdl, MIP.css.mipAppdl);
 });
 
