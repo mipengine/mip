@@ -1,15 +1,8 @@
-# mip-ad-comm
+# ad-comm 
 
-mip-ad 用来支持站长添加网页内自定义广告，主要包括连接、图文，多图，banner四种形式，这类广告可以制定大小也可以被用户关闭。
+通用广告
 
-描述|提供了一个广告容器用来显示广告，目前只支持https的广告
-----|----
-可用性|稳定
-所需脚本|https://mipcache.bdstatic.com/static/v0.1/mip-ad.js#
-支持布局|noneImg, 无图, 单图, 多图 
-示例|官网上线后增加示例
-
-## 1. 使用
+## 示例
 
 基础广告组件有四种样式，四种样式通过tpl参数进行区分，分别是：banner（onlyImg），无图（noneImg），单图（oneImg），多图（moreImg），下面是组件的使用代码示例：
 
@@ -54,7 +47,7 @@ mip-ad 用来支持站长添加网页内自定义广告，主要包括连接、�
 </mip-ad>
 ```
 
-## 2. 属性
+## 属性
 
 基础广告组件所涉及的属性有：广告类型（type），展示类型（tpl），跳转地址（href），图片大小（data-size），图片地址（src），广告标题（data-title），广告子标题（data-txt）以及广告摘要（data-ads）
 
