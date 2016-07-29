@@ -48,7 +48,7 @@ define(function() {
     var SINA_TONGJI_ROOT = ''
         + protocol
         + '//mjs'
-        + (protocol === 'https' ? 's' : '')
+        + (protocol === 'https:' ? 's' : '')
         + '.sinaimg.cn/wap/public/suda/201607111020/';
 
     /**
