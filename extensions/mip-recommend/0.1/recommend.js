@@ -16,10 +16,8 @@ define(function() {
     * 推荐模块
     */
     function render(data) {
-
         //相关推荐
         var recommendData = data.recommend ? data.recommend : data;
-        var moreUrl = data.moreUrl || '//m.baidu.com';
 
         if (recommendData && recommendData.length) {
 
@@ -27,7 +25,7 @@ define(function() {
 
             $.each(recommendData, function(i, item) {
                 $(".recommends").append(
-                    '<div class="' + logClass + ' recommends-box' + (!i ? ' recommends-box-first' : '') + '" data-click=\'{"action":"recommend", "order":"' + i + '", "href":"' + item.url + '", "type": "sf"}\'>'+
+                    '<div ' + (item.head ? 'data-head="' + item.head + '"' : '') + ' class="' + logClass + ' recommends-box' + (!i ? ' recommends-box-first' : '') + '" data-click=\'{"action":"recommend", "order":"' + i + '", "href":"' + item.url + '", "type": "sf"}\'>'+
                     '<a class="recommends-href" href='+ item.url + '>' +
                     '<div class="recommends-title">' + item.title + '</div>' +
                     '<div class="recommends-info">' +
@@ -48,6 +46,24 @@ define(function() {
             );
         }
 
+        // 更多
+        var recommendMore = data.recommend_more;
+
+        if (recommendMore) {
+
+            var url = ''
+                + recommendMore.url
+                + (recommendMore.url.indexOf('?') > -1 ? '&' : '?')
+                + 'from=recmd'
+
+            $(".recommends").addClass('recommends-more').append(''
+                + '<p class="recommends-more-line">'
+                + '<a href="' + url + '" class="recommends-more-link">'
+                + (recommendMore.text || '查看更多 <em>资讯</em> ')
+                + '</a>'
+                + '</p>'
+            );
+        }
 
 
 
@@ -127,14 +143,23 @@ define(function() {
         $(".recommends").delegate('.recommends-box','click',function(ev) {
 
             ev.preventDefault();
+
             var href = $(this).find(".recommends-href").attr("href");
+
+
+            // 顶部题目
+            var head = $(this).data('head');
+
+            if (!head) {
+                head = $(this).find(".recommends-provider").text();
+            }
 
             var message = {
                 "event": "loadiframe",
                 "data": {
                     "url": href,
                     "enc": "no",
-                    "title": $(this).find(".recommends-provider").text(),
+                    "title": head,
                     "click": $(this).data('click')
                 }
             };

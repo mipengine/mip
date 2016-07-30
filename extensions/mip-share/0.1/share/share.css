@@ -2,6 +2,9 @@
 .c-share-list {
     overflow: hidden;
 }
+.c-share-list .c-line-clamp1{
+    line-height: 30px;
+}
 
 .c-share-list .c-share-btn {
     color: #333;
