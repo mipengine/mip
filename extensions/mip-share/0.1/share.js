@@ -17,7 +17,7 @@
 
 define(function () {
 
-    var Clipboard = require('./clipboard');
+    // var Clipboard = require('./clipboard');
     var PMDShare = require('./share/share');
 
     /**
@@ -55,12 +55,12 @@ define(function () {
      *
      * @type {Object}
      */
-    var copylink = {
-        key: 'copylink',
-        icon: __inline('./img/copylink.png'),
-        title: '复制链接',
-        cb: function () {}
-    };
+    // var copylink = {
+    //     key: 'copylink',
+    //     icon: __inline('./img/copylink.png'),
+    //     title: '复制链接',
+    //     cb: function () {}
+    // };
 
     /**
      * initCopyLink
@@ -68,27 +68,27 @@ define(function () {
      * @param  {HTMLElement} container container
      * @param  {Object} opt       options
      */
-    function initCopyLink(container, opt) {
+    // function initCopyLink(container, opt) {
 
-        var elem = $(container).find('.c-share-btn-copylink');
+    //     var elem = $(container).find('.c-share-btn-copylink');
 
-        if (!Clipboard.support || !elem.get(0)) {
-            return;
-        }
+    //     if (!Clipboard.support || !elem.get(0)) {
+    //         return;
+    //     }
 
-        new Clipboard(
-            {
-                el: elem,
-                text: opt.url,
-                success: function () {
-                    alert('复制成功');
-                },
-                error: function () {
-                    alert('复制失败');
-                }
-            }
-        );
-    }
+    //     new Clipboard(
+    //         {
+    //             el: elem,
+    //             text: opt.url,
+    //             success: function () {
+    //                 alert('复制成功');
+    //             },
+    //             error: function () {
+    //                 alert('复制失败');
+    //             }
+    //         }
+    //     );
+    // }
 
     /**
      * defaultOpt
@@ -97,7 +97,7 @@ define(function () {
      */
     var defaultOpt = {
         iconUrl: '//m.baidu.com/se/static/pmd/pmd/share/images/bdu.jpg',
-        custom: Clipboard.support ? [copylink] : []
+        // custom: []
     };
 
 
@@ -120,7 +120,7 @@ define(function () {
             {
                 onRender: function() {
                     // 初始化 分享
-                    initCopyLink(container, opt);
+                    // initCopyLink(container, opt);
                 }
             }
         );

@@ -3,7 +3,7 @@
 __inline('./share/aio');
 __inline('./share/detect');
 __inline('./share/share');
-__inline('./clipboard');
+// __inline('./clipboard');
 __inline('./share');
 
 /**
