@@ -147,14 +147,16 @@ var check = (function() {
 		}
 
 		// 是否缺失rel="standardhtml"
-		for(index = 0; index < linkTag.length; index ++) {
-			var stand = linkTag[index].rel;
-			if(stand && stand !== 'standardhtml') {
-				flag_stand = true;
-			}
-		}
+		// for(index = 0; index < linkTag.length; index ++) {
+		// 	var stand = linkTag[index].rel;
+		// 	if(stand && stand !== 'standardhtml') {
+		// 		flag_stand = true;
+		// 	}
+		// }
+		
 
-		if(flag_stand) {
+
+		if(document.querySelectorAll('link[rel="standardhtml"]').length <= 0) {
 			error_info.push(getErrorInfo(_STATUS , 'link rel="standardhtml" href=""'));
 		}
 
@@ -492,15 +494,15 @@ var check = (function() {
 			error_info.push(getErrorInfo(_STATUS, '<meta name="viewport">'));
 		}
 
-		cnt = 0;
-		var stan = document.getElementsByTagName('link');
-		for(index = 0; index < stan.length; index ++) {
-			var rel = stan.rel || '';
-			if(rel.toLowerCase().indexOf('standardhtml') > -1) {
-				cnt ++;
-			} 
-		}
-		if(cnt > 1) {
+		// cnt = 0;
+		// var stan = document.getElementsByTagName('link');
+		// for(index = 0; index < stan.length; index ++) {
+		// 	var rel = stan.rel || '';
+		// 	if(rel.toLowerCase().indexOf('standardhtml') > -1) {
+		// 		cnt ++;
+		// 	} 
+		// }
+		if(document.querySelectorAll('link[rel="standardhtml"]').length != 1) {
 			error_info.push(getErrorInfo(_STATUS, '<link rel="standardhtml" >'));
 		}
 
