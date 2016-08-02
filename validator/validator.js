@@ -79,17 +79,12 @@ var check = (function() {
 
 		for(var index = 0; index < scriptTag.length; index ++) {
 			var src = scriptTag[index].src;
-			miphtml_main = src.indexOf('//m.baidu.com/static/ala/sf/static/js/miphtml_main_');
-			// v0 = (src === 'https://m.baidu.com/miphtml/v0.js');
+			miphtml_main = src.indexOf('https://mipcache.bdstatic.com/static/mipmain');
 		}
 
 		if(miphtml_main < -1) { 
-			error_info.push('The js file "https://m.baidu.com/static/ala/sf/static/js/miphtml_main_xxxxxx.js" is missing or incorrect');
+			error_info.push('The js file "https://mipcache.bdstatic.com/static/mipmain" is missing or incorrect');
 		}
-
-		// if(!v0) {
-		// 	error_info.push('The js file "https://m.baidu.com/miphtml/v0.js" is missing or incorrect');	
-		// }
 
 		return error_info || null;
 	}
@@ -100,11 +95,11 @@ var check = (function() {
 
 		for(var index = 0; index < linkTag.length; index ++) {
 			var href = linkTag[index].href;
-			miphtml_main = href.indexOf('//m.baidu.com/static/ala/sf/static/js/miphtml_main_');
+			miphtml_main = href.indexOf('https://mipcache.bdstatic.com/static/mipmain');
 		}
 
 		if(miphtml_main > -1) {
-			error_info.push('The js file "//m.baidu.com/static/ala/sf/static/js/miphtml_main_.css" is missing or incorrect');
+			error_info.push('The js file "https://mipcache.bdstatic.com/static/mipmain" is missing or incorrect');
 		}
 
 		return error_info || null;
@@ -152,14 +147,16 @@ var check = (function() {
 		}
 
 		// 是否缺失rel="standardhtml"
-		for(index = 0; index < linkTag.length; index ++) {
-			var stand = linkTag[index].rel;
-			if(stand && stand !== 'standardhtml') {
-				flag_stand = true;
-			}
-		}
+		// for(index = 0; index < linkTag.length; index ++) {
+		// 	var stand = linkTag[index].rel;
+		// 	if(stand && stand !== 'standardhtml') {
+		// 		flag_stand = true;
+		// 	}
+		// }
+		
 
-		if(flag_stand) {
+
+		if(document.querySelectorAll('link[rel="standardhtml"]').length <= 0) {
 			error_info.push(getErrorInfo(_STATUS , 'link rel="standardhtml" href=""'));
 		}
 
@@ -497,15 +494,15 @@ var check = (function() {
 			error_info.push(getErrorInfo(_STATUS, '<meta name="viewport">'));
 		}
 
-		cnt = 0;
-		var stan = document.getElementsByTagName('link');
-		for(index = 0; index < stan.length; index ++) {
-			var rel = stan.rel || '';
-			if(rel.toLowerCase().indexOf('standardhtml') > -1) {
-				cnt ++;
-			} 
-		}
-		if(cnt > 1) {
+		// cnt = 0;
+		// var stan = document.getElementsByTagName('link');
+		// for(index = 0; index < stan.length; index ++) {
+		// 	var rel = stan.rel || '';
+		// 	if(rel.toLowerCase().indexOf('standardhtml') > -1) {
+		// 		cnt ++;
+		// 	} 
+		// }
+		if(document.querySelectorAll('link[rel="standardhtml"]').length != 1) {
 			error_info.push(getErrorInfo(_STATUS, '<link rel="standardhtml" >'));
 		}
 

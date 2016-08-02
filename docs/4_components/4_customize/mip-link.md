@@ -14,14 +14,14 @@ mip-link 用来支持在 mip 页面跳转。
 在MIP HTMl中，用来替代a标签，示例如下：
 
 ```
-	<mip-link title="目标页面标题" url="http://m.baidu.com"></mip-link>
+	<mip-link title="目标页面标题" href="http://m.baidu.com"></mip-link>
 ```
 ## 2. 属性
 
-组件所涉及的属性有：标题（title）, 分享连接（url）, 分享摘要（content）以及分享图片（iconUrl）。
+组件所涉及的属性有：mip地址(href)      跳转目标页面标题(title)。
 
 
-- **url**
+- **href**
 
 	- 是否必填：是
 
@@ -29,7 +29,7 @@ mip-link 用来支持在 mip 页面跳转。
 
 - **title**
 
-	- 是否必填：是
+	- 是否必填：否
 
-    - 说明：跳转目标页面标题
+    - 说明：跳转目标页面标题如果不填默认为标签之间的内容
    
