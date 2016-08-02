@@ -1,21 +1,21 @@
 define(['../utils/util'], function(util){
-   var customElem = require('customElement');
+   var customElem = require('customElement')();
    var build = function(){
         if(this.isRender){
             return; 
         }
         this.isRender = true;
         var _img = new Image();
-        var src = util.urlToCacheUrl (document.location.href, this.getAttribute('src'), 'img');
-        //var src = this.getAttribute('src');
+        var ele = this.element;
+        var src = util.urlToCacheUrl (document.location.href, ele.getAttribute('src'), 'img');
         _img.src = src;
 
-        if(this.getAttribute('alt')) {
-            _img.setAttribute('alt', this.getAttribute('alt'));
+        if(ele.getAttribute('alt')) {
+            _img.setAttribute('alt', ele.getAttribute('alt'));
         }
 
-        this.insertBefore(_img, this.firstChild);
-        if ($(this).attr('popup') === '' || $(this).attr('popup') === 'popup') {
+        ele.insertBefore(_img, ele.firstChild);
+        if ($(ele).attr('popup') === '' || $(ele).attr('popup') === 'popup') {
             // 弹层dom
             var popUpDom = [
                 '<div class="mip-img-popUp-wrapper">',
@@ -25,7 +25,7 @@ define(['../utils/util'], function(util){
             ].join('');
 
             var $img = $(_img);
-            var $mipImg = $(this);
+            var $mipImg = $(ele);
 
             var $popUp = $(popUpDom).insertAfter($img);
             var $popUpBg = $popUp.find('.mip-img-popUp-bg');

@@ -1,5 +1,5 @@
 define(['utils/util'], function(util){
-    var customElem = require('customElement');
+    var customElem = require('customElement')();
     var player = require('./video/player');
 
     var bdPlayer;
@@ -9,32 +9,26 @@ define(['utils/util'], function(util){
         }
         this.isRender = true;
 
-        var me = this;
-        var $me = $(this);
+        var ele = this.element;
+        var $ele = $(this.element);
 
-        $(this).on('click', function (event) {
+        $ele.on('click', function (event) {
             // 如果有视屏正在播放，则移除视屏
             bdPlayer && bdPlayer.remove();
-            // if(bdPlayers.length) {
-            //     for(var index = 0; index < bdPlayers.length; index ++) {
-            //         bdPlayers[index].pause();
-            //     }
-            // }
-            bdPlayer = new player({});
 
             // video容器  如果未设置的话  则传入me
-            var container = $me.attr('container');
+            var container = $ele.attr('container');
             if (container && $(container) && $(container).length) {
                 container = $(container);
             } else {
-                container = me;
+                container = ele;
             }
 
             var mip_video = $(container).parent().find('mip-video');
             
             // 广告数据信息
             var adInfo = [];
-            var adInfoString = $me.attr('adInfo');
+            var adInfoString = $ele.attr('adInfo');
             if (adInfoString) {
                 try {
                     adInfo = new Function('return ' + adInfoString)()
@@ -42,7 +36,7 @@ define(['utils/util'], function(util){
             }
 
             // 正片播放时 设置多type时 数据处理
-            var sources = $me.find('source');
+            var sources = $ele.find('source');
             var playInfo = [];
             sources.each(function () {
                 var src = $(this).attr('src');
@@ -62,21 +56,21 @@ define(['utils/util'], function(util){
                 // 播放器容器，必选
                 container: container,
 
-                height: $me.attr('height'),
-                width: $me.attr('width'),
-                src: $me.attr('src'),
-                type: $me.attr('type'),
-                poster: $me.attr('poster'),
-                autoplay: $me.attr('autoplay'),
-                controls: $me.attr('controls'),
-                loop: $me.attr('loop'),
-                muted: $me.attr('muted'),
+                height: $ele.attr('height'),
+                width: $ele.attr('width'),
+                src: $ele.attr('src'),
+                type: $ele.attr('type'),
+                poster: $ele.attr('poster'),
+                autoplay: $ele.attr('autoplay'),
+                controls: $ele.attr('controls'),
+                loop: $ele.attr('loop'),
+                muted: $ele.attr('muted'),
 
                 android: {
-                    playMode: $me.attr('android-mode') || ''
+                    playMode: $ele.attr('android-mode') || ''
                 },
                 ios: {
-                    playMode: $me.attr('ios-mode') || ''
+                    playMode: $ele.attr('ios-mode') || ''
                 },
 
                 // 广告数据信息
@@ -90,7 +84,7 @@ define(['utils/util'], function(util){
         });
 
         // 防止点击video区域时 造成重播
-        $(this).on('click', 'video', function (event) {
+        $ele.on('click', 'video', function (event) {
             event.stopPropagation();
             event.preventDefault();
         });

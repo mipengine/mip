@@ -6,7 +6,7 @@
 * @copyright 2015 Baidu.com, Inc. All Rights Reserved
 */
 define(function(){
-    var customElem = require('customElement');
+    var customElem = require('customElement')();
 
     function build(){
         if(this.isRender){
@@ -14,7 +14,8 @@ define(function(){
         }
         this.isRender = true;
         var _img = new Image();
-        var src = this.getAttribute('src');
+        var ele = this.element;
+        var src = ele.getAttribute('src');
         var host = window.location.href;
         var title = (document.querySelector('title') || {}).innerHTML || '';
         var time = (new Date().getTime());
@@ -24,9 +25,9 @@ define(function(){
         _img.src= src;
         _img.setAttribute('width',0);
         _img.setAttribute('height',0);
-        this.setAttribute('width','');
-        this.setAttribute('height','');
-        this.appendChild(_img);
+        ele.setAttribute('width','');
+        ele.setAttribute('height','');
+        ele.appendChild(_img);
     }
 
     function addParas(src, paraName, paraVal) {

@@ -1,27 +1,28 @@
 define(function(){
-    var customGif = require('customElement');
-   function build(){
+    var customGif = require('customElement')();
+    function build(){
         if(this.isRender){
             return; 
         }
         this.isRender = true;
         var _img = new Image();
-        var src = this.getAttribute('src');
+        var ele = this.element;
+        var src = ele.getAttribute('src');
         _img.src = src;
-        if(this.getAttribute('width')){
-            _img.setAttribute('width',this.getAttribute('width'));
+        if(ele.getAttribute('width')){
+            _img.setAttribute('width', ele.getAttribute('width'));
         }
-        if(this.getAttribute('height')){
-            _img.setAttribute('height',this.getAttribute('height'));
+        if (ele.getAttribute('height')){
+            _img.setAttribute('height', ele.getAttribute('height'));
         }
-        if(this.getAttribute('srcset')){
-            _img.setAttribute('srcset',this.getAttribute('srcset'));
+        if (ele.getAttribute('srcset')){
+            _img.setAttribute('srcset', ele.getAttribute('srcset'));
         }
 
-        if(this.getAttribute('sizes')){
-            _img.setAttribute('sizes',this.getAttribute('sizes'));
+        if (ele.getAttribute('sizes')){
+            _img.setAttribute('sizes', ele.getAttribute('sizes'));
         }
-        this.appendChild(_img);
+        ele.appendChild(_img);
         $(_img).on('click',function(){
            var mipGifNode = this.parentNode;
            var src = mipGifNode.getAttribute('src');

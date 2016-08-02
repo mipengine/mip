@@ -54,7 +54,7 @@ fis.match('extensions/*/**.less', {
 });
 
 
-/* builtins && src */
+/* mipmain */
 fis.match('src/(**).js', {
     optimizer: fis.plugin('uglify-js'),
     moduleId: '$1'
