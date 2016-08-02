@@ -35,7 +35,7 @@ define(function() {
             });
 
             //重设高度兼容手百
-            $(".recommends").css("height", "100%");
+            // $(".recommends").css("height", "100%");
 
         }
         else {
@@ -116,7 +116,7 @@ define(function() {
             });
 
             $('.hotpoint').append('<div class="hotpoint-box">'+html+'</div>');
-            $(".hotpoint").css("height", "100%");
+            // $(".hotpoint").css("height", "100%");
         }
         else {
             $(".hotpoint").remove();
