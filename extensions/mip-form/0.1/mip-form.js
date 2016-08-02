@@ -1,41 +1,45 @@
 /**
- * @file form
+ * @file form组件
  * @author fengchuantao
- * 
- * @time 2016.06.28
+ * @time 2016.7.28
  */
-
-require.config({
-    paths: {
-        "extensions/mip-form/0.1/mip-form-validate": "http://127.0.0.1:8056/dist/extensions/mip-form/0.1/mip-form-validate"
-    }
-});
-
 
 define(function() {
     var customElem = require('customElement');
-    var validatefn = require("extensions/mip-form/0.1/mip-form-validate")
-    /**
-     * build
-     */
+
     function build() {
         if (this.isRender) {
             return;
         }
         this.isRender = true;
-        $this = $(this);
 
-        var vali = validateDom.call(this)
+        var vali = validateDom.call(this);
 
         if(vali) {
-             domcrete.call(this)
+             domcrete.call(this);
         }
+
+        //验证规则暂定三个
+        var valita = {
+          email: /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
+          phone: /^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/,
+          idcar: /^\d{15}|\d{18}$/
+        };
+
+        function validatefn(type, data) {
+          if(type == "must") {
+            return data == "" ? false : true;
+          }
+          var reg = valita[type];
+          return reg.test(data);
+        }
+
 
         //过滤password与input标签
         function validateDom () {
-            var passwordlen = $(this).find('input[type|="password"]').length>0?false:true;
-            var filelen = $(this).find('input[type|="file"]').length?false:true;
-            if(!passwordlen||!filelen) {
+            var passwordlen = $(this).find('input[type|="password"]').length > 0 ? false : true;
+            var filelen = $(this).find('input[type|="file"]').length ? false : true;
+            if(!passwordlen || !filelen) {
                 console.log("禁止使用password与file输入框");
                 return false;
             }
@@ -49,7 +53,7 @@ define(function() {
             var formdom = $("<form url="+url+" method="+method+" target='_blank'></form>");
             formdom.append($(this).html());
             $(this).html(formdom);
-            domHandle.call(this)
+            domHandle.call(this);
         }
 
         //提交前验证
@@ -81,16 +85,13 @@ define(function() {
                       }
                   }
                })
-               if(len!==0) { //验证未全部通过
+               if(len !== 0) { //验证未全部通过
                  event.preventDefault();
                }
             })
         }
     }
 
-    /**
-     * 初始化
-     */
     customElem.prototype.init = function() {
         this.build = build;
     };
@@ -100,8 +101,6 @@ define(function() {
 });
 
 require(['mip-form'], function (form) {
-
-    //注册组件
     MIP.registerMipElement('mip-form', form);
 });
 
