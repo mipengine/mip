@@ -23,11 +23,9 @@ define(function () {
             this.build();
         }
     };
-   //模板的元素build功能，即元素的默认初始化功能 
+    //模板的元素build功能，即元素的默认初始化功能 
     customElement.prototype.build = function () {};
 
-
-    
     return function () {
         var impl = function (element) {
             customElement.call(this, element);
