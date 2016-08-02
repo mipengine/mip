@@ -2,9 +2,10 @@
 
 ## 背景
 
-customElement 组件升级
+customElement 实现方式升级
 jQuery 修改为 zepto
 
+升级后对原组件有影响，需要升级组件
 
 ## 升级步骤
 
