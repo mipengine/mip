@@ -21,7 +21,6 @@ __inline('./builtins/mip-gif.js');
 __inline('./builtins/mip-pix.js');
 __inline('../extensions/mip-carousel.js');
 __inline('../extensions/mip-iframe.js');
-__inline('../extensions/recommend.js');
 __inline('./builtins/img-viewer.js');
 __inline('./builtins/mip-video.js');
 __inline('./builtins/video/player.js');
