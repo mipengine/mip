@@ -43,7 +43,7 @@ git push
 升级后 customElement 与 dom 元素拆分。如果需要使用 dom 元素的方法，请使用 this.element.xxx。如：this.element.getAttribute    
 
 2、jQuery 切换为 zepto    
-目前 zepto 一共集成了5个模块 zepto event ajax ie form animate。以前的代码可能会不兼容。
+目前 zepto 一共集成了6个模块 zepto event ajax ie form animate。以前的代码可能会不兼容。
 
  
 
