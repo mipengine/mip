@@ -35,7 +35,7 @@ define(function() {
             });
 
             //重设高度兼容手百
-            $(".recommends").css("height", "100%");
+            // $(".recommends").css("height", "100%");
 
         }
         else {
@@ -69,10 +69,27 @@ define(function() {
 
     }
 
+
+    /**
+     * 热点容器
+     *
+     * @type {String}
+     */
+    var tplHotWrapper = ''
+        + '<div class="hotpoint">'
+        +     '<div class="hotpoint-header">新闻热点</div>'
+        + '</div>';
+
+
     /**
      * 热词推荐
      */
     function renderHot(data) {
+
+        if(!$('.hotpoint').length) {
+            $(".recommends").after(tplHotWrapper);
+        }
+
 
         var hotpointData = data.hot_card;
 
@@ -116,29 +133,14 @@ define(function() {
             });
 
             $('.hotpoint').append('<div class="hotpoint-box">'+html+'</div>');
-            $(".hotpoint").css("height", "100%");
+            // $(".hotpoint").css("height", "100%");
         }
         else {
             $(".hotpoint").remove();
         }
     }
 
-
-    /**
-     * 热点容器
-     *
-     * @type {String}
-     */
-    var tplHotWrapper = ''
-        + '<div class="hotpoint">'
-        +     '<div class="hotpoint-header">新闻热点</div>'
-        + '</div>';
-
     function init() {
-
-        if(!$('.hotpoint').length) {
-            $(".recommends").after(tplHotWrapper);
-        }
 
         $(".recommends").delegate('.recommends-box','click',function(ev) {
 
