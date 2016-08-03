@@ -47,7 +47,18 @@
             <span><strong>自定义的加粗字体</strong></span>
         </p>
     </div>
+    <div class="adv">
+        <mip-embed type="ad-comm" tpl="onlyImg" href="//m.baidu.com/s?word=百度" data-size="1242 180" src="//m.baidu.com/static/search/ala/ad_1.png">
+        </mip-embed>
+    </div>
+    <div class="mip-adbd">
+      <mip-embed type="ad-baidu" cproid="u2697394"></mip-embed>
+    </div>
+
+    
+
 <script src="https://mipcache.bdstatic.com/static/mipmain-v0.0.1.js"></script>
+<script src="https://mipcache.bdstatic.com/static/v0.2/ads/mip-ad.js"></script>
 </body>
 </html>
 ```
