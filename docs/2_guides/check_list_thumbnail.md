@@ -85,17 +85,10 @@ audio|mip-audio（暂未开放）
 
 - mip-img
     - src：必须是一个url
-    - data-carousel：目前只有carousel属性值
 
 - mip-pix
     - src：必须是一个支持https的地址url，
     - 如果不支持https适用百度提供的https代理，url中带t={TIME}&title={TITLE}&host={HOST}&from=baidu"
-
-- mip-ad
-    - tpl：onlyImg, noneImg, oneImg, moreImg(只能是这三个)
-    - src：必须是url
-    - data-size："1242 180", 两个数字中间用空格隔开
-    - data-img：必须是url
 
 - 其他html基本页面属性规范不变
 
@@ -148,12 +141,6 @@ mip html中具有强制性属性的标签及其强制性属性有：
     - src
 - mip-pix
     - src
-- mip-baidu-tj
-    - token
-- mip-ad
-    - tpl
-    - src
-    - data-img
 
 ### 6. 直接父标签错误
 
