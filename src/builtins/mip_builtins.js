@@ -58,7 +58,7 @@ define(function(require){
     /**
      *  web compenent组件初始化
      * */
-    require('mipElement');
+    require('element');
 
     /***
      *  注册统计组件

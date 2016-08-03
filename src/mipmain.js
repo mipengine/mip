@@ -11,7 +11,7 @@ __inline('./viewport.js');
 __inline('./deps/document-register-element.max.js');
 __inline('./customElement.js');
 __inline('./utils/cssLoader.js');
-__inline('./mipElement.js');
+__inline('./element.js');
 __inline('./utils/util.js');
 
 
