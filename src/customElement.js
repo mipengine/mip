@@ -33,11 +33,13 @@ define(function () {
         return false;
     };
 
-    return function () {
-        var impl = function (element) {
-            customElement.call(this, element);
-        };
-        impl.prototype = Object.create(customElement.prototype);
-        return impl;
-    };
+    return {
+        create: function () {
+            var impl = function (element) {
+                customElement.call(this, element);
+            };
+            impl.prototype = Object.create(customElement.prototype);
+            return impl;
+        }
+    }
 });

@@ -1,5 +1,5 @@
 define(function () {
-    var customElem = require('customElement');
+    var customElem = require('customElement').create();
     var build = function () {
         // 防止多次渲染
         if(this.isRender){

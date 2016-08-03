@@ -1,5 +1,5 @@
 define(['utils/util'], function(util){
-    var customElem = require('customElement')();
+    var customElem = require('customElement').create();
     var player = require('./video/player');
 
     var bdPlayer;
