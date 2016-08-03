@@ -5,19 +5,12 @@ mip-ad 用来支持站长添加网页内自定义广告，主要包括连接、�
 描述|提供了一个广告容器用来显示广告，目前只支持https的广告
 ----|----
 可用性|稳定
-所需脚本|&lt;script async src="https://mipcache.bdstatic.com/static/v0.1/mip-ad.js" &gt;&lt;/script&gt;
-支持布局|RESPONSIVE 
-示例|官网上线后增加示例
-
-## 1. 版本说明
-描述|支持别名
-----|----
-可用性|稳定
 所需脚本|&lt;script async src="https://mipcache.bdstatic.com/static/v0.2/mip-ad.js" &gt;&lt;/script&gt;
 支持布局|RESPONSIVE 
-别名| mip-embed
+示例|官网上线后增加示例
+版本v0.2|支持别名mip-embed
 
-## 2. 使用示例
+## 1. 使用示例
 
 ```
 <mip-ad 
@@ -53,7 +46,7 @@ mip-ad 用来支持站长添加网页内自定义广告，主要包括连接、�
 </div>
 ```
 
-## 3. 支持广告
+## 2. 支持广告
 
 - [通用广告](http://mip.baidu.com/#../docs/4_components/5_advertisement/ads/mip-ad-comm.md)
 - [网盟广告](http://mip.baidu.com/#../docs/4_components/5_advertisement/ads/mip-ad-baidu.md)
