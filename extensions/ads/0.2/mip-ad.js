@@ -59,5 +59,6 @@ require(['mip-ad'], function (mipAdComm) {
     MIP.css.mipAd = __inline('./mip-ad.less');
     //注册组件
     MIP.registerMipElement('mip-ad', mipAdComm, MIP.css.mipAd);
+    MIP.registerMipElement('mip-embed', mipAdComm, MIP.css.mipAd);
 });
 
