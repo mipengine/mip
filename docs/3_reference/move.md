@@ -42,9 +42,22 @@ git push
 升级前 customElement 会与 dom 元素合并，所以在 customElement 中 this === [DOM 元素]。    
 升级后 customElement 与 dom 元素拆分。如果需要使用 dom 元素的方法，请使用 this.element.xxx。如：this.element.getAttribute    
 
-2、jQuery 切换为 zepto    
+2、customElement 引入变化
+
+```
+// old
+var customElement = require('customElement');
+
+// new
+define(['customElement'], function (customFactory) {
+    var customElement = customFactory();
+});
+// or 
+var customElement = require('customElement')();
+```
+
+3、jQuery 切换为 zepto    
 目前 zepto 一共集成了6个模块 zepto event ajax ie form animate。以前的代码可能会不兼容。
 
  
-
-
+4、已经在使用中的组件需要升版本
