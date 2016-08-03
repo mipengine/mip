@@ -19,6 +19,6 @@ var platform = (function() {
         isSafari:isSafari,
         isChrome:isChrome,
         isUc: isUc,
-        needSpecialScroll: isIos() && !isUc()
+        needSpecialScroll: isIos()
     }
 })(); 
