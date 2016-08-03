@@ -17,14 +17,21 @@ define(function () {
     customElement.prototype.mipDetachedCallback = function () {};
     customElement.prototype.mipAttributeChangedCallback = function () {};
     
-    //自定义元素进入可视区域的默认处理函数，此处可以覆写，如果有特殊逻辑
+    // 自定义元素进入可视区域的默认处理函数，此处可以覆写，如果有特殊逻辑
     customElement.prototype.inviewCallback = function () {
         if(this.element.isInviewer()){
             this.build();
         }
     };
-    //模板的元素build功能，即元素的默认初始化功能 
+    // 模板的元素build功能，即元素的默认初始化功能 
     customElement.prototype.build = function () {};
+    /**
+     * 预渲染接口
+     * @return {boolean}
+     **/
+    customElement.prototype.prerenderAllowed = function () {
+        return false;
+    };
 
     return function () {
         var impl = function (element) {

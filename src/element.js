@@ -28,6 +28,9 @@ define(['utils/cssLoader'], function (cssLoader) {
             this.customElement.mipAttributeChangedCallback();
         };
         proto.isInviewer = function() {
+            if (this.prerenderAllowed()) {
+                return true;
+            }
             var elmTop = $(this).offset().top;
             var pageHight  = $(window).height();
             var scrollTop = pageYOffset;
@@ -43,6 +46,9 @@ define(['utils/cssLoader'], function (cssLoader) {
         };
         proto.inviewCallback = function () {
             this.customElement.inviewCallback();
+        };
+        proto.prerenderAllowed = function () {
+            return this.customElement.prerenderAllowed();
         };
         return baseElementProto = proto;
     };
