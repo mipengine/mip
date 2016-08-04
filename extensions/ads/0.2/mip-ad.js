@@ -14,7 +14,7 @@ require.config({
     paths: {
         "extensions/ads/0.1/mip-ad-comm": "https://mipcache.bdstatic.com/static/v0.1/ads/mip-ad-comm",
         "extensions/ads/0.1/mip-ad-baidu": "https://mipcache.bdstatic.com/static/v0.1/ads/mip-ad-baidu",
-        "extensions/ads/0.1/mip-ad-qwang": "https://mipcache.bdstatic.com/static/v0.1/ads/mip-ad-qwang",
+        "extensions/ads/0.1/mip-ad-qwang": "https://mipcache.bdstatic.com/static/v0.2/ads/mip-ad-qwang"
     }
 });
 
