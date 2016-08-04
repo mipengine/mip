@@ -49,11 +49,7 @@ git push
 var customElement = require('customElement');
 
 // new
-define(['customElement'], function (customFactory) {
-    var customElement = customFactory();
-});
-// or 
-var customElement = require('customElement')();
+var customElement = require('customElement').create();
 ```
 
 3、jQuery 切换为 zepto    

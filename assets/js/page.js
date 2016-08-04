@@ -2,7 +2,7 @@
 //加载右侧菜单
 var globalConf = {
     docDir:'./docs',
-    firstDoc:'./docs/1_getstarted/started.md'
+    firstDoc:'./docs/1-overview/what-is-mip.md'
 };
 $(function(){
         var curentPath = "";

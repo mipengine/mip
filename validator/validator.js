@@ -19,8 +19,8 @@ var check = (function() {
 
 	var tagMipImg = document.getElementsByTagName('mip-img');
 	var tagMipPix = document.getElementsByTagName('mip-pix');
-	var tagMipAd = document.getElementsByTagName('mip-ad');
-	var tagMipBaiduTj = document.getElementsByTagName('mip-baidu-stats');
+	// var tagMipAd = document.getElementsByTagName('mip-ad');
+	// var tagMipBaiduTj = document.getElementsByTagName('mip-baidu-stats');
 
 	// status号待定
 
@@ -80,6 +80,10 @@ var check = (function() {
 		for(var index = 0; index < scriptTag.length; index ++) {
 			var src = scriptTag[index].src;
 			miphtml_main = src.indexOf('https://mipcache.bdstatic.com/static/mipmain');
+			if(miphtml_main <= -1) {
+				miphtml_main = src.indexOf('//m.baidu.com/static/ala/sf/static/css/miphtml');
+				
+			}
 		}
 
 		if(miphtml_main < -1) { 
@@ -96,10 +100,13 @@ var check = (function() {
 		for(var index = 0; index < linkTag.length; index ++) {
 			var href = linkTag[index].href;
 			miphtml_main = href.indexOf('https://mipcache.bdstatic.com/static/mipmain');
+			if(miphtml_main <= -1) {
+				miphtmk_main = href.indexOf('//m.baidu.com/static/ala/sf/static/js/miphtml_main')
+			}
 		}
 
 		if(miphtml_main > -1) {
-			error_info.push('The js file "https://mipcache.bdstatic.com/static/mipmain" is missing or incorrect');
+			error_info.push('The js file "https://mipcache.bdstatic.com/static/mipmain" or is missing or incorrect');
 		}
 
 		return error_info || null;
@@ -145,16 +152,6 @@ var check = (function() {
 		if(!flag) {
 			error_info.push(getErrorInfo(_STATUS , 'utf-8'));
 		}
-
-		// 是否缺失rel="standardhtml"
-		// for(index = 0; index < linkTag.length; index ++) {
-		// 	var stand = linkTag[index].rel;
-		// 	if(stand && stand !== 'standardhtml') {
-		// 		flag_stand = true;
-		// 	}
-		// }
-		
-
 
 		if(document.querySelectorAll('link[rel="standardhtml"]').length <= 0) {
 			error_info.push(getErrorInfo(_STATUS , 'link rel="standardhtml" href=""'));
@@ -278,27 +275,27 @@ var check = (function() {
 		}
 		
 		
-		for(index = 0; index < tagMipImg.length; index ++) {
-			var dataCarousel = tagMipImg[index].getAttribute('data-carousel');
-			if(dataCarousel && dataCarousel != 'carousel') {
-				error_info.push(getMoreParamsErrorInfo(_STATUS, 'data-carousel', 'mip-img', dataCarousel));
-			}
-		}
+		// for(index = 0; index < tagMipImg.length; index ++) {
+		// 	var dataCarousel = tagMipImg[index].getAttribute('data-carousel');
+		// 	if(dataCarousel && dataCarousel != 'carousel') {
+		// 		error_info.push(getMoreParamsErrorInfo(_STATUS, 'data-carousel', 'mip-img', dataCarousel));
+		// 	}
+		// }
 
 
-		for(index = 0; index < tagMipAd.length; index ++) {
-			var tplName = tagMipAd[index].getAttribute('tpl');
-			var dataSize = tagMipAd[index].getAttribute('data-size');
+		// for(index = 0; index < tagMipAd.length; index ++) {
+		// 	var tplName = tagMipAd[index].getAttribute('tpl');
+		// 	var dataSize = tagMipAd[index].getAttribute('data-size');
 
-			if(tplName && !(tplName == 'oneImg' || tplName == 'noneImg' || tplName == 'moreImg' || tplName == 'onlyImg')) {
-				error_info.push(getMoreParamsErrorInfo(_STATUS, 'tpl', 'mip-ad', tplName));
-			}
+		// 	if(tplName && !(tplName == 'oneImg' || tplName == 'noneImg' || tplName == 'moreImg' || tplName == 'onlyImg')) {
+		// 		error_info.push(getMoreParamsErrorInfo(_STATUS, 'tpl', 'mip-ad', tplName));
+		// 	}
 
-			var reg = /^[1-9][\d]*[\s][1-9][\d]*$/;
-			if(dataSize && !reg.test(dataSize)) {
-				error_info.push(getMoreParamsErrorInfo(_STATUS, 'data-size', 'mip-ad', dataSize));
-			}
-		}
+		// 	var reg = /^[1-9][\d]*[\s][1-9][\d]*$/;
+		// 	if(dataSize && !reg.test(dataSize)) {
+		// 		error_info.push(getMoreParamsErrorInfo(_STATUS, 'data-size', 'mip-ad', dataSize));
+		// 	}
+		// }
 
 
 		if(error_info.length) {
@@ -375,26 +372,24 @@ var check = (function() {
 			}
 		}
 		
-		for(index = 0; index < tagMipBaiduTj.length; index ++) {
-			if(!tagMipBaiduTj[index][0].getAttribute('src')) {
-				error_info.push(getErrorInfowithTwoParams('mip-baidu-tj', 'src'));
-			}
-		}
+		// for(index = 0; index < tagMipBaiduTj.length; index ++) {
+		// 	if(!tagMipBaiduTj[index][0].getAttribute('src')) {
+		// 		error_info.push(getErrorInfowithTwoParams('mip-baidu-tj', 'src'));
+		// 	}
+		// }
 
-		for(index = 0; index < tagMipAd.length; index ++) {
-			if(!tagMipAd[index].getAttribute('src')) {
-				error_info.push(getErrorInfowithTwoParams('mip-ad', 'src'));
-			}
-			if(!tagMipAd[index].getAttribute('tpl')) {
-				error_info.push(getErrorInfowithTwoParams('mip-ad', 'tpl'));
-			}
-			// if(!tagMipAd[index].getAttribute('data-size')) {
-			// 	error_info.push(getErrorInfowithTwoParams('mip-ad', 'data-size'));
-			// }
-			if(!tagMipAd[index].getAttribute('data-img')) {
-				error_info.push(getErrorInfowithTwoParams('mip-ad', 'data-img'));
-			}
-		}
+		// for(index = 0; index < tagMipAd.length; index ++) {
+		// 	if(!tagMipAd[index].getAttribute('src')) {
+		// 		error_info.push(getErrorInfowithTwoParams('mip-ad', 'src'));
+		// 	}
+		// 	if(!tagMipAd[index].getAttribute('tpl')) {
+		// 		error_info.push(getErrorInfowithTwoParams('mip-ad', 'tpl'));
+		// 	}
+			
+		// 	if(!tagMipAd[index].getAttribute('data-img')) {
+		// 		error_info.push(getErrorInfowithTwoParams('mip-ad', 'data-img'));
+		// 	}
+		// }
 
 		if(error_info.length) {
 			response_data.status = _STATUS;

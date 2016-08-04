@@ -4,15 +4,27 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
         <link rel="stylesheet" type="text/css" href="/dist/css/mipmain.css">
+        <style type="text/css">
+            
+            h1 {
+                margin-top: 20px;
+                margin-bottom: 10px;
+                font-size: 20px;
+                line-height: 2.0;
+            }
+            mip-video {
+                margin: 30px;
+            }
+        </style>
     </head>
     <body>
-    <p>纯图结构</p>
-    <!-- adInfo="[[{type: 'video/mp4',src: 'http://v1.bdstatic.com/7217528220198269875/mp4/7217528220198269875.mp4'}],[{type: 'video/mp4',src: 'http://v1.bdstatic.com/8aa369effe2cc6280c1bd413723ce0ac/mp4/8aa369effe2cc6280c1bd413723ce0ac.mp4'}]]" -->
+    
+    <h1>视频源符合https标准,在本页面播放</h1>
     <mip-video class="mip-video" 
     poster="//gss0.bdstatic.com/yqACvGbaBA94lNC68IqT0jB-xx1xbK/ztd/whfpf%3D660%2C371%2C50%3Bq%3D70/sign=401857ca845494ee87775c594bc8d6c8/5d6034a85edf8db178d5aa110123dd54574e74c8.jpg"
-    src="http://v1.bdstatic.com/7e313590bc0d1eb605c376b326538356/mp4/7e313590bc0d1eb605c376b326538356.mp4"
+    src="https://gss0.bdstatic.com/6uN1bjq8AAUYm2zgoY3K/2620976604523352338/mp4/2620976604523352338.mp4"
     controls=""
-    adInfo="[[{type: 'video/mp4',src: 'https://gss0.bdstatic.com/6uN1bjq8AAUYm2zgoY3K/3535422104628455086/mp4/3535422104628455086.mp4'}],[{type: 'video/mp4',src: 'http://v1.bdstatic.com/8aa369effe2cc6280c1bd413723ce0ac/mp4/8aa369effe2cc6280c1bd413723ce0ac.mp4'}]]"
+    adInfo="[[{type: 'video/mp4',src: 'https://gss0.bdstatic.com/-b1Caiqa0d9Bmcmop9aC2jh9h2w8e4_h7sED0YQ_t9iCPK/mda-ghbg2ubg743wmj2f/mda-ghbg2ubg743wmj2f.mp4'}],[{type: 'video/mp4',src: 'https://gss0.bdstatic.com/-b1Caiqa0d9Bmcmop9aC2jh9h2w8e4_h7sED0YQ_t9iCPK/mda-ghaz7cphc29zpyre/mda-ghaz7cphc29zpyre.mp4'}]]"
     type="video/mp4" 
     ios-mode="hide"
     >
@@ -22,13 +34,13 @@
         </mip-img>
     </mip-video>
 
-    <p>纯图结构2</p>
-    <!-- adInfo="[[{type: 'video/mp4',src: 'http://v1.bdstatic.com/7217528220198269875/mp4/7217528220198269875.mp4'}],[{type: 'video/mp4',src: 'http://v1.bdstatic.com/8aa369effe2cc6280c1bd413723ce0ac/mp4/8aa369effe2cc6280c1bd413723ce0ac.mp4'}]]" -->
+    
+    <h1>视频源为http时，在手百下将调起手百，非手百将跳转至sf页面</h1>
     <mip-video class="mip-video" 
-    poster="http://gss0.bdstatic.com/yqACvGbaBA94lNC68IqT0jB-xx1xbK/ztd/whfpf%3D660%2C371%2C50%3Bq%3D70/sign=401857ca845494ee87775c594bc8d6c8/5d6034a85edf8db178d5aa110123dd54574e74c8.jpg"
-    src="http://v1.bdstatic.com/7e313590bc0d1eb605c376b326538356/mp4/7e313590bc0d1eb605c376b326538356.mp4"
+    poster="http://h.hiphotos.baidu.com/image/pic/item/b219ebc4b74543a93d6cf71c19178a82b80114ee.jpg"
+    src="http://gss0.bdstatic.com/6uN1bjq8AAUYm2zgoY3K/2620976604523352338/mp4/2620976604523352338.mp4"
     controls=""
-    adInfo="[[{type: 'video/mp4',src: 'http://v1.bdstatic.com/7217528220198269875/mp4/7217528220198269875.mp4'}],[{type: 'video/mp4',src: 'http://v1.bdstatic.com/8aa369effe2cc6280c1bd413723ce0ac/mp4/8aa369effe2cc6280c1bd413723ce0ac.mp4'}]]"
+    adInfo="[[{type: 'video/mp4',src: 'http://gss0.bdstatic.com/-b1Caiqa0d9Bmcmop9aC2jh9h2w8e4_h7sED0YQ_t9iCPK/mda-ghbg2ubg743wmj2f/mda-ghbg2ubg743wmj2f.mp4'}],[{type: 'video/mp4',src: 'http://gss0.bdstatic.com/-b1Caiqa0d9Bmcmop9aC2jh9h2w8e4_h7sED0YQ_t9iCPK/mda-ghaz7cphc29zpyre/mda-ghaz7cphc29zpyre.mp4'}]]"
     type="video/mp4"
     ios-mode="hide"
     >
@@ -37,17 +49,6 @@
             <div class="mip-video-icon"></div>
         </mip-img>
     </mip-video>
-
-
-    <p>纯文字结构</p>
-    <mip-video class="mip-video" 
-    poster="http://p1.bdstatic.com/7217528220198269875.jpg"
-    src="https://gss0.bdstatic.com/6uN1bjq8AAUYm2zgoY3K/11606258655029372539/mp4/11606258655029372539.mp4"
-    android-mode="fullscreen" ios-mode="hide"
-    >
-        立即播放
-    </mip-video>
-
 
    <!--  <p>图文结构</p>
     <mip-video class="mip-video" 
@@ -110,5 +111,6 @@
     <div class="wa-video-box"></div>
 </div> -->
 </body>
+    <script type="text/javascript" src="http://static1.searchbox.baidu.com/static/searchbox/openjs/aio.js?v=201502"></script>
     <script src="/dist/mipmain.js"></script>
 </html>

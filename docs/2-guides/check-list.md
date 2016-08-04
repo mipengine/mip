@@ -85,17 +85,10 @@ audio|mip-audio（暂未开放）
 
 - mip-img
     - src：必须是一个url
-    - data-carousel：目前只有carousel属性值
 
 - mip-pix
     - src：必须是一个支持https的地址url，
     - 如果不支持https适用百度提供的https代理，url中带t={TIME}&title={TITLE}&host={HOST}&from=baidu"
-
-- mip-ad
-    - tpl：onlyImg, noneImg, oneImg, moreImg(只能是这三个)
-    - src：必须是url
-    - data-size："1242 180", 两个数字中间用空格隔开
-    - data-img：必须是url
 
 - 其他html基本页面属性规范不变
 
@@ -134,24 +127,7 @@ audio|mip-audio（暂未开放）
 
 </font>
 
-### 5. 无效的URL协议
-
-|提示|INVALID_URL_PROTOCOL|
-|---|---|
-|错误说明|Invalid URL protocol '%3:' for attribute '%1' in tag '%2'.|
-|错误说明|表填'xx'中的属性'xx'的url协议'xx'是无效的|
-|修复方法|添加有效协议。如将http改为https|
-
-<font color="red">
-
-**注意**：
-
-1. mip html中所有的**资源**url必须是https的<br>
-2. 包括mip页面本身也必须是https的
-
-</font>
-
-### 6. 缺少强制性属性
+### 5. 缺少强制性属性
 
 |提示|MANDATORY_ONEOF_ATTR_MISSING|
 |---|---|
@@ -165,14 +141,8 @@ mip html中具有强制性属性的标签及其强制性属性有：
     - src
 - mip-pix
     - src
-- mip-baidu-tj
-    - token
-- mip-ad
-    - tpl
-    - src
-    - data-img
 
-### 7. 直接父标签错误
+### 6. 直接父标签错误
 
 |提示|WRONG_PARENT_TAG|
 |---|---|
@@ -190,7 +160,7 @@ mip html中具有强制性属性的标签及其强制性属性有：
 - **style mip-custom** 的直接父标签是 **head**
 - **style** 的直接父标签是 **boilerplate**
 
-### 8. 非法父级标签
+### 7. 非法父级标签
 
 |提示|DISALLOWED_TAG_ANCESTOR|
 |---|---|
@@ -202,7 +172,7 @@ mip html中具有强制性属性的标签及其强制性属性有：
 
 - `<body>`的子标签写在了`<head>`中
 
-### 9. 强制父级标签
+### 8. 强制父级标签
 
 |提示|MANDATORY_TAG_ANCESTOR|
 |---|---|
@@ -215,7 +185,7 @@ mip html中具有强制性属性的标签及其强制性属性有：
 - audio 必须是noscript的子级标签
 - noscript必须是body的子级标签
 
-### 10. 唯一标签重复
+### 9. 唯一标签重复
 |提示|DUPLICATE_UNIQUE_TAG|
 |---|---|
 |错误说明|"The tag '%1' appears more than once in the document."|

@@ -72,7 +72,7 @@ define(function() {
                       //验证自定义属性
                       if(validatereg) {
                          var regtest = new RegExp(validatereg);
-                         var reg = regtest.test(value);
+                         var reg = value == ""? false : regtest.test(value);
                       }else {
                          var reg = validatefn(validatetype,value);
                       }
