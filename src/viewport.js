@@ -17,11 +17,11 @@ define(function(){
         _scrollTracking = false,
         _swapTracking = false,
         _isViewportNormal = true,
-        _changeObservable = require('observable'),
-        _scrollObservable = require('observable'),
-        _touchObservable = require('observable');
+        _changeObservable = require('components/observable'),
+        _scrollObservable = require('components/observable'),
+        _touchObservable = require('components/observable');
 
-    var gesture = require('gesture');
+    var gesture = require('components/gesture');
 
     gesture.init();
 

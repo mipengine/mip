@@ -1,5 +1,4 @@
-var platform = (function() {
-
+define(function () {
     function isIos() {
         return /iPhone|iPad|iPod/i.test(window.navigator.userAgent); 
     }
@@ -21,4 +20,4 @@ var platform = (function() {
         isUc: isUc,
         needSpecialScroll: isIos() && !isUc()
     }
-})(); 
+});

@@ -3,7 +3,7 @@ define(function(){
     var state = {
     }
     
-    var gestureObserver = require('observable');
+    var gestureObserver = require('./observable');
     
     function message(data,event){
        gestureObserver.fire(data,event);

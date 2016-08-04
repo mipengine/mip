@@ -1,4 +1,4 @@
-define(['utils/util'], function(util){
+define(['util'], function(util){
     var customElem = require('customElement').create();
     var player = require('./video/player');
 

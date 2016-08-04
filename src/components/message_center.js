@@ -7,7 +7,7 @@ define(function(){
     */
     //发送postMessage时候，目标response的回掉函数
     responseHandlers = {};
-    var messageObserver = require('observable');
+    var messageObserver = require('./observable');
 
     var isListener = false;
     var sentinel = '__MIP__';

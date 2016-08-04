@@ -1,4 +1,4 @@
-define(['deps/emit'], function (EventEmitter) {
+define(['components/emit'], function (EventEmitter) {
     var $win = $(window);
     var winInfo = {
         width: $win.width(),

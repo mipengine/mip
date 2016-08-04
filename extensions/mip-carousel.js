@@ -118,7 +118,7 @@ define(function(){
             autoPlay(defer);
         }
 
-        var gesture = require('gesture');
+        var gesture = require('components/gesture');
         gesture.init();
         gesture.bind(function (evt, data) {
             // 用户手指滑动结束且手势为横向滑动且当前不处于动画播放状态

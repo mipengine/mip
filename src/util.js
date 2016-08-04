@@ -1,4 +1,4 @@
-define(function() {
+define(function () {
     /**
      *  页面资源url转成可用的cache url
      *  @pageUrl 当前页面url地址
@@ -6,10 +6,10 @@ define(function() {
      *  @return url
      *  by lilangbo@baidu.com
      * */
-    function urlToCacheUrl (pageUrl, url, type) { 
-        // 不合法的url 或 pageUrl非mip cache域名 直接return 
-        if (pageUrl.indexOf('mipcache.bdstatic.com') < 0 
-            || (url && url.length < 8) 
+    function urlToCacheUrl (pageUrl, url, type) {
+        // 不合法的url 或 pageUrl非mip cache域名 直接return
+        if (pageUrl.indexOf('mipcache.bdstatic.com') < 0
+            || (url && url.length < 8)
             || !(url.indexOf('http') == 0 || url.indexOf('//') == 0)) {
             return url;
         }
@@ -26,4 +26,5 @@ define(function() {
     return {
         urlToCacheUrl : urlToCacheUrl
     }
+
 });

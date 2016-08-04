@@ -2,7 +2,7 @@
  *  mip element
  *  @exports register
  **/
-define(['utils/cssLoader'], function (cssLoader) {
+define(['components/cssLoader'], function (cssLoader) {
     var customElements = {};
 
     var baseElementProto;
@@ -75,8 +75,6 @@ define(['utils/cssLoader'], function (cssLoader) {
             prototype: createMipElementProto(name)
         });
     };
-
-    MIP['registerMipElement'] = registerElement;
     
     return registerElement;
 });
