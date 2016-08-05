@@ -57,11 +57,11 @@ define(function() {
                 + 'from=recmd'
 
             $(".recommends").addClass('recommends-more').append(''
-                + '<p class="recommends-more-line">'
-                + '<a href="' + url + '" class="recommends-more-link">'
+                + '<div class="recommends-more-line">'
+                + '<a target="_blank" href="' + url + '" class="recommends-more-link">'
                 + (recommendMore.text || '查看更多 <em>资讯</em> ')
                 + '</a>'
-                + '</p>'
+                + '</div>'
             );
         }
 
