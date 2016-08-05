@@ -117,7 +117,7 @@ define(function() {
 
                 html += _.format(tpl, {
                     index: i,
-                    target: inIframe ? '_top' : '_self',
+                    target: inIframe ? '_blank' : '_self',
                     hotClass: '', //item.type ? ' hotpoint-href-word-hot' : '',
                     href: item.url,
                     text: item.query, // item.query + typeStr,
