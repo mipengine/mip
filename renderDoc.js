@@ -12,6 +12,7 @@ var config = {
       '4-customize-widget': '个性化组件',
       '5-ad-widget': '广告组件',
       '5_demos': '示例',
+      'ads': '广告类型'
     }
 };
 var fs = require('fs'),
