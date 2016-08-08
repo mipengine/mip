@@ -380,21 +380,29 @@ define(function () {
                 list.push(qqfriend);
             }
             list.push(qzone, sinaweibo);
-            if (isZbios || isUC || (isQQ && OS.n == 'ios')) {
-                list.push(more);
+
+            // 支持更多
+            var supportMore = isZbios || isUC || (isQQ && OS.n == 'ios');
+
+            // 只有一行
+            if (list.length < 4) {
+                supportMore && list.push(more);
             }
-            list = list.concat(me.opt.custom);
+            else {
+                list = list.concat(me.opt.custom);
+                list = list.splice(0, 4);
 
-            list = list.splice(0, 4);
+                // 最后 是更多
+                if (list.length == 4) {
+                    var lastBtn = list[3];
+                    if (lastBtn.key !== 'more' && supportMore) {
+                        list[3] = more;
+                    }
 
-            // 最后 是更多
-            if (list.length == 4) {
-                var lastBtn = list[3];
-                if (lastBtn.key !== 'more') {
-                    list[3] = more;
                 }
-
             }
+
+
 
             me.list = list;
 
