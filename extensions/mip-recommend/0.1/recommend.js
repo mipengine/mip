@@ -198,14 +198,14 @@ define(function() {
         // actData = [
         //     {
         //         icon: 'https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=1316532929,3120616448&fm=58',
-        //         text: '设置奥运赛事提醒',
-        //         url: '//m.baidu.com'
+        //         text: '奥运有奖竞猜',
+        //         url: 'http://activity.2016.baidu.com/guess'
         //     },
         //     {
         //         icon: 'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1588110423,3363913049&fm=58',
         //         text: '奥运闯关夺宝',
-        //         url: '//m.baidu.com'
-        //     },
+        //         url: 'http://activity.2016.baidu.com/answerui/'
+        //     }
 
         // ];
 
