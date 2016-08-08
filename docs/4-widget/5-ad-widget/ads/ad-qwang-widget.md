@@ -1,4 +1,4 @@
-# ad-qwang
+# 类型: ad-qwang
 
 全网推荐 
 
