@@ -1,90 +1,36 @@
-.c-share-list {
-    background: #fff;
-    padding: 17px 21px;
-    margin-top: 13px;
-    // text-align: left;
+mip-share {
 
-
-    .c-flexbox,
-    .c-row {
-      width: auto;
-      display: -webkit-box;
-      -webkit-box-orient: horizontal;
-      -webkit-box-direction: normal;
-      -webkit-box-pack: justify;
-      -webkit-box-align: stretch;
-      -webkit-box-lines: single;
-      display: -webkit-flex;
-      -webkit-flex-direction: row;
-      -webkit-justify-content: space-between;
-      -webkit-align-items: stretch;
-      -webkit-align-content: flex-start;
-      -webkit-flex-wrap: nowrap;
+    .share-head {
+        font-size: 12px;
+        color: #999;
+        background: #f5f5f5;
+        overflow: hidden;
     }
-    .c-row {
-      margin-right: -1.81818182%;
-      margin-left: -1.81818182%;
+    .share-head p {
+        box-sizing: border-box;
+        position: relative;
+        text-align: center;
+        margin: 17px 17px 0;
     }
-    .c-row-tight {
-      margin-right: -1px;
-      margin-left: 0;
+    .share-head p::before {
+        content: '';
+        border-bottom: 1px solid #ddd;
+        width: 38%;
+        position: absolute;
+        top: 50%;
+        left: 0;
     }
-    .c-row-tile {
-      position: relative;
-      margin: 0 -0.21rem;
-    }
-    .c-row-tile .c-row {
-      padding: 0 0.21rem;
-    }
-    .c-row-top {
-      position: relative;
-      margin-top: -0.1rem;
-    }
-    .c-row-top .c-row:first-child {
-      padding-top: 0.1rem;
-    }
-    .c-row-bottom {
-      position: relative;
-      margin-bottom: -0.08rem;
-    }
-    .c-row-bottom .c-row:last-child {
-      padding-bottom: 0.08rem;
-    }
-    .c-row *,
-    .c-row-tile *,
-    .c-row-top *,
-    .c-row-bottom * {
-      -webkit-box-sizing: border-box;
-      box-sizing: border-box;
-    }
-    .c-span1, .c-span2, .c-span3, .c-span4, .c-span5, .c-span6, .c-span7, .c-span8, .c-span9, .c-span10, .c-span11, .c-span12 {
-      position: relative;
-      min-height: 1px;
-      padding-right: 1.81818182%;
-      padding-left: 1.81818182%;
-    }
-
-
-    .c-span3 {
-      width: 25%;
-      -webkit-box-flex: 3;
-      -webkit-flex: 3 3 auto;
-    }
-
-    .c-img {
-      display: block;
-      width: 100%;
-      height: 0;
-      border: 0 none;
-      background: #f7f7f7 url(//m.baidu.com/static/search/image_default.png) center center no-repeat;
-      margin: 0.04rem 0;
-
-    }
-    .c-img img {
-      width: 100%;
-    }
-    .c-img-s {
-      padding-bottom: 100%;
+    .share-head p::after {
+        content: '';
+        border-bottom: 1px solid #ddd;
+        width: 38%;
+        position: absolute;
+        top: 50%;
+        right: 0;
     }
 
 }
+
+
+
+

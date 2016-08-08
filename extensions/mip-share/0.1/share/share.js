@@ -1,4 +1,5 @@
 
+
 /**
  * @file sharebase
  * @author yangfan16
@@ -383,35 +384,43 @@ define(function () {
                 list.push(more);
             }
             list = list.concat(me.opt.custom);
+
+            list = list.splice(0, 4);
+
+            // 最后 是更多
+            if (list.length == 4) {
+                var lastBtn = list[3];
+                if (lastBtn.key !== 'more') {
+                    list[3] = more;
+                }
+
+            }
+
             me.list = list;
 
             var str = '';
             if ($.type(list) == 'array' && list.length > 0) {
                 str += '<div class="c-share-list">';
-                var num = list.length;
-                var lines = Math.ceil(num / 4);
-                for (var j = 0; j < lines; j++) {
-                    str += '<div class="c-row c-gap-bottom">';
-                    for (var i = 0; i < 4; i++) {
-                        var index = j * 4 + i;
-                        var obj = list[index];
+
+                for (var i = 0; i < 4; i++) {
+                    var index = i;
+                    var obj = list[index];
 
 
-                        if (obj) {
-                            str += '<div class="c-span3 c-share-btn c-share-btn-' + obj.key + '">';
-                            str += '<div class="c-img c-img-s">';
-                            str +=     '<img src="' + obj.icon + '" />';
-                            str += '</div>';
-                            str += '<div class="c-line-clamp1">' + obj.title + '</div>';
-                        }
-                        else {
-                            str += '<div class="c-span3 c-share-btn">';
-                        }
-
+                    if (obj) {
+                        str += '<div class="c-share-btn c-share-btn-' + obj.key + '">';
+                        str += '<div class="c-share-btn-img">';
+                        str +=     '<img src="' + obj.icon + '" />';
                         str += '</div>';
+                        str += '<div class="c-line-clamp1">' + obj.title + '</div>';
                     }
+                    else {
+                        str += '<div class="c-share-btn">';
+                    }
+
                     str += '</div>';
                 }
+
                 str += '</div>';
             }
             me.$dom_shareList = $(str);

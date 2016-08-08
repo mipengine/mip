@@ -1,15 +1,33 @@
 /* 分享列表容器 */
+
+
+.c-share-content {
+    padding: 8px 21px 18px;
+    background: #f5f5f5;
+}
+
 .c-share-list {
     overflow: hidden;
+    display: table;
+    width: 100%;
+
 }
 .c-share-list .c-line-clamp1{
     line-height: 30px;
 }
 
 .c-share-list .c-share-btn {
+    display: table-cell;
     color: #333;
     text-align: center;
     font-size: 12px;
+
+}
+
+.c-share-list .c-share-btn-img {
+    width: 50px;
+    height: 50px;
+    margin: 16px auto;
 }
 
 .c-share-list .c-share-btn .c-img {
@@ -18,6 +36,12 @@
     border-radius: 50%;
 }
 
+.c-share-list .c-share-btn-img {
+    width: 50px;
+    height: 50px;
+    background: #fff;
+    border-radius: 50%;
+}
 
 /* 分享取消按钮,只在popup打开时展现 */
 .c-share-cancel-btn {
