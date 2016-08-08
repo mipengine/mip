@@ -59,7 +59,19 @@ define(function() {
         return matchs ? matchs[1] : "";
     }
 
-//格式化
+    /**
+     * addParam
+     *
+     * @param {string} url   url
+     * @param {Object} param param
+     */
+    function addParam(url, param) {
+        return url = url
+            + (url.indexOf('?') > -1 ? '&' : '?')
+            + $.param(param);
+    }
+
+    //格式化
     function formatBigNumber(num) {
         if (!num) return 0;
         if (num < 1e5) {
@@ -75,8 +87,9 @@ define(function() {
     }
 
     return {
-        timeSince : timeSince,
-        getParam : getParam,
+        timeSince: timeSince,
+        getParam: getParam,
+        addParam: addParam,
         format: format,
         formatBigNumber: formatBigNumber
     }

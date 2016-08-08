@@ -98,6 +98,40 @@ div.recommends-keywords {
 }
 
 
+.recommend-act {
+    display: table;
+    table-layout: fixed;
+    border-top: solid 1px #f0f0f0;
+    border-bottom: solid 1px #f0f0f0;
+    width: 100%;
+    background: #fff;
+    margin: 8px auto;
+
+    &-item {
+        display: table-cell;
+        border-left: solid 1px #f0f0f0;
+        height: 50px;
+        line-height: 50px;
+
+        &:first-child {
+            border: 0;
+        }
+    }
+
+    &-icon {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        vertical-align: middle;
+        margin-right: 14px;
+    }
+
+    &-text {
+        display: inline-block;
+        vertical-align: middle;
+    }
+}
+
 // hot
 .hotpoint {
     width:100%;

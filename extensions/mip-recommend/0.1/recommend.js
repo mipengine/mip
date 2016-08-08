@@ -51,10 +51,8 @@ define(function() {
 
         if (recommendMore) {
 
-            var url = ''
-                + recommendMore.url
-                + (recommendMore.url.indexOf('?') > -1 ? '&' : '?')
-                + 'from=recmd'
+            var url = _.addParam(recommendMore.url, {from: 'recmd'});
+
 
             $(".recommends").addClass('recommends-more').append(''
                 + '<div class="recommends-more-line">'
@@ -177,9 +175,75 @@ define(function() {
 
     }
 
+
+    /**
+     * 活动容器
+     *
+     * @type {String}
+     */
+    var tplActWrapper = ''
+        + '<div class="recommend-act">'
+        + '</div>';
+
+
+    /**
+     * 渲染活动
+     *
+     * @param  {object} data 渲染活动
+     */
+    function renderAct(data) {
+
+        var actData = data.act_card;
+
+        // actData = [
+        //     {
+        //         icon: 'https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=1316532929,3120616448&fm=58',
+        //         text: '设置奥运赛事提醒',
+        //         url: '//m.baidu.com'
+        //     },
+        //     {
+        //         icon: 'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1588110423,3363913049&fm=58',
+        //         text: '奥运闯关夺宝',
+        //         url: '//m.baidu.com'
+        //     },
+
+        // ];
+
+
+        if (actData && actData.length) {
+
+            $(".recommends").after(tplActWrapper);
+
+            var tpl = ''
+                + '<a target="_blank" class="MIP_LOG_BTN recommend-act-item" href="#{url}">'
+                +   '<img class="recommend-act-icon" src="#{icon}" />'
+                +   '<span class="recommend-act-text">#{text}</span>'
+                + '</a>';
+
+            var html = '';
+
+            $.each(actData, function(i, item) {
+
+                var url = _.addParam(item.url, {from: 'recmd'});
+
+                html += _.format(tpl, {
+                    url: url,
+                    text: item.text,
+                    icon: item.icon
+                });
+
+            });
+
+            $('.recommend-act').html(html);
+        }
+
+
+    }
+
     return {
         init : init,
         render: render,
-        renderHot: renderHot
+        renderHot: renderHot,
+        renderAct: renderAct
     }
 });
