@@ -1,4 +1,4 @@
-# ad-baidu
+# 类型: ad-baidu
 
 网盟广告。
 

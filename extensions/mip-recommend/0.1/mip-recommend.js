@@ -84,6 +84,7 @@ define(function() {
         fetchData(url).then(function(res) {
             recommend.render(res.data);
             recommend.renderHot(res.data);
+            recommend.renderAct(res.data);
         });
 
     }

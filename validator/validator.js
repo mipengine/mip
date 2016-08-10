@@ -79,10 +79,22 @@ var check = (function() {
 
 		for(var index = 0; index < scriptTag.length; index ++) {
 			var src = scriptTag[index].src;
-			miphtml_main = src.indexOf('https://mipcache.bdstatic.com/static/mipmain');
+			
+			// 向下兼容 js 判断
+			miphtml_main = src.indexOf('//mipcache.bdstatic.com/static/mipmain');
 			if(miphtml_main <= -1) {
 				miphtml_main = src.indexOf('//m.baidu.com/static/ala/sf/static/css/miphtml');
 				
+			} 
+
+
+			// script 标签处理，如果不是mipcache 下的js
+			// 并且不是 type 不是 application/ld+json 则认为是错误的
+			if(miphtml_main < -1) {
+				var is_mipcache = src.indexOf('//mipcache.bdstatic.com/');
+				if(is_mipcache <= -1 && scriptTag[index].type !== 'application/ld+json') {
+					error_info.push('The script type is missing or incorrect');
+				}
 			}
 		}
 

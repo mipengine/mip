@@ -30,12 +30,21 @@ define(function() {
 
         this.isRender = true;
 
+        if (!this.getAttribute('nohead')) {
+
+            $(this).prepend(Share.headTpl);
+        }
+
+        var body = $('<div class="c-share-content"></div>');
+
+        $(this).append(body);
+
         new Share({
             title: this.getAttribute('title') || document.title,
             url: this.getAttribute('url') || location.href,
             content: this.getAttribute('content') || '',
             iconUrl: this.getAttribute('icon') || ''
-        }, $(this));
+        }, body);
 
     }
 

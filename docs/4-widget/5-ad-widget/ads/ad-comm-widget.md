@@ -1,4 +1,4 @@
-# ad-comm 
+# 类型: ad-comm 
 
 通用广告
 

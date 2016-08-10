@@ -7,11 +7,12 @@ var config = {
       '4-widget':'组件说明',
       '5-support':'技术支持',
       '6-changelog':'上线日志',
-      'inner-widget': '内置组件',
-      'extend-widget': '扩展通用组件',
-      'customize-widget': '个性化组件',
-      'ad-widget': '广告组件',
+      '2-inner-widget': '内置组件',
+      '3-extend-widget': '扩展通用组件',
+      '4-customize-widget': '个性化组件',
+      '5-ad-widget': '广告组件',
       '5_demos': '示例',
+      'ads': '广告类型'
     }
 };
 var fs = require('fs'),

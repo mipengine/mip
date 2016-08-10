@@ -40,15 +40,13 @@ div.recommends-keywords {
 .recommends-box {
     overflow:hidden;
     padding: 16px 0 15px;
-    border-bottom:#eee 1px solid;
+    border-top:#eee 1px solid;
 }
 .recommends-box-first {
     padding-top: 15px;
+    border-top: 0;
 }
-.recommends-box:last-child {
-    border-bottom:none;
-    padding-bottom: 5px;
-}
+
 .recommends-title {
     font-size: 16px;
     margin-bottom: 10px;
@@ -70,7 +68,6 @@ div.recommends-keywords {
     padding-bottom: 0;
 }
 .recommends-more-line {
-    margin-top: 10px;
     text-align: center;
     border-top: solid #e6e6e6 1px;
     line-height: 45px;
@@ -100,6 +97,40 @@ div.recommends-keywords {
     display:block;
 }
 
+
+.recommend-act {
+    display: table;
+    table-layout: fixed;
+    border-top: solid 1px #f0f0f0;
+    border-bottom: solid 1px #f0f0f0;
+    width: 100%;
+    background: #fff;
+    margin: 8px auto;
+
+    &-item {
+        display: table-cell;
+        border-left: solid 1px #f0f0f0;
+        height: 50px;
+        line-height: 50px;
+
+        &:first-child {
+            border: 0;
+        }
+    }
+
+    &-icon {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        vertical-align: middle;
+        margin-right: 14px;
+    }
+
+    &-text {
+        display: inline-block;
+        vertical-align: middle;
+    }
+}
 
 // hot
 .hotpoint {

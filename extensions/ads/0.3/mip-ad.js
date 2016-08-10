@@ -12,21 +12,32 @@
  */
 require.config({
     paths: {
+<<<<<<< HEAD
         "extensions/ads/0.1/mip-ad-comm": "https://mipcache.bdstatic.com/static/v0.1/ads/mip-ad-comm",
         "extensions/ads/0.1/mip-ad-baidu": "https://mipcache.bdstatic.com/static/v0.1/ads/mip-ad-baidu",
         "extensions/ads/0.1/mip-ad-qwang": "https://mipcache.bdstatic.com/static/v0.1/ads/mip-ad-qwang",
+=======
+        "extensions/ads/0.3/mip-ad-comm": "https://mipcache.bdstatic.com/static/v0.3/ads/mip-ad-comm",
+        "extensions/ads/0.3/mip-ad-baidu": "https://mipcache.bdstatic.com/static/v0.3/ads/mip-ad-baidu",
+        "extensions/ads/0.3/mip-ad-qwang": "https://mipcache.bdstatic.com/static/v0.3/ads/mip-ad-qwang"
+>>>>>>> master
     }
 });
 
 define(function (){
+<<<<<<< HEAD
     var customElement = require('customElement').create();
 
+=======
+    var customElem = require('customElement');
+>>>>>>> master
     
     /**
      * render
      *
      */
     function render () {
+<<<<<<< HEAD
         var _element = this.element;
         if (_element.isRender) {
             return;
@@ -38,6 +49,20 @@ define(function (){
         var adFile = 'extensions/ads/0.1/mip-' + type;
         require([adFile], function(mipAd) {
             mipAd.render(_element);
+=======
+
+        var _this = this;
+        if (this.isRender) {
+            return;
+        }
+
+        this.isRender = true;
+
+        var type = this.getAttribute('type');
+        var adFile = 'extensions/ads/0.3/mip-' + type;
+        require([adFile], function(mipAd) {
+            mipAd.render(_this);
+>>>>>>> master
         });
     }
 
@@ -48,10 +73,18 @@ define(function (){
      * 初始化
      *
      */
+<<<<<<< HEAD
     customElement.prototype.init = function() {
         this.build = render;
     };
     return customElement;
+=======
+    customElem.prototype.init = function() {
+       
+        this.build = render;
+    };
+    return customElem;
+>>>>>>> master
 });
 
 require(['mip-ad'], function (mipAdComm) {

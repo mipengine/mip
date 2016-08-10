@@ -1,4 +1,4 @@
-# MIP 校验list
+# MIP 校验规则
 
 MIP页面会有严格的规范校验，不允许存在任何校验不通过的问题存在，本文档意在帮助开发者找到校验的内容和规则，快速定位校验不通过的原因
 
@@ -61,6 +61,7 @@ audio|mip-audio（暂未开放）
 其他说明：
 
 - style：仅允许在head标签中的style标签中使用
+- script：仅允许外链mip组件所需要的js脚本，或type是application/ld+json的情况
 
 <font color="red">
 -**注意**：
@@ -118,6 +119,10 @@ audio|mip-audio（暂未开放）
     - width的属性值device-width
     - minimum-scale的属性值1
     - initial-scale的属性值1
+
+- `<script type="application/ld+json"></script>`
+
+    - 除了外链js，script标签的type的属性值应该为application/ld+json
 
 <font color="red">
 

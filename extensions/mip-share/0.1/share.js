@@ -129,5 +129,9 @@ define(function () {
 
     }
 
+
+    Share.headTpl = ''
+        + '<div class="share-head"><p><span>分享到</span></p></div>';
+
     return Share;
 });
