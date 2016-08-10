@@ -12,20 +12,13 @@ define(function () {
     }
 
     // interface
-    customElement.prototype.mipCreatedCallback = function () {};
-    customElement.prototype.mipAttachedCallback = function () {};
-    customElement.prototype.mipDetachedCallback = function () {};
-    customElement.prototype.mipAttributeChangedCallback = function () {};
+    customElement.prototype.createdCallback = function () {};
+    customElement.prototype.attachedCallback = function () {};
+    customElement.prototype.detachedCallback = function () {};
+    customElement.prototype.attributeChangedCallback = function () {};
     customElement.prototype.viewportCallback = function () {};
     // 模板的元素build功能，即元素的默认初始化功能 
     customElement.prototype.build = function () {};
-    /**
-     * 预渲染接口
-     * @return {boolean}
-     **/
-    customElement.prototype.prerenderAllowed = function () {
-        return false;
-    };
 
     return {
         create: function () {

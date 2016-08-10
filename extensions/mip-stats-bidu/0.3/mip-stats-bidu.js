@@ -12,7 +12,7 @@ define(function(){
 
     customElement.prototype.init = function() {
 
-        this.mipCreatedCallback = render;
+        this.createdCallback = render;
 
     };
 

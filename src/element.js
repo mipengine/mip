@@ -17,17 +17,18 @@ define(['./components/cssLoader', './resources'], function (cssLoader, resources
             this.classList.add('mip-element');
             this._resources = resources();
             this.customElement = new CustomEle(this);
-            this.customElement.mipCreatedCallback();
+            this.customElement.createdCallback();
         };
         proto.attachedCallback = function() {
-            this.customElement.mipAttachedCallback();
+            this.customElement.attachedCallback();
             this._resources.add(this);
         };
         proto.detachedCallback = function() {
-            this.customElement.mipDetachedCallback();
+            this.customElement.detachedCallback();
+            this._resources.remove(this);
         };
         proto.attributeChangedCallback = function(){
-            this.customElement.mipAttributeChangedCallback();
+            this.customElement.attributeChangedCallback();
         };
         proto.inViewport = function () {
             return this._inViewport;
@@ -35,9 +36,6 @@ define(['./components/cssLoader', './resources'], function (cssLoader, resources
         proto.viewportCallback = function (inViewport) {
             this._inViewport = inViewport;
             this.customElement.viewportCallback(inViewport);
-        };
-        proto.prerenderAllowed = function () {
-            return this.customElement.prerenderAllowed();
         };
         proto.isBuilt = function () {
             return this._built;

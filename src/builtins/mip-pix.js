@@ -40,7 +40,7 @@ define(function(){
 
     customElem.prototype.init = function(){
         this.build = build;
-        this.mipAttachedCallback = function(){
+        this.attachedCallback = function(){
             this.build();
         }
 
