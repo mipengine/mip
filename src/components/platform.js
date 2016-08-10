@@ -1,16 +1,20 @@
 define(function () {
+    var ua = navigator.userAgent;
     function isIos() {
-        return /iPhone|iPad|iPod/i.test(window.navigator.userAgent); 
+        return /iPhone|iPad|iPod/i.test(ua); 
     }
 
     function isSafari() {
-        return /Safari/i.test(window.navigator.userAgent) && !isChrome(); 
+        return /Safari/i.test(ua) && !isChrome(); 
     }
     function isChrome() {
-        return /Chrome|CriOS/i.test(window.navigator.userAgent);
+        return /Chrome|CriOS/i.test(ua);
     }
     function isUc() {
-        return /UCBrowser/i.test(window.navigator.userAgent);
+        return /UCBrowser/i.test(ua);
+    }
+    function isWebKit() {
+        return /WebKit/i.test(ua);
     }
 
     return {
@@ -18,6 +22,7 @@ define(function () {
         isSafari:isSafari,
         isChrome:isChrome,
         isUc: isUc,
-        needSpecialScroll: isIos()
+        isWebKit: isWebKit,
+        needSpecialScroll: isIos() && window != top
     }
 });

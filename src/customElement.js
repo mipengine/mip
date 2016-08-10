@@ -16,13 +16,7 @@ define(function () {
     customElement.prototype.mipAttachedCallback = function () {};
     customElement.prototype.mipDetachedCallback = function () {};
     customElement.prototype.mipAttributeChangedCallback = function () {};
-    
-    // 自定义元素进入可视区域的默认处理函数，此处可以覆写，如果有特殊逻辑
-    customElement.prototype.inviewCallback = function () {
-        if(this.element.isInviewer()){
-            this.build();
-        }
-    };
+    customElement.prototype.viewportCallback = function () {};
     // 模板的元素build功能，即元素的默认初始化功能 
     customElement.prototype.build = function () {};
     /**

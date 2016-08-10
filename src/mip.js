@@ -1,7 +1,8 @@
 /**
  * initialize mip
  **/
-require(['./components/platform', './viewport', './element', './builtins/mip_builtins'], function (platform, viewport, registerMipElement, builtin) {
+require(['./components/platform', './element', './builtins/mip_builtins', './resources'], 
+    function (platform, registerMipElement, builtin) {
     'use strict';
 
     !window.MIP && (window.MIP = {});
@@ -10,22 +11,8 @@ require(['./components/platform', './viewport', './element', './builtins/mip_bui
 
     window.platform = platform;
 
-    //页面初始化后，处理可视区域内元素
-    $(function(){
-        window.setTimeout(function(){
-            $('.mip-element').each(function(){
-                this.inviewCallback();
-            });
-        },100);
-    });
 
-    //元素绑定scroll，用于lazy load等场景
-    viewport.onScroll(function(){
-        $('.mip-element').each(function(){
-            this.inviewCallback();
-        });
-    });
-
+    // viewer
     if (window.parent !== window) {
         // IOS非UC解决方案
         if (platform.needSpecialScroll) {
@@ -34,6 +21,7 @@ require(['./components/platform', './viewport', './element', './builtins/mip_bui
                 overflow: 'auto',
                 '-webkit-overflow-scrolling': 'touch'
             });
+            $('body').css('position', 'relative');
         }
         //页面传递消息给父页面
         window.parent.postMessage({
@@ -43,7 +31,7 @@ require(['./components/platform', './viewport', './element', './builtins/mip_bui
             }
         }, '*');
     }
-
+    console.log(document.readyState);
     // 注册内置组件
     builtin.register();
 });

@@ -2,7 +2,7 @@
  *  mip element
  *  @exports register
  **/
-define(['components/cssLoader'], function (cssLoader) {
+define(['./components/cssLoader', './resources'], function (cssLoader, resources) {
     var customElements = {};
 
     var baseElementProto;
@@ -15,11 +15,14 @@ define(['components/cssLoader'], function (cssLoader) {
         proto.createdCallback = function() {
             var CustomEle = customElements[this.name];
             this.classList.add('mip-element');
+            this._resources = resources();
             this.customElement = new CustomEle(this);
             this.customElement.mipCreatedCallback();
         };
         proto.attachedCallback = function() {
+            console.log(document.readyState);
             this.customElement.mipAttachedCallback();
+            this._resources.add(this);
         };
         proto.detachedCallback = function() {
             this.customElement.mipDetachedCallback();
@@ -27,28 +30,30 @@ define(['components/cssLoader'], function (cssLoader) {
         proto.attributeChangedCallback = function(){
             this.customElement.mipAttributeChangedCallback();
         };
-        proto.isInviewer = function() {
-            if (this.prerenderAllowed()) {
-                return true;
-            }
-            var elmTop = $(this).offset().top;
-            var pageHight  = $(window).height();
-            var scrollTop = pageYOffset;
-
-            if (window.parent !== window && platform.needSpecialScroll) {
-                return elmTop <= pageHight;
-            }
-            if(elmTop - scrollTop > pageHight){
-                return false;
-            } else {
-                return true;
-            }
+        proto.inViewport = function () {
+            return this._inViewport;
         };
-        proto.inviewCallback = function () {
-            this.customElement.inviewCallback();
+        proto.viewportCallback = function (inViewport) {
+            this._inViewport = inViewport;
+            this.customElement.viewportCallback(inViewport);
         };
         proto.prerenderAllowed = function () {
             return this.customElement.prerenderAllowed();
+        };
+        proto.isBuilt = function () {
+            return this._built;
+        };
+        proto.build = function () {
+            console.log('built');
+            if (this.isBuilt()) {
+                return;
+            }
+            try {
+                this.customElement.build();
+                this._built = true;
+            } catch (e) {
+                console.warn('build error:', this);
+            }
         };
         return baseElementProto = proto;
     };

@@ -1,5 +1,4 @@
-define(function(){
-
+define(['./components/rect'], function (rect) {
     /**
         界面可视窗口模块，提供窗口各属性，以及窗口整体scroll、resize等事件接口
     */
@@ -22,27 +21,23 @@ define(function(){
         _touchObservable = require('components/observable');
 
     var gesture = require('components/gesture');
-
     gesture.init();
 
-    Viewport.getTop = function() {
-        return this.getScrollTop();
-    };
 
     Viewport.getScrollTop = function() {
-        _scrollTop = $(window).scrollTop();
+        _scrollTop = rect.getScrollTop();
         return _scrollTop;
     };
 
     Viewport.getScrollLeft = function() {
         if(_scrollLeft == null) {
-            _scrollLeft = $(window).scrollLeft();
+            _scrollLeft = rect.getScrollLeft();
         }
         return _scrollLeft;
     };
 
     /**
-     *  
+     *  Todo: fix IOS bug when iframed
      * */
     Viewport.setScrollTop = function(scrollPos) {
         _scrollTop = null;
@@ -54,21 +49,19 @@ define(function(){
      * @return {!{width: number, height: number}}
     */
     Viewport.getSize = function() {
-        if (_size) {
-            return _size;
-        }
         return _size = {
-            "width" : $(window).width(),
-            "height" : $(window).height()
+            "width" : window.innerWidth || document.documentElement.clientWidth,
+            "height" : window.innerHeight || document.documentElement.clientHeight
         };
+    };
+
+    Viewport.getRect = function () {
+        var size = this.getSize();
+        return rect.get(_scrollLeft, _scrollTop, size.width, size.height);
     };
 
     Viewport.getWidth = function() {
         return this.getSize().width;
-    };
-
-    Viewport.getScrollWidth = function() {
-        return _getScrollingElement.scrollWidth;
     };
 
     Viewport.onChanged = function(handler) {
@@ -157,17 +150,6 @@ define(function(){
             width: size.width,
             height: size.height
         });
-    }
-
-    function _getScrollingElement() {
-        var doc = this.win.document;
-        if (doc.scrollingElement) {
-          return doc.scrollingElement;
-        }
-        if (doc.body) {
-          return doc.body;
-        }
-        return doc.documentElement;
     }
 
     /**

@@ -1,4 +1,4 @@
-define(function () {
+define(['./components/fn'], function (fn) {
     /**
      *  页面资源url转成可用的cache url
      *  @pageUrl 当前页面url地址
@@ -24,7 +24,7 @@ define(function () {
         return prefix + url;
     }
     return {
-        urlToCacheUrl : urlToCacheUrl
+        urlToCacheUrl: urlToCacheUrl,
+        fn: fn
     }
-
 });
