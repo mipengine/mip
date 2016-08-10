@@ -73,52 +73,55 @@ var check = (function() {
 	}
 
 	function errorScript() {
-		var miphtml_main;
+		var miphtml_main = -1;
 		var v0;
 		var error_info = [];
 
 		for(var index = 0; index < scriptTag.length; index ++) {
 			var src = scriptTag[index].src;
+			var type = scriptTag[index].type;
 			
 			// 向下兼容 js 判断
-			miphtml_main = src.indexOf('//mipcache.bdstatic.com/static/mipmain');
-			if(miphtml_main <= -1) {
-				miphtml_main = src.indexOf('//m.baidu.com/static/ala/sf/static/css/miphtml');
-				
-			} 
+			var loca = location.protocol == '';
+			var reg = /^http(s)?:\/\/(mipcache.bdstatic.com)|(m.baidu.com\/static\/ala\/sf\/static\/)/;
 
-
-			// script 标签处理，如果不是mipcache 下的js
-			// 并且不是 type 不是 application/ld+json 则认为是错误的
-			if(miphtml_main < -1) {
-				var is_mipcache = src.indexOf('//mipcache.bdstatic.com/');
-				if(is_mipcache <= -1 && scriptTag[index].type !== 'application/ld+json') {
-					error_info.push('The script type is missing or incorrect');
+			if(src) {
+				if(!reg.test(src)) {
+					error_info.push('The script whose src is ' + src + ' is forbidden');
+				} else {
+					miphtml_main = 1;
 				}
-			}
+			} else if(type && type !== 'application/ld+json') {
+				// script 标签处理，如果不是mipcache 下的js
+				// 并且不是 type 不是 application/ld+json 则认为是错误的
+				error_info.push('The script src is ' + src + ' is forbidden');
+			} 
 		}
 
-		if(miphtml_main < -1) { 
-			error_info.push('The js file "https://mipcache.bdstatic.com/static/mipmain" is missing or incorrect');
+		if(miphtml_main == -1) {
+			error_info.push('The js file "https://mipcache.bdstatic.com/static/mipmain" or is missing or incorrect');
 		}
-
 		return error_info || null;
 	}
 
 	function errorLink() {
-		var miphtml_main;
+		var miphtml_main = -1;
 		var error_info = [];
 
 		for(var index = 0; index < linkTag.length; index ++) {
 			var href = linkTag[index].href;
-			miphtml_main = href.indexOf('https://mipcache.bdstatic.com/static/mipmain');
-			if(miphtml_main <= -1) {
-				miphtmk_main = href.indexOf('//m.baidu.com/static/ala/sf/static/js/miphtml_main')
+			var reg = /^http(s)?:\/\/(mipcache.bdstatic.com)|(m.baidu.com\/static\/ala\/sf\/static\/js\/miphtml_main)/;
+			if(reg.test(href)) {
+				miphtml_main = 1;
 			}
+			// miphtml_main = href.indexOf('https://mipcache.bdstatic.com/static/mipmain');
+			// if(miphtml_main <= -1) {
+			// 	miphtmk_main = href.indexOf('//m.baidu.com/static/ala/sf/static/js/miphtml_main')
+			// }
 		}
 
-		if(miphtml_main > -1) {
-			error_info.push('The js file "https://mipcache.bdstatic.com/static/mipmain" or is missing or incorrect');
+		if(miphtml_main == -1) {
+			error_info.push('The css file "https://mipcache.bdstatic.com/static/mipmain" or is missing or incorrect');
 		}
 
 		return error_info || null;
@@ -130,8 +133,8 @@ var check = (function() {
 	 * @return {[type]} [description]
 	 */
 	function mandatory_tag_missing() {
-		var tags = [headTag, bodyTag, scriptTag, linkTag];
-		var tagNames = [ 'head', 'body', 'script', 'link'];
+		var tags = [headTag, bodyTag];
+		var tagNames = [ 'head', 'body'];
 		var _STATUS = '06200101';
 		var error_info = [];
 
@@ -509,7 +512,7 @@ var check = (function() {
 		// 		cnt ++;
 		// 	} 
 		// }
-		if(document.querySelectorAll('link[rel="standardhtml"]').length != 1) {
+		if(document.querySelectorAll('link[rel="standardhtml"]').length > 1) {
 			error_info.push(getErrorInfo(_STATUS, '<link rel="standardhtml" >'));
 		}
 
