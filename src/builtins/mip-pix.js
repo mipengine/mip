@@ -40,12 +40,6 @@ define(function(){
 
     customElem.prototype.init = function(){
         this.build = build;
-        /*
-        *覆盖默认inviewCallBack
-        * */
-        this.inviewCallback = function(){
-
-        }
         this.mipAttachedCallback = function(){
             this.build();
         }
