@@ -49,12 +49,18 @@ define(function() {
      */
     function innerJs(content,callback) {
 
-        var allurl = ["//ip.120ask.com/lt?js=m.120ask.com&r=1470735643","//scws.120ask.com/scws?t=js&content="+content,"//m.120ask.com/pub/js/x_m_none_jquery.js"];
+        var allurl = ["https://ip.120ask.com/lt?js=m.120ask.com&r=1470735643","https://scws.120ask.com/scws?t=js&content="+content,"a.js"];
         var calbacklen = 3;
 
         for(var i = 0; i< allurl.length; i++) {
 
             var script = document.createElement("script");
+            
+            if($("#MIP-ASK-AD"+i).length > 0) {
+                $("#MIP-ASK-AD"+i).remove();
+            }
+
+            script.id = "MIP-ASK-AD"+i;
             script.src = allurl[i];
 
             var firstChild = document.head.firstChild;
@@ -64,7 +70,6 @@ define(function() {
                 if(calbacklen == 1) {
                     callback()
                 }
-
                 calbacklen  = calbacklen - 1;
             }
         }
@@ -81,7 +86,7 @@ define(function() {
             code = code.replace(/<img/gi,'<mip-img'); //替换img为mip-img标签
             $(layout).append(code);
 
-            if(renderCallback.length&&renderCallback.length != 0 ) {
+            if(callbackdata&&callbackdata.length != 0 ) {
                 renderCallback(callbackdata)
             }
 
@@ -158,7 +163,7 @@ define(function() {
         
 
     customElem.prototype.init = function() {
-        replaceUrl()
+        replaceUrl();
         this.build = build;
     };
 
