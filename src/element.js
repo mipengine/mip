@@ -15,6 +15,7 @@ define(['./components/cssLoader', './resources'], function (cssLoader, resources
         proto.createdCallback = function() {
             var CustomEle = customElements[this.name];
             this.classList.add('mip-element');
+            this._inViewport = false;
             this._resources = resources();
             this.customElement = new CustomEle(this);
             this.customElement.createdCallback();

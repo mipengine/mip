@@ -57,7 +57,7 @@ define(['./components/rect'], function (rect) {
 
     Viewport.getRect = function () {
         var size = this.getSize();
-        return rect.get(_scrollLeft, _scrollTop, size.width, size.height);
+        return rect.get(this.getScrollLeft(), this.getScrollTop(), size.width, size.height);
     };
 
     Viewport.getWidth = function() {

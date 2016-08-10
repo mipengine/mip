@@ -7,6 +7,7 @@ define(function () {
     var throttle = function (fn, delay) {
         var context, args, timerId;
         var execTime = 0;
+        !delay && (delay = 10);
         var exec = function () {
             timerId = 0;
             execTime = Date.now();
@@ -16,8 +17,9 @@ define(function () {
             var delta = Date.now() - execTime;
             context = this;
             args = arguments;
-            if (!timerId) {
-                delta >= delay && exec();
+            clearTimeout(timerId);
+            if (delta >= delay) {
+                exec();
             } else {
                 timerId = setTimeout(exec, delay - delta);
             }

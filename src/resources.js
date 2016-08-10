@@ -1,5 +1,5 @@
 /**
- *  自定义标签manager
+ *  资源管理
  **/
 define(['./util', './components/document', 'viewport', './components/rect'], function (util, doc, viewport, rect) {
     var resources = {};
