@@ -22,7 +22,6 @@ define(function() {
 
         this.isRender = true;
 
-        var $this = $(this);
         var id = this.getAttribute('id') || '';
 
         $.getScript(location.protocol + '//analytics.163.com/ntes_ex.js', function() {
