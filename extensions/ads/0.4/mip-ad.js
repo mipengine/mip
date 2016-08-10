@@ -19,22 +19,22 @@ require.config({
 });
 
 define(function (){
-    var customElem = require('customElement');
+    var customElement = require('customElement').create();
     
     /**
      * render
      *
      */
     function render () {
-
-        var _this = this;
-        if (this.isRender) {
+        var _element = this.element;
+        var _this = _element;
+        if (_element.isRender) {
             return;
         }
 
-        this.isRender = true;
+        _element.isRender = true;
 
-        var type = this.getAttribute('type');
+        var type = _element.getAttribute('type');
         var adFile = 'extensions/ads/0.3/mip-' + type;
         require([adFile], function(mipAd) {
             mipAd.render(_this);
@@ -48,11 +48,11 @@ define(function (){
      * 初始化
      *
      */
-    customElem.prototype.init = function() {
+    customElement.prototype.init = function() {
        
         this.build = render;
     };
-    return customElem;
+    return customElement;
 });
 
 require(['mip-ad'], function (mipAdComm) {
