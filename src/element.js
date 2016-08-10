@@ -20,7 +20,6 @@ define(['./components/cssLoader', './resources'], function (cssLoader, resources
             this.customElement.mipCreatedCallback();
         };
         proto.attachedCallback = function() {
-            console.log(document.readyState);
             this.customElement.mipAttachedCallback();
             this._resources.add(this);
         };
@@ -44,7 +43,6 @@ define(['./components/cssLoader', './resources'], function (cssLoader, resources
             return this._built;
         };
         proto.build = function () {
-            console.log('built');
             if (this.isBuilt()) {
                 return;
             }
