@@ -31,7 +31,6 @@ require(['./components/platform', './element', './builtins/mip_builtins', './res
             }
         }, '*');
     }
-    console.log(document.readyState);
     // 注册内置组件
     builtin.register();
 });
