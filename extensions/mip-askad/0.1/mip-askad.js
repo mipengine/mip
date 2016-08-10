@@ -49,7 +49,7 @@ define(function() {
      */
     function innerJs(content,callback) {
 
-        var allurl = ["https://ip.120ask.com/lt?js=m.120ask.com&r=1470735643","https://scws.120ask.com/scws?t=js&content="+content,"a.js"];
+        var allurl = ["https://ip.120ask.com/lt?js=m.120ask.com&r=1470735643","https://scws.120ask.com/scws?t=js&content="+content,"//m.120ask.com/pub/js/x_m_none_jquery.js"];
         var calbacklen = 3;
 
         for(var i = 0; i< allurl.length; i++) {
