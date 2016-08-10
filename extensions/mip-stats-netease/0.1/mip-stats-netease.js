@@ -10,7 +10,7 @@ define(function() {
     var customElem = require('customElement');
 
     customElem.prototype.init = function() {
-        this.build = render;
+        this.mipCreatedCallback = render;
     };
 
 
