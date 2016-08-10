@@ -10,7 +10,7 @@
         return transition;
     }
 
-    jQuery.fn.createTween = function(start, end, params, callback) {
+    Zepto.fn.createTween = function(start, end, params, callback) {
         var $this = this;
         var transition = mergeTransition(params);
         var transitionEnd = 'webkitTransitionEnd.feed';
