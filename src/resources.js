@@ -6,16 +6,6 @@ define(['./util', 'viewport', './components/rect'], function (util, viewport, re
     var counter = 0;
     var fn = util.fn;
 
-    var hasNextNode = function(element) {
-        do {
-            if (element.nextSibling) {
-                return true;
-            }
-        } while (element = element.parentNode);
-        return false;
-    }
-
-
     var Resources = function () {
         // resource id
         this._rid = counter ++;
