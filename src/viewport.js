@@ -1,4 +1,4 @@
-define(['./components/rect', './components/document'], function (rect, doc) {
+define(['./components/rect'], function (rect) {
     /**
         界面可视窗口模块，提供窗口各属性，以及窗口整体scroll、resize等事件接口
     */
@@ -185,12 +185,10 @@ define(['./components/rect', './components/document'], function (rect, doc) {
     };
 
     function _init() {
-        doc.ready(function () {
-            $(window).on("scroll",_scroll);
-            if (window.parent !== window && platform.needSpecialScroll) {
-                $('body').on('scroll', _scroll);
-            }
-        });
+        $(window).on("scroll",_scroll);
+        if (window.parent !== window && platform.needSpecialScroll) {
+            $('body').on('scroll', _scroll);
+        }
         gesture.bind(_touch);
         return Viewport;
     }

@@ -1,5 +1,14 @@
-define(['./platform', './document'], function (platform, doc) {
+define(['./platform'], function (platform) {
     'use strict';
+    var patchForIOS = function () {
+        if (platform.needSpecialScroll && window !== top) {
+            var element = document.createElement('div');
+            element.style.cssText = 'position:absolute;top:0;left:0;width:0;height:0;visibility:hidden;';
+            return document.body.appendChild(element);
+        }
+        return null;
+    };
+
     var Rect = {
         get: function (left, top, width, height) {
             return {
@@ -13,7 +22,7 @@ define(['./platform', './document'], function (platform, doc) {
         },
         scrollingElement: document.scrollingElement || (document.body && platform.isWebkit() 
             && document.body) || document.documentElement,
-        trickyElement: null,
+        trickyElement: patchForIOS(),
         getFromDom: function (element) {
             var clientRect = element.getBoundingClientRect();
             return Rect.get(clientRect.left + Rect.getScrollLeft(), clientRect.top + Rect.getScrollTop(),
@@ -32,19 +41,5 @@ define(['./platform', './document'], function (platform, doc) {
                 && rect1.left <= rect2.right && rect2.left <= rect1.right;
         }
     };
-    var patchForIOS = function () {
-        if (platform.needSpecialScroll && window !== top) {
-            if (doc.isReady()) {
-                var element = document.createElement('div');
-                element.style.cssText = 'position:absolute;top:0;left:0;width:0;height:0;visibility:hidden;';
-                document.body.appendChild(element);
-                Rect.trickyElement = element;
-            } else {
-                doc.ready(patchForIOS);
-            }
-        } 
-    };
-
-    patchForIOS();
     return Rect;
 });

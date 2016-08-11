@@ -10,7 +10,6 @@ __inline('./deps/esl_config.js');
 
 /* components */
 __inline('./components/fn.js');
-__inline('./components/document.js');
 __inline('./components/emit.js');
 __inline('./components/cssLoader.js');
 __inline('./components/gesture.js');

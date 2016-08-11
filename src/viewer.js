@@ -1,12 +1,12 @@
 /** 
  * viewer
  **/
-define(['./components/platform', './components/document'], function (platform, doc) {
+define(['./components/platform'], function (platform) {
     'use strict';
     var Viewer = {
         isIframed: window !== top,
         init: function () {
-            doc.ready(this.patchForIframe);
+            this.patchForIframe();
         },
         patchForIframe: function () {
             if (platform.needSpecialScroll) {
