@@ -16,6 +16,7 @@ define(['./components/cssLoader', './resources'], function (cssLoader, resources
             var CustomEle = customElements[this.name];
             this.classList.add('mip-element');
             this._inViewport = false;
+            this._firstInViewport = false;
             this._resources = resources();
             this.customElement = new CustomEle(this);
             this.customElement.createdCallback();
@@ -36,6 +37,10 @@ define(['./components/cssLoader', './resources'], function (cssLoader, resources
         };
         proto.viewportCallback = function (inViewport) {
             this._inViewport = inViewport;
+            if (!this._firstInViewport) {
+                this._firstInViewport = true;
+                this.customElement.inviewCallback();
+            }
             this.customElement.viewportCallback(inViewport);
         };
         proto.isBuilt = function () {
