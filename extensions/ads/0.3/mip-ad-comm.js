@@ -54,7 +54,7 @@ define(function (){
         var ratio = (size[1]/size[0]*100).toFixed(2);
 
         var html = [
-            '<a href="'+ url +'" class="c-urljump">',
+            '<a href="'+ url +'" class="c-urljump" target="_blank">',
                 '<div class="mip-ad-bannerbox" style="padding-bottom:'+ ratio +'%;">',
                     '<img src="'+ src +'">',
                 '</div>',
@@ -76,7 +76,7 @@ define(function (){
         var title = $this.data('title');
 
         var html = [
-            '<a class="c-blocka mip-ad-box" href="'+ url +'" class="c-urljump">',
+            '<a class="c-blocka mip-ad-box" href="'+ url +'" class="c-urljump"  target="_blank">',
             '    <div class="mip-ad-row">',
             '        <div class="c-span12 c-line-clamp2">',
             '            ' + title,
@@ -104,7 +104,7 @@ define(function (){
         var ratio = (size[1]/size[0]*100).toFixed(2);
 
         var html = [
-            '<a class="c-blocka mip-ad-box" href="'+ url +'" class="c-urljump">',
+            '<a class="c-blocka mip-ad-box" href="'+ url +'" class="c-urljump"  target="_blank">',
             '    <div class="mip-ad-row">',
             '        <div class="c-span4">',
             '            <div class="c-img c-img-x" style="padding-bottom:'+ ratio +'%;">',
@@ -157,7 +157,7 @@ define(function (){
             }
 
             var html = [
-                '<a class="c-blocka  mip-ad-box" href="'+ url +'" class="c-urljump">',
+                '<a class="c-blocka  mip-ad-box" href="'+ url +'" class="c-urljump"  target="_blank">',
                 '    <div class="mip-ad-row c-gap-bottom-small">',
                 '        <div class="c-span12 c-title">' + title + '</div>',
                 '    </div>',
