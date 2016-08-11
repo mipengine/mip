@@ -2,8 +2,9 @@
  *  mip element
  *  @exports register
  **/
-define(['./components/cssLoader', './resources'], function (cssLoader, resources) {
+define(['./components/cssLoader'], function (cssLoader) {
     var customElements = {};
+    var resources;
 
     var baseElementProto;
     var createBaseElementProto = function () {
@@ -75,6 +76,9 @@ define(['./components/cssLoader', './resources'], function (cssLoader, resources
     var registerElement = function (name, elementClass, css) {
         if (customElements[name]) {
             return;
+        }
+        if (!resources) {
+            resources = require('./resources');
         }
         customElements[name] = elementClass;
         loadCss(css);

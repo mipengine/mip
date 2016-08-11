@@ -26,14 +26,14 @@ __inline('./customElement.js');
 __inline('./element.js');
 __inline('./util.js');
 __inline('./resources.js');
+__inline('./viewer.js');
 
 /* builtins */
 __inline('./builtins/mip-img.js');
 __inline('./builtins/mip-gif.js');
 __inline('./builtins/mip-pix.js');
-__inline('../extensions/mip-carousel.js');
-__inline('../extensions/mip-iframe.js');
-__inline('../extensions/recommend.js');
+__inline('./builtins/mip-carousel.js');
+__inline('./builtins/mip-iframe.js');
 __inline('./builtins/img-viewer.js');
 __inline('./builtins/mip-video.js');
 __inline('./builtins/video/player.js');
