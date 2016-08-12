@@ -29,6 +29,7 @@
 回复写明负责人，预计完成时间（可用markdown格式）
 ![跟进问题](1-add-issue/assign.png)
 
+开发同学收到issue后，添加 __进行中…__ Label
 ### 解决问题
 负责同学解决后，在issue中回复，并添加 __已解决__ Label
 ![跟进问题](1-add-issue/finish.png)
