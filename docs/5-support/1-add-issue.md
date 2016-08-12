@@ -18,19 +18,19 @@
 ![填写issue内容](1-add-issue/add.png)
 
 3. 给这个问题用label归类
+如`todo`, `bug`, `mip-组件`等
 ![用label归类](1-add-issue/add-label.png)
 
-4. 点击提交即可
+4. 点击提交即可 
 ![提交](1-add-issue/submit.png)
 
 ### 跟进问题
-
 针对__BUG__及 __需求__, 负责人跟进回复，并assign给同学开发。  
 回复写明负责人，预计完成时间（可用markdown格式）
 ![跟进问题](1-add-issue/assign.png)
 
-开发同学收到issue后，添加 __进行中…__ Label
+开发同学收到issue后，添加 ·进行中…· Label
 ### 解决问题
-负责同学解决后，在issue中回复，并添加 __已解决__ Label
+负责同学解决后，在issue中回复，并添加 ·已解决· Label
 ![跟进问题](1-add-issue/finish.png)
 
