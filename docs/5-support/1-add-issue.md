@@ -18,7 +18,7 @@
 ![填写issue内容](1-add-issue/add.png)
 
 3. 给这个问题用label归类
-![用label归类](1-add-issue/assign.png)
+![用label归类](1-add-issue/add-label.png)
 
 4. 点击提交即可
 ![提交](1-add-issue/submit.png)
