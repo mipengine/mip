@@ -13,6 +13,7 @@ __inline('./components/fn.js');
 __inline('./components/document.js');
 __inline('./components/emit.js');
 __inline('./components/cssLoader.js');
+__inline('./components/layout.js');
 __inline('./components/gesture.js');
 __inline('./components/observable.js');
 __inline('./components/platform.js');

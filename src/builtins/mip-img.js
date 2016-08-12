@@ -6,6 +6,7 @@ define(['util'], function(util){
         }
         this.isRender = true;
         var _img = new Image();
+        this.applyFillContent(_img, true);
         var ele = this.element;
         var src = util.urlToCacheUrl (document.location.href, ele.getAttribute('src'), 'img');
         _img.src = src;

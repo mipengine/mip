@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>lilangbo report for baidu</title>
+    
+    <meta name="author" content="Bartek Szopka" />
+
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic" rel="stylesheet" />
+
+    <!--
+        
+        Impress.js doesn't depend on any external stylesheets. It adds all of the styles it needs for the
+        presentation to work.
+        
+        This style below contains styles only for demo presentation. Browse it to see how impress.js
+        classes are used to style presentation steps, or how to apply fallback styles, but I don't want
+        you to use them directly in your presentation.
+        
+        Be creative, build your own. We don't really want all impress.js presentations to look the same,
+        do we?
+        
+        When creating your own presentation get rid of this file. Start from scratch, it's fun!
+        
+    -->
+    <link href="js/impress-demo.css" rel="stylesheet" />
+    
+    <link rel="shortcut icon" href="favicon.png" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+</head>
+
+<!--
+    
+    Body element is used by impress.js to set some useful class names, that will allow you to detect
+    the support and state of the presentation in CSS or other scripts.
+    
+    First very useful class name is `impress-not-supported`. This class means, that browser doesn't
+    support features required by impress.js, so you should apply some fallback styles in your CSS.
+    It's not necessary to add it manually on this element. If the script detects that browser is not
+    good enough it will add this class, but keeping it in HTML means that users without JavaScript
+    will also get fallback styles.
+    
+    When impress.js script detects that browser supports all required features, this class name will
+    be removed.
+    
+    The class name on body element also depends on currently active presentation step. More details about
+    it can be found later, when `hint` element is being described.
+    
+-->
+<body class="impress-not-supported">
+
+<!--
+    For example this fallback message is only visible when there is `impress-not-supported` class on body.
+-->
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<!--
+    
+    Now that's the core element used by impress.js.
+    
+    That's the wrapper for your presentation steps. In this element all the impress.js magic happens.
+    It doesn't have to be a `<div>`. Only `id` is important here as that's how the script find it.
+    
+    You probably won't need it now, but there are some configuration options that can be set on this element.
+    
+    To change the duration of the transition between slides use `data-transition-duration="2000"` giving it
+    a number of ms. It defaults to 1000 (1s).
+    
+    You can also control the perspective with `data-perspective="500"` giving it a number of pixels.
+    It defaults to 1000. You can set it to 0 if you don't want any 3D effects.
+    If you are willing to change this value make sure you understand how CSS perspective works:
+    https://developer.mozilla.org/en/CSS/perspective
+    
+    But as I said, you won't need it for now, so don't worry - there are some simple but interesting things
+    right around the corner of this tag ;)
+    
+-->
+<div id="impress">
+
+    <!--
+        
+        Here is where interesting thing start to happen.
+        
+        Each step of the presentation should be an element inside the `#impress` with a class name
+        of `step`. These step elements are positioned, rotated and scaled by impress.js, and
+        the 'camera' shows them on each step of the presentation.
+        
+        Positioning information is passed through data attributes.
+        
+        In the example below we only specify x and y position of the step element with `data-x="-1000"`
+        and `data-y="-1500"` attributes. This means that **the center** of the element (yes, the center)
+        will be positioned in point x = -1000px and y = -1500px of the presentation 'canvas'.
+        
+        It will not be rotated or scaled.
+        
+    -->
+    <div id="bored" class="step slide" data-x="-1500" data-y="-1500">
+        <q style="margin:150px 0 0;">2016年秋季职称评定述职</q>
+        <q>李浪波</q>
+        <q style="color:#888;font-size:30px;margin-top:20px">2016年8月</q>
+    </div>
+
+    <!--
+        
+        The `id` attribute of the step element is used to identify it in the URL, but it's optional.
+        If it is not defined, it will get a default value of `step-N` where N is a number of slide.
+        
+        So in the example below it'll be `step-2`.
+        
+        The hash part of the url when this step is active will be `#/step-2`.
+        
+        You can also use `#step-2` in a link, to point directly to this particular step.
+        
+        Please note, that while `#/step-2` (with slash) would also work in a link it's not recommended.
+        Using classic `id`-based links like `#step-2` makes these links usable also in fallback mode.
+        
+    -->
+    <div class="step slide" data-x="-500" data-y="-1500">
+        <q style="margin:60px 0 30px;"><strong>个人介绍</strong></q>
+        <div style="height: 444px;background-image: url('./js/career.jpg');width: 755px;background-size: 100%;"></div>
+    </div>
+
+    <div class="step slide" data-x="500" data-y="-1500">
+        <q><strong>成果</strong></q>
+        <ul style="line-height:60px;    padding: 0 40px;">
+            <li>2015年大搜索进攻精神之<b>奋勇当先奖</b></li>
+            <li>2015年年终 <b>绩效2</b></li>
+            <li>2014年Q3，<b>靠谱新人奖</b></li>
+        </ul>
+        <ul style="margin-top:30px;line-height:60px;    padding: 0 40px;">
+            <li>SSG <b>TC创新奖-重构奖</b>（团队奖）</li>
+            <li>SSG <b>特殊贡献奖</b>（wise栅格化虚拟团队）</li>
+            <li>产品创新奖若干，专利2个</li>
+        </ul>
+    </div>
+
+    <div class="step slide" data-x="1500" data-y="-1500">
+        <q><strong>我所在的团队</strong></q>
+
+        <div style="margin-top:40px">网页搜索前端团队-阿拉丁团队(ALA-FE)</div>
+
+        <ul style="margin-top:40px">
+            <li>24人</li>
+        </ul>
+        <div style="margin:45px 0 0;">
+        <label>wise</label><label>体验提升</label><label>生态繁荣</label>
+        </div>
+
+        <div style="margin-top:30px;line-height:50px;font-size:25px">
+        <span><strong>wise架构</strong></span><span><strong>哥伦布</strong></span><span>资讯垂类</span><span><strong>开发效率</strong></span><br/>
+        <span>阿拉丁平台</span><span>superframe</span><span>速度</span><span><strong>栅格</strong></span><br/>
+        <span>用户行为分析</span><span>mobile friendly</span><span><strong>mip</strong></span>
+        </div>
+    </div>
+
+    <!--
+        
+        This is an example of step element being scaled.
+        
+        Again, we use a `data-` attribute, this time it's `data-scale="4"`, so it means that this
+        element will be 4 times larger than the others.
+        From presentation and transitions point of view it means, that it will have to be scaled
+        down (4 times) to make it back to its correct size.
+        
+    -->
+    <div id="title" class="step" data-x="0" data-y="0" data-scale="4">
+        <p class="try" style="    text-align: center;position: relative;left: 0;">我在团队中的职责</p>
+        <b class="footnote"><sup>*</sup> 产品方向技术负责人</b><br/>
+        <div style="padding-left:80px;font-size: 20px;">
+              技术方案制定审核(30%)；
+              工程师培养(20%)；<br>
+              技术指导(10%)；
+              调研开发(40%)
+        </div>
+        <b class="footnote"><sup>*</sup> MIP核心骨干 </b><br/>
+        <div style="padding-left:80px;font-size: 20px;">
+              组件 owner；
+              指导开发；<br>
+              核心代码 coder；
+              易用性、发展蓝图等的designer之一
+        </div>
+        <b class="footnote"><sup>*</sup> 阿拉丁对外业务合作技术接口人</b><br/>
+        <div style="padding-left:80px;font-size: 20px;">
+              跨部门合作、公司战略合作
+        </div>
+    </div>
+
+    <!--
+        
+        This element introduces rotation.
+        
+        Notation shouldn't be a surprise. We use `data-rotate="90"` attribute, meaning that this
+        element should be rotated by 90 degrees clockwise.
+        
+    -->
+    <div id="its" style="font-size:30px;" class="step" data-x="850" data-y="3000" data-rotate="90" data-scale="5">
+        <p style="font-size:45px;margin-bottom:30px;position:relative;left:0;text-align:center"><strong>个人技术方向</strong> </p>
+        <sup>*</sup> 完全 <b>cover</b> 搜索前端技术 <br/>
+        <br/>
+        <sup>*</sup> 在阿拉丁业务方向深入发展，熟悉通盘机制，专注于规范、产品体验和开发效率</br>
+        <br/>
+        <sup>*</sup> <b>MIP</b>方向技术深耕，核心成员之一,负责组件、验证等部分子方向
+    </div>
+
+    <div id="big" class="step" data-x="3500" data-y="2100" data-rotate="180" data-scale="6">
+        <p>项目介绍</p>
+        <p style="font-size: 40px; margin: 80px 0;">wise阿拉丁前端重构</p>
+    </div>
+
+    <!--
+        
+        And now it gets really exciting! We move into third dimension!
+        
+        Along with `data-x` and `data-y`, you can define the position on third (Z) axis, with
+        `data-z`. In the example below we use `data-z="-3000"` meaning that element should be
+        positioned far away from us (by 3000px).
+        
+    -->
+    <div id="tiny" class="step" data-x="1425" data-y="2325" data-z="-1500" data-rotate="300" data-scale="1">
+        <p>做了些什么？</p>
+        <ul  style="margin-top:30px">
+            <li><span class="footnote"><sup>*</sup> 开发方式的重构 </span></li>
+            <li><span class="footnote"><sup>*</sup> 独立上线 </span></li>
+            <li><span class="footnote"><sup>*</sup> 栅格化 </span></li>
+            <li><span class="footnote"><sup>*</sup> 抽样 </span></li>
+            <li><span class="footnote"><sup>*</sup> sigma </span></li>
+            <li><span class="footnote"><sup>*</sup> 建立新的统一文档平台和开发规范 </span></li>
+        </ul>
+
+    </div>
+
+    <div id="ing" class="step" data-x="3500" data-y="-850" data-rotate="270" data-scale="6">
+        <h2 style="font-size:36px;margin-bottom:10px;text-align:center">技术难点</h2>
+        <p>
+            <b class="rotating">旧架构</b>:熟悉老架构，深究逻辑，洞悉各种补丁<br>
+            <b class="positioning">新规范</b>:规范的制定和产出<br> 
+            <b class="rotating">易用性</b>:新架构学习和开发成本低<br> 
+            <b class="positioning">稳定性</b>:能够平稳过渡新老逻辑<br>  
+            <b class="rotating">性能</b>:页面性能需要较之前持平或提升<br>
+            <b class="positioning">前瞻性</b>:能够支持未来的 wise 产品需求<br>
+            <b class="scaling">资源</b>:合理利用和使用各方资源</p>
+    </div>
+
+    <div id="app" class="step" data-x="2925" data-y="4025" data-z="-3000" data-rotate="300" data-scale="1">
+        <p>收益</p>
+        <ul style="line-height:60px;margin-top:40px;">
+<li><span class="footnote"><sup>*</sup> 研发效率提升<b>25%</b> </span></li>
+
+<li><span class="footnote"><sup>*</sup> 降低入门门槛和开发成本，<b>20+</b>产品线同学快速开发 </span></li>
+
+<li><span class="footnote"><sup>*</sup> 抹平抽样 diff，降低抽样风险和难度 </span></li>
+
+<li><span class="footnote"><sup>*</sup> 上线一周一次提升为一天一次，提升<b>5倍</b> </span></li>
+
+<li><span class="footnote"><sup>*</sup> 单次上线时间减少<b>60%</b>（3-1.2） </span></li>
+
+<li><span class="footnote"><sup>*</sup> 栅格：代码量减少30%-40%,cpm增长了<b>4%</b></span></li></ul>
+    </div>
+
+
+    <div id="imagination" class="step" data-x="6700" data-y="-300" data-scale="6">
+        <h2 style="font-size:36px;margin-bottom:10px;text-align:center">其他典型项目</h2>
+        <p style="font-size:24px;line-height:60px;">
+            <b>MIP</b>：战略级技术框架，mip 页速度提升30-80%，到达率提升，生态控制力，NA 体验增强<br> 
+            <b>WISE产品用户体验提升</b>：指导9人，体验-1.6%→2%左右,+7%的随机影响面,卡片新增商业收益约5.25亿/年<br> 
+
+            <b>哥伦布</b>：参与框架设计，规范制定，cover 娱乐垂类，兼顾其他垂类<br>
+            <b>阿拉丁样式缩减</b>：技术接口人，打通弱化模板选择机制，结果页更加统一和精炼，共186个模板成功退化
+        </p>
+    </div>
+
+    <div id="source" class="step" data-x="6300" data-y="2000" data-rotate="20" data-scale="4">
+        <p>个人总结</p>
+
+        <q style="font-size:30px">技术和产品相互驱动，双赢</q><br/>
+        <q style="font-size:30px">用户体验至上的原则</q><br/>
+
+
+        <q style="font-size:30px">他山之石</q>
+    </div>
+
+    <div id="one-more-thing" class="step" data-x="6000" data-y="4000" data-scale="2">
+        <p>Q&A</p>
+    </div>
+
+    <!--
+        
+        And the last one shows full power and flexibility of impress.js.
+        
+        You can not only position element in 3D, but also rotate it around any axis.
+        So this one here will get rotated by -40 degrees (40 degrees anticlockwise) around X axis and
+        10 degrees (clockwise) around Y axis.
+        
+        You can of course rotate it around Z axis with `data-rotate-z` - it has exactly the same effect
+        as `data-rotate` (these two are basically aliases).
+        
+    -->
+    <div id="its-in-3d" class="step" data-x="6200" data-y="4300" data-z="-100" data-rotate-x="-40" data-rotate-y="10" data-scale="2">
+        <p><span class="have">That's</span> <span class="you">all!</span> <span class="noticed">Thank</span> <span class="its">you</span> <span class="in">very</span> <span>much<sup>*</sup></span>!</p>
+        <span class="footnote" style="text-align: right;display: block;">* End ;)</span>
+    </div>
+
+    <!--
+        
+        So to summarize of all the possible attributes used to position presentation steps, we have:
+        
+        * `data-x`, `data-y`, `data-z` - they define the position of **the center** of step element on
+            the canvas in pixels; their default value is 0;
+        * `data-rotate-x`, `data-rotate-y`, 'data-rotate-z`, `data-rotate` - they define the rotation of
+            the element around given axis in degrees; their default value is 0; `data-rotate` and `data-rotate-z`
+            are exactly the same;
+        * `data-scale` - defines the scale of step element; default value is 1
+        
+        These values are used by impress.js in CSS transformation functions, so for more information consult
+        CSS transfrom docs: https://developer.mozilla.org/en/CSS/transform
+        
+    -->
+    <div id="overview" class="step" data-x="3000" data-y="1500" data-scale="10">
+    </div>
+
+</div>
+
+<!--
+    
+    Hint is not related to impress.js in any way.
+    
+    But it can show you how to use impress.js features in creative way.
+    
+    When the presentation step is shown (selected) its element gets the class of "active" and the body element
+    gets the class based on active step id `impress-on-ID` (where ID is the step's id)... It may not be
+    so clear because of all these "ids" in previous sentence, so for example when the first step (the one with
+    the id of `bored`) is active, body element gets a class of `impress-on-bored`.
+    
+    This class is used by this hint below. Check CSS file to see how it's shown with delayed CSS animation when
+    the first step of presentation is visible for a couple of seconds.
+    
+    ...
+    
+    And when it comes to this piece of JavaScript below ... kids, don't do this at home ;)
+    It's just a quick and dirty workaround to get different hint text for touch devices.
+    In a real world it should be at least placed in separate JS file ... and the touch content should be
+    probably just hidden somewhere in HTML - not hard-coded in the script.
+    
+    Just sayin' ;)
+    
+-->
+
+<!--
+    
+    Last, but not least.
+    
+    To make all described above really work, you need to include impress.js in the page.
+    I strongly encourage to minify it first.
+    
+    In here I just include full source of the script to make it more readable.
+    
+    You also need to call a `impress().init()` function to initialize impress.js presentation.
+    And you should do it in the end of your document. Not only because it's a good practice, but also
+    because it should be done when the whole document is ready.
+    Of course you can wrap it in any kind of "DOM ready" event, but I was too lazy to do so ;)
+    
+-->
+<script src="js/impress.js"></script>
+<script>impress().init();</script>
+
+<!--
+    
+    The `impress()` function also gives you access to the API that controls the presentation.
+    
+    Just store the result of the call:
+    
+        var api = impress();
+    
+    and you will get three functions you can call:
+    
+        `api.init()` - initializes the presentation,
+        `api.next()` - moves to next step of the presentation,
+        `api.prev()` - moves to previous step of the presentation,
+        `api.goto( stepIndex | stepElementId | stepElement, [duration] )` - moves the presentation to the step given by its index number
+                id or the DOM element; second parameter can be used to define duration of the transition in ms,
+                but it's optional - if not provided default transition duration for the presentation will be used.
+    
+    You can also simply call `impress()` again to get the API, so `impress().next()` is also allowed.
+    Don't worry, it wont initialize the presentation again.
+    
+    For some example uses of this API check the last part of the source of impress.js where the API
+    is used in event handlers.
+    
+-->
+
+</body>
+</html>

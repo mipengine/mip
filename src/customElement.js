@@ -12,6 +12,12 @@ define(function () {
     }
 
     // interface
+    customElement.prototype.applyFillContent = function (ele, isReplaceed) {
+        ele.classList.add('mip-fill-content');
+        if (isReplaceed) {
+          ele.classList.add('mip-replaced-content');
+        }
+    };
     customElement.prototype.createdCallback = function () {};
     customElement.prototype.attachedCallback = function () {};
     customElement.prototype.detachedCallback = function () {};

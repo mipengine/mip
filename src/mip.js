@@ -33,4 +33,9 @@ require(['./components/platform', './element', './builtins/mip_builtins', './res
     }
     // 注册内置组件
     builtin.register();
+    //显示 body
+    $('body').css({
+        opacity: 1,
+        animation: 'none'
+    });
 });
