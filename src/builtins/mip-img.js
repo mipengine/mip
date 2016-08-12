@@ -1,6 +1,6 @@
 define(['util'], function(util){
    var customElem = require('customElement').create();
-   var build = function(){
+   var inviewCallback = function(){
         if(this.isRender){
             return; 
         }
@@ -127,9 +127,7 @@ define(['util'], function(util){
     }
 
 
-    customElem.prototype.init = function(){
-        this.build = build; 
-    };
+    customElem.prototype.inviewCallback = inviewCallback;
 
     return customElem;
 

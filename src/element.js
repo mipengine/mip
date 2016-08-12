@@ -2,8 +2,11 @@
  *  mip element
  *  @exports register
  **/
-define(['./components/cssLoader', './resources', './components/layout'], function (cssLoader, resources, layoutObj) {
+define(['./components/cssLoader', './components/layout'], function (cssLoader, layoutObj) {
     var customElements = {};
+    var resources;
+
+    var baseElementProto;
     /**
      * Applies layout to the element. Visible for testing only.
      * @param {!AmpElement} element
@@ -94,18 +97,17 @@ define(['./components/cssLoader', './resources', './components/layout'], functio
         return layout;
     }
 
-    var baseElementProto;
     var createBaseElementProto = function () {
         if (baseElementProto) {
             return baseElementProto;
         }
-
 
         var proto = Object.create(HTMLElement.prototype);
         proto.createdCallback = function() {
             var CustomEle = customElements[this.name];
             this.classList.add('mip-element');
             this._inViewport = false;
+            this._firstInViewport = false;
             this._resources = resources();
             this.customElement = new CustomEle(this);
             this.customElement.createdCallback();
@@ -127,6 +129,10 @@ define(['./components/cssLoader', './resources', './components/layout'], functio
         };
         proto.viewportCallback = function (inViewport) {
             this._inViewport = inViewport;
+            if (!this._firstInViewport) {
+                this._firstInViewport = true;
+                this.customElement.inviewCallback();
+            }
             this.customElement.viewportCallback(inViewport);
         };
         proto.isBuilt = function () {
@@ -161,6 +167,9 @@ define(['./components/cssLoader', './resources', './components/layout'], functio
     var registerElement = function (name, elementClass, css) {
         if (customElements[name]) {
             return;
+        }
+        if (!resources) {
+            resources = require('./resources');
         }
         customElements[name] = elementClass;
         loadCss(css);

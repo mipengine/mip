@@ -61,7 +61,7 @@ audio|mip-audio（暂未开放）
 其他说明：
 
 - style：仅允许在head标签中的style标签中使用
-- script：仅允许外链mip组件所需要的js脚本，或type是application/ld+json的情况
+- script：仅允许外链 MIP 所需要的js脚本，或type是application/ld+json的情况
 
 <font color="red">
 -**注意**：
@@ -122,7 +122,7 @@ audio|mip-audio（暂未开放）
 
 - `<script type="application/ld+json"></script>`
 
-    - 除了外链js，script标签的type的属性值应该为application/ld+json
+    - 除了外链 MIP 所需 js，script标签的type的属性值应该为application/ld+json
 
 <font color="red">
 

@@ -30,7 +30,7 @@ define(function() {
     }
 
     customElem.prototype.init = function() {
-        this.build = build;
+        this.mipCreatedCallback = build;
     };
 
     /**

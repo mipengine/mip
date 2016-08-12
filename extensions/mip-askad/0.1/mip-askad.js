@@ -1,14 +1,20 @@
 /**
  * @file 120ask广告组件
  * @author fengchuantao
- * @time 2016.7.28
+ * @time 2016.8.8
  */
 
 define(function() {
     var customElem = require('customElement');
 
-    function build() {
+    var newYWBD;
+    var mipLoadedJs = false;
+    var mipLoadingJs = false;
+    var mipcallList = [];
+     
 
+    function build() {
+        
         if (this.isRender) {
             return;
         }
@@ -28,7 +34,6 @@ define(function() {
             } catch (e) {}
         }
 
-
         //根据页面获取推荐内容
         var $title = $(".g-under-ask h1");
         var $dse = $(".g-under-ask .crazy_keyword_inlink");
@@ -38,9 +43,8 @@ define(function() {
         }else {
             var content = $title.html() +" "+ $dse.html().slice(0,30);
         }
-        
         innerJs(content,function(){
-            getadDate(params,Number(otherparamkey),otherparamvalue.toString(),callbackdata,_this)
+             getadDate(params,Number(otherparamkey),otherparamvalue.toString(),callbackdata,_this)
         })
     }
 
@@ -48,29 +52,32 @@ define(function() {
      * 加载120ask网站js
      */
     function innerJs(content,callback) {
+        if(mipLoadedJs) {
+            callback();
+        }else if(mipLoadingJs) {
+            mipcallList.push(callback)
+        }else {
+            mipLoadingJs  = true;
+            var allurl = ["//ip.120ask.com/lt?js=m.120ask.com&r=1470735643","//scws.120ask.com/scws?t=js&content="+content,"//m.120ask.com/pub/js/x_m_none_jquery.js"];
+            var calbacklen = 3;
 
-        var allurl = ["https://ip.120ask.com/lt?js=m.120ask.com&r=1470735643","https://scws.120ask.com/scws?t=js&content="+content,"//m.120ask.com/pub/js/x_m_none_jquery.js"];
-        var calbacklen = 3;
+            for(var i = 0; i< allurl.length; i++) {
 
-        for(var i = 0; i< allurl.length; i++) {
+                var script = document.createElement("script");  
+                script.src = allurl[i];
 
-            var script = document.createElement("script");
-            
-            if($("#MIP-ASK-AD"+i).length > 0) {
-                $("#MIP-ASK-AD"+i).remove();
-            }
+                var firstChild = document.head.firstChild;
+                document.head.insertBefore(script,firstChild);
 
-            script.id = "MIP-ASK-AD"+i;
-            script.src = allurl[i];
-
-            var firstChild = document.head.firstChild;
-            document.head.insertBefore(script,firstChild);
-
-            script.onload = function() {
-                if(calbacklen == 1) {
-                    callback()
+                script.onload = function() {
+                    if(calbacklen == 1) {
+                        mipLoadedJs = true;
+                        for(var i=0; i<mipcallList.length; i++) {
+                            mipcallList[i]()   
+                        }
+                    }
+                    calbacklen  = calbacklen - 1;
                 }
-                calbacklen  = calbacklen - 1;
             }
         }
     }
@@ -80,25 +87,25 @@ define(function() {
      */
     function getadDate(params,otherparamkey,otherparamvalue,callbackdata,layout) {
 
-        //重写YWBD原型方法以实现标签替换
-        YWBD.prototype.YWBD_WRITE =  function(backdata) {
+        // //重写YWBD原型方法以实现标签替换
+        YWBD.prototype.YWBD_WRITE =  function(backdata,OBJ,EXCEPTION,NONE) {
             var code = backdata.code;
-            code = code.replace(/<img/gi,'<mip-img'); //替换img为mip-img标签
-            $(layout).append(code);
-
-            if(callbackdata&&callbackdata.length != 0 ) {
-                renderCallback(callbackdata)
+            if(location.href.indexOf('mipcache.bdstatic.com') >= 0 ) { //如果是mip页
+                code = code.replace(/http:\/\/cdn.120askimages.com/g,"/i/cdn.120askimages.com") //替换img为src代理路径
             }
-
+            OBJ.append(code);
+            if(EXCEPTION&&EXCEPTION.length != 0 ) {
+                renderCallback(EXCEPTION)
+            }
         }
 
         //以下为广告投放原始代码
-        var smallad = new YWBD();
-        smallad.YWBD_SET_PARAMS('Id', params);
-        smallad.YWBD_SET_OTHER_PARAM(otherparamkey, otherparamvalue);
-        smallad.YWBD_SET_AREA_PARAMS();
-        smallad.YWBD_SET_LOG();
-        smallad.YWBD_AD_AJAX($(layout));
+        newYWBD = new YWBD();
+        newYWBD.YWBD_SET_PARAMS('Id', params);
+        newYWBD.YWBD_SET_OTHER_PARAM(otherparamkey, otherparamvalue);
+        newYWBD.YWBD_SET_AREA_PARAMS();
+        newYWBD.YWBD_SET_LOG();
+        newYWBD.YWBD_AD_AJAX($(layout),callbackdata);
     }
 
     /**
@@ -158,12 +165,8 @@ define(function() {
     function hidedom(obj) {
         $(obj).hide();
     }
-    
-    
         
-
     customElem.prototype.init = function() {
-        replaceUrl();
         this.build = build;
     };
 
@@ -174,4 +177,3 @@ define(function() {
 require(['mip-askad'], function (askad) {
     MIP.registerMipElement('mip-askad', askad);
 });
-

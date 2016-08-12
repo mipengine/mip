@@ -186,7 +186,6 @@ define(['./components/rect'], function (rect) {
 
     function _init() {
         $(window).on("scroll",_scroll);
-        
         if (window.parent !== window && platform.needSpecialScroll) {
             $('body').on('scroll', _scroll);
         }

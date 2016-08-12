@@ -1,20 +1,10 @@
 /**
  *  资源管理
  **/
-define(['./util', './components/document', 'viewport', './components/rect'], function (util, doc, viewport, rect) {
+define(['./util', 'viewport', './components/rect'], function (util, viewport, rect) {
     var resources = {};
     var counter = 0;
     var fn = util.fn;
-
-    var hasNextNode = function(element) {
-        do {
-            if (element.nextSibling) {
-                return true;
-            }
-        } while (element = element.parentNode);
-        return false;
-    }
-
 
     var Resources = function () {
         // resource id
@@ -30,7 +20,6 @@ define(['./util', './components/document', 'viewport', './components/rect'], fun
         this.updateState = fn.throttle(update);
 
         this._viewport = viewport;
-        this._holdReadyList = [];
         this._bind();
     };
 
@@ -45,23 +34,14 @@ define(['./util', './components/document', 'viewport', './components/rect'], fun
                 self._scrollTime = Date.now();
             });
 
-            doc.ready(function () {
-                self._ready = true;
-                self._runBuild();
-                self._update();
-            });
+            this._update();
         },
         // 元素加入列表
         add: function (element) {
             element._eid = this._eid ++;
             resources[this._rid][element._eid] = element;
-            if (this._ready) {
-                element.build();
-                this.updateState();
-            } else if (!element.isBuilt()) {
-                this._holdReadyList.push(element);
-                this._runBuild();
-            }
+            element.build();
+            this.updateState();
         },
         // 从列表中移除元素
         remove: function (element/* or id */) {
@@ -84,24 +64,6 @@ define(['./util', './components/document', 'viewport', './components/rect'], fun
                 return;
             } else {
                 element.viewportCallback(inViewport);
-            }
-        },
-        // 批量执行元素的 build
-        _runBuild: function () {
-            if (this._building) {
-                return;
-            }
-            this._building = true;
-            try {
-                for (var i = 0; i < this._holdReadyList.length; i++) {
-                    var element = this._holdReadyList[i];
-                    if (this._ready && hasNextNode(element)) {
-                        this._holdReadyList.splice(i--, 1);
-                        element.build();
-                    }
-                }
-            } finally {
-                this._building = false;
             }
         },
         _update: function () {

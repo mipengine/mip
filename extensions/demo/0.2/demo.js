@@ -16,6 +16,7 @@ define(function (){
         if (element.getAttribute('height')) {
             element.style.height = element.getAttribute('height') + 'px';
         }
+        console.log(this.id, 'build');
     };
     customElement.prototype.viewportCallback = function (inview) {
         console.log(this.id, inview);

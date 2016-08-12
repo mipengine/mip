@@ -1,16 +1,14 @@
 define(['./platform'], function (platform) {
     'use strict';
-   
     var patchForIOS = function () {
         if (platform.needSpecialScroll && window !== top) {
             var element = document.createElement('div');
             element.style.cssText = 'position:absolute;top:0;left:0;width:0;height:0;visibility:hidden;';
-            document.body.appendChild(element);
-            return element;
+            return document.body.appendChild(element);
         }
         return null;
-    }; 
- 
+    };
+
     var Rect = {
         get: function (left, top, width, height) {
             return {
