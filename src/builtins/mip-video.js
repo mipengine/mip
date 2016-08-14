@@ -164,9 +164,7 @@ define(['utils/util'], function(util){
                         src: src
                     });
                 });
-
                 // 加载视频、并播放
-
                 bdPlayer.render({
                     // 播放器容器，必选
                     container: container,
