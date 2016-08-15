@@ -7,7 +7,7 @@ mip-link 用来支持在 mip 页面跳转。
 可用性| 完成
 支持布局| 响应式
 示例|官网上线后增加示例
-所需脚本|https://mipcache.bdstatic.com/static/v0.1/mip-link.js
+所需脚本|https://mipcache.bdstatic.com/static/v0.2/mip-link.js
 
 ## 1. 使用
 

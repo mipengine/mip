@@ -15,7 +15,10 @@ define(function() {
         }
         _element.isRender = true;
 
-        var url = _element.getAttribute("src")
+        var url = _element.getAttribute("src")||"";
+        if(url=='') {
+            return;
+        }
         var newauido = new Audio({
             "url": url,
             "layout": _element,

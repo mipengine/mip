@@ -1,4 +1,4 @@
-# mip-video（ToDo）
+# mip-video
 
 mip-video 用来支持在 mip 中增加视频内容。
 
@@ -6,31 +6,49 @@ mip-video 用来支持在 mip 中增加视频内容。
 
 描述|替换html5的video标签; 只用于能直接用HTML5播放的视频文件.
 ----|----
-可用性|开发中
+可用性|稳定版本
 支持布局| 响应式
 示例|官网上线后增加示例
 
 ## 1. 使用
 
-mip-video 根据标签的src在组件的runtime中进行懒加载，能够像html5的video标签一样控制
+mip-video能够像html5的video标签一样播发视频
+
+1. 图文形式的视频组件
 
 ```
-<mip-video 
-    width=400 
-    height=300 
-    src="https://yourhost.com/yourvideo.mp4"
-    poster="yourvideo.jpg">
-    <div fallback>
-        <p>你的浏览器不支持html5 video</p>
-    </div>
-  <source type="video/mp4" src="foo.mp4">
-  <source type="video/webm" src="foo.webm">
-</mip-video>
+<mip-video class="mip-video" 
+    poster="xx.jpg"
+    src="xx.mp4"
+    adInfo="[[{type: 'video/mp4',src: 'xx.mp4'}],[{type: 'video/mp4',src: 'xx.mp4'}]]"
+    type="video/mp4" 
+    ios-mode="hide"
+    android-mode = "fullscreen"
+    >
+        <source type="video/mp4" src="xx.mp4"></source>
+        <mip-img  class="mip-video-container" src="xx.jpg">
+            <div class="mip-video-icon"></div>
+        </mip-img>
+    </mip-video>
+
+```
+
+2. 纯文字结构
+
+```
+    <mip-video class="mip-video" 
+    poster="xx.jpg"
+    src="xx.mp4"
+    android-mode="fullscreen" 
+    ios-mode="hide"
+    >
+        立即播放
+    </mip-video>
 ```
 
 ## 2. 属性
 
-视频组件所涉及的属性有：视频地址（src），封面图地址（poster），自动播放开关（autoplay），菜单开关（controls），循环播放开关（loop）以及（muted）
+视频组件所涉及的属性有：视频地址（src），封面图地址（poster），广告 (ad), 安卓全屏(android-mode) iso下显示模式(ios-mode)
 
 - **视频地址（src）**
 
@@ -44,30 +62,26 @@ mip-video 根据标签的src在组件的runtime中进行懒加载，能够像htm
 
     - 说明：视频播放前默认展示图片
 
-- **自动播放开关（autoplay）**
+
+- **广告（ad）**
 
     - 是否必填：否
 
-    - 说明：默认？ //待完善 需要说明几种选择的值是什么
-
-- **菜单开关（controls）**
-
-    - 是否必填：否
-
-    - 说明：默认？ //待完善 需要说明几种选择的值是什么
+    - 说明：该属性为配置广告。可不填,必须卫https资源
 
 
-- **循环播放开关（loop）**
+- **安卓全屏（android-mode）**
 
     - 是否必填：否
 
-    - 说明：默认？ //待完善 需要说明几种选择的值是什么
+    - 说明：在安卓下没有该属性则会按照外框大小显示video。如果存在，则填写唯一属性值fullscreen，模拟全屏显示。
 
-- **muted**
+- **iso下显示模式(ios-mode)**
 
     - 是否必填：否
 
-    - 说明：默认？ //待完善 需要说明几种选择的值是什么
+    - 说明：在ios下是否隐藏原video.全屏打开，如果不填写则为正常打开。但是由于ios的特殊属性还是会全屏打开。(建议开启该模式,用户体验更佳)
+
 
 ## 3. 验证
 
