@@ -241,7 +241,7 @@ define(['../util'], function(util){
         //http承载页跳转
         function superpage(allconfig) {
             var geturl = alignment(allconfig)
-            location.href = geturl + "&title="+encodeURIComponent("视频");
+            top.location.href = geturl + "&title="+encodeURIComponent("视频");
         }
 
         /**
