@@ -52,7 +52,7 @@ fis.match('extensions/*/**.less', {
     rExt: '.css',
     release: true
 });
-fis.match('extensions/*/**.{svg,eot,woff,woff2,tff,otf,jpg,png}', {
+fis.match('extensions/*/**.{svg,eot,woff,woff2,ttf,otf,jpg,png}', {
     release: true
 });
 
