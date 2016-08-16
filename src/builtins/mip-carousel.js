@@ -136,21 +136,21 @@ define(function(){
             autoPlay(defer);
         }
 
-        var gesture = require('components/gesture');
-        gesture.init();
-        gesture.bind(function (evt, data) {
-            // 用户手指滑动结束且手势为横向滑动且当前不处于动画播放状态
-            if (data.event === 'touchend' && Math.abs(data.x) > Math.abs(data.y) && !isAnimating) {
-                autoTimer && clearTimeout(autoTimer);
-                // 向右滑（上一张）or 向左滑(下一张)
-                var forward = !(data.x > 0);
-                switchItem(forward).then(function () {
-                    if (isAutoPlay) {
-                        autoPlay(defer);
-                    }
-                });
-            }
-        });
+        // var gesture = require('components/gesture');
+        // gesture.init();
+        // gesture.bind(function (evt, data) {
+        //     // 用户手指滑动结束且手势为横向滑动且当前不处于动画播放状态
+        //     if (data.event === 'touchend' && Math.abs(data.x) > Math.abs(data.y) && !isAnimating) {
+        //         autoTimer && clearTimeout(autoTimer);
+        //         // 向右滑（上一张）or 向左滑(下一张)
+        //         var forward = !(data.x > 0);
+        //         switchItem(forward).then(function () {
+        //             if (isAutoPlay) {
+        //                 autoPlay(defer);
+        //             }
+        //         });
+        //     }
+        // });
 
         if (isAutoPlay) {
             $this.delegate('mip-img', 'click', function () {

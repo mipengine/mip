@@ -5,9 +5,11 @@ define(['util'], function(util){
             return; 
         }
         this.isRender = true;
+
         var _img = new Image();
         this.applyFillContent(_img, true);
         var ele = this.element;
+        
         var src = util.urlToCacheUrl (document.location.href, ele.getAttribute('src'), 'img');
         _img.src = src;
 
@@ -126,8 +128,19 @@ define(['util'], function(util){
         };
     }
 
+    customElem.prototype.prerenderAllowed = function () {
+        return this.prerender || false;
+    };
 
     customElem.prototype.inviewCallback = inviewCallback;
+
+    customElem.prototype.build = function(){
+        var ele = this.element;
+        if(ele.getAttribute("show") == 'always'){
+             this.prerender = true;
+        }
+    };
+
 
     return customElem;
 
