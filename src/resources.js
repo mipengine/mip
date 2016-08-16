@@ -70,7 +70,7 @@ define(['./util', 'viewport', './components/rect'], function (util, viewport, re
             var resources = this.getSources();
             var viewportRect = this._viewport.getRect();
             for (var i in resources) {
-                var inViewport = rect.overlapping(rect.getFromDom(resources[i]), viewportRect);
+                var inViewport = resources[i].prerenderAllowed() || rect.overlapping(rect.getFromDom(resources[i]), viewportRect);
                 this.setInViewport(resources[i], inViewport);
             }
         }

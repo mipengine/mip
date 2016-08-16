@@ -138,6 +138,9 @@ define(['./components/cssLoader', './components/layout'], function (cssLoader, l
         proto.isBuilt = function () {
             return this._built;
         };
+        proto.prerenderAllowed = function () {
+            return this.customElement.prerenderAllowed();
+        };
         proto.build = function () {
             if (this.isBuilt()) {
                 return;
@@ -146,7 +149,7 @@ define(['./components/cssLoader', './components/layout'], function (cssLoader, l
                 this.customElement.build();
                 this._built = true;
             } catch (e) {
-                console.warn('build error:', this);
+                console.warn('build error:', e);
             }
         };
         return baseElementProto = proto;

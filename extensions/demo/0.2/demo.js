@@ -17,9 +17,15 @@ define(function (){
             element.style.height = element.getAttribute('height') + 'px';
         }
         console.log(this.id, 'build');
+        if (this.id === 6) {
+            this.prerender = true;
+        }
     };
     customElement.prototype.viewportCallback = function (inview) {
         console.log(this.id, inview);
+    };
+    customElement.prototype.prerenderAllowed = function () {
+        return this.prerender || false;
     };
     return customElement;
 });

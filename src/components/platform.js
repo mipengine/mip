@@ -13,7 +13,7 @@ define(function () {
     function isUc() {
         return /UCBrowser/i.test(ua);
     }
-    function isWebKit() {
+    function isWebkit() {
         return /WebKit/i.test(ua);
     }
 
@@ -22,7 +22,7 @@ define(function () {
         isSafari:isSafari,
         isChrome:isChrome,
         isUc: isUc,
-        isWebKit: isWebKit,
+        isWebkit: isWebkit,
         needSpecialScroll: isIos() && window != top
     }
 });
