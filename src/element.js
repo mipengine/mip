@@ -171,6 +171,7 @@ define(['./components/cssLoader', './components/layout'], function (cssLoader, l
         if (!resources) {
             resources = require('./resources');
         }
+
         customElements[name] = elementClass;
         loadCss(css);
         document.registerElement(name, {

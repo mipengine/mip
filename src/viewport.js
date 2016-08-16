@@ -1,4 +1,5 @@
 define(['./components/rect'], function (rect) {
+
     /**
         界面可视窗口模块，提供窗口各属性，以及窗口整体scroll、resize等事件接口
     */

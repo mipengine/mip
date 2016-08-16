@@ -9,6 +9,7 @@ define(['./platform'], function (platform) {
         return null;
     };
 
+    
     var Rect = {
         get: function (left, top, width, height) {
             return {
@@ -40,6 +41,6 @@ define(['./platform'], function (platform) {
             return rect1.top <= rect2.bottom && rect2.top <= rect1.bottom 
                 && rect1.left <= rect2.right && rect2.left <= rect1.right;
         }
-    };
+    }
     return Rect;
 });

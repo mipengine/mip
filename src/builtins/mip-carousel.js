@@ -47,7 +47,8 @@ define(function(){
         $childs.css({
             'position': 'absolute',
             'left': HIDE_LEFT,
-            'top': 0
+            'top': 0,
+            'height':hei+"px"
         });
         $childs.eq(currentIndex).css('left', 0);
 
@@ -90,6 +91,9 @@ define(function(){
                 'left': left,
                 'z-index': 2
             });
+
+            var nicai = $childs.eq(index)[0];
+            // console.log(nicai.inviewCallback())
 
             isAnimating = true;
 

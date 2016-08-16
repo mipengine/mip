@@ -1,7 +1,7 @@
 /**
  * builtins register
  */
-define(['element'], function (registerEle) {
+define(['../element'], function (registerEle) {
     'use strict';
     // 注册内置组件
     var register = function () {
