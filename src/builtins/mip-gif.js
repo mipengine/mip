@@ -1,12 +1,13 @@
 define(function(){
     var customGif = require('customElement').create();
     function build(){
-        if(this.isRender){
+        var _this = this;
+        if(_this.isRender){
             return; 
         }
-        this.isRender = true;
+        _this.isRender = true;
         var _img = new Image();
-        var ele = this.element;
+        var ele = _this.element;
         var src = ele.getAttribute('src');
         _img.src = src;
         if(ele.getAttribute('width')){

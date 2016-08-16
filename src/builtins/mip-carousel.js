@@ -2,13 +2,19 @@ define(function(){
     var customElem = require('customElement').create();
 
     var build = function () {
+
+        var _ele = this.element;
+        var g_this = this;
+
         // 避免多次渲染
-        if(this.isRender){
+        if(_ele.isRender){
             return; 
         }
-        this.isRender = true;
+        _ele.isRender = true;
 
-        var $this = $(this);
+
+
+        $this = $(_ele);
 
         var hei = $this.attr('height');
         var wid = $this.attr('width');
@@ -41,7 +47,7 @@ define(function(){
         $childs.css({
             'position': 'absolute',
             'left': HIDE_LEFT,
-            'top': 0,
+            'top': 0
         });
         $childs.eq(currentIndex).css('left', 0);
 
@@ -69,29 +75,37 @@ define(function(){
             // 图片占据的一屏宽度
             var perWid = $this.width();
             var left = (forward ? 1 : -1) * perWid;
+            var _promise;
             $childs.filter(function (i) {
                 return (i !== currentIndex && i !== index);
             }).css('left', HIDE_LEFT);
+
             $childs.css({
                 'display': 'block',
                 'opacity': 1,
                 'z-index': 1
             });
+
             $childs.eq(index).css({
                 'left': left,
                 'z-index': 2
             });
-            var def = $.Deferred();
+
             isAnimating = true;
-            $childs.eq(index).animate({
-                left: 0
-            }, DURATION, function () {
-                currentIndex = index;
-                isMipImgPop ? def.reject() : def.resolve();
-                isAnimating = false;
+
+            _promise = new Promise(function(resolve,reject){
+                $childs.eq(index).animate({
+                    left: 0
+                }, DURATION, function () {
+                    currentIndex = index;
+                    resolve();
+                    isAnimating = false;
+                });
             });
+
             $childs.eq(currentIndex).fadeOut(DURATION);
-            return def.promise();
+
+            return _promise;
         };
 
         // 是否需要自动轮播
@@ -108,8 +122,8 @@ define(function(){
         var defer;
         var isAutoPlay = false;
         if ($this.attr('autoplay') === 'autoplay' || $this.attr('autoplay') === '') {
-            if (typeof +this.getAttribute('defer') === 'number') {
-                defer = +this.getAttribute('defer');
+            if (typeof +_ele.getAttribute('defer') === 'number') {
+                defer = +_ele.getAttribute('defer');
             }
             else {
                 defer = 2000;

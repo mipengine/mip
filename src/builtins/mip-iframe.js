@@ -1,12 +1,14 @@
 define(function () {
     var customElem = require('customElement').create();
     var build = function () {
-        // 防止多次渲染
-        if(this.isRender){
+	var _element = this.element;
+        
+	// 防止多次渲染
+        if(_element.isRender){
             return; 
         }
-        this.isRender = true;
-        var $this = $(this);
+        _element.isRender = true;
+        var $this = $(_element);
         // 获取src属性的值，如果用户传递了srcdoc，则将src内容转为base64编码用于iframe的src
         var src = $this.attr('src');
         if ($this.attr('srcdoc')) {
