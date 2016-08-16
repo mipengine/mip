@@ -138,6 +138,9 @@ define(['./components/cssLoader', './components/layout'], function (cssLoader, l
         proto.isBuilt = function () {
             return this._built;
         };
+        proto.prerenderAllowed = function () {
+            return this.customElement.prerenderAllowed();
+        };
         proto.build = function () {
             if (this.isBuilt()) {
                 return;
