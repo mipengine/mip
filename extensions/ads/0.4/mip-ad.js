@@ -49,7 +49,6 @@ define(function (){
      *
      */
     customElement.prototype.init = function() {
-       
         this.build = render;
     };
     return customElement;

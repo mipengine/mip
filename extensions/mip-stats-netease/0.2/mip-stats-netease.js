@@ -25,14 +25,15 @@ define(function() {
         var $_element = $(_element);
         var id = _element.getAttribute('id') || '';
 
-        $.getScript(location.protocol + '//analytics.163.com/ntes_ex.js', function() {
+        var elescript = document.createElement('script');
+        elescript.src = location.protocol + '//analytics.163.com/ntes_ex.js';
+        $('body').append(elescript)
+        elescript.onload = function() {
             // 网易小伙伴 居然支持 amd
             require(['NTES'], function (NTES) {
                 NTES(id).pageTracker();
             });
-
-        });
-
+        }
     }
 
     return customElement;

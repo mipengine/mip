@@ -48,15 +48,25 @@ define(function() {
      * @param  {string}   url      url
      * @return {Promise}
      */
+    
     function fetchData(url) {
-        return $.ajax({
-            'url': url,
-            'dataType': 'jsonp',
-            'jsonp': 'cb',
-            'data': {
-                'url_key': location.href
-            }
+
+        var _promise =  new Promise(function(resolve,reject){
+            $.ajax({
+                'url': url,
+                'dataType': 'jsonp',
+                'jsonp': 'cb',
+                'data': {
+                    'url_key': location.href
+                },
+                success:function(data){
+                    resolve(data);
+                },error:function(data){
+                    reject(data);
+                }
+            });
         });
+        return _promise;
     }
 
 
@@ -84,7 +94,7 @@ define(function() {
         fetchData(url).then(function(res) {
             recommend.render(res.data);
             recommend.renderHot(res.data);
-        });
+        },function(data){}); 
 
     }
 

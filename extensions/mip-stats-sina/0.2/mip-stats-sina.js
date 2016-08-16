@@ -58,11 +58,17 @@ define(function() {
      * @return {promise}     promise
      */
     function getScriptPromise (src) {
-        var dfd = $.Deferred();
-        $.getScript(src, function () {
-            dfd.resolve();
+
+        var _promise = new Promise(function(resolve,reject){
+            var elescrit = document.createElement("script");
+            elescrit.src = src;
+            $('body').append(elescrit);
+            elescrit.onload = function() {
+                resolve();
+            };
         });
-        return dfd;
+
+        return _promise;
     }
 
 
@@ -76,16 +82,14 @@ define(function() {
 
         var elem = _element;
 
-        $.when(
-            getScriptPromise(SINA_TONGJI_ROOT + 'suda_log.min.js'),
-            getScriptPromise(SINA_TONGJI_ROOT + 'suda_map.min.js')
-        ).then(function () {
-            elemKeysToObj(elem, ['uId', 'pageId'], window.sudaMapConfig);
+        getScriptPromise(SINA_TONGJI_ROOT + 'suda_log.min.js').then(function(){
+             return getScriptPromise(SINA_TONGJI_ROOT + 'suda_map.min.js');
+        }).then(function(){
+           elemKeysToObj(elem, ['uId', 'pageId'], window.sudaMapConfig);
 
             if (window.suda_init) {
                 window.suda_init(window.sudaMapConfig.pageId, 100);
             }
-
         });
 
     }
