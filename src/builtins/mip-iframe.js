@@ -15,19 +15,24 @@ define(function () {
             src = 'data:text/html;charset=utf-8;base64,' + window.btoa($this.attr('srcdoc'));
         }
         var hei = $this.attr('height');
-        var wid = $this.attr('width');
+        var wid = $this.attr('width')||"100%";
 
         if (!src || !wid || !hei) {
             return;
         }
 
-        if (hei && wid && typeof +hei === 'number' && typeof +wid === 'number') {
+	//感觉这个方案有问题
+
+        //if (hei && wid && typeof +hei === 'number' && typeof +wid === 'number') {
             // padding-bottom
-            var pdb = +hei / +wid * 100 + '%';
-            $this.append('<div style="padding-bottom: ' + pdb + ';"></div>');
-        }
-        var $iframe = $('<iframe frameBorder="0" scrolling="no"></iframe>');
-        $iframe.attr('src', src);
+          //  var pdb = +hei / +wid * 100 + '%';
+            //$this.append('<div style="padding-bottom: ' + pdb + ';"></div>');
+       // }
+
+        
+        var $iframe = $('<iframe frameBorder="0" scrolling="no" style="width:'+wid+';height:'+hei+'"></iframe>');
+        
+	$iframe.attr('src', src);
         if ($this.attr('allowfullscreen') === '') {
             $iframe.attr('allowfullscreen', '');
         }
