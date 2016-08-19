@@ -157,7 +157,7 @@ define(function () {
     // 朋友圈分享按钮配置
     var pyq = {
         key: 'pyq',
-        icon: '//m.baidu.com/se/static/pmd/pmd/share/images/pyq.png',
+        icon: '//m.baidu.com/se/static/pmd/pmd/share/images/pyq_2.png',
         title: '朋友圈',
         cb: (function () {
             var fn;
@@ -189,7 +189,7 @@ define(function () {
     // 微信好友分享按钮配置
     var wxfriend = {
         key: 'wxfriend',
-        icon: '//m.baidu.com/se/static/pmd/pmd/share/images/wxfriend.png',
+        icon: '//m.baidu.com/se/static/pmd/pmd/share/images/wxfriend_2.png',
         title: '微信好友',
         cb: (function () {
             var fn;
@@ -221,7 +221,7 @@ define(function () {
     // qq好友分享按钮配置
     var qqfriend = {
         key: 'qqfriend',
-        icon: '//m.baidu.com/se/static/pmd/pmd/share/images/qqfriend.png',
+        icon: '//m.baidu.com/se/static/pmd/pmd/share/images/qqfriend_2.png',
         title: 'QQ好友',
         cb: (function () {
             var fn;
@@ -249,7 +249,7 @@ define(function () {
     // qq空间分享按钮配置
     var qzone = {
         key: 'qzone',
-        icon: '//m.baidu.com/se/static/pmd/pmd/share/images/qzone.png',
+        icon: '//m.baidu.com/se/static/pmd/pmd/share/images/qzone_2.png',
         title: 'QQ空间',
         cb: (function () {
             var fn;
@@ -283,7 +283,7 @@ define(function () {
     // 新郎微博分享按钮配置
     var sinaweibo = {
         key: 'sinaweibo',
-        icon: '//m.baidu.com/se/static/pmd/pmd/share/images/sinaweibo.png',
+        icon: '//m.baidu.com/se/static/pmd/pmd/share/images/sinaweibo_2.png',
         title: '新浪微博',
         cb: (function () {
             var fn;
@@ -315,7 +315,7 @@ define(function () {
 
     var more = {
         key: 'more',
-        icon: '//m.baidu.com/se/static/pmd/pmd/share/images/more.png',
+        icon: '//m.baidu.com/se/static/pmd/pmd/share/images/more_2.png',
         title: '更多',
         cb: (function () {
             var fn;
@@ -374,7 +374,7 @@ define(function () {
             // 处理分享图标list,并拼装dom
             var list = [];
             if (isZbios || isUC || isQQ || isWechat) {
-                list.push(pyq, wxfriend);
+                list.push(wxfriend, pyq);
             }
             if (isZbios || isUC || isQQ) {
                 list.push(qqfriend);

@@ -17,7 +17,7 @@
     color:#333
 }
 .recommends-header {
-    font-size: 13px;
+    font-size: 16px;
     color:#999;
 }
 div.recommends-keywords {
@@ -71,8 +71,11 @@ div.recommends-keywords {
     text-align: center;
     border-top: solid #e6e6e6 1px;
     line-height: 45px;
-    font-size: 13px;
-    color: #999;
+    font-size: 14px;
+
+    a {
+        color: #999;
+    }
     em {
         color: #2596DE;
         font-style: normal;
@@ -135,8 +138,8 @@ div.recommends-keywords {
 // hot
 .hotpoint {
     width:100%;
-    padding:16px 0 9px;
-    margin:13px 0;
+    padding: 16px 0 9px;
+    margin: 8px 0;
     background-color:#fff;
     overflow: hidden;
     text-align: left;
@@ -144,7 +147,7 @@ div.recommends-keywords {
 
     &-header {
         margin-bottom: 13px;
-        font-size: 13px;
+        font-size: 16px;
         color: #999;
     }
 
@@ -156,9 +159,14 @@ div.recommends-keywords {
         margin-bottom: 8px;
         background-color: #f5f5f5;
         overflow: hidden;
+        width: 50%;
+        -webkit-box-flex: 6;
+        -webkit-flex: 6 6 auto;
     }
     &-row {
         margin: 0;
+        display: -webkit-box;
+        display: -webkit-flex;
     }
     &-row .hotpoint-item:last-child {
         margin-left: 5px;
