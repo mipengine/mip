@@ -58,9 +58,12 @@ fis.match('extensions/*/**.{svg,eot,woff,woff2,ttf,otf,jpg,png}', {
 
 
 /* mipmain */
-fis.match('src/(**).js', {
+fis.match('/src/(**).js', {
     optimizer: fis.plugin('uglify-js'),
     moduleId: '$1'
+});
+fis.match('/src/deps/zepto.js', {
+    moduleId: 'zepto'
 });
 fis.match('src/mipmain.js', {
     release: 'mipmain.js'
