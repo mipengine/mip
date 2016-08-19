@@ -146,7 +146,7 @@ define(function() {
 
                 var ceil = parseInt(currentTime)/parseInt(_this.duration)*100+"%";
                 $progressbar.css("left",ceil)
-            },500)
+            },10)
         },
         gettimelen: function() {
             var _this = this;
@@ -178,31 +178,34 @@ define(function() {
             var parentwidth = $(btn).parent(".mip-audiao-progress").width();
             var _this = this;
 
+
             var startx, startok = false;
             btn.addEventListener('touchstart',function(event){
                  startx  = event.touches[0].clientX;
                  startok = true;
                  clearInterval(_this.allstoptime);
-            })
+            });
             btn.addEventListener('touchmove',function(event){
                 event.preventDefault();
                 event.stopPropagation();
-                if(!startok) return
-                var btnleft = parseInt($(btn).css("left"));
-                var movexmouse = event.touches[0].clientX-startx;
+                if(!startok) return;
+                var btnleft = parseInt($(btn).position().left);
+               
+        		var movexmouse = event.touches[0].clientX-startx;
                 var movex = movexmouse+btnleft;
+	           	
                 if(movex > parentwidth) {
                     btn.style.left = parentwidth+"px";
                     _this.setTimepaly(movex/parentwidth);
                 }else if(movex<=0) {
-                     btn.style.left = "0px;"
+                     btn.style.left = "0px;";
                      _this.setTimepaly(parseInt(0));
                 }
                 else {
                     btn.style.left = movex+"px";
                     _this.setTimepaly(movex/parentwidth);
                 }
-                startx = event.touches[0].clientX;
+		       startx = event.touches[0].clientX;
             })
             btn.addEventListener('touchend',function(event){
                 startok = false;
