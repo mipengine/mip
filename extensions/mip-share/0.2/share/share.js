@@ -37,7 +37,7 @@ define(function () {
             script.type = 'text/javascript';
             script.onload = script.onreadystatechange = function() {
                 if (!this.readyState || this.readyState === "loaded" || this.readyState === "complete" ) {
-                    resolve(value);
+                    resolve();
                 }
             };
             script.src = '//jsapi.qq.com/get?api=app.share';
