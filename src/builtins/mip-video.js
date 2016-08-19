@@ -271,7 +271,7 @@ define(['../util'], function(util){
 
             var all_adinfourl = [];
             allconfig.adInfo.map(function(data,index) {
-                all_adinfourl.push( data[0].src);
+                all_adinfourl.push(encodeURIComponent(data[0].src));
             })
             var geturl = "&poster="+encodeURIComponent(allconfig.poster)+"&src="+encodeURIComponent(allconfig.src)+"&ad=";
             endgeturl = PROXYURL + geturl + all_adinfourl;
