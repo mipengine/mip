@@ -40,6 +40,7 @@ define(function() {
         this.canplaythrough = true;
         this.timeupdate = true;
         this.dragboolen = true;
+        this.stopbtn = false;
 
     }
 
@@ -184,6 +185,11 @@ define(function() {
                  startx  = event.touches[0].clientX;
                  startok = true;
                  clearInterval(_this.allstoptime);
+                 if(!_this.audio.paused) {
+                    _this.audio.pause();
+                    _this.stopbtn = true;
+                    $layout.find(".mip-audio-voice-stop").removeClass("mip-audio-voice-stop").addClass('mip-audio-voice-play');
+                 }
             });
             btn.addEventListener('touchmove',function(event){
                 event.preventDefault();
@@ -191,7 +197,7 @@ define(function() {
                 if(!startok) return;
                 var btnleft = parseInt($(btn).position().left);
                
-        		var movexmouse = event.touches[0].clientX-startx;
+        	var movexmouse = event.touches[0].clientX-startx;
                 var movex = movexmouse+btnleft;
 	           	
                 if(movex > parentwidth) {
@@ -209,6 +215,10 @@ define(function() {
             })
             btn.addEventListener('touchend',function(event){
                 startok = false;
+                if(_this.stopbtn) {
+                    _this.audio.play();
+                    $layout.find(".mip-audio-voice-play").removeClass("mip-audio-voice-play").addClass('mip-audio-voice-stop');
+                }
                 _this.progressshow()
             })
         },
