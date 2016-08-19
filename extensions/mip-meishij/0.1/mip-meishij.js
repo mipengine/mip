@@ -232,19 +232,15 @@ define(function() {
      * 渲染入口方法
      */
     function build() {
-        // isRender是当前版本引入的问题，即将得到改进
-        //var $el = $(this.element);
         var $el = $(this);
         if (this.isRender) {
             return;
         }
         this.isRender = true;
 
-
         // DOM元素列表
         var $share = $el.find('.share_box');
         var $baifendian = $el.find('.baifendian');
-
 
         // 初始化各模块
         initBaifendian($baifendian);
@@ -259,7 +255,7 @@ define(function() {
      * 初始化
      */
     customElem.prototype.init = function() {
-        this.build = build;
+        this.mipAttachedCallback = build;
     };
     return customElem;
 });
