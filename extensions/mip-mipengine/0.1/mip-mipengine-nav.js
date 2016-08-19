@@ -39,6 +39,7 @@ define('extensions/mip-mipengine/0.1/mip-mipengine-nav', ['require', 'customElem
                 '<a href="/" class="navbar-brand">MIP</a>' +
             '</div>';
         $container.append($btnWrap).append($ulNav).appendTo($this);
+        $('.mip-nav-wrapper').addClass('show');
 
         me.isRender = true;
     }
