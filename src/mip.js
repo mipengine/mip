@@ -18,7 +18,10 @@ require(['./components/platform', './element', './builtins/mip_builtins', './vie
     builtin.register();
     //显示 body
     $('body').css({
-        opacity: 1,
-        animation: 'none'
+        'opacity': 1,
+        'animation': 'none',
+        '-webkit-animation': 'none',
+        '-moz-animation': 'none',
+        '-ms-animation': 'none'
     });
 });
