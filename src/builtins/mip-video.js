@@ -120,7 +120,22 @@ define(['../util'], function(util){
         //本页打开
         //该函数源于@赵雷
         function playnowpage() {
+
+             // 防止点击video区域时 造成重播
+            // $(this).on('click', 'video', function (event) {
+            //     // event.stopPropagation();
+            //     // event.preventDefault();
+            //     return false;
+            // });
+
+            
             $(this).on('click', function (event) {
+                if(event.target.tagName.toLocaleLowerCase()=='video') {
+                    event.stopPropagation();
+                    return false;
+                    // event.preventDefault();
+                    // event.preventdefault();
+                }
                 // 如果有视屏正在播放，则移除视屏
                 bdPlayer && bdPlayer.remove();
 
@@ -194,12 +209,6 @@ define(['../util'], function(util){
                     playInfo: playInfo
                     // src: 'http://v1.bdstatic.com/8aa369effe2cc6280c1bd413723ce0ac/mp4/8aa369effe2cc6280c1bd413723ce0ac.mp4'
                 });
-            });
-
-            // 防止点击video区域时 造成重播
-            $(this).on('click', 'video', function (event) {
-                event.stopPropagation();
-                event.preventDefault();
             });
         }
 
