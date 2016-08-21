@@ -3,6 +3,7 @@
  * @author dongshihao
  */
 define(function () {
+    var $ = require('zepto');
 
     var PopupFrame = function (opt) {
         var me = this;

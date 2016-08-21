@@ -1,5 +1,5 @@
 define(['./components/rect'], function (rect) {
-
+    
     /**
         界面可视窗口模块，提供窗口各属性，以及窗口整体scroll、resize等事件接口
     */
@@ -9,6 +9,8 @@ define(['./components/rect'], function (rect) {
         Viewer对象，用于做父页面和子页面的通信代理
     */
     var viewer  = null;
+
+    var $ = require('zepto');
 
     var _scrollTop = null,
         _scrollLeft = null,

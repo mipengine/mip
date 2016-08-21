@@ -3,10 +3,10 @@ __inline('./polyfills/promise.js');
 
 
 /* libs */
-__inline('./deps/zepto.js');
 __inline('./deps/document-register-element.max.js');
 __inline('./deps/esl.js');
 __inline('./deps/esl_config.js');
+__inline('./deps/zepto.js');
 
 /* components */
 __inline('./components/fn.js');

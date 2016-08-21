@@ -5,6 +5,7 @@
  */
 
 define(function () {
+    var $ = require('zepto');
 
     // 获取ua并转换为小写
     var UA = navigator.userAgent.toLowerCase();

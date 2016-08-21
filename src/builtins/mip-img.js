@@ -1,4 +1,5 @@
 define(['util'], function(util){
+   var $ = require('zepto');
    var customElem = require('customElement').create();
    var inviewCallback = function(){
         if(this.isRender){

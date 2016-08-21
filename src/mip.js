@@ -4,6 +4,8 @@
 require(['./components/platform', './element', './builtins/mip_builtins', './viewer'], 
     function (platform, registerMipElement, builtin, viewer) {
     'use strict';
+    
+    var $ = require('zepto');
 
     !window.MIP && (window.MIP = {});
     MIP.css = {};

@@ -1,4 +1,5 @@
 define(function(){
+    var $ = require('zepto');
     var customGif = require('customElement').create();
     function build(){
         var _this = this;

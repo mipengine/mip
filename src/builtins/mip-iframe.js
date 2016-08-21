@@ -1,4 +1,5 @@
 define(function () {
+    var $ = require('zepto');
     var customElem = require('customElement').create();
     var build = function () {
 	var _element = this.element;

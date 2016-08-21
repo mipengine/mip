@@ -6,6 +6,7 @@
  */
 
 define(function () {
+    var $ = require('zepto');
 
     // 加载share公共css
     var $shareStyle = $('<style data-for="pmd/share/share"></style>');

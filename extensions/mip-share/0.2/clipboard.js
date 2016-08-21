@@ -6,6 +6,7 @@
 
 
 define(function() {
+    var $ = require('zepto');
 
     /**
      * CLICK_EVENT

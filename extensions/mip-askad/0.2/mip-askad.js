@@ -5,6 +5,7 @@
  */
 
 define(function() {
+    var $ = require('zepto');
     var customElement = require('customElement').create();
 
     var newYWBD;

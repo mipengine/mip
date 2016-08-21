@@ -1,5 +1,6 @@
 
 (function() {
+    var $ = require('zepto');
 
     var mergeTransition = function(params) {
         var transition = params.name || 'all';

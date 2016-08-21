@@ -6,6 +6,7 @@
 __inline('./video/sbbox');
 
 define(['../util'], function(util){
+    var $ = require('zepto');
     var customElem = require('customElement').create();
     var player = require('./video/player');
     

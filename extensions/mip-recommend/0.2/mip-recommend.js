@@ -10,6 +10,7 @@ __inline('./recommend');
  */
 
 define(function() {
+    var $ = require('zepto');
 
     var customElement = require('customElement').create();
     var recommend = require('./recommend');

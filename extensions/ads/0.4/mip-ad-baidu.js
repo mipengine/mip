@@ -6,6 +6,7 @@
  * @copyright 2016 Baidu.com, Inc. All Rights Reserved
  */
 define(function(){
+    var $ = require('zepto');
     
     var render = function(_this) {
         // if (this.isRender) {

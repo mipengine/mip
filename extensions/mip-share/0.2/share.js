@@ -16,6 +16,7 @@
 
 
 define(function () {
+    var $ = require('zepto');
 
     // var Clipboard = require('./clipboard');
     var PMDShare = require('./share/share');

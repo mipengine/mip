@@ -5,6 +5,7 @@
  * @author songgenlei@baidu.com
  */
 define(function() {
+    var $ = require('zepto');
 
     /**
      * 构造函数

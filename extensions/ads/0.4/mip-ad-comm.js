@@ -8,7 +8,7 @@
 
 define(function (){
     // var customElem = require('customElement');
-    
+    var $ = require('zepto');
     /**
      * render
      *

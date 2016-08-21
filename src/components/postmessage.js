@@ -3,6 +3,7 @@
  * @author luofei02
  */
 define(function () {
+    var $ = require('zepto');
     // 等待响应的defer
     var deferQueue = {};
     // 请求处理队列
