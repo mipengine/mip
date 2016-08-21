@@ -41,6 +41,7 @@ define(['utils/util'], function(util){
             var poster = this.getAttribute("poster");
             var src = this.getAttribute("src");
             var adInfoString = this.getAttribute("adInfo");
+            var title = this.getAttribute("title")||"视频";
 
             //广告信息序列化
             var adInfo = [];
@@ -53,7 +54,8 @@ define(['utils/util'], function(util){
             return {
                 poster : poster,
                 src : src,
-                adInfo : adInfo
+                adInfo : adInfo,
+                title: title
             }
         }
 
@@ -240,7 +242,7 @@ define(['utils/util'], function(util){
         //http承载页跳转
         function superpage(allconfig) {
             var geturl = alignment(allconfig)
-            location.href = geturl + "&title="+encodeURIComponent("视频");
+            location.href = geturl + "&title="+encodeURIComponent(allconfig.title);
         }
 
         /**
@@ -252,7 +254,7 @@ define(['utils/util'], function(util){
            var URL = encode?geturl:encodeURIComponent(geturl)
             var $jsonString = {
                 "vid": +new Date(),
-                "title": "视频",
+                "title": encodeURIComponent(allconfig.title),
                 "src": URL,
                 "cate": "tvplay",
                 "pageUrl": location.herf,
@@ -266,11 +268,11 @@ define(['utils/util'], function(util){
          * 数据组装函数
          */
         function alignment(allconfig) {
-            var PROXYURL = "https://wwwhttps.baidu.com/sf?pd=mms_mipvideo&dev_tpl=act_mip_video&wd=%E8%A7%86%E9%A2%91&actname=act_mip_video";
+            var PROXYURL = "http://transcoder.baidu.com/sf?pd=mms_mipvideo&dev_tpl=act_mip_video&wd=%E8%A7%86%E9%A2%91&actname=act_mip_video";
 
             var all_adinfourl = [];
             allconfig.adInfo.map(function(data,index) {
-                all_adinfourl.push( data[0].src);
+                all_adinfourl.push(encodeURIComponent(data[0].src));
             })
             var geturl = "&poster="+encodeURIComponent(allconfig.poster)+"&src="+encodeURIComponent(allconfig.src)+"&ad=";
             endgeturl = PROXYURL + geturl + all_adinfourl;
