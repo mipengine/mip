@@ -7,10 +7,7 @@ define(['./components/cssLoader', './components/layout'], function (cssLoader, l
     var resources;
 
     var baseElementProto;
-    /**
-     * Applies layout to the element. Visible for testing only.
-     * @param {!AmpElement} element
-     */
+    
     function applyLayout_(element) {
         var layoutAttr = element.getAttribute('layout');
         var widthAttr = element.getAttribute('width');
