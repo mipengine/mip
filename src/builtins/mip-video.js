@@ -43,6 +43,7 @@ define(['../util'], function(util){
             var poster = this.getAttribute("poster");
             var src = this.getAttribute("src");
             var adInfoString = this.getAttribute("adInfo");
+            var title = this.getAttribute("title")||"视频";
 
             //广告信息序列化
             var adInfo = [];
@@ -51,11 +52,31 @@ define(['../util'], function(util){
                     adInfo = new Function('return ' + adInfoString)()
                 } catch (e) {}
             }
-            
+
+            //过滤ios7.0
+            var agent = navigator.userAgent.toLowerCase() ;
+            var version;
+            if(agent.indexOf("like mac os x") > 0){
+                //ios
+                var regStr_saf = /os [\d._]*/gi ;
+                var verinfo = agent.match(regStr_saf) ;
+                version = (verinfo+"").replace(/[^0-9|_.]/ig,"").replace(/_/ig,".");
+            }
+
+            var version_str = version+"";
+            if(version_str != "undefined" && version_str.length >0){
+                version=version.substring(0,1);
+            }
+
+            if(version<8) {
+                adInfo = [];
+            }
+
             return {
                 poster : poster,
                 src : src,
-                adInfo : adInfo
+                adInfo : adInfo,
+                title:title
             }
         }
 
@@ -121,21 +142,10 @@ define(['../util'], function(util){
         //本页打开
         //该函数源于@赵雷
         function playnowpage() {
-
-             // 防止点击video区域时 造成重播
-            // $(this).on('click', 'video', function (event) {
-            //     // event.stopPropagation();
-            //     // event.preventDefault();
-            //     return false;
-            // });
-
-            
             $(this).on('click', function (event) {
                 if(event.target.tagName.toLocaleLowerCase()=='video') {
                     event.stopPropagation();
                     return false;
-                    // event.preventDefault();
-                    // event.preventdefault();
                 }
                 // 如果有视屏正在播放，则移除视屏
                 bdPlayer && bdPlayer.remove();
@@ -160,13 +170,30 @@ define(['../util'], function(util){
                 }
 
 
+                //过滤ios qq
                 var userAgent = navigator.userAgent;
                 var qqbrower = userAgent.indexOf("QQ")>0?true:false;
                 var ios = !!userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
                 
-                if(qqbrower&&ios) {
+                //过滤ios7.0
+                var agent = navigator.userAgent.toLowerCase() ;
+                var version;
+                if(agent.indexOf("like mac os x") > 0){
+                    //ios
+                    var regStr_saf = /os [\d._]*/gi ;
+                    var verinfo = agent.match(regStr_saf) ;
+                    version = (verinfo+"").replace(/[^0-9|_.]/ig,"").replace(/_/ig,".");
+                }
+
+                var version_str = version+"";
+                if(version_str != "undefined" && version_str.length >0){
+                    version=version.substring(0,1);
+                }
+
+                if((qqbrower&&ios)||version < 8) {
                     adInfo = [];
                 }
+
                 // 正片播放时 设置多type时 数据处理
                 var sources = $me.find('source');
                 var playInfo = [];
@@ -251,7 +278,7 @@ define(['../util'], function(util){
         //http承载页跳转
         function superpage(allconfig) {
             var geturl = alignment(allconfig)
-            top.location.href = geturl + "&title="+encodeURIComponent("视频");
+            top.location.href = geturl + "&title="+encodeURIComponent(allconfig.title);
         }
 
         /**
@@ -263,7 +290,7 @@ define(['../util'], function(util){
            var URL = encode?geturl:encodeURIComponent(geturl)
             var $jsonString = {
                 "vid": +new Date(),
-                "title": "视频",
+                "title": encodeURIComponent(allconfig.title),
                 "src": URL,
                 "cate": "tvplay",
                 "pageUrl": location.herf,
@@ -277,7 +304,7 @@ define(['../util'], function(util){
          * 数据组装函数
          */
         function alignment(allconfig) {
-            var PROXYURL = "https://wwwhttps.baidu.com/sf?pd=mms_mipvideo&dev_tpl=act_mip_video&wd=%E8%A7%86%E9%A2%91&actname=act_mip_video";
+            var PROXYURL ="http://transcoder.baidu.com/sf?pd=mms_mipvideo&dev_tpl=act_mip_video&wd=%E8%A7%86%E9%A2%91&actname=act_mip_video";
 
             var all_adinfourl = [];
             allconfig.adInfo.map(function(data,index) {
