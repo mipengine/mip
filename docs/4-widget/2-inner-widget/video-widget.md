@@ -48,7 +48,7 @@ mip-video能够像html5的video标签一样播发视频
 
 ## 2. 属性
 
-视频组件所涉及的属性有：视频地址（src），封面图地址（poster），广告 (ad), 安卓全屏(android-mode) iso下显示模式(ios-mode)
+视频组件所涉及的属性有：视频地址（src），封面图地址（poster），广告 (ad), 安卓全屏(android-mode) ios下显示模式(ios-mode)
 
 - **视频地址（src）**
 
@@ -76,7 +76,7 @@ mip-video能够像html5的video标签一样播发视频
 
     - 说明：在安卓下没有该属性则会按照外框大小显示video。如果存在，则填写唯一属性值fullscreen，模拟全屏显示。
 
-- **iso下显示模式(ios-mode)**
+- **ios下显示模式(ios-mode)**
 
     - 是否必填：否
 

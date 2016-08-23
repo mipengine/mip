@@ -12,7 +12,7 @@ mip-carousel 用来支持 mip 中图片的一种展示方式，支出多图轮�
 在MIP HTMl中，示例如下：
 
 ```
-<mip-carousel autoplay defer="1000">
+<mip-carousel autoplay defer="1000" width="400" height="300">
     <mip-img 
         class="mip-img" 
         popup 
@@ -31,7 +31,7 @@ mip-carousel 用来支持 mip 中图片的一种展示方式，支出多图轮�
 ```
 ## 2. 属性
 
-轮播组件所涉及的属性有：自动轮播（autoplay），间隔时间（defer）
+轮播组件所涉及的属性有：自动轮播（autoplay），间隔时间（defer），宽度(width)和高度（height）
 
 - **自动轮播(autoplay)**
 
@@ -44,4 +44,16 @@ mip-carousel 用来支持 mip 中图片的一种展示方式，支出多图轮�
     - 是否必填：否
 
     - 说明：每次轮播的时间间隔，单位ms，如果设置了`autoplay`，可以添加`defer`来指定轮播的时间间隔，默认值2000
+
+- **宽度(width)**
+
+    - 是否必填：是
+
+    - 说明：与高度属性配合来设置图片比例
+
+- **高度（height）**
+
+    - 是否必填：是
+
+    - 说明：与宽度属性配合来设置图片比例
 

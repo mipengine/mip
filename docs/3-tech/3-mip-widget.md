@@ -24,7 +24,7 @@
 ```
 . #根目录
 ├── src                 #mip核心代码
-│   ├── buildins            #内置组件
+│   ├── buildins        #内置组件
 │   └── deps            #依赖代码库
 ├── extensions          #扩展、个性化及广告组件
 │   └── olympic         #mip奥运项目
@@ -81,8 +81,22 @@ js目录下:
 
         2、版本目录 两位数字 如0.1 
 
+MIP element 生命周期
 
-	demo示例
+    init                   # 初始化  
+      ↓  
+    create                 # 创建元素  
+      ↓  
+    attached               # 插入到文档中  
+      ↓   
+    build                  # 执行build，只会被执行一次   
+      ↓     
+    viewport(in or out)    # 进入或离开可视区域   
+      ↓    
+    detached               # 从文档中移除
+
+
+demo示例
 	        
 	```
 	 /**

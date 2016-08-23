@@ -76,7 +76,7 @@ define(['../util'], function(util){
                 poster : poster,
                 src : src,
                 adInfo : adInfo,
-                title:title
+                title: title
             }
         }
 
@@ -304,7 +304,7 @@ define(['../util'], function(util){
          * 数据组装函数
          */
         function alignment(allconfig) {
-            var PROXYURL ="http://transcoder.baidu.com/sf?pd=mms_mipvideo&dev_tpl=act_mip_video&wd=%E8%A7%86%E9%A2%91&actname=act_mip_video";
+            var PROXYURL = "http://transcoder.baidu.com/sf?pd=mms_mipvideo&dev_tpl=act_mip_video&wd=%E8%A7%86%E9%A2%91&actname=act_mip_video";
 
             var all_adinfourl = [];
             allconfig.adInfo.map(function(data,index) {

@@ -126,7 +126,7 @@ define(function() {
         // 初始化video标签
         init: function () {
             var me = this;
-            me.$video = $('<video></video>');
+            me.$video = $('<video autoplay="autoplay"></video>');
             me.video = me.$video[0];
 
             // 设置video标签默认样式
@@ -245,7 +245,7 @@ define(function() {
         play: function () {
             var me = this;
             var uaReg = /(iphone.+mqqbrowser)|(android.*(baidubrowser)|(baiduboxapp))/i;
-
+           
             if (navigator.userAgent.match(uaReg)) {
                 setTimeout(function() {
                     me.video.play();
@@ -401,7 +401,7 @@ define(function() {
         // 绑定事件
         bindEvents: function() {
             var me = this;
-            me.$video.on('loadeddata', function() {
+            me.$video.on('canplay', function() {
                 me.video.play();
             });
         },
@@ -444,7 +444,7 @@ define(function() {
                 remove.length && remove.off('click' + eventNS)
                     .on('click' + eventNS, function () {
                         popup.$popupContent.length && popup.$popupContent.html('');
-                    });
+                });
             });
         },
 
