@@ -80,20 +80,22 @@ js目录下:
         1、组件.md  #组件说明文档
 
         2、版本目录 两位数字 如0.1 
-    
+
+
+
     MIP element 生命周期
     ```
-         init    初始化  
-          ↓  
-        create   创建元素  
-          ↓  
-        attached  插入到文档中  
-          ↓   
-        build    执行build，只会被执行一次   
-          ↓     
-       viewport(in or out)   进入或离开可视区域   
-          ↓    
-       detached   从文档中移除
+    init                   # 初始化  
+      ↓  
+    create                 # 创建元素  
+      ↓  
+    attached               # 插入到文档中  
+      ↓   
+    build                  # 执行build，只会被执行一次   
+      ↓     
+    viewport(in or out)    # 进入或离开可视区域   
+      ↓    
+    detached               # 从文档中移除
     ```
 
 
