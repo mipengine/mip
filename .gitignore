@@ -3,3 +3,4 @@
 server.log
 test
 dist
+.DS_Store

@@ -63,4 +63,3 @@ require(['mip-ad'], function (mipAdComm) {
     MIP.registerMipElement('mip-ad', mipAdComm, MIP.css.mipAd);
     MIP.registerMipElement('mip-embed', mipAdComm, MIP.css.mipAd);
 });
-

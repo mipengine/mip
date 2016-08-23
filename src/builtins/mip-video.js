@@ -5,29 +5,31 @@
  */
 __inline('./video/sbbox');
 
-define(['utils/util'], function(util){
-    var customElem = require('customElement');
+define(['../util'], function(util){
+    var $ = require('zepto');
+    var customElem = require('customElement').create();
     var player = require('./video/player');
     
 
     var bdPlayer;
 
     var build = function () {
-        if (this.isRender) {
+        var _element = this.element;
+        if (_element.isRender) {
             return; 
         }
-        this.isRender = true;
-        var me = this;
-        var $me = $(this);
+        _element.isRender = true;
+        var me = _element;
+        var $me = $(_element);
     
         var _Videoconfig = {}; //数据存储
 
-        _Videoconfig = getInfo.call(this,_Videoconfig);
+        _Videoconfig = getInfo.call(_element,_Videoconfig);
         listdataValida();
 
         //本地打开或者外部页打开
         if(_Videoconfig.nowpage) { //在本地打开
-            playnowpage.call(this)
+            playnowpage.call(_element)
         }else {
              _this = me;
             $(_this).on("click",function(){
@@ -50,7 +52,26 @@ define(['utils/util'], function(util){
                     adInfo = new Function('return ' + adInfoString)()
                 } catch (e) {}
             }
-            
+
+            //过滤ios7.0
+            var agent = navigator.userAgent.toLowerCase() ;
+            var version;
+            if(agent.indexOf("like mac os x") > 0){
+                //ios
+                var regStr_saf = /os [\d._]*/gi ;
+                var verinfo = agent.match(regStr_saf) ;
+                version = (verinfo+"").replace(/[^0-9|_.]/ig,"").replace(/_/ig,".");
+            }
+
+            var version_str = version+"";
+            if(version_str != "undefined" && version_str.length >0){
+                version=version.substring(0,1);
+            }
+
+            if(version<8) {
+                adInfo = [];
+            }
+
             return {
                 poster : poster,
                 src : src,
@@ -122,6 +143,10 @@ define(['utils/util'], function(util){
         //该函数源于@赵雷
         function playnowpage() {
             $(this).on('click', function (event) {
+                if(event.target.tagName.toLocaleLowerCase()=='video') {
+                    event.stopPropagation();
+                    return false;
+                }
                 // 如果有视屏正在播放，则移除视屏
                 bdPlayer && bdPlayer.remove();
 
@@ -145,13 +170,30 @@ define(['utils/util'], function(util){
                 }
 
 
+                //过滤ios qq
                 var userAgent = navigator.userAgent;
                 var qqbrower = userAgent.indexOf("QQ")>0?true:false;
                 var ios = !!userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
                 
-                if(qqbrower&&ios) {
+                //过滤ios7.0
+                var agent = navigator.userAgent.toLowerCase() ;
+                var version;
+                if(agent.indexOf("like mac os x") > 0){
+                    //ios
+                    var regStr_saf = /os [\d._]*/gi ;
+                    var verinfo = agent.match(regStr_saf) ;
+                    version = (verinfo+"").replace(/[^0-9|_.]/ig,"").replace(/_/ig,".");
+                }
+
+                var version_str = version+"";
+                if(version_str != "undefined" && version_str.length >0){
+                    version=version.substring(0,1);
+                }
+
+                if((qqbrower&&ios)||version < 8) {
                     adInfo = [];
                 }
+
                 // 正片播放时 设置多type时 数据处理
                 var sources = $me.find('source');
                 var playInfo = [];
@@ -196,12 +238,6 @@ define(['utils/util'], function(util){
                     // src: 'http://v1.bdstatic.com/8aa369effe2cc6280c1bd413723ce0ac/mp4/8aa369effe2cc6280c1bd413723ce0ac.mp4'
                 });
             });
-
-            // 防止点击video区域时 造成重播
-            $(this).on('click', 'video', function (event) {
-                event.stopPropagation();
-                event.preventDefault();
-            });
         }
 
         //非本页打开
@@ -242,7 +278,7 @@ define(['utils/util'], function(util){
         //http承载页跳转
         function superpage(allconfig) {
             var geturl = alignment(allconfig)
-            location.href = geturl + "&title="+encodeURIComponent(allconfig.title);
+            top.location.href = geturl + "&title="+encodeURIComponent(allconfig.title);
         }
 
         /**
