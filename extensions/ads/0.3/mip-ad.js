@@ -13,7 +13,8 @@
 require.config({
     paths: {
         "extensions/ads/0.3/mip-ad-comm": "https://mipcache.bdstatic.com/static/v0.3/ads/mip-ad-comm",
-        "extensions/ads/0.3/mip-ad-baidu": "https://mipcache.bdstatic.com/static/v0.3/ads/mip-ad-baidu",
+        // "extensions/ads/0.3/mip-ad-baidu": "https://mipcache.bdstatic.com/static/v0.3/ads/mip-ad-baidu",
+        "extensions/ads/0.3/mip-ad-baidu": "http://127.0.0.1:8056/extensions/ads/0.3/mip-ad-baidu",
         "extensions/ads/0.3/mip-ad-qwang": "https://mipcache.bdstatic.com/static/v0.3/ads/mip-ad-qwang"
     }
 });
