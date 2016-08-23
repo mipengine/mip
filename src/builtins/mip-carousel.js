@@ -1,27 +1,38 @@
 define(function(){
+    var $ = require('zepto');
     var customElem = require('customElement').create();
 
-    var css = function (element, obj) {
-        for (var i in obj) {
-            element.style[i] = obj[i];
-        }
-    };
-
-    customElem.prototype.build = function () {
-        var element = this.element;
-        var height = element.getAttribute('height');
-        var width = element.getAttribute('width');
-        if (height != +height || width != +width) {
-            return;
-        }
-        var childElements = this.children;
-        if (childElements.length < 2) {
-            return;
-        }
-        childElements
-    };
-
     var build = function () {
+
+        var _ele = this.element;
+        var g_this = this;
+
+        // 避免多次渲染
+        if(_ele.isRender){
+            return; 
+        }
+        _ele.isRender = true;
+
+
+
+        $this = $(_ele);
+
+        var hei = $this.attr('height');
+        var wid = $this.attr('width');
+
+        if (!wid || !hei || typeof +hei !== 'number' || typeof +wid !== 'number') {
+            return;
+        }
+
+        // padding-bottom
+        // var pdb = +hei / +wid * 100 + '%';
+        // $this.css('padding-bottom', pdb);
+
+        // 如果子节点少于2个，则不需要轮播
+        var $childs = $this.children();
+        if ($childs.length < 2) {
+            return;
+        }
 
         // 当前展示的图片序号
         var currentIndex = 0;
@@ -125,6 +136,22 @@ define(function(){
             isAutoPlay = true;
             autoPlay(defer);
         }
+
+        // var gesture = require('components/gesture');
+        // gesture.init();
+        // gesture.bind(function (evt, data) {
+        //     // 用户手指滑动结束且手势为横向滑动且当前不处于动画播放状态
+        //     if (data.event === 'touchend' && Math.abs(data.x) > Math.abs(data.y) && !isAnimating) {
+        //         autoTimer && clearTimeout(autoTimer);
+        //         // 向右滑（上一张）or 向左滑(下一张)
+        //         var forward = !(data.x > 0);
+        //         switchItem(forward).then(function () {
+        //             if (isAutoPlay) {
+        //                 autoPlay(defer);
+        //             }
+        //         });
+        //     }
+        // });
 
         if (isAutoPlay) {
             $this.delegate('mip-img', 'click', function () {
