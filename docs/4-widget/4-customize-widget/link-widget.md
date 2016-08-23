@@ -1,8 +1,8 @@
 # mip-link
 
-mip-link 用来支持在 mip 页面跳转。
+mip-link 用来支持在 mip 页面跳转，解决类似 iframe 嵌套情况下不能跳出父级的问题。
 
-描述| mip-link代替a标签.实现mip页之间的跳转.支持 superframe
+描述| 代替 a 标签
 ----|----
 可用性| 完成
 支持布局| 响应式

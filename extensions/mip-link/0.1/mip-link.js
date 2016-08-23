@@ -29,7 +29,8 @@ define(function() {
                 'data': {
                     'url': href,
                     'title': (elem.attr('title') || elem.text().trim().split('\n')[0]),
-                    'click': elem.data('click')
+                    'click': elem.data('click'),
+		    'enc': 'mip'
                 }
             };
 
