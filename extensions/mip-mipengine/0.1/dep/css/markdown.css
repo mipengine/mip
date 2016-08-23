@@ -171,6 +171,7 @@
 .markdown-body table th, .markdown-body table td {
     border: 1px solid #CCCCCC;
     padding: 6px 13px;
+    word-break: break-all;
 }
 .markdown-body table tr {
     background-color: #FFFFFF;

@@ -30,7 +30,7 @@ define('extensions/mip-mipengine/0.1/mip-mipengine-nav', ['require', 'customElem
             $container = $('<div class="container"></div>');
         
         var $btnWrap = '<div class="navbar-header">' + 
-                '<button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#' + id + '" aria-controls="' + id + '" aria-expanded="false">' +
+                '<button class="navbar-toggle collapsed" type="button" data-target="#' + id + '" aria-controls="' + id + '" aria-expanded="false">' +
                     '<span class="sr-only">导航</span>' +
                     '<span class="icon-bar"></span>' +
                     '<span class="icon-bar"></span>' +
@@ -49,25 +49,18 @@ define('extensions/mip-mipengine/0.1/mip-mipengine-nav', ['require', 'customElem
         var body_class = $('body').attr('class');
         $('#bs-navbar').find('.' + body_class).addClass('active');
 
-        /* TODO: hack: 除文档页，所有页面添加菜单按钮事件。文档页引用了bootsrtap的js */
-        if(body_class != 'doc-body') {
-            $(document).on('click', '.navbar-header .navbar-toggle', navClickHandler);
-        }
+        $(document).on('click', '.navbar-header .navbar-toggle', navClickHandler);
 
-        $('#bs-navbar').on('touchend', function() {
-            // 主菜单点击“帮助”时，由于不发生页面跳转，需要收起主菜单
-            if ($('#bs-navbar .doc-body').hasClass('active')) {
-                $('.navbar-header .navbar-toggle').trigger('click');
-            }
-        });
 
         $('#bs-navbar .navbar-nav li').on('click', function() {
             $('.navbar-header .navbar-toggle').trigger('click');
         })
         // 主菜单关闭按钮 touchstart touchend mousedown mouseup变色
         addHoverClass($('#navbar-wise-close-btn'));
-        $('#navbar-wise-close-btn').on('touchend', function(){
+        $('#navbar-wise-close-btn').on('touchend', function(e){
             $('.navbar-header .navbar-toggle').trigger('click');
+            e.preventDefault();
+            e.stopPropagation();
         }).on('click', function(){
             $('.navbar-header .navbar-toggle').trigger('click');
         });
@@ -86,6 +79,7 @@ define('extensions/mip-mipengine/0.1/mip-mipengine-nav', ['require', 'customElem
         var $wiseNav = $('#bs-navbar');
 
         if($wiseNav.hasClass('in')) {
+            console.log('close')
             // 关闭菜单
             $wiseNav.height('0px');
             $('body').css('overflow', 'scroll');
@@ -101,20 +95,27 @@ define('extensions/mip-mipengine/0.1/mip-mipengine-nav', ['require', 'customElem
             var closeBtnTop = 20;
 
             $('html').add($('body')).addClass('noscroll');
-            setNavHeight()
+            setNavHeight('open');
 
             $(window).on('orientationchange', function() {
                 window.setTimeout(function() { // hack: orientationchange 取window高度不及时
-                    setNavHeight()
+                    setNavHeight('resize');
                 }, 100)
-            }).on('resize', setNavHeight);
-            function setNavHeight() {
-                $wiseNav.addClass('in').height(window.innerHeight - 50);
-                closeBtnTop = window.innerHeight - 50 - $('.navbar-right .index-body').height() * 4 - 67;
-                if(closeBtnTop > 20) {
-                    $('.navbar-wise-close').css('margin-top', closeBtnTop + 'px')
-                } else {
-                    $('.navbar-wise-close').css('margin-top', '20px')
+            }).on('resize', function() {
+                setNavHeight('resize');
+            });
+            function setNavHeight(mode) {
+                if(mode == 'open') {
+                    $wiseNav.addClass('in')
+                }
+                if(mode == 'resize' && $wiseNav.hasClass('in') || mode == 'open') {
+                    $wiseNav.height(window.innerHeight - 50);
+                    closeBtnTop = window.innerHeight - 50 - $('.navbar-right .index-body').height() * 4 - 67;
+                    if(closeBtnTop > 20) {
+                        $('.navbar-wise-close').css('margin-top', closeBtnTop + 'px')
+                    } else {
+                        $('.navbar-wise-close').css('margin-top', '20px')
+                    }
                 }
             }
         }
@@ -141,12 +142,6 @@ define('extensions/mip-mipengine/0.1/mip-mipengine-nav', ['require', 'customElem
         $this.removeAttr('style');
     }
 
-     /* 解决点击延迟 */
-    $(document).on('touchend', '.navbar-header .navbar-toggle', function(e) {
-        $(this).trigger('click');
-        e.stopPropagation();
-        e.preventDefault();
-    });
     /**
      * 初始化
      *
@@ -160,7 +155,6 @@ define('extensions/mip-mipengine/0.1/mip-mipengine-nav', ['require', 'customElem
 });
 require(['extensions/mip-mipengine/0.1/mip-mipengine-nav'], function (nav) {
     // 引入组件需要的css文件，选填
-    MIP.css.mipMipengineNav = __inline('./dep/css/bootstrap.css');
     MIP.css.mipMipengineNav += __inline('./mip-mipengine-nav.less');
 
     //注册组件
