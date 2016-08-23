@@ -79,7 +79,6 @@ define('extensions/mip-mipengine/0.1/mip-mipengine-nav', ['require', 'customElem
         var $wiseNav = $('#bs-navbar');
 
         if($wiseNav.hasClass('in')) {
-            console.log('close')
             // 关闭菜单
             $wiseNav.height('0px');
             $('body').css('overflow', 'scroll');
