@@ -81,10 +81,8 @@ js目录下:
 
         2、版本目录 两位数字 如0.1 
 
+MIP element 生命周期
 
-
-    MIP element 生命周期
-    ```
     init                   # 初始化  
       ↓  
     create                 # 创建元素  
@@ -96,10 +94,9 @@ js目录下:
     viewport(in or out)    # 进入或离开可视区域   
       ↓    
     detached               # 从文档中移除
-    ```
 
 
-	demo示例
+demo示例
 	        
 	```
 	 /**
