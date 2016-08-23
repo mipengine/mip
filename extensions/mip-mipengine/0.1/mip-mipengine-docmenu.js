@@ -36,19 +36,20 @@ define('extensions/mip-mipengine/0.1/mip-mipengine-docmenu', ['require', 'custom
                 $(this).parent().addClass('active');
             }
         });
+        
+        // wise自动折叠菜单
+        var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+        if (width < 768) {
+            $('div.navbar-collapse').addClass('collapse');
+            topOffset = 100; // 2-row-menu
+        } else {
+            $('div.navbar-collapse').removeClass('collapse');
+        }
 
+        // hack 防止mip组件加载前后样式闪动
         window.setTimeout(function() {
             $('.mip-element-docmenu').addClass('show');
         }, 10);
-        $(window).on('hashchange', function() {
-            scrollTo(0, 0); 
-            /*移动端点击文档后 导航收起*/
-            setTimeout(function() {
-                if($('div.navbar-collapse').hasClass('collapse')) {
-                    $('.sidebar .navbar-toggle').trigger('click');
-                }
-            }, 100);
-        });
 
         //Loads the correct sidebar on window load,
         //collapses the sidebar on window resize.
@@ -71,22 +72,6 @@ define('extensions/mip-mipengine/0.1/mip-mipengine-docmenu', ['require', 'custom
                 $("#page-wrapper").css("min-height", (height) + "px");
             }
         });
-
-        /*文档导航贴顶效果*/
-        $(window).on('scroll',function(){
-            var width = (this.window.innerWidth > 0) ? this.window.innerWidth : this.screen.width;
-            if(width < 768 ) return;
-            if (pageYOffset > 136){
-                $('#sidebar-wrapper').css({
-                    'position': 'fixed', 
-                    'top': 0
-                });
-            }else{
-                $('#sidebar-wrapper').css({
-                    'position': 'static', 
-                });
-            }
-        });
     };
 
     /**
@@ -102,7 +87,6 @@ define('extensions/mip-mipengine/0.1/mip-mipengine-docmenu', ['require', 'custom
 });
 require(['extensions/mip-mipengine/0.1/mip-mipengine-docmenu'], function (docmenu) {
     // 引入组件需要的css文件，选填123
-    MIP.css.mipMipengineDocmenu = __inline('./dep/css/bootstrap.css');
     MIP.css.mipMipengineDocmenu += __inline('./dep/css/metisMenu.css');
     MIP.css.mipMipengineDocmenu += __inline('./mip-mipengine-docmenu.less');
     //注册组件
