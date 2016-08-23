@@ -76,7 +76,11 @@ define(['../util'], function(util){
                 poster : poster,
                 src : src,
                 adInfo : adInfo,
+<<<<<<< HEAD
                 title:title
+=======
+                title: title
+>>>>>>> master
             }
         }
 
@@ -278,7 +282,11 @@ define(['../util'], function(util){
         //http承载页跳转
         function superpage(allconfig) {
             var geturl = alignment(allconfig)
+<<<<<<< HEAD
             top.location.href = geturl + "&title="+encodeURIComponent(allconfig.title);
+=======
+            location.href = geturl + "&title="+encodeURIComponent(allconfig.title);
+>>>>>>> master
         }
 
         /**
@@ -304,7 +312,15 @@ define(['../util'], function(util){
          * 数据组装函数
          */
         function alignment(allconfig) {
+<<<<<<< HEAD
             var PROXYURL ="http://wwwhttps.baidu.com/sf?pd=mms_mipvideo&dev_tpl=act_mip_video&wd=%E8%A7%86%E9%A2%91&actname=act_mip_video";
+=======
+<<<<<<< HEAD
+            var PROXYURL ="http://transcoder.baidu.com/sf?pd=mms_mipvideo&dev_tpl=act_mip_video&wd=%E8%A7%86%E9%A2%91&actname=act_mip_video";
+=======
+            var PROXYURL = "http://transcoder.baidu.com/sf?pd=mms_mipvideo&dev_tpl=act_mip_video&wd=%E8%A7%86%E9%A2%91&actname=act_mip_video";
+>>>>>>> master
+>>>>>>> d4f7d5695cd4a4ce854baeb4e278232d5db6ec20
 
             var all_adinfourl = [];
             allconfig.adInfo.map(function(data,index) {
