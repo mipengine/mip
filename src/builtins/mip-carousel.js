@@ -20,13 +20,16 @@ define(function(){
         var hei = $this.attr('height');
         var wid = $this.attr('width');
 
-        if (!wid || !hei || typeof +hei !== 'number' || typeof +wid !== 'number') {
+        if (!hei || typeof +hei !== 'number' || typeof +wid !== 'number') {
             return;
         }
 
+
+        var parentwiddth = $this.parent().width();
+
         // padding-bottom
-        // var pdb = +hei / +wid * 100 + '%';
-        // $this.css('padding-bottom', pdb);
+        var pdb = hei / +parentwiddth * 100 + '%';
+        $this.css('padding-bottom', pdb);
 
         // 如果子节点少于2个，则不需要轮播
         var $childs = $this.children();
@@ -49,7 +52,7 @@ define(function(){
             'position': 'absolute',
             'left': HIDE_LEFT,
             'top': 0,
-            'height':hei+"px"
+            'height':"100%"
         });
         $childs.eq(currentIndex).css('left', 0);
 
@@ -93,8 +96,7 @@ define(function(){
                 'z-index': 2
             });
 
-            var nicai = $childs.eq(index)[0];
-            // console.log(nicai.inviewCallback())
+            MIP.prerenderElement($childs.eq(index)[0]);
 
             isAnimating = true;
 
