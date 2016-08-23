@@ -12,9 +12,9 @@
  */
 require.config({
     paths: {
-        "extensions/ads/0.3/mip-ad-comm": "https://mipcache.bdstatic.com/static/v0.3/ads/mip-ad-comm",
-        "extensions/ads/0.3/mip-ad-baidu": "https://mipcache.bdstatic.com/static/v0.3/ads/mip-ad-baidu",
-        "extensions/ads/0.3/mip-ad-qwang": "https://mipcache.bdstatic.com/static/v0.3/ads/mip-ad-qwang"
+        "extensions/ads/1.0/mip-ad-comm": "https://mipcache.bdstatic.com/static/v1.0/ads/mip-ad-comm",
+        "extensions/ads/1.0/mip-ad-baidu": "https://mipcache.bdstatic.com/static/v1.0/ads/mip-ad-baidu",
+        "extensions/ads/1.0/mip-ad-qwang": "https://mipcache.bdstatic.com/static/v1.0/ads/mip-ad-qwang"
     }
 });
 
@@ -35,7 +35,7 @@ define(function (){
         _element.isRender = true;
 
         var type = _element.getAttribute('type');
-        var adFile = 'extensions/ads/0.3/mip-' + type;
+        var adFile = 'extensions/ads/1.0/mip-' + type;
         require([adFile], function(mipAd) {
             mipAd.render(_this);
         });
