@@ -76,6 +76,15 @@ define(['./util', 'viewport', './components/rect'], function (util, viewport, re
         }
     };
 
+    // 强制触发元素的 viewportCallback，并设置为 true
+    Resources.prerenderElement = function (element) {
+        if (element.inViewport && !element.inViewport()) {
+            element.viewportCallback && element.viewportCallback(true);
+        }
+    };
+    !window.MIP && (window.MIP = {});
+    MIP.prerenderElement = Resources.prerenderElement;
+
     var _resources; 
     return function (resources) {
         return _resources || (_resources = new Resources());
