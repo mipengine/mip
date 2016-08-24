@@ -1,0 +1,149 @@
+
+
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+        <title>文章大标题</title>
+        <link rel="stylesheet" type="text/css" href="/dist/css/mipmain.css">
+        <style>
+
+            /* 建议样式 */
+
+            /* 头部信息 */
+            .o-head-info {
+                display: block;
+                padding: 20px 17px 0;
+                color: #6a6a6a;
+                font-size: 13px;
+                overflow: hidden;
+            }
+            /* 发布来源 */
+            .o-head-tag {
+                float: left;
+            }
+            /* 发布时间 */
+            .o-head-time {
+                float: right;
+            }
+            /* 文章大标题 */
+            .o-head-title h3 {
+                margin-top: 0;
+                line-height: 34px;
+                text-align: justify;
+                font-size: 22px;
+                color: #333;
+            }
+
+            /* 其他自定义样式（自己的样式写在这里，使用 o-page- 开头）*/
+
+            .o-page-test01 {
+                background: yellow;
+                font-style: italic;
+            }
+            .main {
+                background: #f5f5f5;
+            }
+            .article {
+                padding: 0 21px;
+            }
+
+        </style>
+    </head>
+    <body>
+        <!-- 页面主体 -->
+        <div class="main">
+
+            <!-- 页面头部（非框架部分，可使用建议样式） -->
+            <header>
+
+                <div class="o-head-info">
+                    <!-- 发布来源 -->
+                    <span class="o-head-tag">发布来源</span>
+                    <!-- 发布时间：格式（月-日 时:分） -->
+                    <span class="o-head-time">03-20 11:11</span>
+                </div>
+
+                <div class="o-head-title">
+                    <!-- 文章大标题 -->
+                    <h3>文章大标题</h3>
+                </div>
+
+            </header>
+
+            <!-- 文章部分 -->
+            <div class="article">
+
+                <!-- 图片（请在容器外层标注图片尺寸） -->
+                <div class="mip-img-container" width="350" height="109">
+                    <!-- 图片地址 -->
+                    <mip-img data-carousel="carousel" class="mip-img" src="//m.baidu.com/static/index/plus/plus_logo.png"></mip-img>
+                    <!-- 图片标题 -->
+                    <p class="mip-img-subtitle">图标标题</p>
+                </div>
+
+                <!-- 文章小标题 -->
+                <h3>文章小标题</h3>
+
+                <!-- 段落 -->
+                <p class="mip-text">段落1  段落1  段落1  段落1  段落1  段落1  段落1  段落1 ，段落1  段落1  段落1  段落1  段落1  段落1  段落1  段落1 ！</p>
+
+                <p class="mip-text">段落2  段落2  段落2  段落2  段落2  段落2  段落2  段落2 ，段落2  段落2  段落2  段落2  段落2  段落2  段落2  段落2 ！</p>
+
+                <!-- 段落居中 -->
+                <div class="mip-html">
+                    <p align="center">
+                        段落居中 段落居中！<br>
+                        段落居中 段落居中！
+                    </p>
+                </div>
+
+                <!-- 文字加粗 -->
+                <div class="mip-html">
+                    <p>
+                        <strong>文字加粗 文字加粗！</strong> 文字文字...
+                    </p>
+                </div>
+
+                <!-- 文字飘红 -->
+                <div class="mip-html">
+                    <p>
+                        <span style="color:red;"> 文字飘红 文字飘红！</span> 文字文字...
+                    </p>
+                </div>
+
+                <!-- 自定义样式 -->
+                <div class="mip-html">
+                    <p>
+                        这个一个 <span class="o-page-test01">自定义样式</span> 的示例
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- share -->
+            <div class="mip-share-container">
+                <mip-share ></mip-share>
+            </div>
+
+            <!-- 通用广告 -->
+            <div class="adv">
+                <mip-ad tpl="onlyImg" src="//m.baidu.com/s?word=百度" data-size="1242 180" data-img="//m.baidu.com/static/search/ala/ad_1.png"></mip-ad>
+            </div>
+
+            <!-- 相关推荐 -->
+            <mip-recommend src="http://cp01-qa2014-junheng2plus047.cp01.baidu.com:8000/pae/olympic/api/reclist"></mip-recommend>
+            <div class="recommends">
+                <div class="recommends-header">相关推荐</div>
+            </div>
+
+        </div>
+
+        <script src="https://mipcache.bdstatic.com/static/mipmain-v0.0.1.js"></script>
+        <script src="/dist/extensions/mip-link/0.1/mip-link.js"></script>
+        <script src="/dist/extensions/mip-share/0.1/mip-share.js"></script>
+        <script src="/dist/extensions/mip-recommend/0.1/mip-recommend.js"></script>
+
+    </body>
+</html>
