@@ -26,7 +26,8 @@ define('extensions/mip-mipengine/0.1/mip-mipengine-nav', ['require', 'customElem
         var $this = $(me),
             id = $this.data('id'),
             navClass= $this.data('nav-class'),
-            brand = $this.data('brand'),
+            brandimg = $this.data('brandimg'),
+            brandclass = $this.data('brandclass'),
             $ulNav = $this.find('#' + id),
             $container = $('<div class="container"></div>');
         
@@ -37,7 +38,9 @@ define('extensions/mip-mipengine/0.1/mip-mipengine-nav', ['require', 'customElem
                     '<span class="icon-bar"></span>' +
                     '<span class="icon-bar"></span>' +
                 '</button>' +
-                '<a href="/" class="navbar-brand">' + brand + '</a>' +
+                '<a href="/" class="navbar-brand">' +
+                    '<img src="' + brandimg + '" class="' + brandclass + '">' +
+                '</a>' +
             '</div>';
         $container.append($btnWrap).append($ulNav).appendTo($this);
         $('.mip-nav-wrapper').addClass('show');
