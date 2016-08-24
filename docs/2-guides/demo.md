@@ -58,7 +58,7 @@
     
 
 <script src="https://mipcache.bdstatic.com/static/mipmain-v1.0.0.js"></script>
-<script src="https://mipcache.bdstatic.com/static/v1.0/ads/mip-ad.js"></script>
+<script src="https://mipcache.bdstatic.com/static/v1.0/mip-ad.js"></script>
 </body>
 </html>
 ```

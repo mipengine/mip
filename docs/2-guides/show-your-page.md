@@ -9,17 +9,17 @@
 
     在standard html中添加：
 
-    <link rel="miphtml" href="https://www.baidu.com/nocache/zhixin/mib/mip-demo.html">
+    <link rel="miphtml" href="https://m.baidu.com/static/ala/mip/mip-demo.html">
 
     在mip html中添加：
 
-    <link rel="standardhtml" href="https://www.baidu.com/nocache/zhixin/mib/mip-demo.html">
+    <link rel="standardhtml" href="https://m.baidu.com/static/ala/mip/mip-demo.html">
 
 ### 如果只有mip html
 	
 	同样需要添加，指向自己：
     
-    <link rel="standardhtml" href="https://www.baidu.com/nocache/zhixin/mib/mip-demo.html">
+    <link rel="standardhtml" href="https://m.baidu.com/static/ala/mip/mip-demo.html">
 
 ## 通过添加meta标签集成第三方平台
 
