@@ -130,7 +130,27 @@ define(function() {
                 }
             });
 
-            $('.hotpoint').append('<div class="hotpoint-box">'+html+'</div>');
+
+            $('.hotpoint').append('<div class="hotpoint-box">' + html + '</div>');
+
+            if (data.hot_card_more) {
+
+                var morelink = data.hot_card_more.link || 'https://m.baidu.com/s?word=%E7%99%BE%E5%BA%A6%E7%83%AD%E7%82%B9&sa=oper_olympic';
+
+                var moreText = data.hot_card_more.text || '点击查看更多百度热点新闻';
+
+                var moreHtml = ''
+                    + '<div class="hotpoint-more">'
+                    +   '<a target="_blank" href="' + morelink + '" class="hotpoint-more-link">'
+                    +       moreText
+                    +   '</a>'
+                    + '</div>';
+
+                $('.hotpoint').append(moreHtml);
+
+            }
+
+
             // $(".hotpoint").css("height", "100%");
         }
         else {
