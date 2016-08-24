@@ -1,5 +1,5 @@
-define(function(){
-
+define(['./components/rect'], function (rect) {
+    
     /**
         界面可视窗口模块，提供窗口各属性，以及窗口整体scroll、resize等事件接口
     */
@@ -10,6 +10,8 @@ define(function(){
     */
     var viewer  = null;
 
+    var $ = require('zepto');
+
     var _scrollTop = null,
         _scrollLeft = null,
         _size = null,
@@ -17,32 +19,28 @@ define(function(){
         _scrollTracking = false,
         _swapTracking = false,
         _isViewportNormal = true,
-        _changeObservable = require('observable'),
-        _scrollObservable = require('observable'),
-        _touchObservable = require('observable');
+        _changeObservable = require('components/observable'),
+        _scrollObservable = require('components/observable'),
+        _touchObservable = require('components/observable');
 
-    var gesture = require('gesture');
-
+    var gesture = require('components/gesture');
     gesture.init();
 
-    Viewport.getTop = function() {
-        return this.getScrollTop();
-    };
 
     Viewport.getScrollTop = function() {
-        _scrollTop = $(window).scrollTop();
+        _scrollTop = rect.getScrollTop();
         return _scrollTop;
     };
 
     Viewport.getScrollLeft = function() {
         if(_scrollLeft == null) {
-            _scrollLeft = $(window).scrollLeft();
+            _scrollLeft = rect.getScrollLeft();
         }
         return _scrollLeft;
     };
 
     /**
-     *  
+     *  Todo: fix IOS bug when iframed
      * */
     Viewport.setScrollTop = function(scrollPos) {
         _scrollTop = null;
@@ -54,21 +52,19 @@ define(function(){
      * @return {!{width: number, height: number}}
     */
     Viewport.getSize = function() {
-        if (_size) {
-            return _size;
-        }
         return _size = {
-            "width" : $(window).width(),
-            "height" : $(window).height()
+            "width" : window.innerWidth || document.documentElement.clientWidth,
+            "height" : window.innerHeight || document.documentElement.clientHeight
         };
+    };
+
+    Viewport.getRect = function () {
+        var size = this.getSize();
+        return rect.get(this.getScrollLeft(), this.getScrollTop(), size.width, size.height);
     };
 
     Viewport.getWidth = function() {
         return this.getSize().width;
-    };
-
-    Viewport.getScrollWidth = function() {
-        return _getScrollingElement.scrollWidth;
     };
 
     Viewport.onChanged = function(handler) {
@@ -159,17 +155,6 @@ define(function(){
         });
     }
 
-    function _getScrollingElement() {
-        var doc = this.win.document;
-        if (doc.scrollingElement) {
-          return doc.scrollingElement;
-        }
-        if (doc.body) {
-          return doc.body;
-        }
-        return doc.documentElement;
-    }
-
     /**
      *  触发scroll，并向observerfire事件
      * */
@@ -204,7 +189,6 @@ define(function(){
 
     function _init() {
         $(window).on("scroll",_scroll);
-        
         if (window.parent !== window && platform.needSpecialScroll) {
             $('body').on('scroll', _scroll);
         }

@@ -24,7 +24,10 @@ define(function() {
      * 百分点统计
      */
     function initBaifendian($el) {
-        var config = $el.data();
+        var config = {
+            clientId: $el.data('client-id'),
+            path: $el.data('path'),
+        };
         var prefix = 'https:' == document.location.protocol ?
             'https://ssl-static1' : 'http://static1';
 
@@ -46,7 +49,13 @@ define(function() {
      * 微博分享点击处理函数
      */
     function initWeiboShare($el) {
-        var config = $el.data();
+        var config = {
+            appkey: $el.data('appkey'),
+            title: $el.data('title'),
+            pic: $el.data('pic'),
+            url: $el.data('url'),
+            relateUid: $el.data('relate-uid')
+        };
         var url = 'http://service.t.sina.com.cn/share/share.php?' +
             'appkey=' + config.appkey +
             '&title=' + encodeURIComponent(config.title) +
@@ -62,7 +71,14 @@ define(function() {
      * 初始化QQ空间分享
      */
     function initQQShare($el) {
-        var config = $el.data();
+        var config = {
+            url: $el.data('url'),
+            desc: $el.data('desc'),
+            pics: $el.data('pics'),
+            summary: $el.data('summary'),
+            title: $el.data('title'),
+            site: $el.data('site'),
+        };
         var query = 'url=' + encodeURIComponent(config.url) +
             '&desc=' + encodeURIComponent(config.desc) +
             '&pics=' + encodeURIComponent(config.pics) +
@@ -228,15 +244,10 @@ define(function() {
         });
     }
 
-    /*
-     * 渲染入口方法
-     */
-    function build() {
-        var $el = $(this);
-        if (this.isRender) {
-            return;
-        }
-        this.isRender = true;
+    var customElem = require('customElement').create();
+
+    customElem.prototype.attachedCallback = function() {
+        var $el = $(this.element);
 
         // DOM元素列表
         var $share = $el.find('.share_box');
@@ -247,16 +258,8 @@ define(function() {
         initShare($share);
         initFavorite();
         initMenu();
-    }
-
-    var customElem = require('customElement');
-
-    /**
-     * 初始化
-     */
-    customElem.prototype.init = function() {
-        this.mipAttachedCallback = build;
     };
+
     return customElem;
 });
 

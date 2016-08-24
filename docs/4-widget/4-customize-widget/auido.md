@@ -6,8 +6,7 @@ mip-audio 用来支持在 mip 音频的播放。
 ----|----
 可用性| 完成
 支持布局| 响应式
-示例|官网上线后增加示例
-所需脚本|https://mipcache.bdstatic.com/static/v0.1/mip-audio.js
+所需脚本|https://mipcache.bdstatic.com/static/v1.0/mip-audio.js
 
 ## 1. 使用
 

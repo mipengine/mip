@@ -1,28 +1,45 @@
-/* 主逻辑 */
-__inline('./deps/jquery.js');
+/* polyfills */
+__inline('./polyfills/promise.js');
+
+
+/* libs */
+__inline('./deps/document-register-element.max.js');
 __inline('./deps/esl.js');
 __inline('./deps/esl_config.js');
-__inline('./deps/emit.js');
-__inline('./observable.js');
-__inline('./platform.js');
-__inline('./message_center.js');
-__inline('./gesture.js');
+__inline('./deps/zepto.js');
+
+/* components */
+__inline('./components/fn.js');
+__inline('./components/emit.js');
+__inline('./components/cssLoader.js');
+__inline('./components/layout.js');
+__inline('./components/gesture.js');
+__inline('./components/observable.js');
+__inline('./components/platform.js');
+__inline('./components/message_center.js');
+__inline('./components/postmessage.js');
+__inline('./components/rect.js');
+
+/* mip frame */
 __inline('./viewport.js');
-__inline('./deps/document-register-element.max.js');
 __inline('./customElement.js');
-__inline('./registerMipElement.js');
-__inline('./utils/util.js');
-__inline('./utils/cssLoader.js');
+__inline('./element.js');
+__inline('./util.js');
+__inline('./resources.js');
+__inline('./viewer.js');
 
-
-/* 内置组件 */
+/* builtins */
 __inline('./builtins/mip-img.js');
 __inline('./builtins/mip-gif.js');
 __inline('./builtins/mip-pix.js');
-__inline('../extensions/mip-carousel.js');
-__inline('../extensions/mip-iframe.js');
+__inline('./builtins/mip-carousel.js');
+__inline('./builtins/mip-iframe.js');
 __inline('./builtins/img-viewer.js');
 __inline('./builtins/mip-video.js');
 __inline('./builtins/video/player.js');
 __inline('./builtins/video/popup.js');
 __inline('./builtins/mip_builtins.js');
+
+/* initialize */
+__inline('./mip.js');
+

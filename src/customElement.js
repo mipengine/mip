@@ -1,45 +1,40 @@
 /**
  * 自定义组件基类
- * @exports modulename
- * @author shenzhou@baidu.com
- * @version 1.0
- * @copyright 2015 Baidu.com, Inc. All Rights Reserved
+ * @exports factory
+ * @copyright 2016 Baidu.com, Inc. All Rights Reserved
  */
-define(function(){
-   
-    function customElement(){
-        if(this.init){
-        this.init();
+define(function () {
+    function customElement(element) {
+        this.element = element;
+        if (this.init){
+            this.init();
         }    
     }
-//    var customElement =  Object.create(HTMLElement.prototype); 
-       
-    customElement.prototype.mipCreatedCallback = function(){
-         
-    };
-    
-    customElement.prototype.mipAttachedCallback = function(){
-    };
-    
-    customElement.prototype.mipDetachedCallback = function(){
-    
-    };
 
-    customElement.prototype.mipAttributeChangedCallback = function(){
-    };
-    
-    //自定义元素进入可视区域的默认处理函数，此处可以覆写，如果有特殊逻辑
-
-    customElement.prototype.inviewCallback = function(){
-        if(this.isInviewer()){
-            this.build();
+    // interface
+    customElement.prototype.applyFillContent = function (ele, isReplaceed) {
+        ele.classList.add('mip-fill-content');
+        if (isReplaceed) {
+          ele.classList.add('mip-replaced-content');
         }
     };
-   //模板的元素build功能，即元素的默认初始化功能 
-    customElement.prototype.build = function(){
-    
-    };
-    
-    return customElement;
+    customElement.prototype.createdCallback = function () {};
+    customElement.prototype.attachedCallback = function () {};
+    customElement.prototype.detachedCallback = function () {};
+    customElement.prototype.attributeChangedCallback = function () {};
+    customElement.prototype.inviewCallback = function () {};
+    customElement.prototype.viewportCallback = function () {};
+    customElement.prototype.prerenderAllowed = function () {return false;}
+    // 模板的元素build功能，即元素的默认初始化功能 
+    customElement.prototype.build = function () {};
 
+    return {
+        create: function () {
+            var impl = function (element) {
+                customElement.call(this, element);
+            };
+            impl.prototype = Object.create(customElement.prototype);
+            return impl;
+        }
+    }
 });

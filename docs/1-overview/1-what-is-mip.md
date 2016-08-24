@@ -24,7 +24,7 @@ MIP HTML 基于HTML中的基础标签制定了全新的规范，通过对一部�
         <link rel="stylesheet" type="text/css" href="https://mipcache.bdstatic.com/static/mipmain-v0.0.1.css">
     </head>
     <body>Hello World!</body>
-    <script src="https://mipcache.bdstatic.com/static/mipmain-v0.0.1.js"></script>   
+    <script src="https://mipcache.bdstatic.com/static/mipmain-v1.0.0.js"></script>   
 </html>
 ```
 

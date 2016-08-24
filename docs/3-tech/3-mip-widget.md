@@ -24,8 +24,8 @@
 ```
 . #根目录
 ├── src                 #mip核心代码
+│   ├── buildins        #内置组件
 │   └── deps            #依赖代码库
-├── buildins            #内置组件
 ├── extensions          #扩展、个性化及广告组件
 │   └── olympic         #mip奥运项目
 ├── dist                #编译后文件
@@ -81,44 +81,74 @@ js目录下:
 
         2、版本目录 两位数字 如0.1 
 
+MIP element 生命周期
 
-	demo示例
+    init                   # 初始化  
+      ↓  
+    create                 # 创建元素  
+      ↓  
+    attached               # 插入到文档中  
+      ↓   
+    build                  # 执行build，只会被执行一次   
+      ↓     
+    viewport(in or out)    # 进入或离开可视区域   
+      ↓    
+    detached               # 从文档中移除
+
+
+demo示例
 	        
 	```
 	 /**
 	 * @file 组件demo示例
-	 * @author lilangbo
-	 * @time 2016.07.11
+	 * @author lilangbo,qijian
+	 * @time 2016.08.21
 	 */
 
 	define(function (){
-	    var customElem = require('customElement');
-	    /**
-	     * demoFun
-	     *
-	     * @param  {Event} e event
-	     */
-	    function demoFun (e) {
-	        console.log('This is a mip componnents demo');
-	    }
+        // mip 中可引入 zepto，非强依赖请尽量不要使用，会影响页面速度
+        var $ = require('zepto');
+        
+	    var customElem = require('customElement').create();
 
-	    /**
-	     * 初始化
-	     *
-	     */
-	    customElem.prototype.init = function() {
-	        this.createdCallback = function () {
-	            //创建节点回调
-	        };
-	        this.attachedCallback = function () {
-	            //插入节点回调
-	        };
-	        //如果在build里面定义渲染,用户在可视区域内，才会渲染
-	        this.build = demoFun;
-	        this.detachedCallback = function () {
-	            //销毁事件
-	        };
-	    };
+
+        var index = 0;
+
+        // build 方法，元素插入到文档时执行，仅会执行一次
+        customElem.prototype.build = function () {
+            // this.element 可取到当前实例对应的 dom 元素
+            var element = this.element;
+            element._index = index ++;
+        };
+
+        // 创建元素回调
+        customElem.prototype.createdCallback = function () {
+            console.log('created');
+        };
+        // 向文档中插入节点回调
+        customElem.prototype.attachedCallback = function () {
+            console.log('attached');
+        };
+        // 从文档中移出节点回调
+        customElem.prototype.detachedCallback = function () {
+            console.log('detached');
+        };
+        // 第一次进入可视区回调,只会执行一次
+        customElem.prototype.inviewCallback = function () {
+            console.log('first in viewport');
+        };
+        // 进入或离开可视区回调，每次状态变化都会执行
+        customElem.prototype.viewportCallback = function (isInView) {
+            // true 进入可视区;false 离开可视区
+            console.log(isInView);
+        };
+        // 控制inviewCallback是否提前执行
+        // 轮播图片等可使用此方法提前渲染
+        customElem.prototype.prerenderAllowed = function () {
+            // 判断条件，可自定义。返回值为true时,inviewCallback会在元素build后执行
+            return !!this.isCarouselImg;
+        };
+
 	    return customElem;
 	});
 	require(["组件名称"], function(demo) {
@@ -138,9 +168,9 @@ js目录下:
 
         组件.js  
 
-        src/miphtml_base.js inline组件  
+        src/miphtml.js inline组件代码  
 
-        src/mip.js 注册组件
+        src/mip.js 注册内置组件
 
         less/组件.less  mip-common.less 注册
 

@@ -6,10 +6,11 @@
  */
 
 define(function() {
-   var customElem = require('customElement');
+    var $ = require('zepto');
+    var customElement = require('customElement').create();
    
     function build() {
-        var _element = this;
+        var _element = this.element;
         if (_element.isRender) {
             return;
         }
@@ -40,6 +41,7 @@ define(function() {
         this.canplaythrough = true;
         this.timeupdate = true;
         this.dragboolen = true;
+        this.stopbtn = false;
 
     }
 
@@ -146,7 +148,7 @@ define(function() {
 
                 var ceil = parseInt(currentTime)/parseInt(_this.duration)*100+"%";
                 $progressbar.css("left",ceil)
-            },500)
+            },10)
         },
         gettimelen: function() {
             var _this = this;
@@ -178,34 +180,46 @@ define(function() {
             var parentwidth = $(btn).parent(".mip-audiao-progress").width();
             var _this = this;
 
+
             var startx, startok = false;
             btn.addEventListener('touchstart',function(event){
                  startx  = event.touches[0].clientX;
                  startok = true;
                  clearInterval(_this.allstoptime);
-            })
+                 if(!_this.audio.paused) {
+                    _this.audio.pause();
+                    _this.stopbtn = true;
+                    $layout.find(".mip-audio-voice-stop").removeClass("mip-audio-voice-stop").addClass('mip-audio-voice-play');
+                 }
+            });
             btn.addEventListener('touchmove',function(event){
                 event.preventDefault();
                 event.stopPropagation();
-                if(!startok) return
-                var btnleft = parseInt($(btn).css("left"));
-                var movexmouse = event.touches[0].clientX-startx;
+                if(!startok) return;
+                var btnleft = parseInt($(btn).position().left);
+               
+        	var movexmouse = event.touches[0].clientX-startx;
                 var movex = movexmouse+btnleft;
+	           	
                 if(movex > parentwidth) {
                     btn.style.left = parentwidth+"px";
                     _this.setTimepaly(movex/parentwidth);
                 }else if(movex<=0) {
-                     btn.style.left = "0px;"
+                     btn.style.left = "0px;";
                      _this.setTimepaly(parseInt(0));
                 }
                 else {
                     btn.style.left = movex+"px";
                     _this.setTimepaly(movex/parentwidth);
                 }
-                startx = event.touches[0].clientX;
+		       startx = event.touches[0].clientX;
             })
             btn.addEventListener('touchend',function(event){
                 startok = false;
+                if(_this.stopbtn) {
+                    _this.audio.play();
+                    $layout.find(".mip-audio-voice-play").removeClass("mip-audio-voice-play").addClass('mip-audio-voice-stop');
+                }
                 _this.progressshow()
             })
         },
@@ -245,11 +259,9 @@ define(function() {
         }
     }
     
-    customElem.prototype.init = function() {
-        this.build = build;
-    };
+    customElement.prototype.build = build;
 
-    return customElem;
+    return customElement;
 
 });
 
