@@ -14,7 +14,7 @@
 
 - 必须在head标签中包含 &lt; link rel="stylesheet" type="text/css" href="https://mipcache.bdstatic.com/static/mipmain-v0.0.1.css" &gt;
 
-- 必须在body标签中包含 &lt;script src="https://mipcache.bdstatic.com/static/mipmain-v0.0.1.js" &gt;&lt;/script &gt;
+- 必须在body标签中包含 &lt;script src="https://mipcache.bdstatic.com/static/mipmain-v1.0.0.js" &gt;&lt;/script &gt;
 
 - 必须在head标签中包含 &lt;link rel="standardhtml" href="xxx" &gt;
 

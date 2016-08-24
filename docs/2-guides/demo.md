@@ -6,7 +6,7 @@
 
 ## 引入js组件（已包含jq、amd）
 
-&lt;script src="https://mipcache.bdstatic.com/static/mipmain-v0.0.1.js" &gt;&lt;/script&gt;
+&lt;script src="https://mipcache.bdstatic.com/static/mipmain-v1.0.0.js" &gt;&lt;/script&gt;
 
 ## 一个完整的例子
 
@@ -57,8 +57,8 @@
 
     
 
-<script src="https://mipcache.bdstatic.com/static/mipmain-v0.0.1.js"></script>
-<script src="https://mipcache.bdstatic.com/static/v0.2/ads/mip-ad.js"></script>
+<script src="https://mipcache.bdstatic.com/static/mipmain-v1.0.0.js"></script>
+<script src="https://mipcache.bdstatic.com/static/v1.0/ads/mip-ad.js"></script>
 </body>
 </html>
 ```

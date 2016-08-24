@@ -5,8 +5,7 @@ mip-form 用来支持 mip 中的表单提交。
 描述|用来支持 mip 中的表单提交。
 ----|----
 可用性|稳定
-示例|官网上线后增加示例
-所需脚本|https://mipcache.bdstatic.com/static/v0.1/mip-form.js
+所需脚本|https://mipcache.bdstatic.com/static/v1.0/mip-form.js
 
 ## 1. 使用
 
