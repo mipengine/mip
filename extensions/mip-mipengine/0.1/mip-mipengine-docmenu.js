@@ -4,7 +4,7 @@
  * @time 2016.08
  */
 
-define('extensions/mip-mipengine/0.1/mip-mipengine-docmenu', ['require', 'customElement'], function (require){
+define(function (){
     __inline("./dep/bootstrap.min.js");
     __inline("./dep/metisMenu.min.js");
     
@@ -85,7 +85,7 @@ define('extensions/mip-mipengine/0.1/mip-mipengine-docmenu', ['require', 'custom
     };
     return customElem;
 });
-require(['extensions/mip-mipengine/0.1/mip-mipengine-docmenu'], function (docmenu) {
+require(['mip-mipengine-docmenu'], function (docmenu) {
     // 引入组件需要的css文件，选填123
     MIP.css.mipMipengineDocmenu += __inline('./dep/css/metisMenu.css');
     MIP.css.mipMipengineDocmenu += __inline('./mip-mipengine-docmenu.less');

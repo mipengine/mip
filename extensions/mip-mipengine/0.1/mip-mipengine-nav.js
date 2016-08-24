@@ -3,7 +3,7 @@
  * @author liangjiaying
  * @time 2016.07
  */
-define('extensions/mip-mipengine/0.1/mip-mipengine-nav', ['require', 'customElement', 'customElement'], function (require){
+define(function (){
     var customElem = require('customElement');
     /**
      * demoFun
@@ -155,7 +155,7 @@ define('extensions/mip-mipengine/0.1/mip-mipengine-nav', ['require', 'customElem
     };
     return customElem;
 });
-require(['extensions/mip-mipengine/0.1/mip-mipengine-nav'], function (nav) {
+require(['mip-mipengine-nav'], function (nav) {
     // 引入组件需要的css文件，选填
     MIP.css.mipMipengineNav += __inline('./mip-mipengine-nav.less');
 
