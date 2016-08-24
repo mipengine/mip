@@ -7,7 +7,7 @@ mip-share 用来支持在 mip 中添加对第三方网站的分享。
 描述|提供了一个分享容器来支持分享，目前支持分享到qq空间，微博和复制连接
 ----|----
 可用性|开发中
-支持布局| 响应式
+支持布局|responsive, fixed-height, fixed
 所需脚本|https://mipcache.bdstatic.com/static/v1.0/mip-share.js
 
 ## 1. 使用

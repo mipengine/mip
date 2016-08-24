@@ -7,7 +7,7 @@ mip-video 用来支持在 mip 中增加视频内容。
 描述|替换html5的video标签; 只用于能直接用HTML5播放的视频文件.
 ----|----
 可用性|稳定版本
-支持布局| 响应式
+支持布局|responsive, fixed-height, fixed
 
 ## 1. 使用
 

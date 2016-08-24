@@ -5,6 +5,7 @@ mip-iframe 是用来支持在 mip 中嵌入第三方内容的一种方式，需�
 描述|用自定义的mip-iframe标签实现了其他页面的引入
 ----|----
 可用性|稳定
+支持布局|responsive, fixed-height, fixed
 
 ## 1. 使用
 
