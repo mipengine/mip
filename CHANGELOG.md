@@ -7,3 +7,4 @@
 8月19日|新增meishij.js(美食节),官网sidbar|王培
 8月22日|更新mipmainv0.0.1,修复线上动画轮播bug|封传梼
 8月25日|发布mipmain-v1.0.0，升级一系列底层接口和组件|齐健
+8月25日|fix mip-carousel.js bug|封传梼
