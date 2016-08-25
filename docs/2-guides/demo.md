@@ -17,11 +17,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
     <title>MIP DEMO</title>
-    <link rel="stylesheet" href="https://mipcache.bdstatic.com/static/mipmain-v0.0.1.css">
+    <link rel="stylesheet" href="https://mipcache.bdstatic.com/static/mipmain-v1.0.0.css">
     <!-- 在standard html中添加 -->
     <link rel="miphtml" href="页面h5 url">
     <!-- 在mip html中添加 -->
     <link rel="standardhtml" href="页面h5 url">
+    <noscript>
+        <style mip-officialrelease>
+            body {
+                -webkit-animation:none;
+                   -moz-animation:none;
+                    -ms-animation:none;
+                        animation:none
+            }
+        </style>
+    </noscript>
 </head>
 <body>
     <p class="mip-text">这是一个段落，纯文本形式</p>

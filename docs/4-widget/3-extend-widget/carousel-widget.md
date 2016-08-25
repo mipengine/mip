@@ -12,7 +12,7 @@ mip-carousel 用来支持 mip 中图片的一种展示方式，支出多图轮�
 在MIP HTMl中，示例如下：
 
 ```
-<mip-carousel autoplay defer="1000" width="400" height="300">
+<mip-carousel layout="fixed-height"  height="263"autoplay defer="1000" width="400" height="300">
     <mip-img 
         class="mip-img" 
         popup 

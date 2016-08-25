@@ -16,7 +16,11 @@ mip-video能够像html5的video标签一样播发视频
 1. 图文形式的视频组件
 
 ```
-<mip-video class="mip-video" 
+<mip-video 
+    layout="responsive" 
+    width="350" 
+    height="263"
+    class="mip-video" 
     poster="xx.jpg"
     src="xx.mp4"
     adInfo="[[{type: 'video/mp4',src: 'xx.mp4'}],[{type: 'video/mp4',src: 'xx.mp4'}]]"
@@ -24,23 +28,43 @@ mip-video能够像html5的video标签一样播发视频
     ios-mode="hide"
     android-mode = "fullscreen"
     >
-        <source type="video/mp4" src="xx.mp4"></source>
-        <mip-img  class="mip-video-container" src="xx.jpg">
-            <div class="mip-video-icon"></div>
-        </mip-img>
-    </mip-video>
+    <source type="video/mp4" src="xx.mp4"></source>
+    <mip-img  class="mip-video-container" src="xx.jpg">
+        <div class="mip-video-icon"></div>
+    </mip-img>
+</mip-video>
+
+<mip-video 
+    layout="fixed-height" 
+    height="263"
+    class="mip-video" 
+    poster="xx.jpg"
+    src="xx.mp4"
+    adInfo="[[{type: 'video/mp4',src: 'xx.mp4'}],[{type: 'video/mp4',src: 'xx.mp4'}]]"
+    type="video/mp4" 
+    ios-mode="hide"
+    android-mode = "fullscreen"
+    >
+    <source type="video/mp4" src="xx.mp4"></source>
+    <mip-img  class="mip-video-container" src="xx.jpg">
+        <div class="mip-video-icon"></div>
+    </mip-img>
+</mip-video>
 
 ```
 
 2. 纯文字结构
 
 ```
-    <mip-video class="mip-video" 
-    poster="xx.jpg"
-    src="xx.mp4"
-    android-mode="fullscreen" 
-    ios-mode="hide"
-    >
+    <mip-video 
+        layout="fixed" 
+        width="350" 
+        height="263"
+        class="mip-video" 
+        poster="xx.jpg"
+        src="xx.mp4"
+        android-mode="fullscreen" 
+        ios-mode="hide">
         立即播放
     </mip-video>
 ```
