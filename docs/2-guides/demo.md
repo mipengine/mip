@@ -22,6 +22,16 @@
     <link rel="miphtml" href="页面h5 url">
     <!-- 在mip html中添加 -->
     <link rel="standardhtml" href="页面h5 url">
+    <noscript>
+        <style mip-officialrelease>
+            body {
+                -webkit-animation:none;
+                   -moz-animation:none;
+                    -ms-animation:none;
+                        animation:none
+            }
+        </style>
+    </noscript>
 </head>
 <body>
     <p class="mip-text">这是一个段落，纯文本形式</p>
