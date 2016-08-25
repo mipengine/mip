@@ -4,7 +4,9 @@
 
 ## 开发文档
 
-[详情参见](https://github.com/mipengine/mip-plugins/tree/master/extensions)
+外部站长开发扩展组件请参照下面链接
+
+[扩展组件开发文档](https://github.com/mipengine/mip-plugins/tree/master/extensions)
 
 ## 组件类型划分及代码所处目录
 
@@ -40,8 +42,6 @@
 ├── docs                #说明文档
 └── assets              #docs依赖文件
 ```
-
-##
 
 ## 版本控制
 
