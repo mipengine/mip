@@ -22,6 +22,11 @@ define(function(){
             return;
         }
 
+        /*处理各个layput的特殊情况*/
+        // if($this.attr('layout')=='responsive') {
+        //     $this.css({'height':'auto'});
+        // }
+
 
         // var parentwiddth = $this.parent().width();
 
@@ -43,7 +48,7 @@ define(function(){
         var HIDE_LEFT = -9999;
 
         // 轮播动画时长
-        var DURATION = 800;
+        var DURATION = 300;
 
         // 轮播思路：轮播只涉及2张图片，分别是当前图片和下一张要出现的图片，把下一张图片放到当前图片的前面或者后面，
         //         然后移动到当前图片的位置，其余不涉及的图片全部设置left:-9999px，具体可以看效果
@@ -52,7 +57,8 @@ define(function(){
             'position': 'absolute',
             'left': HIDE_LEFT,
             'top': 0,
-            'height':"100%"
+            'height':"100%",
+            'width':"100%"
         });
 
         // if ($this.attr('layout')=="responsive") {
@@ -98,6 +104,11 @@ define(function(){
                 'opacity': 1,
                 'z-index': 1
             });
+
+            $childs.map(function(i,ele) {
+                g_this.applyFillContent(ele);
+             });
+           
 
             $childs.eq(index).css({
                 'left': left,
