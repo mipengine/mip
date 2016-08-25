@@ -5,73 +5,120 @@
         <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
         <title>图片轮播测试地址</title>
         <link rel="stylesheet" type="text/css" href="/dist/css/mipmain.css">
-        
+        <style>
+            mip-carousel {
+                margin-bottom: 20px;
+            }
+            h1 {
+                color: #d24b4b;
+                font-size: 13px;
+                margin: 20px 0px;
+            }
+            .testp {
+                margin-top: 30px;
+                font-size: 13px;
+                color: #d24b4b
+            }
+        </style>
     </head>
     <body>
-<<<<<<< HEAD
-	<mip-carousel autoplay defer="2000" width="300" height="207">
-=======
-	<mip-carousel autoplay defer="2000"  height="100">
->>>>>>> d9711d71cf04309b67b8f1d4f9f20a375ca98fdc
-            <mip-img show='always' src="http://img5.imgtn.bdimg.com/it/u=3828918471,3276589926&fm=21&gp=0.jpg" popup alt="banner a">
-                <p>banner a</p>
+    <h1>我是fixed-hight布局</h1>
+    <mip-carousel  autoplay defer="2000" layout="fixed-height"  height="200">
+        <a target="_blank" href="http://wenda.tianya.cn/m/question/1almfj0foas94gc7vtoq6ejbfbmdk3e78ehaa">
+            <mip-img 
+                class="mip-img"  
+                alt="胖子突围记！讲讲你的突围历程？" 
+                src="http://a2.att.hudong.com/71/04/300224654811132504044925945_950.jpg" height="200">
             </mip-img>
-            <mip-img show='always'  src="http://img1.imgtn.bdimg.com/it/u=2363027421,438461014&fm=206&gp=0.jpg" popup alt="banner b">
-                <p>banner b</p>
+            <p class="mip-img-subtitle">胖子突围记！讲讲你的突围历程？</p>
+        </a>
+        <a target="_blank" href="http://wenda.tianya.cn/m/question/1almfj0foas94gc7vtoq6ejbfbmdk3e78ehaa" style="width:100%">
+            <mip-img 
+                class="mip-img"  
+                alt="招募行家！欢迎加入！" 
+                src="http://www.bz55.com/uploads/allimg/150305/139-1503051FS0.jpg" height="200">
             </mip-img>
-            <mip-img show='always' src="http://img5.imgtn.bdimg.com/it/u=3828918471,3276589926&fm=21&gp=0.jpg" popup alt="banner a">
-                <p>banner a</p>
+            <p class="mip-img-subtitle">招募行家！欢迎加入！</p>
+        </a>
+        <a target="_blank" href="http://wenda.tianya.cn/m/question/1almfj0foas94gc7vtoq6ejbfbmdk3e78ehaa" style="width:100%">
+            <mip-img 
+                class="mip-img"  
+                alt="招募行家！欢迎加入！" 
+                src="http://img3.3lian.com/2013/v9/58/d/25.jpg" height="200">
             </mip-img>
-            <mip-img show='always'  src="http://img1.imgtn.bdimg.com/it/u=2363027421,438461014&fm=206&gp=0.jpg" popup alt="banner b">
-                <p>banner b</p>
-            </mip-img>
+            <p class="mip-img-subtitle">招募行家！欢迎加入！</p>
+        </a>
     </mip-carousel>
 
-    <mip-carousel autoplay defer="1000" layout="fixed-height" width="300" height="360">
-                <div>
-                <a target="_blank" href="http://wenda.tianya.cn/m/question/1almfj0foas94gc7vtoq6ejbfbmdk3e78ehaa">
-                    <mip-img  show='always'
-                        class="mip-img"  
-                        alt="胖子突围记！讲讲你的突围历程？" 
-                        src="http://img1.imgtn.bdimg.com/it/u=2363027421,438461014&fm=206&gp=0.jpg" layout="responsive" width="410" height="320">
-                    </mip-img>
-                    <p class="mip-img-subtitle">胖子突围记！讲讲你的突围历程？</p>
-                </a>
-                </div>
-                <a target="_blank" href="http://wenda.tianya.cn/m/question/1almfj0foas94gc7vtoq6ejbfbmdk3e78ehaa" style="width:100%">
-                    <mip-img  show='always'
-                        class="mip-img"  
-                        alt="招募行家！欢迎加入！" 
-                        src="http://img1.imgtn.bdimg.com/it/u=2363027421,438461014&fm=206&gp=0.jpg" layout="responsive" width="410" height="320">
-                    </mip-img>
-                    <p class="mip-img-subtitle">招募行家！欢迎加入！</p>
-                </a>
-                <a target="_blank" href="http://wenda.tianya.cn/m/question/1almfj0foas94gc7vtoq6ejbfbmdk3e78ehaa" style="width:100%">
-                    <mip-img  show='always'
-                        class="mip-img"  
-                        alt="张佳芮：从相亲开始相爱" 
-                        src="http://img1.imgtn.bdimg.com/it/u=2363027421,438461014&fm=206&gp=0.jpg" layout="responsive" width="410" height="320">
-                    </mip-img>
-                    <p class="mip-img-subtitle">张佳芮：从相亲开始相爱</p>
-                </a>
-                <a target="_blank" href="http://wenda.tianya.cn/m/question/1almfj0foas94gc7vtoq6ejbfbmdk3e78ehaa" style="width:100%">
-                    <mip-img  show='always'
-                        class="mip-img"  
-                        alt="中国石油博物馆，开馆啦！" 
-                        src="http://img1.imgtn.bdimg.com/it/u=2363027421,438461014&fm=206&gp=0.jpg" layout="responsive" width="410" height="320">
-                    </mip-img>
-                    <p class="mip-img-subtitle">中国石油博物馆，开馆啦！</p>
-                </a>
-                <a target="_blank" href="http://wenda.tianya.cn/m/question/1almfj0foas94gc7vtoq6ejbfbmdk3e78ehaa" style="width:100%">
-                    <mip-img  show='always'
-                        class="mip-img"  
-                        alt="寻找掩埋在时光深处的祖辈爱情" 
-                        src="http://img1.imgtn.bdimg.com/it/u=2363027421,438461014&fm=206&gp=0.jpg" layout="responsive" width="410" height="320">
-                    </mip-img>
-                    <p class="mip-img-subtitle">寻找掩埋在时光深处的祖辈爱情</p>
-                </a>
-            </mip-carousel>
+    <h1>我是responsive布局</h1>
 
+    <mip-carousel  autoplay defer="1000" layout="responsive"  width=600 height="400">
+        <mip-img 
+                class="mip-img"  
+                alt="胖子突围记！讲讲你的突围历程？" 
+                src="http://a2.att.hudong.com/71/04/300224654811132504044925945_950.jpg" layout="responsive"  width=600 height="300">
+            </mip-img>
+        <a target="_blank" href="http://wenda.tianya.cn/m/question/1almfj0foas94gc7vtoq6ejbfbmdk3e78ehaa" style="width:100%">
+            <mip-img 
+                class="mip-img"  
+                alt="招募行家！欢迎加入！" 
+                src="http://www.bz55.com/uploads/allimg/150305/139-1503051FS0.jpg" layout="responsive"  width=600 height="300">
+            </mip-img>
+            <p class="mip-img-subtitle">招募行家！欢迎加入！</p>
+        </a>
+        <a target="_blank" href="http://wenda.tianya.cn/m/question/1almfj0foas94gc7vtoq6ejbfbmdk3e78ehaa" style="width:100%">
+            <mip-img 
+                class="mip-img"  
+                alt="招募行家！欢迎加入！" 
+                src="http://img3.3lian.com/2013/v9/58/d/25.jpg" layout="responsive"  width=600 height="300">
+            </mip-img>
+            <p class="mip-img-subtitle">招募行家！欢迎加入！</p>
+        </a>    
+    </mip-carousel>
+    
+     <p class="testp">every night in my dreams，i see you, i feel you  ,that is how i know you go on. ,far across the distance     ,and spaces between us,you have come to show you go on.near, far, wherever you are    ,i believe that the heart does go on</p>
+
+<!--     <mip-carousel  autoplay defer="1000" layout="fixed"  height="600">
+        <a target="_blank" href="http://wenda.tianya.cn/m/question/1almfj0foas94gc7vtoq6ejbfbmdk3e78ehaa">
+            <mip-img 
+                class="mip-img"  
+                alt="胖子突围记！讲讲你的突围历程？" 
+                src="http://img1.imgtn.bdimg.com/it/u=2363027421,438461014&fm=206&gp=0.jpg" layout="responsive" width="410" height="320">
+            </mip-img>
+            <p class="mip-img-subtitle">胖子突围记！讲讲你的突围历程？</p>
+        </a>
+        <a target="_blank" href="http://wenda.tianya.cn/m/question/1almfj0foas94gc7vtoq6ejbfbmdk3e78ehaa" style="width:100%">
+            <mip-img 
+                class="mip-img"  
+                alt="招募行家！欢迎加入！" 
+                src="http://img1.imgtn.bdimg.com/it/u=2363027421,438461014&fm=206&gp=0.jpg" layout="responsive" width="410" height="320">
+            </mip-img>
+            <p class="mip-img-subtitle">招募行家！欢迎加入！</p>
+        </a>
+    </mip-carousel> -->
+
+<!--  -->
+
+
+<!--     <mip-carousel  autoplay defer="1000" layout="container">
+        <a target="_blank" href="http://wenda.tianya.cn/m/question/1almfj0foas94gc7vtoq6ejbfbmdk3e78ehaa">
+            <mip-img 
+                class="mip-img"  
+                alt="胖子突围记！讲讲你的突围历程？" 
+                src="http://img1.imgtn.bdimg.com/it/u=2363027421,438461014&fm=206&gp=0.jpg" layout="responsive" width="410" height="320">
+            </mip-img>
+            <p class="mip-img-subtitle">胖子突围记！讲讲你的突围历程？</p>
+        </a>
+        <a target="_blank" href="http://wenda.tianya.cn/m/question/1almfj0foas94gc7vtoq6ejbfbmdk3e78ehaa" style="width:100%">
+            <mip-img 
+                class="mip-img"  
+                alt="招募行家！欢迎加入！" 
+                src="http://img1.imgtn.bdimg.com/it/u=2363027421,438461014&fm=206&gp=0.jpg" layout="responsive" width="410" height="320">
+            </mip-img>
+            <p class="mip-img-subtitle">招募行家！欢迎加入！</p>
+        </a>
+    </mip-carousel>
+ -->
     </body>
     <script src="/dist/mipmain.js"></script>
 </html>
