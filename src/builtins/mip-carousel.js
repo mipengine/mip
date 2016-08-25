@@ -8,34 +8,33 @@ define(function(){
         var g_this = this;
 
         // 避免多次渲染
-        if(_ele.isRender){
+        if(this.isRender){
             return; 
         }
-        _ele.isRender = true;
-
-
+        this.isRender = true;
 
         $this = $(_ele);
 
         var hei = $this.attr('height');
-        var wid = $this.attr('width');
 
-        if (!hei || typeof +hei !== 'number' || typeof +wid !== 'number') {
+
+        if (!hei) {
             return;
         }
 
 
-        var parentwiddth = $this.parent().width();
+        // var parentwiddth = $this.parent().width();
 
         // padding-bottom
-        var pdb = hei / +parentwiddth * 100 + '%';
-        $this.css('padding-bottom', pdb);
+        // var pdb = hei / +parentwiddth * 100 + '%';
+        // $this.css('padding-bottom', pdb);
 
         // 如果子节点少于2个，则不需要轮播
-        var $childs = $this.children();
+        var $childs = $this.children().not("mip-i-space");
         if ($childs.length < 2) {
             return;
         }
+
 
         // 当前展示的图片序号
         var currentIndex = 0;
@@ -48,12 +47,21 @@ define(function(){
 
         // 轮播思路：轮播只涉及2张图片，分别是当前图片和下一张要出现的图片，把下一张图片放到当前图片的前面或者后面，
         //         然后移动到当前图片的位置，其余不涉及的图片全部设置left:-9999px，具体可以看效果
+        // 
         $childs.css({
             'position': 'absolute',
             'left': HIDE_LEFT,
             'top': 0,
             'height':"100%"
         });
+
+        // if ($this.attr('layout')=="responsive") {
+        //      $childs.css({
+        //         'height':0,
+        //         'padding-top': "40%"
+        //     });
+        // }        
+       
         $childs.eq(currentIndex).css('left', 0);
 
         // 如果mip-carousel里子节点是mip-img，并且mip-img弹出了浮层
@@ -96,7 +104,16 @@ define(function(){
                 'z-index': 2
             });
 
-            MIP.prerenderElement($childs.eq(index)[0]);
+            //手动触发不可见区域的mip-img
+            if($childs.eq(index)[0].tagName.toLocaleLowerCase()== "mip-img") {
+                MIP.prerenderElement($childs.eq(index)[0]);
+            }else {
+                $box = $($childs.eq(index)[0]);
+                $box.find('mip-img').map(function(i,ele){
+                     MIP.prerenderElement(ele);
+                });
+            }
+
 
             isAnimating = true;
 
