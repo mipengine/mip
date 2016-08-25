@@ -44,7 +44,8 @@ define(['./components/rect', './components/platform', './components/event', './u
     var _scrolling;
     var _init = function () {
         _throttleChangeEvent = util.fn.throttle(_changeEvent.bind(this), 20);
-        win.addEventListener('scroll', _scrollEvent.bind(this), false);
+        (platform.needSpecialScroll ? document.body : win)
+            .addEventListener('scroll', _scrollEvent.bind(this), false);
         win.addEventListener('resize', _resizeEvent.bind(this), false);
         return this;
     };
@@ -66,7 +67,7 @@ define(['./components/rect', './components/platform', './components/event', './u
     var _changeEvent = function (event, oldTop, oldTime) {
         var now = Date.now();
         var scrollTop = this.getScrollTop();
-        if (Math.abs((oldTop - scrollTop) / (oldTime - now)) < 0.03) {
+        if (oldTime != now && Math.abs((oldTop - scrollTop) / (oldTime - now)) < 0.03) {
             _scrolling = false;
             this.trigger('changed', event, this.getRect());
         } else {
