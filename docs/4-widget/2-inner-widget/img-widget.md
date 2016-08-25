@@ -15,6 +15,39 @@ mip-img 用来支持在 mip 中增加图片内容。
 
 ```
 <mip-img 
+    layout="responsive" 
+    width="350" 
+    height="263"
+    class="mip-img" 
+    popup 
+    alt="baidu mip img" 
+    src="http://ztd00.photos.bdimg.com/ztd/w%3D350%3Bq%3D70/sign=e3bb1c4b97ef76c6d0d2fd2ead2d8cc7/f703738da9773912b57d4b0bff198618367ae205.jpg">
+    <p class="mip-img-subtitle">带图片标题的类型</p>
+</mip-img>
+
+<mip-img 
+    layout="fixed-height" 
+    height="263"
+    class="mip-img" 
+    popup 
+    alt="baidu mip img" 
+    src="http://ztd00.photos.bdimg.com/ztd/w%3D350%3Bq%3D70/sign=e3bb1c4b97ef76c6d0d2fd2ead2d8cc7/f703738da9773912b57d4b0bff198618367ae205.jpg">
+    <p class="mip-img-subtitle">带图片标题的类型</p>
+</mip-img>
+
+<mip-img 
+    layout="fixed" 
+    width="350" 
+    height="263"
+    class="mip-img" 
+    popup 
+    alt="baidu mip img" 
+    src="http://ztd00.photos.bdimg.com/ztd/w%3D350%3Bq%3D70/sign=e3bb1c4b97ef76c6d0d2fd2ead2d8cc7/f703738da9773912b57d4b0bff198618367ae205.jpg">
+    <p class="mip-img-subtitle">带图片标题的类型</p>
+</mip-img>
+
+<mip-img 
+    layout="container" 
     class="mip-img" 
     popup 
     alt="baidu mip img" 

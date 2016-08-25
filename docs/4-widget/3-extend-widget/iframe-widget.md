@@ -12,7 +12,31 @@ mip-iframe 是用来支持在 mip 中嵌入第三方内容的一种方式，需�
 在MIP HTMl中，示例如下：
 
 ```
-<mip-iframe 
+<mip-iframe
+    layout="responsive" 
+    width="100" 
+    height="50" 
+    allowfullscreen 
+    srcdoc="<p>123</p>" 
+    src="http://m.baidu.com" 
+    sandbox="" 
+    allowfullscreen 
+    allowtransparency="true">
+</mip-iframe>
+
+<mip-iframe
+    layout="fixed-height" 
+    height="50" 
+    allowfullscreen 
+    srcdoc="<p>123</p>" 
+    src="http://m.baidu.com" 
+    sandbox="" 
+    allowfullscreen 
+    allowtransparency="true">
+</mip-iframe>
+
+<mip-iframe
+    layout="fixed" 
     width="100" 
     height="50" 
     allowfullscreen 
