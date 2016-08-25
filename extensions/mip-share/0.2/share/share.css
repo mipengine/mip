@@ -50,3 +50,6 @@
     margin: 0 auto;
     padding: 21px;
 }
+.mip-layout-size-defined .mip-fill-content {
+    margin-top: 0;
+}

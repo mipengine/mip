@@ -2,15 +2,18 @@ define(function () {
     var $ = require('zepto');
     var customElem = require('customElement').create();
     var build = function () {
-	var _element = this.element;
+    var _element = this.element;
         
-	// 防止多次渲染
+    // 防止多次渲染
         if(_element.isRender){
             return; 
         }
         _element.isRender = true;
+        
         var $this = $(_element);
+
         // 获取src属性的值，如果用户传递了srcdoc，则将src内容转为base64编码用于iframe的src
+        
         var src = $this.attr('src');
         if ($this.attr('srcdoc')) {
             src = 'data:text/html;charset=utf-8;base64,' + window.btoa($this.attr('srcdoc'));
@@ -22,18 +25,19 @@ define(function () {
             return;
         }
 
-	//感觉这个方案有问题
+    var ele = [
+        '<iframe ',
+            'frameBorder="0" ',
+            'scrolling="no" ',
+            'style="width:' + wid + '; height:' + hei + '">',
+        '</iframe>'
+    ].join('');
 
-        //if (hei && wid && typeof +hei === 'number' && typeof +wid === 'number') {
-            // padding-bottom
-          //  var pdb = +hei / +wid * 100 + '%';
-            //$this.append('<div style="padding-bottom: ' + pdb + ';"></div>');
-       // }
+    var $iframe = $(ele);
 
-        
-        var $iframe = $('<iframe frameBorder="0" scrolling="no" style="width:'+wid+';height:'+hei+'"></iframe>');
-        
-	$iframe.attr('src', src);
+    this.applyFillContent($iframe[0]);
+
+    $iframe.attr('src', src);
         if ($this.attr('allowfullscreen') === '') {
             $iframe.attr('allowfullscreen', '');
         }
