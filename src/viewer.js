@@ -1,26 +1,49 @@
 /** 
  * viewer
  **/
-define(['./components/platform'], function (platform) {
+define(['./components/platform', './components/event', './components/css'], function (platform, Event, css) {
     'use strict';
+    var win = window;
     var Viewer = {
-        isIframed: window !== top,
         init: function () {
             this.patchForIframe();
+            this.sendMessage('mippageload', {
+                time: Date.now()
+            });
         },
+        isIframed: win !== top,
         patchForIframe: function () {
             if (platform.needSpecialScroll) {
-                document.documentElement.style.cssText = 'height: 100%; overflow: auto;';
-                document.body.style.cssText = 'height: 100%; overflow: auto; position: relative;';
+                css([document.documentElement, document.body], {
+                    height: '100%',
+                    overflow: 'auto'
+                });
+                css(document.body, 'position', 'relative');
             }
-            //页面传递消息给父页面
-            window.parent.postMessage({
-                event: 'mippageload',
-                data: {
-                    time: new Date().getTime()
-                }
-            }, '*');
+        },
+        show: function () {
+            //显示 body
+            css(document.body, {
+                'opacity': 1,
+                'animation': 'none',
+                '-webkit-animation': 'none',
+                '-moz-animation': 'none',
+                '-ms-animation': 'none'
+            });
+            this.trigger('load', Date.now());
+        },
+        sendMessage: function (eventName, data) {
+            if (this.isIframed) {
+                window.parent.postMessage({
+                    event: eventName,
+                    data: data
+                }, '*');
+            }
         }
     };
+
+    Event.mixin(Viewer);
+
     return Viewer;
 });
+
