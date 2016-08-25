@@ -1,29 +1,26 @@
 /**
  * initialize mip
  **/
-require(['./components/platform', './element', './builtins/mip_builtins', './viewer'], 
-    function (platform, registerMipElement, builtin, viewer) {
+require(['./components/platform', './element', './builtins/mip_builtins', 
+    './viewer', './viewport', './components/css', 'resources'], 
+    function (platform, registerMipElement, builtin, viewer, viewport, css, resources) {
     'use strict';
-    
-    var $ = require('zepto');
 
+    // mip 初始化
     !window.MIP && (window.MIP = {});
     MIP.css = {};
     MIP['registerMipElement'] = registerMipElement;
-
     window.platform = platform;
+    MIP.registerMipElement = registerMipElement;
+    MIP.viewer = viewer;
+    MIP.viewport = viewport;
+    MIP.prerenderElement = resources.prerenderElement;
 
-    // viewer 初始化
     viewer.init();
 
     // 注册内置组件
     builtin.register();
-    //显示 body
-    $('body').css({
-        'opacity': 1,
-        'animation': 'none',
-        '-webkit-animation': 'none',
-        '-moz-animation': 'none',
-        '-ms-animation': 'none'
-    });
+
+    // 显示页面
+    viewer.show();
 });

@@ -10,15 +10,13 @@ __inline('./deps/zepto.js');
 
 /* components */
 __inline('./components/fn.js');
-__inline('./components/emit.js');
 __inline('./components/cssLoader.js');
 __inline('./components/layout.js');
 __inline('./components/gesture.js');
-__inline('./components/observable.js');
 __inline('./components/platform.js');
-__inline('./components/message_center.js');
-__inline('./components/postmessage.js');
 __inline('./components/rect.js');
+__inline('./components/event.js');
+__inline('./components/css.js');
 
 /* mip frame */
 __inline('./viewport.js');
@@ -34,7 +32,6 @@ __inline('./builtins/mip-gif.js');
 __inline('./builtins/mip-pix.js');
 __inline('./builtins/mip-carousel.js');
 __inline('./builtins/mip-iframe.js');
-__inline('./builtins/img-viewer.js');
 __inline('./builtins/mip-video.js');
 __inline('./builtins/video/player.js');
 __inline('./builtins/video/popup.js');

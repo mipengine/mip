@@ -62,8 +62,8 @@ fis.match('/src/(**).js', {
     optimizer: fis.plugin('uglify-js'),
     moduleId: '$1'
 });
-fis.match('/src/deps/zepto.js', {
-    moduleId: 'zepto'
+fis.match('/src/deps/(*).js', {
+    moduleId: '$1'
 });
 fis.match('src/mipmain.js', {
     release: 'mipmain.js'
