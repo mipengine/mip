@@ -18,14 +18,6 @@ require.config({
     }
 });
 
-require.config({
-    paths: {
-        "extensions/ads/1.0/mip-ad-comm": "/dist/extensions/ads/1.0/mip-ad-comm",
-        "extensions/ads/1.0/mip-ad-baidu": "/dist/extensions/ads/1.0/mip-ad-baidu",
-        "extensions/ads/1.0/mip-ad-qwang": "/dist/extensions/ads/1.0/mip-ad-qwang"
-    }
-});
-
 define(function (){
     var customElement = require('customElement').create();
     
