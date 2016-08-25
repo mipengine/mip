@@ -22,17 +22,6 @@ define(function(){
             return;
         }
 
-        /*处理各个layput的特殊情况*/
-        // if($this.attr('layout')=='responsive') {
-        //     $this.css({'height':'auto'});
-        // }
-
-
-        // var parentwiddth = $this.parent().width();
-
-        // padding-bottom
-        // var pdb = hei / +parentwiddth * 100 + '%';
-        // $this.css('padding-bottom', pdb);
 
         // 如果子节点少于2个，则不需要轮播
         var $childs = $this.children().not("mip-i-space");
@@ -71,13 +60,6 @@ define(function(){
             }
         });
            
-
-        // if ($this.attr('layout')=="responsive") {
-        //      $childs.css({
-        //         'height':0,
-        //         'padding-top': "40%"
-        //     });
-        // }        
        
         $childs.eq(currentIndex).css('left', 0);
 
