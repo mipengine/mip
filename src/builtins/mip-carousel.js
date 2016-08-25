@@ -61,6 +61,17 @@ define(function(){
             'width':"100%"
         });
 
+        $childs.map(function(i,ele) {
+            if(ele.tagName.toLocaleLowerCase()== "mip-img") {
+                g_this.applyFillContent(ele, true);       
+            }else {
+                $(ele).find("mip-img").map(function(j,el){
+                     g_this.applyFillContent(el, true);
+                });
+            }
+        });
+           
+
         // if ($this.attr('layout')=="responsive") {
         //      $childs.css({
         //         'height':0,
@@ -105,10 +116,6 @@ define(function(){
                 'z-index': 1
             });
 
-            $childs.map(function(i,ele) {
-                g_this.applyFillContent(ele);
-             });
-           
 
             $childs.eq(index).css({
                 'left': left,
