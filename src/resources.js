@@ -26,14 +26,9 @@ define(['./util', 'viewport', './components/rect'], function (util, viewport, re
     Resources.prototype = {
         _bind: function () {
             var self = this;
-            this._viewport.onChanged(function () {
+            this._viewport.on('changed', function () {
                 self._update();
             });
-
-            this._viewport.onScroll(function () {
-                self._scrollTime = Date.now();
-            });
-
             this._update();
         },
         // 元素加入列表
@@ -82,11 +77,6 @@ define(['./util', 'viewport', './components/rect'], function (util, viewport, re
             element.viewportCallback && element.viewportCallback(true);
         }
     };
-    !window.MIP && (window.MIP = {});
-    MIP.prerenderElement = Resources.prerenderElement;
 
-    var _resources; 
-    return function (resources) {
-        return _resources || (_resources = new Resources());
-    };
+    return Resources;
 });

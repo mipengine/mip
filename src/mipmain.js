@@ -14,11 +14,10 @@ __inline('./components/emit.js');
 __inline('./components/cssLoader.js');
 __inline('./components/layout.js');
 __inline('./components/gesture.js');
-__inline('./components/observable.js');
 __inline('./components/platform.js');
-__inline('./components/message_center.js');
-__inline('./components/postmessage.js');
 __inline('./components/rect.js');
+__inline('./components/event.js');
+__inline('./components/css.js');
 
 /* mip frame */
 __inline('./viewport.js');

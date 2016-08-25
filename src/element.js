@@ -2,7 +2,7 @@
  *  mip element
  *  @exports register
  **/
-define(['./components/cssLoader', './components/layout'], function (cssLoader, layoutObj) {
+define(['./components/cssLoader', './components/layout', './resources'], function (cssLoader, layoutObj, Resources) {
     var customElements = {};
     var resources;
 
@@ -105,7 +105,7 @@ define(['./components/cssLoader', './components/layout'], function (cssLoader, l
             this.classList.add('mip-element');
             this._inViewport = false;
             this._firstInViewport = false;
-            this._resources = resources();
+            this._resources = resources;
             this.customElement = new CustomEle(this);
             this.customElement.createdCallback();
         };
@@ -168,10 +168,10 @@ define(['./components/cssLoader', './components/layout'], function (cssLoader, l
         if (customElements[name]) {
             return;
         }
-        if (!resources) {
-            resources = require('./resources');
-        }
 
+        if (!resources) {
+            resources = new Resources();
+        }
         customElements[name] = elementClass;
         loadCss(css);
         document.registerElement(name, {
