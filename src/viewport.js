@@ -1,201 +1,82 @@
-define(['./components/rect'], function (rect) {
-    
-    /**
-        界面可视窗口模块，提供窗口各属性，以及窗口整体scroll、resize等事件接口
-    */
-    var Viewport = {};
+/**
+ * 界面可视窗口模块，提供窗口各属性，以及窗口整体scroll、resize等事件接口
+ **/
+define(['./components/rect', './components/platform', './components/event', './util'], 
+    function (rect, platform, Event, util) {
+    'use strict';
 
-    /**
-        Viewer对象，用于做父页面和子页面的通信代理
-    */
-    var viewer  = null;
-
-    var $ = require('zepto');
-
-    var _scrollTop = null,
-        _scrollLeft = null,
-        _size = null,
-        _scrollCount = 0,
-        _scrollTracking = false,
-        _swapTracking = false,
-        _isViewportNormal = true,
-        _changeObservable = require('components/observable'),
-        _scrollObservable = require('components/observable'),
-        _touchObservable = require('components/observable');
-
-    var gesture = require('components/gesture');
-    gesture.init();
-
-
-    Viewport.getScrollTop = function() {
-        _scrollTop = rect.getScrollTop();
-        return _scrollTop;
-    };
-
-    Viewport.getScrollLeft = function() {
-        if(_scrollLeft == null) {
-            _scrollLeft = rect.getScrollLeft();
+    var docElem = document.documentElement;
+    var win = window;
+    var  Viewport = {
+        getScrollTop: function () {
+            return this._scrollTop = rect.getScrollTop();
+        },
+        getScrollLeft: function () {
+            if (this._scrollLeft == null) {
+                this._scrollLeft = rect.getScrollLeft();
+            }
+            return this._scrollLeft;
+        },
+        setScrollTop: function (top) {
+            rect.setScrollTop(top);
+        },
+        getWidth: function () {
+            return win.innerWidth || docElem.clientWidth;
+        },
+        getHeight: function () {
+            return win.innerHeight || docElem.clientHeight;
+        },
+        getScrollWidth: function () {
+            return rect.getScrollWidth();
+        },
+        getScrollHeight: function () {
+            return rect.getScrollHeight();
+        },
+        getRect: function () {
+            return rect.get(
+                this.getScrollLeft(),
+                this.getScrollTop(),
+                this.getWidth(),
+                this.getHeight());
         }
-        return _scrollLeft;
     };
-
-    /**
-     *  Todo: fix IOS bug when iframed
-     * */
-    Viewport.setScrollTop = function(scrollPos) {
-        _scrollTop = null;
-        $(window).scrollTop(scrollPos);
+    var _throttleChangeEvent;
+    var _scrolling;
+    var _init = function () {
+        _throttleChangeEvent = util.fn.throttle(_changeEvent.bind(this), 20);
+        (platform.needSpecialScroll ? document.body : win)
+            .addEventListener('scroll', _scrollEvent.bind(this), false);
+        win.addEventListener('resize', _resizeEvent.bind(this), false);
+        return this;
     };
-
-    /**
-     * Returns the size of the viewport.
-     * @return {!{width: number, height: number}}
-    */
-    Viewport.getSize = function() {
-        return _size = {
-            "width" : window.innerWidth || document.documentElement.clientWidth,
-            "height" : window.innerHeight || document.documentElement.clientHeight
-        };
-    };
-
-    Viewport.getRect = function () {
-        var size = this.getSize();
-        return rect.get(this.getScrollLeft(), this.getScrollTop(), size.width, size.height);
-    };
-
-    Viewport.getWidth = function() {
-        return this.getSize().width;
-    };
-
-    Viewport.onChanged = function(handler) {
-        return _changeObservable.add(handler);
-    };
-
-    Viewport.onScroll = function(handler) {
-        return _scrollObservable.add(handler);
-    };
-
-    Viewport.onTouch = function(handler) {
-        return _touchObservable.add(handler);
-    }
-
-    Viewport.resetTouchZoom = function(){
-        var windowHeight = window.innerHeight;
-        var documentHeight = window.document.documentElement.clientHeight;
-        
-        if(windowHeight && documentHeight && windowHeight === documentHeight) {
+    var _scrollEvent = function (event) {
+        if (this.getScrollTop() < 0) {
             return;
         }
-
-        if(disableTouchZoom()) {
-            //restore touch zoom
+        if (!this._scrolling) {
+            _scrolling = true;
+            _throttleChangeEvent(event);
         }
-
+        // trigger this.on('scroll', ...);
+        this.trigger('scroll', event);
+    };
+    var _resizeEvent = function (event) {
+        // trigger this.on('resize', ...)
+        this.trigger('resize', event);
+    };
+    var _changeEvent = function (event, oldTop, oldTime) {
+        var now = Date.now();
+        var scrollTop = this.getScrollTop();
+        if (oldTime != now && Math.abs((oldTop - scrollTop) / (oldTime - now)) < 0.03) {
+            _scrolling = false;
+            this.trigger('changed', event, this.getRect());
+        } else {
+            _throttleChangeEvent(event, scrollTop, now);
+        }
     };
 
-    Viewport.disableTouchZoom = function() {
-        var viewportMeta = _getViewportMeta();
-    };
 
-    Viewport.setViewportNormal = function(flag) {
-        _isViewportNormal = flag;
-    };
+    Event.mixin(Viewport);
 
-    function _touch(evt, data) {
-         if(_isViewportNormal) {
-            //正常浏览时执行
-            //此处应该调用recognizeGesture来识别
-            _recognizeGesture(evt, data);
-         } else {
-            //图片浏览、全屏视频播放时，不触发viewport的touch
-            return;
-         }
-    }
-
-    function _recognizeGesture(evt, data) {
-
-
-        if(typeof data === "object") {
-            var eventType = data.event;
-
-            switch(eventType) {
-                case "touchstart" :
-                    window.parent.postMessage(data,'*');
-                    break;
-                case "touchmove" :
-
-                    if (Math.abs(data.x) > 15 && Math.abs(data.x/data.y) >= 3 && !_scrollTracking ) {
-                        evt.preventDefault(); //阻止触摸时浏览器的缩放、滚动条滚动等
-                        _swapTracking = true;
-                        window.parent.postMessage(data,'*');
-                    } else if(Math.abs(data.y/data.x) >= 3 && !_swapTracking) {
-                        _scrollTracking = true; 
-                    }
-                    if(data.y != 0 && _swapTracking) {
-                        evt.preventDefault && evt.preventDefault();
-                        evt.stopPropagation && evt.stopPropagation();
-                    }
-                    break;
-                case "touchend" :
-                    window.parent.postMessage(data,'*');
-                    _swapTracking = false;
-                    _scrollTracking = false;
-                    break;
-            } 
-        }
-    }
-
-    function _changed() {
-        var size = Viewport.getSize();
-        var scrollTop = Viewport.getScrollTop();
-        _changeObservable.fire({
-            top: scrollTop,
-            width: size.width,
-            height: size.height
-        });
-    }
-
-    /**
-     *  触发scroll，并向observerfire事件
-     * */
-    function _scroll() {
-
-        _scrollCount ++;
-        _scrollObservable.fire();
-        _scrollLeft = Viewport.getScrollLeft();
-        
-        /*
-        if(_scrollTracking) {
-            return;
-        }
-        */
-
-        var newScrollTop = Viewport.getScrollTop();
-        if(newScrollTop < 0) {
-            return;
-        }
-
-        //正在进行scroll，scrollTracking设为true
-        //TODO 
-        //计算滚动速度，速度为0的时候，
-        //_scrollTracking = true;
-        _scrollTop = newScrollTop;
-
-    }
-
-    Viewport.hasScrolled = function() {
-        return _scrollCount > 0;
-    };
-
-    function _init() {
-        $(window).on("scroll",_scroll);
-        if (window.parent !== window && platform.needSpecialScroll) {
-            $('body').on('scroll', _scroll);
-        }
-        gesture.bind(_touch);
-        return Viewport;
-    }
-
-    return _init();
-
+    return _init.call(Viewport);
 });

@@ -1,95 +1,59 @@
-define(function(){
-    
-    var state = {
-    }
-    
-    var gestureObserver = require('./observable');
-    
-    function message(data,event){
-       gestureObserver.fire(data,event);
-    }
-    
-    function bind(handler){
-        gestureObserver.add(handler);
-    }
-    
-    function unbind(handler){
-        gestureObserver.remove(handler);
-    }
-     
-    var point = {
-        "startX" : 0,
-        "startY" : 0,
-        "lastX" : 0,
-        "lastY" : 0,
-        "startT" : 0
+/**
+ * 手势组件
+ **/
+define(['./event'], function (Event) {
+
+    var touchEvent = function (event) {
+        var isEnd = event.type === 'touchend';
+        var pointX, pointY;
+        if (isEnd) {
+            touch = event.changedTouches[0];
+            pointX = touch.screenX - this.startX;
+            pointY = touch.screenY - this.startY;
+        } else {
+            touch = event.touches;
+            pointX = touch.screenX;
+            pointY = touch.screenY;
+            if (event.type === 'touchstart') {
+                this.startX = pointX;
+                this.startY = pointY;
+                this.startT = event.timeStamp;
+            }
+        }
+
+        // trigger this.on('gesture | touchstart | touchend', point)
+        this.trigger('gesture ' + event.type, {
+            'event': event.type,
+            'x': pointX,
+            'y': pointY,
+            '_t': event.timeStamp
+        }, event);
     };
 
-    
-    function touchStart(evt){
-        try {
-            var touch = evt.touches[0];
-            point.startX = Number(touch.screenX);
-            point.startY = Number(touch.screenY);
-            point.startT = evt.timeStamp;
-            var data = {"event" : "touchstart", "x" : point.startX, "y" : point.startY, "_t" : evt.timeStamp};
-            message(evt,data);
-        }
-        catch (e) {
+    /**
+     * 手势
+     * @class
+     **/
+    var Gesture = function (element) {
+        this._eventContext = this._element = element;
+        this.startX = this.startY = this.startT = 0;
 
-        }
-    }
-    
-    function touchEnd(evt){
+        this._boundTouchEvent = touchEvent.bind(this);
+        element.addEventListener('touchstart', this._boundTouchEvent, false);
+        element.addEventListener('touchmove', this._boundTouchEvent, false);
+        element.addEventListener('touchend', this._boundTouchEvent, false);
 
-        try {
-            nChangX = evt.changedTouches[0].screenX;
-            nChangY = evt.changedTouches[0].screenY;
+        this._boundTriggerListener = this.trigger.bind(this);
+    };
 
-            var distX = nChangX - point.startX;
-            var distY = nChangY - point.startY;
+    // add event functions to gesture.prototype
+    Event.mixin(Gesture.prototype);
 
-            var speed = (evt.timeStamp - point.startT)/distX;
-            message(evt, {"event" : "touchend", "x" : distX, "y" : distY, "_t" : evt.timeStamp, "speed" : speed});
+    Gesture.prototype.cleanup = function () {
+        element.removeEventListener('touchstart', this._boundTouchEvent);
+        element.removeEventListener('touchmove', this._boundTouchEvent);
+        element.removeEventListener('touchend', this._boundTouchEvent);
+    };
 
-        }
-        catch (e) {
-
-        }
-
-    }
-
-    function touchMove(evt){
-        try {
-            var touch = evt.touches[0]; 
-            var x = Number(touch.screenX);
-            var y = Number(touch.screenY);
-            var data = {"event" : "touchmove", "x" : x - point.startX, "y" : y - point.startY, "_t" : evt.timeStamp};
-            message(evt,data);
-
-        }
-        catch (e) {
-
-        }
-    }
-
-    //绑定事件
-    var isBind = false;
-    function bindEvent(){
-        if(!isBind) {
-            window.addEventListener('touchstart', touchStart, false);
-            window.addEventListener('touchmove', touchMove, false);
-            window.addEventListener('touchend', touchEnd, false);
-            isBind = true;
-        }
-    }
-    
-    function init(){
-        bindEvent();
-    }
-    return {
-        init:init,
-        bind:bind,
-        unbind:unbind
-    }
+    return Gesture;
 });
