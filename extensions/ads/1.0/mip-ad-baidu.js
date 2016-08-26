@@ -76,9 +76,11 @@ define(function(){
             async: true
         });
 
-        // me.applyFillContent($(html)[0], true);
-
-        // console.log($(html), $(html)[0]);
+        $elemID[0].childNodes.forEach(function(node) {
+            if(node.nodeType == 1 && node.nodeName !== 'MIP-I-SPACE' && node.nodeName !== 'SCRIPT') {
+                me.applyFillContent(node, true);
+            }
+        });
 
     }
 
