@@ -11,12 +11,17 @@
  * @copyright 2016 Baidu.com, Inc. All Rights Reserved
  */
 require.config({
-    paths: {
-        "extensions/ads/1.0/mip-ad-comm": "https://mipcache.bdstatic.com/static/v1.0/ads/mip-ad-comm",
-        "extensions/ads/1.0/mip-ad-baidu": "https://mipcache.bdstatic.com/static/v1.0/ads/mip-ad-baidu",
-        "extensions/ads/1.0/mip-ad-qwang": "https://mipcache.bdstatic.com/static/v1.0/ads/mip-ad-qwang"
-    }
+    // paths: {
+    //     "extensions/ads/1.0/mip-ad-comm": "https://mipcache.bdstatic.com/static/v1.0/ads/mip-ad-comm",
+    //     "extensions/ads/1.0/mip-ad-baidu": "https://mipcache.bdstatic.com/static/v1.0/ads/mip-ad-baidu",
+    //     "extensions/ads/1.0/mip-ad-qwang": "https://mipcache.bdstatic.com/static/v1.0/ads/mip-ad-qwang"
+    // }
     
+    paths: {
+        "extensions/ads/1.1/mip-ad-comm": "http://127.0.0.1:8056/dist/extensions/ads/1.1/mip-ad-comm",
+        "extensions/ads/1.1/mip-ad-baidu": "http://127.0.0.1:8056/dist/extensions/ads/1.1/mip-ad-baidu",
+        "extensions/ads/1.1/mip-ad-qwang": "http://127.0.0.1:8056/dist/extensions/ads/1.1/mip-ad-qwang"
+    }
 });
 
 define(function (){
@@ -38,7 +43,7 @@ define(function (){
         _element.isRender = true;
 
         var type = _element.getAttribute('type');
-        var adFile = 'extensions/ads/1.0/mip-' + type;
+        var adFile = 'extensions/ads/1.1/mip-' + type;
 
         require([adFile], function(mipAd) {
             mipAd.render(_this, me);

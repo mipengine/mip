@@ -9,11 +9,7 @@ define(function(){
     var $ = require('zepto');
     
     var render = function(_this, me) {
-        // if (this.isRender) {
-        //     return;
-        // }
-        // this.isRender = true;
-        // 
+
         var $this = $(_this);
         var cproID = _this.getAttribute("cproid");
         if(!cproID) {
@@ -62,8 +58,6 @@ define(function(){
      * @return
      */
     function initadbaidu($elemID, cproID, me) {
-
-        console.log(me);
 
         var s = "_" + Math.random().toString(36).slice(2);
         var html = '<div style="" id="' + s + '"></div>';
