@@ -8,7 +8,7 @@
 define(function(){
     var $ = require('zepto');
     
-    var render = function(_this) {
+    var render = function(_this, me) {
         // if (this.isRender) {
         //     return;
         // }
@@ -34,8 +34,8 @@ define(function(){
 
         }
         
-        initJs();
-        initadbaidu($this, cproID);
+        initJs(me);
+        initadbaidu($this, cproID, me);
     };
 
     /**
@@ -50,7 +50,8 @@ define(function(){
         var script = document.createElement('script');
         script.src = '//dup.baidustatic.com/js/dm.js';
         script.id = "MIP_DUP_JS";
-        document.body.appendChild(script);     
+        document.body.appendChild(script);  
+
     }
 
     /**
@@ -60,7 +61,9 @@ define(function(){
      * @param  {String} cproID  广告id
      * @return
      */
-    function initadbaidu($elemID, cproID) {
+    function initadbaidu($elemID, cproID, me) {
+
+        console.log(me);
 
         var s = "_" + Math.random().toString(36).slice(2);
         var html = '<div style="" id="' + s + '"></div>';
@@ -72,6 +75,11 @@ define(function(){
             display: 'inlay-fix',
             async: true
         });
+
+        // me.applyFillContent($(html)[0], true);
+
+        // console.log($(html), $(html)[0]);
+
     }
 
     /**

@@ -1,6 +1,7 @@
 /* 分享列表容器 */
 .c-share-list {
     overflow: hidden;
+    margin-top: 0;
 }
 .c-share-list .c-line-clamp1{
     line-height: 30px;
@@ -49,7 +50,4 @@
 .c-share-popup-modal .c-popup-content {
     margin: 0 auto;
     padding: 21px;
-}
-.mip-layout-size-defined .mip-fill-content {
-    margin-top: 0;
 }
