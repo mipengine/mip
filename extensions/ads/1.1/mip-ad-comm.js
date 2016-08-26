@@ -14,15 +14,8 @@ define(function (){
      *
      */
     var render = function(_this, me) {
-        // if (this.isRender) {
-        //     return;
-        // }
-
-        // this.isRender = true;
 
         var tpl = _this.getAttribute('tpl');
-        // console.log('tpl');
-        // console.log(tpl);
 
         switch(tpl) {
             case 'onlyImg':
