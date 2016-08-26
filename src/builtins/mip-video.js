@@ -15,10 +15,23 @@ define(['../util'], function(util){
 
     var build = function () {
         var _element = this.element;
+        var g_this = this;
         if (_element.isRender) {
             return; 
         }
         _element.isRender = true;
+
+        var $childs = $(_element).children().not('mip-i-space');
+
+        $childs.map(function(i,ele) {
+            if(ele.tagName.toLocaleLowerCase() == "mip-img") {
+                g_this.applyFillContent(ele,true);       
+            }
+        });
+
+
+        this.applyFillContent(_element,true);
+        
         var me = _element;
         var $me = $(_element);
     
