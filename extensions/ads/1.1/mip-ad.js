@@ -12,9 +12,9 @@
  */
 require.config({
     paths: {
-        "extensions/ads/1.0/mip-ad-comm": "https://mipcache.bdstatic.com/static/v1.1/ads/mip-ad-comm",
-        "extensions/ads/1.0/mip-ad-baidu": "https://mipcache.bdstatic.com/static/v1.1/ads/mip-ad-baidu",
-        "extensions/ads/1.0/mip-ad-qwang": "https://mipcache.bdstatic.com/static/v1.1/ads/mip-ad-qwang"
+        "extensions/ads/1.1/mip-ad-comm": "https://mipcache.bdstatic.com/static/v1.1/ads/mip-ad-comm",
+        "extensions/ads/1.1/mip-ad-baidu": "https://mipcache.bdstatic.com/static/v1.1/ads/mip-ad-baidu",
+        "extensions/ads/1.1/mip-ad-qwang": "https://mipcache.bdstatic.com/static/v1.1/ads/mip-ad-qwang"
     }
     
 });
