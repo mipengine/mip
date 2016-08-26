@@ -28,7 +28,6 @@ mip-video能够像html5的video标签一样播发视频
     ios-mode="hide"
     android-mode = "fullscreen"
     >
-    <source type="video/mp4" src="xx.mp4"></source>
     <mip-img  class="mip-video-container" src="xx.jpg">
         <div class="mip-video-icon"></div>
     </mip-img>
