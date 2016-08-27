@@ -5,7 +5,7 @@ mip-ad 用来支持站长添加网页内自定义广告，主要包括连接、�
 描述|提供了一个广告容器用来显示广告，目前只支持https的广告
 ----|----
 可用性|稳定
-所需脚本|&lt;script async src="https://mipcache.bdstatic.com/static/v1.0/mip-ad.js" &gt;&lt;/script&gt;
+所需脚本|&lt;script async src="https://mipcache.bdstatic.com/static/v1.1/mip-ad.js" &gt;&lt;/script&gt;
 支持布局|responsive 
 版本v1.0|支持别名mip-embed
 

@@ -7,7 +7,7 @@ mip-img 用来支持在 mip 中增加图片内容。
 描述|用自定义的mip-img标签封装了html原生img标签
 ----|----
 可用性|稳定
-支持布局| responsive, fixed-height, fixed, container
+支持布局| responsive, fixed-height, fixed
 
 ## 1. 使用
 
