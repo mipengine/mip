@@ -47,5 +47,6 @@ mip-ad 用来支持站长添加网页内自定义广告，主要包括连接、�
 
 ## 2. 支持广告
 
-- [通用广告](http://mip.baidu.com/#../docs/4_components/5_advertisement/ads/mip-ad-comm.md)
-- [网盟广告](http://mip.baidu.com/#../docs/4_components/5_advertisement/ads/mip-ad-baidu.md)
+- [通用广告](http://mip.baidu.com/#../docs/4_components/5_advertisement/ads/mip-ad-comm-widget.md)
+- [网盟广告](http://mip.baidu.com/#../docs/4_components/5_advertisement/ads/mip-ad-baidu-widget.md)
+- [全网广告](http://mip.baidu.com/#../docs/4_components/5_advertisement/ads/mip-ad-qwang-widget.md)

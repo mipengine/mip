@@ -1,6 +1,6 @@
 # 什么是MIP
 
-MIP （Mobile Instant Page - 移动网页加速器）,  是一套应用于移动网页的开放性技术标准。通过提供MIP-HTML规范、MIP-JS运行环境以及MIP-Cache页面缓存系统，实现移动网页加速。
+MIP （Mobile Instant Pages - 移动网页加速器）,  是一套应用于移动网页的开放性技术标准。通过提供MIP-HTML规范、MIP-JS运行环境以及MIP-Cache页面缓存系统，实现移动网页加速。
 
 
 MIP主要由三部分组织成：
