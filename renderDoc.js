@@ -2,7 +2,7 @@ var config = {
     docPath:'./docs',
     nameMap:{
       '1-overview':'项目介绍',
-      '2-guides':'开发指南',
+      '2-guide':'开发指南',
       '3-tech':'技术规范',
       '4-widget':'组件说明',
       '5-support':'技术支持',
