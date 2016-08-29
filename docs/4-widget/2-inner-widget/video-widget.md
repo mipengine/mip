@@ -13,7 +13,7 @@ mip-video 用来支持在 mip 中增加视频内容。
 
 mip-video能够像html5的video标签一样播发视频
 
-1. 图文形式的视频组件
+1、 图文形式的视频组件
 
 ```
 <mip-video 
@@ -52,7 +52,7 @@ mip-video能够像html5的video标签一样播发视频
 
 ```
 
-2. 纯文字结构
+2、 纯文字结构
 
 ```
     <mip-video 
@@ -108,5 +108,3 @@ mip-video能够像html5的video标签一样播发视频
 ## 3. 验证
 
 暂不支持
-
-

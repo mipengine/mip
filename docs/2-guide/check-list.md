@@ -28,7 +28,7 @@ MIP页面会有严格的规范校验，不允许存在任何校验不通过的�
 
 ### 2. 禁用标签
 
-|提示|DISALLOWED_TAG|	 
+|提示|DISALLOWED_TAG|  
 |---|---|
 |错误说明|"The tag '%1' is disallowed."|
 |错误说明|禁止使用'xx'标签|
@@ -38,10 +38,10 @@ MIP页面会有严格的规范校验，不允许存在任何校验不通过的�
 
 禁止使用标签有：
 
-- frame	 
-- frameset	 
+- frame  
+- frameset   
 - object
-- param	 
+- param  
 - applet
 - embed
 - form

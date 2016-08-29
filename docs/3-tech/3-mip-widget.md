@@ -12,7 +12,7 @@
 
 1、内置组件(root/buildins/): 
     
-* 定义：MIP为了解决性能、安全性问题必须要使用的组件，包括`<mip-img>`、`<mip-video>`、`<mip-pixl>` 等。
+* 定义：MIP为了解决性能、安全性问题必须要使用的组件，包括`<mip-img>`、`<mip-video>`、`<mip-pixl>`等。
 
 2、扩展组件(root/extensions): 
     
