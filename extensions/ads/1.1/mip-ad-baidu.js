@@ -30,7 +30,7 @@ define(function(){
 
         }
         
-        initJs(me);
+        initJs();
         initadbaidu($this, cproID, me);
     };
 
