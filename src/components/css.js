@@ -26,8 +26,7 @@ define(function () {
                 }
             }
         }
-        prefixCache[property] = prop || property;
-        return property;
+        return prefixCache[property] = prop || property;
     };
 
     var unitCache = {};
