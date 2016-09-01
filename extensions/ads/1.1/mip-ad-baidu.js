@@ -70,12 +70,7 @@ define(function(){
             async: true
         });
 
-        $elemID[0].childNodes.forEach(function(node) {
-            if(node.nodeType == 1 && node.nodeName !== 'MIP-I-SPACE' && node.nodeName !== 'SCRIPT') {
-                me.applyFillContent(node, true);
-            }
-        });
-
+        me.applyFillContent(document.getElementById(s), true);
     }
 
     /**

@@ -23,11 +23,11 @@ define(function() {
             '</script>'
         ].join('');
 
-        var elem = document.createElement("div");
-        elem.innerHTML = scriptHtml;
+        var node = document.createElement("div");
+        node.innerHTML = scriptHtml;
        
-        _this.appendChild(elem);
-        initJs(_this, me);
+        _this.appendChild(node);
+        initJs(node, me);
     }
     
 
@@ -36,7 +36,7 @@ define(function() {
      * 
      * @return
      */
-    function initJs(_this, me) {
+    function initJs(node, me) {
 
         var WEBADVISEJS = document.getElementById('MIP_WEBADVISE_JS');
 
@@ -50,15 +50,8 @@ define(function() {
 
         script.onload = function(){
 
-            var children = script.parentNode.childNodes;
+            me.applyFillContent(node, true);
 
-            _this.childNodes.forEach(function(node) {
-
-                if(node.nodeType == 1 && node.nodeName !== 'MIP-I-SPACE') {
-                    me.applyFillContent(node, true);
-                }
-                    
-            });
         };     
     }
 
