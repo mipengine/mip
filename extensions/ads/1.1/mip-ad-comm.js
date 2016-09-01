@@ -7,7 +7,7 @@
  */
 
 define(function (){
-    // var customElem = require('customElement');
+
     var $ = require('zepto');
     /**
      * render
@@ -32,6 +32,7 @@ define(function (){
                 break;
         }
     };
+
 
     /**
      * [renderOnlyImg banner样式渲染函数]
@@ -60,6 +61,7 @@ define(function (){
         
     }
 
+
     /**
      * [renderNoneImg 无图样式渲染函数]
      * 
@@ -86,6 +88,7 @@ define(function (){
         layout($this[0], me);
 
     }
+
 
     /**
      * [renderOneImg 单图样式渲染函数]
@@ -120,8 +123,6 @@ define(function (){
 
         layout($this[0], me);
     }
-
-
 
 
     /**
