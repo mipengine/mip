@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>mip网盟组件</title>
     <meta name="viewport" content="width=device-width,user-scalable=no">
-    <link rel="stylesheet" type="text/css" href="//m.baidu.com/static/ala/sf/static/css/mibhtml_4613619.css">
+    <link rel="stylesheet" type="text/css" href="/dist/css/mipmain.css">
     <style type="text/css">
       .mip-adbd {
          width: 100%;
@@ -19,7 +19,11 @@
         </p>
     </div>
      <div class="mip-adbd">
-      <mip-embed type="ad-baidu" cproid="u1908671">
+      <mip-embed 
+            layout="fixed"
+            width="414"
+            height="157" 
+            type="ad-baidu" cproid="u1908671" class="mip-element mip-layout-container">
             <script type="application/json">
             {
                 "at": "3",
@@ -28,11 +32,11 @@
                 "imgRadio": "1.7",
                 "scale": "20.6",
                 "pat": "6",
-                "tn": "template_inlay_all_mobile_u_native",
+                "tn": "template_inlay_all_mobile_lu_native",
                 "rss1": "#FFFFFF",
                 "adp": "1",
                 "ptt": "0",
-                "titFF": "",
+                "titFF": "%E",
                 "rss2": "#FFFFFF",
                 "titSU": "0",
                 "ptbg": "70",
@@ -44,7 +48,12 @@
 
 
     <div class="mip-adbd">
-      <mip-embed type="ad-baidu" cproid="u2697394"></mip-embed>
+      <mip-embed 
+          layout="fixed"
+            width="414"
+            height="80" 
+            type="ad-baidu" 
+            cproid="u2697394"></mip-embed>
     </div>
          <div class="article">
         <p class="mip-text">
@@ -68,6 +77,6 @@
       <mip-embed type="ad-baidu" cproid="u2697398"></mip-embed>
     </div>
     <script src="/dist/mipmain.js"></script>
-    <script src="/dist/extensions/ads/1.0/mip-ad.js"></script>
+    <script src="/dist/extensions/ads/1.1/mip-ad.js"></script>
   </body>
 </html>

@@ -25,6 +25,7 @@ MIP组件有四种：基础组件、扩展通用组件、个性化组件以及�
 |[mip-appdl](/#./docs/4-widget/4-customize-widget/appdl-widget.md)|app下载组件|已完成|
 |[mip-form](/#./docs/4-widget/4-customize-widget/form-widget.md)|表单组件|已完成|
 |[mip-link](/#./docs/4-widget/4-customize-widget/link-widget.md)|页面跳转组件|已完成|
+|[mip-audio](/#./docs/4-widget/4-customize-widget/audio-widget.md)|音频组件|已完成|
 |[mip-baidu-stats](/#./docs/4-widget/4-customize-widget/baidu-anlysis.md)|百度统计组件|已完成|
 
 - 广告组件

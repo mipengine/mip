@@ -40,7 +40,7 @@ Schema.org 是一份公开的、标准的 schema 词汇表，它能够给站长�
   {
     "@context": "http://schema.org",
     "@type": "NewsArticle",
-    "mainEntityOfPage": "https://www.baidu.com/nocache/zhixin/mib/mip-demo.html",
+    "mainEntityOfPage": "https://m.baidu.com/static/ala/mip/mip-demo.html",
     "headline": "标题",
     "datePublished": "1907-05-05T12:02:41Z",
     "dateModified": "1907-05-05T12:02:41Z",
