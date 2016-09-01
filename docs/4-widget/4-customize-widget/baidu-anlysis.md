@@ -5,7 +5,7 @@ mip-stats-bidu 用来支持站长添加百度统计。
 描述|百度统计组件，用于统计页面数据
 ----|----
 可用性|稳定
-所需脚本|https://mipcache.bdstatic.com/static/v1.0/mip-stats-bidu.js
+所需脚本|https://mipcache.bdstatic.com/static/v1.1/mip-stats-bidu.js
 
 ## 1. 使用
 

@@ -5,29 +5,37 @@ mip-carousel 用来支持 mip 中图片的一种展示方式，支出多图轮�
 描述|用自定义的mip-carousel标签实现了子节点的轮播效果
 ----|----
 可用性|稳定
-支持布局| fixed-height
+支持布局| fixed-height,responsive
 
 ## 1. 使用
 
 在MIP HTMl中，示例如下：
 
 ```
-<mip-carousel layout="fixed-height"  height="263"autoplay defer="1000" width="400" height="300">
-    <mip-img 
-        class="mip-img" 
-        popup 
-        alt="baidu mip img" 
-        src="http://ztd00.photos.bdimg.com/ztd/w%3D350%3Bq%3D70/sign=e3bb1c4b97ef76c6d0d2fd2ead2d8cc7/f703738da9773912b57d4b0bff198618367ae205.jpg">
-        <p class="mip-img-subtitle">带图片标题的类型</p>
-    </mip-img>
-    <mip-img 
-        class="mip-img" 
-        popup 
-        alt="baidu mip img2" 
-        src="http://ztd00.photos.bdimg.com/ztd/w%3D350%3Bq%3D70/sign=e3bb1c4b97ef76c6d0d2fd2ead2d8cc7/f703738da9773912b57d4b0bff198618367ae205.jpg">
-        <p class="mip-img-subtitle">带图片标题的类型2</p>
-    </mip-img>
-</mip-carousel>
+    <mip-carousel  autoplay defer="1000" layout="responsive"  width=600 height="400">
+            <mip-img 
+                class="mip-img"  
+                alt="胖子突围记！讲讲你的突围历程？" 
+                src="http://a2.att.hudong.com/71/04/300224654811132504044925945_950.jpg" layout="responsive"  width=600 height="300">
+            </mip-img>
+        <a target="_blank" href="http://wenda.tianya.cn/m/question/1almfj0foas94gc7vtoq6ejbfbmdk3e78ehaa" style="width:100%">
+            <mip-img 
+                class="mip-img"  
+                alt="招募行家！欢迎加入！" 
+                src="http://www.bz55.com/uploads/allimg/150305/139-1503051FS0.jpg" layout="responsive"  width=600 height="300">
+            </mip-img>
+            <p class="mip-img-subtitle">招募行家！欢迎加入！</p>
+        </a>
+        <a target="_blank" href="http://wenda.tianya.cn/m/question/1almfj0foas94gc7vtoq6ejbfbmdk3e78ehaa" style="width:100%">
+            <mip-img 
+                class="mip-img"  
+                alt="招募行家！欢迎加入！" 
+                src="http://img3.3lian.com/2013/v9/58/d/25.jpg" layout="responsive"  width=600 height="300">
+            </mip-img>
+            <p class="mip-img-subtitle">招募行家！欢迎加入！</p>
+        </a>    
+    </mip-carousel>
+
 ```
 ## 2. 属性
 

@@ -2,11 +2,11 @@
 
 ## 引入css样式
 
-&lt; link type="text/css" rel="stylesheet" href="https://mipcache.bdstatic.com/static/mipmain-v0.0.1.css" &gt;
+&lt; link type="text/css" rel="stylesheet" href="https://mipcache.bdstatic.com/static/mipmain-v1.0.1.css" &gt;
 
 ## 引入js组件（已包含jq、amd）
 
-&lt;script src="https://mipcache.bdstatic.com/static/mipmain-v1.0.0.js" &gt;&lt;/script&gt;
+&lt;script src="https://mipcache.bdstatic.com/static/mipmain-v1.0.2.js" &gt;&lt;/script&gt;
 
 ## 一个完整的例子
 
@@ -14,10 +14,10 @@
 <!DOCTYPE html>
 <html mip>
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
     <title>MIP DEMO</title>
-    <link rel="stylesheet" href="https://mipcache.bdstatic.com/static/mipmain-v1.0.0.css">
+    <link rel="stylesheet" href="https://mipcache.bdstatic.com/static/mipmain-v1.0.1.css">
     <!-- 在standard html中添加 -->
     <link rel="miphtml" href="页面h5 url">
     <!-- 在mip html中添加 -->
@@ -67,8 +67,8 @@
 
     
 
-<script src="https://mipcache.bdstatic.com/static/mipmain-v1.0.0.js"></script>
-<script src="https://mipcache.bdstatic.com/static/v1.0/mip-ad.js"></script>
+<script src="https://mipcache.bdstatic.com/static/mipmain-v1.0.2.js"></script>
+<script src="https://mipcache.bdstatic.com/static/v1.1/mip-ad.js"></script>
 </body>
 </html>
 ```

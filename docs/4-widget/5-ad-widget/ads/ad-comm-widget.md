@@ -2,13 +2,22 @@
 
 通用广告
 
+## 支持布局
+
+- reponsive
+- fixed-height
+- fixed
+
 ## 示例
 
 基础广告组件有四种样式，四种样式通过tpl参数进行区分，分别是：banner（onlyImg），无图（noneImg），单图（oneImg），多图（moreImg），下面是组件的使用代码示例：
 
 ```
 - banner
-<mip-ad 
+<mip-ad
+    layout="fixed"
+    width="414"
+    height="80" 
     type="ad-comm"
     tpl="onlyImg" 
     href="//m.baidu.com/s?word=百度" 
@@ -17,7 +26,10 @@
 </mip-ad>
 
 - 无图
-<mip-ad 
+
+<mip-ad
+    layout="fixed-height"
+    height="80" 
     type="ad-comm"
     tpl="noneImg" 
     href="//m.baidu.com/s?word=百度" 
@@ -25,7 +37,11 @@
 </mip-ad>
 
 - 单图
-<mip-ad 
+
+<mip-ad
+    layout="reponsive"
+    width="414"
+    height="80" 
     type="ad-comm"
     tpl="oneImg" 
     href="//m.baidu.com/s?word=百度" 

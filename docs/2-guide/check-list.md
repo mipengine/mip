@@ -21,14 +21,14 @@ MIP页面会有严格的规范校验，不允许存在任何校验不通过的�
 |&lt;head&gt; |强制小写|
 |&lt;meta charset="utf-8"&gt; |utf-8不区分大小写，无单引号或者双引号限制|
 |&lt;meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1"&gt; |强制小写，无单引号或者双引号限制|
-|&lt; link rel="stylesheet" type="text/css" href="https://mipcache.bdstatic.com/static/mipmain-v1.0.0.css" &gt; |强制小写，无单引号或者双引号限制，v0.0.1会根据版本不同而不同|
-|&lt;script src="https://mipcache.bdstatic.com/static/mipmain-v1.0.0.js" &gt;&lt;/script &gt; |强制小写，无单引号或者双引号限制，v0.0.1会根据版本不同而不同|
+|&lt; link rel="stylesheet" type="text/css" href="https://mipcache.bdstatic.com/static/mipmain-v1.0.1.css" &gt; |强制小写，无单引号或者双引号限制，v1.0.1会根据版本不同而不同|
+|&lt;script src="https://mipcache.bdstatic.com/static/mipmain-v1.0.2.js" &gt;&lt;/script &gt; |强制小写，无单引号或者双引号限制，v1.0.2会根据版本不同而不同|
 |&lt;body&gt; |强制小写|
 |&lt;link rel="standardhtml" href="xxx"&gt; |强制小写|
 
 ### 2. 禁用标签
 
-|提示|DISALLOWED_TAG|	 
+|提示|DISALLOWED_TAG|  
 |---|---|
 |错误说明|"The tag '%1' is disallowed."|
 |错误说明|禁止使用'xx'标签|
@@ -38,10 +38,10 @@ MIP页面会有严格的规范校验，不允许存在任何校验不通过的�
 
 禁止使用标签有：
 
-- frame	 
-- frameset	 
+- frame  
+- frameset   
 - object
-- param	 
+- param  
 - applet
 - embed
 - form
@@ -95,11 +95,11 @@ audio|mip-audio（暂未开放）
 
 <font color="red">
 
-**注意**：
+**注意**：  
 
 1. MIP HTML中的url强制是https的<br>
 
-2. a:<br>
+2. `<a>`标签:<br>
     - `<a href="javascript:xxx()"></a>` 错<br>
     - `<a href="xxx" target="_blank"></a>` 对
 
@@ -124,7 +124,7 @@ audio|mip-audio（暂未开放）
 
 - `<script type="application/json"></script>`
 
-    - 除了外链 MIP 所需 js，script标签的type的属性值应该为application/ld+json
+    - 除了外链 MIP 所需 js，script标签的type的属性值应该为application/ld+json 或 application/json
 
 <font color="red">
 

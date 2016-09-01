@@ -12,9 +12,9 @@
 
 - 必须在head标签中包含viewport设置标签:  &lt;meta name="viewport" content="width=device-width,minimum-scale=1"&gt;，推荐包含`initial-scale=1`
 
-- 必须在head标签中包含 &lt; link rel="stylesheet" type="text/css" href="https://mipcache.bdstatic.com/static/mipmain-v0.0.1.css" &gt;
+- 必须在head标签中包含 &lt; link rel="stylesheet" type="text/css" href="https://mipcache.bdstatic.com/static/mipmain-v1.0.1.css" &gt;
 
-- 必须在body标签中包含 &lt;script src="https://mipcache.bdstatic.com/static/mipmain-v1.0.0.js" &gt;&lt;/script &gt;
+- 必须在body标签中包含 &lt;script src="https://mipcache.bdstatic.com/static/mipmain-v1.0.2.js" &gt;&lt;/script &gt;
 
 - 必须在head标签中包含 &lt;link rel="standardhtml" href="xxx" &gt;
 
@@ -29,7 +29,7 @@ MIP HTML 禁止使用对页面性能以及安全有较大影响的标签，请�
 |audio	|替换为mip-audio|暂未开放|
 |iframe	|替换为mip-iframe|暂未开放|
 |style	|替换为&lt;style mip-custom&gt;|只能在head标签中使用一次|
-|script |禁止使用|禁止使用script标签, 以下两种情况除外：1）外链mip组件所需js，2）type为 "application/ld+json"|
+|script |禁止使用|禁止使用script标签, 以下两种情况除外：1）外链mip组件所需js，2）type为 "application/ld+json" 或 "application/json"|
 |svg	|允许使用||
 |button	|允许使用||
 |link	|允许使用|不允许使用link标签进行样式表的加载|

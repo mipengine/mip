@@ -1,0 +1,142 @@
+/* mip-mipengine-docmenu.css */
+/* 文档页专用-pc */
+.mip-element-docmenu {
+    #sidebar-wrapper {
+        text-align: left;
+        width: 250px;
+        float: left;
+        padding: 0 0 20px 0;
+    }
+    .sidebar {
+        .sidebar-nav.navbar-collapse {
+            padding-right: 0;
+            padding-left: 0;
+        }
+        .sidebar-search {
+            padding: 15px;
+        }
+        ul li {
+            border-bottom: 1px solid #e7e7e7;
+        }
+        .nav-second-level li a,
+        .nav-2-level li a {
+            margin-left: 3px;
+        }
+        .nav-third-level li a,
+        .nav-3-level li a {
+            margin-left: 30px;
+        }
+        .nav-4-level li a {
+            margin-left: 58px;
+        }
+        .nav-2-level li,
+        .nav-3-level li,
+        .nav-4-level li,
+        .nav-second-level li,
+        .nav-third-level li{
+            border-bottom: 0!important;
+        }
+
+    }
+    #side-menu {
+        color: #333;
+        &>li>a {
+            color: #999;
+            padding: 15px 0;
+        }
+        li a:hover, li a:focus {
+            /*color: #489cf4;*/
+            /*background: rgba(0,0,0,0.04);*/
+            background: transparent;
+            color: #489cf4;;
+        }
+        a.active {
+            color: #489cf4;
+            background: transparent;
+            /*background: rgba(0,0,0,0.02);*/
+
+        }
+        
+        /* 文档展开收起图标 */
+        &>li>a>.fa.arrow {
+            float: right;
+            right: 0
+        }
+        &>li>a>.fa.arrow:before {
+            display: inline-block;
+            width: 15px;
+            content: "<";
+            line-height: 22px;
+        }
+        &>li.active>a>.fa.arrow:before {
+            content: "v";
+        }
+        .fa.arrow{
+/*            width: 15px;
+            display: inline-block;
+            margin: 0 0 0 -15px;*/
+        }
+
+        .nav-2-level .fa.arrow:before,
+        .nav-3-level .fa.arrow:before,
+        .nav-4-level .fa.arrow:before {
+            content: '+';
+            position: absolute;
+            left: 0;
+            margin-top: 14px;
+            top: 0;
+        }
+        .nav-2-level>.active>a>.fa.arrow:before,
+        .nav-3-level>.active>a>.fa.arrow:before,
+        .nav-4-level>.active>a>.fa.arrow:before {
+            content: '-';
+        }
+    }  
+}
+
+/*文档页专用-wise*/
+@media screen and (max-width: 767px){
+    .mip-element-docmenu {
+        #sidebar-wrapper {
+            width: 100%;
+            float: none;
+        }
+        .doc-nav .navbar-toggle {
+            float: none;
+            margin: 0;
+            padding: 15px 0;
+            border-bottom: 1px solid #ebebeb;
+            width: 100%;
+            text-align: left;
+            color: #333;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        #sidebar-container {
+            margin: 0 -15px;
+            padding: 0 15px;
+            border-top: 0;
+        }
+        #side-menu>li>a{
+            padding: 15px 0;
+        }
+        #side-menu li.active {
+            background-color: #f3f3f3;
+            margin: 0 -15px;
+            padding: 0 15px;
+
+        }
+        #side-menu a {
+            color: #666;
+        }
+        #side-menu .nav-2-level>li>a{
+            padding: 10px 0 10px 20px;
+        }
+        .content-container{
+            padding: 0 15px 40px;
+        }
+        footer{
+            top: 42px;
+        }
+    }
+}

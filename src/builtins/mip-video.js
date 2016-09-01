@@ -96,10 +96,10 @@ define(['../util'], function(util){
         //HTTPS验证
         function validaHttps(url) {
             var httpsValida;
-            var absoluteurl = url.indexOf('/') == 0 ? true : false; //验证省略协议的情况如//www.baidu.com/xxx/xxx;
+            var absoluteurl = url.indexOf('/') == 0 ? true : false; //验证省略协议的情况如//www.baidu.com/xxx/xxx 或 /static/demo.mp4;
 
             if(absoluteurl) {
-                httpsValida = httpsurl(location.href.protocol);
+                httpsValida = httpsurl(location.protocol);
             }else {
                 httpsValida = httpsurl(url)
             }

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="/dist/css/mipmain.css">
+        <title>doc 的预览环境</title>
+        <style>
+        body {
+            background: #f3f3f3;
+            color: #666;
+        }
+        a {
+            color: inherit;
+        }
+        .container {
+            background: white;
+        }
+        </style>
+    </head>
+    <body class="doc-body">
+        <div class="container content-container">
+        <mip-mipengine-docmenu class="mip-element-docmenu" data-default-doc="../docs/1-overview/what-is-mip.md">
+            <div class="sidebar doc-nav" role="navigation" id="sidebar-wrapper">
+                <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#sidebar-container" aria-controls="sidebar-container" aria-expanded="false">
+                    <span class="sidebar-btn">MIP 教程</span>
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true" style="float: right;"></span>
+                </button>
+                <div class="sidebar-nav navbar-collapse" id="sidebar-container">
+                    <ul class="nav" id="side-menu"><li><a href="#">项目介绍 <span class="fa arrow"></span></a><ul class="nav nav-2-level" data-level = "2"><li><a href= "#../docs/1-overview/principle-of-mip.md">MIP 加速原理</a></li><li><a href= "#../docs/1-overview/what-is-mip.md">什么是 MIP</a></li></ul></li><li><a href="#">开发指南 <span class="fa arrow"></span></a><ul class="nav nav-2-level" data-level = "2"><li><a href= "#../docs/2-guide/MIP-101.md">新手指南 - 创建你的第一个MIP页面</a></li><li><a href= "#../docs/2-guide/check-list.md">MIP 校验list</a></li><li><a href= "#../docs/2-guide/demo.md">demo示例</a></li><li><a href= "#../docs/2-guide/show-your-page.md">让搜索发现你的页面</a></li></ul></li><li><a href="#">技术规范 <span class="fa arrow"></span></a><ul class="nav nav-2-level" data-level = "2"><li><a href= "#../docs/3-tech/mip-cache.md">MIP Cache 规范</a></li><li><a href= "#../docs/3-tech/mip-html.md">MIP HTML规范</a></li><li><a href= "#../docs/3-tech/mip-widget.md">组件开发规范</a></li></ul></li><li><a href="#">组件说明 <span class="fa arrow"></span></a><ul class="nav nav-2-level" data-level = "2"><li><a href="#">广告组件 <span class="fa arrow"></span></a><ul class="nav nav-3-level" data-level = "3"><li><a href= "#../docs/4-widget/ad-widget/ad-widget.md">mip-ad</a></li><li><a href="#">ads <span class="fa arrow"></span></a><ul class="nav nav-4-level" data-level = "4"><li><a href= "#../docs/4-widget/ad-widget/ads/ad-baidu-widget.md">ad-baidu</a></li><li><a href= "#../docs/4-widget/ad-widget/ads/ad-comm-widget.md">ad-comm </a></li><li><a href= "#../docs/4-widget/ad-widget/ads/ad-qwang-widget.md">ad-qwang</a></li></ul></li></ul></li><li><a href="#">个性化组件 <span class="fa arrow"></span></a><ul class="nav nav-3-level" data-level = "3"><li><a href= "#../docs/4-widget/customize-widget/appdl-widget.md">mip-appdl</a></li><li><a href= "#../docs/4-widget/customize-widget/baidu-anlysis.md">mip-stats-bidu</a></li><li><a href= "#../docs/4-widget/customize-widget/link-widget.md">mip-link</a></li><li><a href= "#../docs/4-widget/customize-widget/share-widget.md">mip-share</a></li></ul></li><li><a href="#">扩展通用组件 <span class="fa arrow"></span></a><ul class="nav nav-3-level" data-level = "3"><li><a href= "#../docs/4-widget/extend-widget/carousel-widget.md">mip-carousel</a></li><li><a href= "#../docs/4-widget/extend-widget/iframe-widget.md">mip-iframe</a></li></ul></li><li><a href="#">内置组件 <span class="fa arrow"></span></a><ul class="nav nav-3-level" data-level = "3"><li><a href= "#../docs/4-widget/inner-widget/img-widget.md">mip-img</a></li><li><a href= "#../docs/4-widget/inner-widget/pix-widget.md">mip-pix</a></li><li><a href= "#../docs/4-widget/inner-widget/video-widget.md">mip-video（ToDo）</a></li></ul></li><li><a href= "#../docs/4-widget/overview.md">组件概述</a></li></ul></li><li><a href="#">帮助中心 <span class="fa arrow"></span></a><ul class="nav nav-2-level" data-level = "2"><li><a href= "#../docs/5-support/contact.md">联系我们</a></li><li><a href= "#../docs/5-support/q-and-a.md">MIP FAQ
+</a></li></ul></li></ul>
+                </div>
+            </div>
+        </mip-mipengine-docmenu>
+        <mip-mipengine-docbox class="mip-element-docmenu">
+            <div class="container-fluid container-doc">
+                <div class="row">
+                    <div class="markdown-body" style="margin:10px 0 0 10px" id="con-doc">
+                       加载中 ... 
+                    </div>
+                </div>
+            </div>
+        </mip-mipengine-docbox>
+    </div>
+
+    </body>
+    <script src="/dist/mipmain.js"></script>
+    <script src="/dist/extensions/mip-mipengine/0.3/mip-mipengine-docmenu.js"></script>
+  
+</html>

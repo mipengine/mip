@@ -8,7 +8,7 @@ mip-share 用来支持在 mip 中添加对第三方网站的分享。
 ----|----
 可用性|开发中
 支持布局|responsive, fixed-height, fixed
-所需脚本|https://mipcache.bdstatic.com/static/v1.0/mip-share.js
+所需脚本|https://mipcache.bdstatic.com/static/v1.1/mip-share.js
 
 ## 1. 使用
 
@@ -17,6 +17,32 @@ mip-share 用来支持在 mip 中添加对第三方网站的分享。
 ```
 <div class="mip-share-container">
     <mip-share 
+        layout="responsive"
+        width="414"
+        height="158"
+        title="分享出去的标题" 
+        url="分享的连接" 
+        content="分享的内容" 
+        iconUrl="分享所带的图片地址">
+    </mip-share>
+</div>
+
+<div class="mip-share-container">
+    <mip-share 
+        layout="fixed-height"
+        height="158"
+        title="分享出去的标题" 
+        url="分享的连接" 
+        content="分享的内容" 
+        iconUrl="分享所带的图片地址">
+    </mip-share>
+</div>
+
+<div class="mip-share-container">
+    <mip-share
+        layout="fixed"
+        width="200"
+        height="158" 
         title="分享出去的标题" 
         url="分享的连接" 
         content="分享的内容" 
