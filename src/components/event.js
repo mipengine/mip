@@ -1,7 +1,11 @@
 define(function () {
     var reg = /\s+/;
-    var Event = function (context) {
-        this.__eventContext = context || this;
+    var Event = function (opt) {
+        if (opt) {
+            this.setEventContext(opt.context);
+            opt.createEventCallback && (this._createEventCallback = opt.createEventCallback);
+            opt.removeEventCallback && (this._removeEventCallback = opt.removeEventCallback);
+        }
     };
     var proto = Event.prototype = {
         /**
@@ -29,12 +33,17 @@ define(function () {
                 delete this.__events[name];
                 this._removeEventCallback(this._removeEventCallback(name));
             } 
-            return this;
+            return this.__events[name];
         },
         once: function (name, callback) {
             var cb = callback.bind(this);
+            var self = this;
             cb.__once = true;
             this.on(name, cb);
+            return function () {
+                self.off(name, cb);
+                cb = self = null;
+            }
         },
         trigger: function (name) {
             var args = Array.prototype.slice.call(arguments, 1);
@@ -56,6 +65,9 @@ define(function () {
                 }
             }
         },
+        setEventContext: function (context) {
+            this.__eventContext = context || this;
+        },
         _getEvent: function (name) {
             if (!this.__events) {
                 this.__events = {};
@@ -66,7 +78,6 @@ define(function () {
             }
             return this.__events[name];
         },
-        // for override
         // 创建事件时的回调，供继承用
         _createEventCallback: function () {
 
@@ -81,7 +92,7 @@ define(function () {
         'on bind',
         'off unbind',
         'once one',
-        'trigger fire'
+        'trigger fire emit'
     ].forEach(function (value) {
         var value = value.split(' ');
         for (var i = 1; i < value.length; i++) {

@@ -38,7 +38,7 @@ fis.match('/less/(**).less', {
     rExt: '.css',
     release: 'css/$1'
 });
-
+ 
 /* extension */
 fis.match('extensions/*/**.js', {
     optimizer: fis.plugin('uglify-js'),

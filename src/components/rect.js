@@ -1,5 +1,6 @@
 define(['./platform'], function (platform) {
     'use strict';
+    var round = Math.round;
     var patchForIOS = function (isEnd) {
         if (platform.needSpecialScroll && window !== top) {
             var element = document.createElement('div');
@@ -14,6 +15,10 @@ define(['./platform'], function (platform) {
 
     var Rect = {    
         get: function (left, top, width, height) {
+            left = round(left);
+            top = round(top);
+            width = round(width);
+            height = round(height);
             return {
                 left: left,
                 top: top,
@@ -29,18 +34,27 @@ define(['./platform'], function (platform) {
         setterElement: patchForIOS(),
         // for compute scrollheight in ios
         endElement: patchForIOS(true),
-        getFromDom: function (element) {
+        getDomRect: function (element) {
             var clientRect = element.getBoundingClientRect();
             return Rect.get(clientRect.left + Rect.getScrollLeft(), clientRect.top + Rect.getScrollTop(),
                  clientRect.width, clientRect.height);
         },
+        getDomOffset: function (element) {
+            var clientRect = element.getBoundingClientRect();
+            return {
+                left: round(clientRect.left),
+                top: round(clientRect.top),
+                width: round(clientRect.width),
+                height: round(clientRect.height)
+            }
+        },
         getScrollLeft: function () {
-            return Rect.scrollingElement.scrollLeft || pageXOffset ||
-                (Rect.getterElement && -Rect.getterElement.getBoundingClientRect().left) || 0;
+            return round(Rect.scrollingElement.scrollLeft || pageXOffset ||
+                (Rect.getterElement && -Rect.getterElement.getBoundingClientRect().left) || 0);
         },
         getScrollTop: function () {
-            return Rect.scrollingElement.scrollTop || pageYOffset ||
-                (Rect.getterElement && -Rect.getterElement.getBoundingClientRect().top) || 0;
+            return round(Rect.scrollingElement.scrollTop || pageYOffset ||
+                (Rect.getterElement && -Rect.getterElement.getBoundingClientRect().top) || 0);
         },
         setScrollTop: function (top) {
             var ele;
@@ -57,10 +71,10 @@ define(['./platform'], function (platform) {
                 Rect.getterElement.getBoundingClientRect()[attr]
         },
         getScrollHeight: function () {
-            return Rect.endElement ? Rect._getscroll('top') : Rect.scrollingElement.scrollHeight;
+            return round(Rect.endElement ? Rect._getscroll('top') : Rect.scrollingElement.scrollHeight);
         },
         getScrollWidth: function () {
-            return Rect.endElement ? Rect._getscroll('left') : Rect.scrollingElement.scrollWidth;
+            return window.innerWidth;
         },
         overlapping: function (rect1, rect2) {
             return rect1.top <= rect2.bottom && rect2.top <= rect1.bottom

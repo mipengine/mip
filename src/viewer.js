@@ -22,13 +22,10 @@ define(['./components/platform', './components/event', './components/css'], func
             }
         },
         show: function () {
-            //显示 body
+            // 显示 body
             css(document.body, {
                 'opacity': 1,
-                'animation': 'none',
-                '-webkit-animation': 'none',
-                '-moz-animation': 'none',
-                '-ms-animation': 'none'
+                'animation': 'none'
             });
             this.trigger('load', Date.now());
         },

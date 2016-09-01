@@ -2,7 +2,7 @@
  *  mip element
  *  @exports register
  **/
-define(['./components/cssLoader', './components/layout', './resources'], function (cssLoader, layoutObj, Resources) {
+define(['./components/css-loader', './components/layout', './resources'], function (cssLoader, layoutObj, Resources) {
     var customElements = {};
     var resources;
 

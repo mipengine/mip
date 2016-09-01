@@ -27,6 +27,13 @@ define(function () {
     customElement.prototype.prerenderAllowed = function () {return false;}
     // 模板的元素build功能，即元素的默认初始化功能 
     customElement.prototype.build = function () {};
+    customElement.prototype.expendAttr = function (attrs, element) {
+        for (var i = 0; i < attrs.length; i++) {
+            if (this.element.hasAttribute(attrs[i])) {
+                element.setAttribute(attrs[i], this.element.getAttribute(attrs[i]));
+            }
+        }
+    };
 
     return {
         create: function () {

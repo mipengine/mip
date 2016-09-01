@@ -36,8 +36,47 @@ define(function () {
         return ret;
     };
 
+    var likeArray = function (obj) {
+        return obj && (+obj.length === obj.length) && ((obj.length - 1) in obj);
+    };
+
+    var isPlainObject = function (obj) {
+        return obj && Object.getPrototypeOf(obj) == Object.prototype;
+    };
+
+    var _extend = function (target, source, deep) {
+        for (var key in source) {
+            if (deep) {
+                if (isPlainObject(source[key])) {
+                    !isPlainObject(target[key]) && (target[key] = {});
+                } else if (Array.isArray(source[key])) {
+                    !Array.isArray(target[key]) && (target[key] = []); 
+                } else {
+                    source[key] !== undefined && (target[key] = source[key]);
+                    continue;
+                }
+                _extend(target[key], source[key], deep);
+            } else if (source[key] !== undefined) {
+                target[key] = source[key];
+            }
+        }
+    };
+    var extend = function (target) {
+        var hasDeep = typeof target === 'boolean';
+        var deep = false;
+        if (hasDeep) {
+            deep = target;
+            target = arguments[1];
+        }
+        for (var i = hasDeep ? 2 : 1; i < arguments.length; i++) {
+            _extend(target, arguments[i], deep);
+        }
+        return target;
+    };
+
     return {
         throttle: throttle,
-        values: values
+        values: values,
+        extend: extend
     }
 });
