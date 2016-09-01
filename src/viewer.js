@@ -8,7 +8,8 @@ define(['./components/platform', './components/event', './components/css'], func
         init: function () {
             this.patchForIframe();
             this.sendMessage('mippageload', {
-                time: Date.now()
+                time: Date.now(),
+                title: encodeURIComponent(document.title)
             });
         },
         isIframed: win !== top,
