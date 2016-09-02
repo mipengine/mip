@@ -14,7 +14,7 @@ define(['./event', './gesture-recognizer'], function (Event, Recognizer) {
         startCenter: null,
         lastCenter: null,
         startTime: null,
-        process: function (event) {
+        process: function (event, preventX, preventY) {
             var data = {};
             var now = Date.now();
             var touches = event.touches.length ? event.touches : event.changedTouches;
@@ -23,6 +23,7 @@ define(['./event', './gesture-recognizer'], function (Event, Recognizer) {
                 this.startCenter = this.getCenter(touches);
                 this.startTime = now;
                 this.startData = data;
+                this.preData = null;
             }
             var startCenter = this.startCenter;
             var center = this.getCenter(touches);
@@ -54,6 +55,22 @@ define(['./event', './gesture-recognizer'], function (Event, Recognizer) {
             data.eventState = event.type.replace('touch', '');
             // 时间戳
             data.timeStamp = now;
+
+            if (this.preData) {
+                var instTime = data.instantDeltaTime = now - this.preData.timeStamp;
+                var instX = data.instantVelocityX = (data.x - this.preData.x) / instTime || 0;
+                var instY = data.instantVelocityY = (data.y - this.preData.y) / instTime || 0;
+                if (data.eventState === 'move' && (preventX || preventY)) {
+                    var curDirection = abs(instX) > abs(instY);
+                    if ((preventX && curDirection) || (preventY && curDirection)) {
+                        event.preventDefault();
+                    }
+                }
+            } else {
+                data.instantDeltaTime = data.instantVelocityX = data.instantVelocityY = 0;
+            }
+
+            this.preData = data;
 
             return Object.freeze(data);
         },
@@ -92,7 +109,10 @@ define(['./event', './gesture-recognizer'], function (Event, Recognizer) {
     };
 
     var touchHandler = function (event) {
-        var data = dataProcessor.process(event);
+        var opt = this._opt;
+        opt.preventDefault && event.preventDefault();
+        opt.stopPropagation && event.stopPropagation();
+        var data = dataProcessor.process(event, opt.preventX, opt.preventY);
         this._recognize(event, data);
         this.trigger(event.type, event, data);
     };
@@ -112,20 +132,26 @@ define(['./event', './gesture-recognizer'], function (Event, Recognizer) {
      * 手势
      * @class
      **/
-    var Gesture = function (element) {
+    var Gesture = function (element, opt) {
         this._eventContext = this._element = element;
         this.startX = this.startY = this.startT = 0;
+        opt && (this._opt = opt);
 
         this._boundTouchEvent = touchHandler.bind(this);
         listenersHelp(element, 'touchstart touchmove touchend touchcancel', this._boundTouchEvent);
 
         this._boundTriggerListener = this.trigger.bind(this);
-
         this._recognizers = {};
     };
 
     var proto = Event.mixin(Gesture.prototype);
 
+    proto._opt = {
+        preventDefault: false,
+        stopPropagation: false,
+        preventX: true,
+        preventY: false
+    };
     proto.cleanup = function () {
         var element = this._element;
         listenersHelp(element, 'touchstart touchmove touchend touchcancel', this._boundTouchEvent, false);

@@ -1,58 +1,36 @@
 define(function () {
-    var $ = require('zepto');
     var customElem = require('customElement').create();
-    var build = function () {
-    var _element = this.element;
-        
-    // 防止多次渲染
-        if(_element.isRender){
-            return; 
-        }
-        _element.isRender = true;
-        
-        var $this = $(_element);
+    var css = require('components/css');
 
-        // 获取src属性的值，如果用户传递了srcdoc，则将src内容转为base64编码用于iframe的src
-        
-        var src = $this.attr('src');
-        if ($this.attr('srcdoc')) {
-            src = 'data:text/html;charset=utf-8;base64,' + window.btoa($this.attr('srcdoc'));
+    var attrList = ['allowfullscreen', 'allowtransparency', 'sandbox'];
+    customElem.prototype.build = function () {
+        var element = this.element;
+        var src = element.getAttribute('src');
+        var srcdoc = element.getAttribute('srcdoc');
+        if (srcdoc) {
+            src = 'data:text/html;charset=utf-8;base64,' + window.btoa(srcdoc);
         }
-        var hei = $this.attr('height');
-        var wid = $this.attr('width')||"100%";
 
-        if (!src || !wid || !hei) {
+        var height = element.getAttribute('height');
+        var width = element.getAttribute('width') || '100%';
+
+        if (!src || !height) {
             return;
         }
 
-    var ele = [
-        '<iframe ',
-            'frameBorder="0" ',
-            'scrolling="no" ',
-            'style="width:' + wid + '; height:' + hei + '">',
-        '</iframe>'
-    ].join('');
+        var iframe = document.createElement('iframe');
+        iframe.frameBorder = '0';
+        iframe.scrolling = 'no';
+        css(iframe, {
+            width: width,
+            height: height
+        });
 
-    var $iframe = $(ele);
+        this.applyFillContent(iframe);
+        iframe.src = src;
 
-    this.applyFillContent($iframe[0]);
-
-    $iframe.attr('src', src);
-        if ($this.attr('allowfullscreen') === '') {
-            $iframe.attr('allowfullscreen', '');
-        }
-        if ($this.attr('allowtransparency') === 'true') {
-            $iframe.attr('allowtransparency', 'true');
-        }
-        var sandbox = $this.attr('sandbox');
-        if (sandbox || sandbox === '') {
-            $iframe.attr('sandbox', sandbox);
-        }
-        $this.append($iframe);
-    };
-
-    customElem.prototype.init = function(){
-        this.build = build; 
+        this.expendAttr(attrList, iframe);
+        element.appendChild(iframe);
     };
 
     return customElem;

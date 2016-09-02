@@ -1,10 +1,10 @@
 define(['./dom'], function (dom) {
-    var delegate = function (element, event, selector, handler, capture) {
+    var delegate = function (element, selector, event, handler, capture) {
         capture = !!capture;
         var eventHandler = function (event) {
             var target = event.target;
             var parent = dom.closest(target, selector);
-            if (parent) {
+            if (parent && dom.contains(this, parent)) {
                 handler.call(parent, event);
             }
         };

@@ -7,6 +7,19 @@ define(function () {
             opt.removeEventCallback && (this._removeEventCallback = opt.removeEventCallback);
         }
     };
+    var multiReg = /\s+/;
+    var multiArgs = function (obj, fn, name, args) {
+        if (multiReg.test(name)) {
+            var nameList = name.split(multiReg);
+            var isApply = typeof args !== 'function';
+            for (var i = 0; i < nameList.length; i++) {
+                isApply ? fn.apply(obj, [nameList[i]].concat(args)) :
+                    fn.call(obj, nameList[i], args);
+            }
+            return true;
+        }
+        return false;
+    };
     var proto = Event.prototype = {
         /**
          *  挂载事件
@@ -15,6 +28,9 @@ define(function () {
          *  @return {constructor}
          **/
         on: function (name, callback) {
+            if (multiArgs(this, this.on, name, callback)) {
+                return null;
+            }
             this._getEvent(name).push(callback);
             return this;
         },
@@ -23,6 +39,9 @@ define(function () {
                 this.__events = null;
                 this._removeEventCallback();
             } else if (arguments.length > 1) {
+                if (multiArgs(this, this.off, name, callback)) {
+                    return null;
+                }
                 var list = this._getEvent(name);
                 var index = list.indexOf(callback);
                 if (index > -1) {
@@ -47,14 +66,8 @@ define(function () {
         },
         trigger: function (name) {
             var args = Array.prototype.slice.call(arguments, 1);
-            if (name.search(reg) > -1) {
-                name = name.split(reg);
-                for (var i = 0; i < name.length; i++) {
-                    args.unshift(name[i]);
-                    this.trigger.apply(this, args);
-                    args.shift();
-                }
-                return;
+            if (multiArgs(this, this.trigger, name, args)) {
+                return null;
             }
             var list = this._getEvent(name);
             var context = this.__eventContext || this;
@@ -78,11 +91,11 @@ define(function () {
             }
             return this.__events[name];
         },
-        // 创建事件时的回调，供继承用
+        // 创建事件时的回调
         _createEventCallback: function () {
 
         },
-        // 删除事件时的回调，供继承用
+        // 删除事件时的回调
         _removeEventCallback: function () {
 
         }
