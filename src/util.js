@@ -1,4 +1,4 @@
-define(['./components/fn'], function (fn) {
+define(['./components/fn', './components/dom', './components/dom-event', './components/css'], function (fn, dom, event) {
     /**
      *  页面资源url转成可用的cache url
      *  @pageUrl 当前页面url地址
@@ -25,6 +25,10 @@ define(['./components/fn'], function (fn) {
     }
     return {
         urlToCacheUrl: urlToCacheUrl,
-        fn: fn
+        fn: fn,
+        dom: dom,
+        event: event,
+        rect: rect,
+        css: css
     }
 });

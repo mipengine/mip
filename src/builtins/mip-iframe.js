@@ -1,6 +1,6 @@
 define(function () {
     var customElem = require('customElement').create();
-    var css = require('components/css');
+    var util = require('util');
 
     var attrList = ['allowfullscreen', 'allowtransparency', 'sandbox'];
     customElem.prototype.build = function () {
@@ -21,7 +21,7 @@ define(function () {
         var iframe = document.createElement('iframe');
         iframe.frameBorder = '0';
         iframe.scrolling = 'no';
-        css(iframe, {
+        util.css(iframe, {
             width: width,
             height: height
         });

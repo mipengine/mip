@@ -1,9 +1,10 @@
 define(function(){
     var customElem = require('customElement').create();
     var Gesture = require('components/gesture');
-    var css = require('components/css');
+    var util = require('util');
+    var css = util.css;
     var Naboo = require('naboo');
-    var eventHelper = require('components/dom-event');
+    var eventHelper = util.event;
 
     customElem.prototype.build = function () {
         var element = this.element;

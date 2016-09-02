@@ -1,7 +1,9 @@
-define(['util', 'naboo', 'components/rect', 'viewport', 'components/css'], 
-    function(util, naboo, rect, viewport, css){
+define(['util', 'naboo', 'viewport'], 
+    function(util, naboo, viewport){
 
     var customElem = require('customElement').create();
+    var css = util.css;
+    var rect = util.rect;
 
     var getPopupImgPos = function (imgWidth, imgHeight) {
         var width = viewport.getWidth();

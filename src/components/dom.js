@@ -42,9 +42,19 @@ define(function () {
             return false;
         };
 
+    var createTmpElement = document.createElement('div');
+    var create = function (str) {
+        createTmpElement.innerHTML = str;
+        var children = createTmpElement.children;
+        createTmpElement.innerHTML = '';
+        return children.length > 1 ? children : children[0]; 
+    };
+
+
     return {
         closest: closest,
         matches: matches,
-        contains: contains
+        contains: contains,
+        create: create
     }
 });
