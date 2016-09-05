@@ -52,7 +52,7 @@ define(function() {
         function domcrete() {
             var url = this.getAttribute("url");
             var method = this.getAttribute("method");
-            var formdom = $("<form url="+url+" method="+method+" target='_blank'></form>");
+            var formdom = $("<form action="+url+" method="+method+" target='_blank'></form>");
             formdom.append($(this).html());
             $(this).html(formdom);
             domHandle.call(this);
