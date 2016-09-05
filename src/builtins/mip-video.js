@@ -49,12 +49,18 @@ define(['../util'], function(util){
         _this.ext = {}; //数据存储
         getVideoInfo.call(_this);
 
+<<<<<<< HEAD
         // console.log(_this);
+=======
+>>>>>>> 16f40fb03de04aa307d3b8680f04f777d81271e7
 
 
         _this.isBlank = isBlank.call(_this);
 
+<<<<<<< HEAD
         // console.log(_this);
+=======
+>>>>>>> 16f40fb03de04aa307d3b8680f04f777d81271e7
 
         // var _Videoconfig = {}; //数据存储
 
@@ -68,7 +74,6 @@ define(['../util'], function(util){
             playnowpage.call(_this)
         }else {
              _this.element.addEventListener('click', function() {
-                console.log('click');
                 toTranscoder.call(_this);
              });
         }
@@ -193,7 +198,6 @@ define(['../util'], function(util){
             bdPlayer = new player({});
 
             var configstr = baiduapp.call(_this);
-            console.log('configstr', configstr);
 
             // return;
 
@@ -244,7 +248,11 @@ define(['../util'], function(util){
         function baiduapp(encode) {
             // alert(encode);
             var url = alignment.call(this);
+<<<<<<< HEAD
             // alert(url)
+=======
+            
+>>>>>>> 16f40fb03de04aa307d3b8680f04f777d81271e7
             // alert(url);
 
            // var geturl = alignment(allconfig)+"&tn=nohead"; //手百调取SF页面需要去掉SF页头部。
@@ -295,15 +303,25 @@ define(['../util'], function(util){
         
         for(var key in params) {
             if(params.hasOwnProperty(key)) {
+<<<<<<< HEAD
                 if(key == 'ext') {
                     url += getEXTString(params[key]);
                 } else {
+=======
+                if(key!='ext') {
+>>>>>>> 16f40fb03de04aa307d3b8680f04f777d81271e7
                     url += key + '=' + params[key] + '&';
                 }
             }
         }
 
-        return url;
+        var ext = params['ext'];
+        url +="ext={";
+        for(var i in ext) {
+            url += i + '=' + ext[i] + '&';
+        }
+
+        return url+"}";
     }
 
     function getEXTString(param) {
