@@ -54,6 +54,8 @@ define(['../util'], function(util){
 
         _this.isBlank = isBlank.call(_this);
 
+        console.log(_this);
+
         // var _Videoconfig = {}; //数据存储
 
         // _Videoconfig = getVideoInfo.call(_this);
@@ -77,6 +79,7 @@ define(['../util'], function(util){
         //本页打开
         //该函数源于@赵雷
         function playnowpage() {
+            alert('dfddfdfd');
             var elem = this.element;
 
             $(this.element).on('click', function (event) {
@@ -241,7 +244,8 @@ define(['../util'], function(util){
         function baiduapp(encode) {
             // alert(encode);
             
-            var url = encodeURIComponent(alignment.call(this)+"tn=nohead");
+            var url = alignment.call(this)+"tn=nohead";
+            url = encode ? url : encodeURIComponent(url);
             // alert(url);
 
            // var geturl = alignment(allconfig)+"&tn=nohead"; //手百调取SF页面需要去掉SF页头部。
@@ -273,12 +277,21 @@ define(['../util'], function(util){
     function alignment() {
 
         var _this = this;
-        
+        var str = '';
+
+        _this.ext.adInfo.map(function(data, index) {
+            if(index) {
+                str += ',';
+            }
+            str += encodeURIComponent(data[0].src);
+        });
+
+        _this.adInfo = str;
 
         var data = {
             'pd': 'mms_mipvideo',
             'title': _this.title,
-            // 'dev_tpl': 'act_mip_video',
+            'dev_tpl': 'act_mip_video',
             'wd': '%E8%A7%86%E9%A2%91',
             'actname': 'act_mip_video',
             'ext': JSON.stringify(_this.ext)
@@ -328,19 +341,19 @@ define(['../util'], function(util){
             } catch (e) {}
         }
 
-        adInfoAry.map(function(data, index) {
-            if(index) {
-                adInfoStr += ',';
-            }
-            adInfoStr += encodeURIComponent(data[0].src);
-        });
+        // adInfoAry.map(function(data, index) {
+        //     if(index) {
+        //         adInfoStr += ',';
+        //     }
+        //     adInfoStr += encodeURIComponent(data[0].src);
+        // });
 
 
         _this.title = title;
         _this.ext = {
             poster : poster,
             src : src,
-            adInfo : adInfoStr,
+            adInfo : adInfoAry,
             iSrc: iSrc
         };
 
