@@ -49,12 +49,12 @@ define(['../util'], function(util){
         _this.ext = {}; //数据存储
         getVideoInfo.call(_this);
 
-        console.log(_this);
+        // console.log(_this);
 
 
         _this.isBlank = isBlank.call(_this);
 
-        console.log(_this);
+        // console.log(_this);
 
         // var _Videoconfig = {}; //数据存储
 
@@ -79,7 +79,6 @@ define(['../util'], function(util){
         //本页打开
         //该函数源于@赵雷
         function playnowpage() {
-            alert('dfddfdfd');
             var elem = this.element;
 
             $(this.element).on('click', function (event) {
@@ -233,7 +232,7 @@ define(['../util'], function(util){
         //http承载页跳转
         function superpage() {
             
-            // top.location.href = alignment.call(this, 'dfdf')
+            top.location.href = alignment.call(this, 'dfdf')
             
             //console.log(alignment.call(this));        
         }
@@ -244,14 +243,8 @@ define(['../util'], function(util){
          */
         function baiduapp(encode) {
             // alert(encode);
-<<<<<<< HEAD
             var url = alignment.call(this);
-            alert(url)
-=======
-            
-            var url = alignment.call(this)+"tn=nohead";
-            url = encode ? url : encodeURIComponent(url);
->>>>>>> fc4d8cddeed9d8561c2f215826ec691c5114fa97
+            // alert(url)
             // alert(url);
 
            // var geturl = alignment(allconfig)+"&tn=nohead"; //手百调取SF页面需要去掉SF页头部。
@@ -279,14 +272,9 @@ define(['../util'], function(util){
         var _this = this;
         var str = '';
 
-        _this.ext.adInfo.map(function(data, index) {
-            if(index) {
-                str += ',';
-            }
-            str += encodeURIComponent(data[0].src);
-        });
+        
 
-        _this.adInfo = str;
+        // _this.adInfo = str;
 
         var data = {
             'pd': 'mms_mipvideo',
@@ -296,12 +284,6 @@ define(['../util'], function(util){
             'actname': 'act_mip_video',
             'ext': _this.ext
         };
-
-        // for(var key in data) {
-        //     if(data.hasOwnProperty(key)) {
-        //         url += key + '=' + data[key] + '&';
-        //     }
-        // }
 
         return getUrl(data);
     }
@@ -313,11 +295,36 @@ define(['../util'], function(util){
         
         for(var key in params) {
             if(params.hasOwnProperty(key)) {
-                url += key + '=' + params[key] + '&';
+                if(key == 'ext') {
+                    url += getEXTString(params[key]);
+                } else {
+                    url += key + '=' + params[key] + '&';
+                }
             }
         }
 
         return url;
+    }
+
+    function getEXTString(param) {
+        var str = '';
+        var flag = false;
+
+        for(var key in param) {
+            if(param.hasOwnProperty(key)) {
+                if(key == 'adInfo') {
+                    var adStr = '';
+                    for(var index = 0; index < param.adInfo.length; index ++) {
+                        adStr += param[key][index][0].src + ',';
+                    }
+                }
+
+                str += flag ? ',' + key + ':' + param[key] : key + ': ' + param[key]
+                flag = true;
+            }
+        }
+
+        return 'ext={' + str + '}&';
     }
 
 
