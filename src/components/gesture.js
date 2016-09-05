@@ -72,6 +72,8 @@ define(['./event', './gesture-recognizer', './fn'], function (Event, Recognizer,
 
             this.preData = data;
 
+            data.event = event;
+
             return Object.freeze(data);
         },
         // 计算触摸点的中心点 PS：暂时只做单点，后续看需求是否加多点
@@ -113,7 +115,7 @@ define(['./event', './gesture-recognizer', './fn'], function (Event, Recognizer,
         opt.preventDefault && event.preventDefault();
         opt.stopPropagation && event.stopPropagation();
         var data = dataProcessor.process(event, opt.preventX, opt.preventY);
-        this._recognize(event, data);
+        this._recognize(data);
         this.trigger(event.type, event, data);
     };
 
@@ -193,7 +195,7 @@ define(['./event', './gesture-recognizer', './fn'], function (Event, Recognizer,
     proto._hasRegister = function (name) {
         return !!this._recognizers[Recognizer.getByEventname(name)];
     };
-    proto._recognize = function (event, data) {
+    proto._recognize = function (data) {
         var recognizers = this._recognizers;
         for (var i in recognizers) {
             var recognizer = recognizers[i];

@@ -1,4 +1,5 @@
-define(['./components/fn', './components/dom', './components/dom-event', './components/css'], function (fn, dom, event) {
+define(['./components/fn', './components/dom', './components/dom-event', './components/css',
+    './components/rect'], function (fn, dom, event, css, rect) {
     /**
      *  页面资源url转成可用的cache url
      *  @pageUrl 当前页面url地址

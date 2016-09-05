@@ -151,10 +151,7 @@ define(['./components/css-loader', './components/layout', './resources'], functi
         };
  
         proto.excuteActionEvent = function (action) {
-            var eventObj = this.customElement._actionEvent;
-            if (action && eventObj) {
-                eventObj.trigger(action.handler, action.event, action.arg);
-            }
+            this.customElement.excuteActionEvent(action);
         };
         return baseElementProto = proto;
     };

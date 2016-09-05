@@ -117,7 +117,7 @@ define(['./fn'], function (fn) {
             return this.state = STATE_HOLD;
         },
         trigger: function (data) {
-            this.gesture.trigger(data.type, data);
+            this.gesture.trigger(data.type, data.event, data);
         }
     };
 

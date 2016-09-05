@@ -8,7 +8,7 @@ define(['./components/platform', './components/event', './components/css', './co
     var Viewer = {
         init: function () {
             this.patchForIframe();
-            this._gesture = new Gesture({
+            this._gesture = new Gesture(document, {
                 preventX: false
             });
             this.sendMessage('mippageload', {

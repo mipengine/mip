@@ -10,6 +10,7 @@ define(['components/gesture'], function (Gesture) {
     customElement.prototype.build = function () {
         var element = this.element;
         this.id = index ++;
+        element.id = this.id;
         if (element.getAttribute('width')) {
             element.style.width = element.getAttribute('width') + 'px';
         }
@@ -32,6 +33,9 @@ define(['components/gesture'], function (Gesture) {
                 console.log(data);
             });
         }
+        this.addActionEvent('test', function (event, title) {
+            console.log(title);
+        });
     };
     customElement.prototype.viewportCallback = function (inview) {
         console.log(this.id, inview);

@@ -1,7 +1,7 @@
 define(['./fn'], function () {
     'use strict';
 
-    var parseReg = /^(\w+):(\w+)\.(\w+)(\([^\)]+\))?$/;
+    var parseReg = /^(\w+):(\w+)\.(\w+)(?:\(([^\)]+)\))?$/;
     var checkReg = /^mip-/;
 
     var optKeys = ['get', 'excuteEventAction', 'parse', 'checkTarget'];
@@ -16,7 +16,7 @@ define(['./fn'], function () {
             if (!target) {
                 return;
             }
-            this.excute(
+            this._excute(
                 this.parse(target.getAttribute(this.attr), type, nativeEvent),
                 target
                 );
@@ -28,8 +28,8 @@ define(['./fn'], function () {
         get: function (id) {
             return document.getElementById(id);
         },
-        excuteEventAction: function (action, target) {
-            target.excuteAction && target.excuteAction(action);
+        excuteActionEvent: function (action, target) {
+            target.excuteActionEvent && target.excuteActionEvent(action);
         },
         _excute: function (actions) {
             for (var i = 0; i < actions.length; i++) {
@@ -49,12 +49,12 @@ define(['./fn'], function () {
             var result = [];
             for (var i = 0; i < actions.length; i++) {
                 var matchedResult = actions[i].match(parseReg);
-                if (matchedResult && matchedResult[0] === type) {
+                if (matchedResult && matchedResult[1] === type) {
                     result.push({
-                        type: matchedResult[0],
-                        id: matchedResult[1],
-                        handler: matchedResult[2],
-                        arg: matchedResult[3],
+                        type: matchedResult[1],
+                        id: matchedResult[2],
+                        handler: matchedResult[3],
+                        arg: matchedResult[4],
                         event: nativeEvent
                     });
                 }

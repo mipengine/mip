@@ -38,7 +38,7 @@ define(['./components/event'], function (Event) {
     customElement.prototype.addActionEvent = function () {
         var evt = this._actionEvent;
         if (!evt) {
-            evt = this._action = {};
+            evt = this._actionEvent = new Event();
             evt.setEventContext(this);
         }
         
