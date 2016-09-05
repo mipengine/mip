@@ -37,10 +37,15 @@ define(function () {
                 if (element === child) {
                     return true;
                 }
-                child = child.parentNode;
+                child = child.parentElement;
             };
             return false;
         };
+
+    var closestTo = function (element, selector, target) {
+        var closestElement = closest(element, selector);
+        return contains(element, closestElement) ? closestElement : null;
+    };
 
     var createTmpElement = document.createElement('div');
     var create = function (str) {
@@ -53,6 +58,7 @@ define(function () {
 
     return {
         closest: closest,
+        closestTo: closestTo,
         matches: matches,
         contains: contains,
         create: create

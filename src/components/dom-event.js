@@ -3,8 +3,8 @@ define(['./dom'], function (dom) {
         capture = !!capture;
         var eventHandler = function (event) {
             var target = event.target;
-            var parent = dom.closest(target, selector);
-            if (parent && dom.contains(this, parent)) {
+            var parent = dom.closestTo(target, selector, this);
+            if (parent) {
                 handler.call(parent, event);
             }
         };
