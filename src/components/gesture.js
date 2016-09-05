@@ -1,7 +1,7 @@
 /**
  * 手势组件
  **/
-define(['./event', './gesture-recognizer'], function (Event, Recognizer) {
+define(['./event', './gesture-recognizer', './fn'], function (Event, Recognizer, fn) {
     var round = Math.round;
     var max = Math.max;
     var abs = Math.abs;
@@ -135,7 +135,7 @@ define(['./event', './gesture-recognizer'], function (Event, Recognizer) {
     var Gesture = function (element, opt) {
         this._eventContext = this._element = element;
         this.startX = this.startY = this.startT = 0;
-        opt && (this._opt = opt);
+        opt && (this._opt = fn.extend({}, this._opt, opt));
 
         this._boundTouchEvent = touchHandler.bind(this);
         listenersHelp(element, 'touchstart touchmove touchend touchcancel', this._boundTouchEvent);

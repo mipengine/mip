@@ -1,16 +1,21 @@
 /** 
  * viewer
  **/
-define(['./components/platform', './components/event', './components/css'], function (platform, Event, css) {
+define(['./components/platform', './components/event', './components/css', './components/event-action',
+    './components/gesture'], function (platform, Event, css, EventAction, Gesture) {
     'use strict';
     var win = window;
     var Viewer = {
         init: function () {
             this.patchForIframe();
+            this._gesture = new Gesture({
+                preventX: false
+            });
             this.sendMessage('mippageload', {
                 time: Date.now(),
                 title: encodeURIComponent(document.title)
             });
+            this.setupEventAction();
         },
         isIframed: win !== top,
         patchForIframe: function () {
@@ -37,6 +42,12 @@ define(['./components/platform', './components/event', './components/css'], func
                     data: data
                 }, '*');
             }
+        },
+        setupEventAction: function () {
+            var eventAction = this.eventAction = new EventAction();
+            this._gesture.on('tap', function (event) {
+                eventAction.excute('tap', event.target, event);
+            });
         }
     };
 

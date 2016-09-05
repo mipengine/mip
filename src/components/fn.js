@@ -74,9 +74,25 @@ define(function () {
         return target;
     };
 
+    var pick = function (obj/*, key1, key2 or [keys] */) {
+        var keys = arguments[1];
+        var result = [];
+        if (!Array.isArray(keys)) {
+            keys = Array.prototype.slice.call(arguments, 1); 
+        }
+        for (var i = 0; i < keys.length; i++) {
+            var key = keys[i];
+            if (key in obj) {
+                result[key] = obj[key];
+            }
+        }
+        return result;
+    };
+
     return {
         throttle: throttle,
         values: values,
-        extend: extend
+        extend: extend,
+        pick: pick
     }
 });

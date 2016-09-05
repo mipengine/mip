@@ -32,7 +32,6 @@ define(['./platform'], function (platform) {
             && document.body) || document.documentElement,
         getterElement: patchForIOS(),
         setterElement: patchForIOS(),
-        // for compute scrollheight in ios
         endElement: patchForIOS(true),
         getDomRect: function (element) {
             var clientRect = element.getBoundingClientRect();

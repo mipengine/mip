@@ -3,7 +3,7 @@
  * @exports factory
  * @copyright 2016 Baidu.com, Inc. All Rights Reserved
  */
-define(function () {
+define(['./components/event'], function (Event) {
     function customElement(element) {
         this.element = element;
         if (this.init){
@@ -32,6 +32,23 @@ define(function () {
             if (this.element.hasAttribute(attrs[i])) {
                 element.setAttribute(attrs[i], this.element.getAttribute(attrs[i]));
             }
+        }
+    };
+
+    customElement.prototype.addActionEvent = function () {
+        var evt = this._actionEvent;
+        if (!evt) {
+            evt = this._action = {};
+            evt.setEventContext(this);
+        }
+        
+        evt.on.apply(evt, arguments);
+    };
+
+    customElement.prototype.excuteActionEvent = function (action) {
+        var eventObj = this._actionEvent;
+        if (action && eventObj) {
+            eventObj.trigger(action.handler, action.event, action.arg);
         }
     };
 
