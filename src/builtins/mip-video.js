@@ -49,12 +49,10 @@ define(['../util'], function(util){
         _this.ext = {}; //数据存储
         getVideoInfo.call(_this);
 
-        console.log(_this);
 
 
         _this.isBlank = isBlank.call(_this);
 
-        console.log(_this);
 
         // var _Videoconfig = {}; //数据存储
 
@@ -68,7 +66,6 @@ define(['../util'], function(util){
             playnowpage.call(_this)
         }else {
              _this.element.addEventListener('click', function() {
-                console.log('click');
                 toTranscoder.call(_this);
              });
         }
@@ -79,7 +76,6 @@ define(['../util'], function(util){
         //本页打开
         //该函数源于@赵雷
         function playnowpage() {
-            alert('dfddfdfd');
             var elem = this.element;
 
             $(this.element).on('click', function (event) {
@@ -194,7 +190,6 @@ define(['../util'], function(util){
             bdPlayer = new player({});
 
             var configstr = baiduapp.call(_this);
-            console.log('configstr', configstr);
 
             // return;
 
@@ -244,14 +239,8 @@ define(['../util'], function(util){
          */
         function baiduapp(encode) {
             // alert(encode);
-<<<<<<< HEAD
             var url = alignment.call(this);
-            alert(url)
-=======
             
-            var url = alignment.call(this)+"tn=nohead";
-            url = encode ? url : encodeURIComponent(url);
->>>>>>> fc4d8cddeed9d8561c2f215826ec691c5114fa97
             // alert(url);
 
            // var geturl = alignment(allconfig)+"&tn=nohead"; //手百调取SF页面需要去掉SF页头部。
@@ -313,11 +302,19 @@ define(['../util'], function(util){
         
         for(var key in params) {
             if(params.hasOwnProperty(key)) {
-                url += key + '=' + params[key] + '&';
+                if(key!='ext') {
+                    url += key + '=' + params[key] + '&';
+                }
             }
         }
 
-        return url;
+        var ext = params['ext'];
+        url +="ext={";
+        for(var i in ext) {
+            url += i + '=' + ext[i] + '&';
+        }
+
+        return url+"}";
     }
 
 
