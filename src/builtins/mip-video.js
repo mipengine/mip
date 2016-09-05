@@ -210,9 +210,10 @@ define(['../util'], function(util){
                    
                     var configstr = baiduapp.call(_this);
 
-                    alert('dad'+ configstr);
-                    Box.ios.invokeApp("video",{"action":"playVideo","params":configstr,"minver":"6.8.0.0"},"");
-                
+                  //  alert('dad'+ configstr);
+                   try{        
+                    Box.ios.invokeApp("video",{"action":"playVideo","params": configstr, "minver":"6.8.0.0"},"");
+              }catch(e){alert(e)}  
                 } else {
                     
                     superpage.call(_this);
@@ -231,7 +232,7 @@ define(['../util'], function(util){
             
             // top.location.href = alignment.call(this, 'dfdf')
             
-            console.log(alignment.call(this));        
+            //console.log(alignment.call(this));        
         }
 
         /**
@@ -240,8 +241,8 @@ define(['../util'], function(util){
          */
         function baiduapp(encode) {
             // alert(encode);
-            
-            var url = encodeURIComponent(alignment.call(this)+"tn=nohead");
+            var url = alignment.call(this);
+            alert(url)
             // alert(url);
 
            // var geturl = alignment(allconfig)+"&tn=nohead"; //手百调取SF页面需要去掉SF页头部。
@@ -249,19 +250,13 @@ define(['../util'], function(util){
             var $jsonString = {
                 "vid": +new Date(),
                 "title": encodeURIComponent(_this.title),
-                "src": url,
+                "src": encodeURIComponent(url),
                 "cate": "tvplay",
                 "pageUrl": location.href,
                 "type": "other"
             }
-            console.log(location.href);
-            console.log($jsonString);
 
             jsonString = JSON.stringify($jsonString);
-
-
-
-            // alert(jsonString);
             return jsonString;
         }
 
@@ -281,8 +276,7 @@ define(['../util'], function(util){
             // 'dev_tpl': 'act_mip_video',
             'wd': '%E8%A7%86%E9%A2%91',
             'actname': 'act_mip_video',
-            'ext': JSON.stringify(_this.ext)
-
+            'ext': _this.ext
         };
 
         // for(var key in data) {
