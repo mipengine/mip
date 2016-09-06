@@ -16,15 +16,16 @@ define(function() {
         var cpropsheight = _this.getAttribute("cpro_psheight") || "230";
 
         var scriptHtml = [
-            '<script>',
-            '    var cpro_psid ="' + cpropsid + '";',
-            '    var cpro_pswidth ="' + cpropswidth + '";',
-            '    var cpro_psheight="' + cpropsheight + '";',
-            '</script>'
+            'var cpro_psid ="' + cpropsid + '";',
+            'var cpro_pswidth ="' + cpropswidth + '";',
+            'var cpro_psheight="' + cpropsheight + '";'
         ].join('');
 
+        var scriptNode = document.createElement("script");
+        scriptNode.innerHTML = scriptHtml;
+
         var node = document.createElement("div");
-        node.innerHTML = scriptHtml;
+        node.appendChild(scriptNode);
        
         _this.appendChild(node);
         initJs(node, me);
