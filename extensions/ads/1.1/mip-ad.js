@@ -1,13 +1,8 @@
-// __inline('./mip-ad.js');
-// __inline('./mip-ad-baidu.js');
-// 
-
-
 /**
- * 广告插件
+ * 广告组件
  * 
  * @author wangpei07@baidu.com
- * @version 1.0
+ * @version 1.1
  * @copyright 2016 Baidu.com, Inc. All Rights Reserved
  */
 require.config({

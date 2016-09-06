@@ -38,6 +38,10 @@ define(function() {
             iconUrl: _element.getAttribute('icon') || ''
         }, $(_element));
 
+        var elem = $(_element).children().not("mip-i-space")[0];
+
+        this.applyFillContent(elem);
+
     }
 
     /**

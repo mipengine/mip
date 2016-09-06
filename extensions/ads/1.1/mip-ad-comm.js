@@ -1,5 +1,5 @@
 /**
- * 广告插件
+ * 通用广告
  * 
  * @author wangpei07@baidu.com
  * @version 1.0
@@ -7,7 +7,7 @@
  */
 
 define(function (){
-    // var customElem = require('customElement');
+
     var $ = require('zepto');
     /**
      * render
@@ -33,6 +33,7 @@ define(function (){
         }
     };
 
+
     /**
      * [renderOnlyImg banner样式渲染函数]
      * 
@@ -47,18 +48,22 @@ define(function (){
         var ratio = (size[1]/size[0]*100).toFixed(2);
 
         var html = [
-            '<a href="'+ url +'" class="c-urljump">',
-                '<div class="mip-ad-bannerbox" style="padding-bottom:'+ ratio +'%;">',
-                    '<img src="'+ src +'">',
-                '</div>',
-            '</a>'
+            '<div class="mip-ad-bannerbox" style="padding-bottom:'+ ratio +'%;">',
+            '    <img src="'+ src +'">',
+            '</div>'
         ].join('');
 
-        $this.append(html);
+        var node = document.createElement("a");
+        node.setAttribute('href', url);
+        node.classList.add('c-urljump');
+        node.innerHTML = html;
 
-        layout($this[0], me);
+        $this.append(node);
+
+        me.applyFillContent(node, true);
         
     }
+
 
     /**
      * [renderNoneImg 无图样式渲染函数]
@@ -72,20 +77,23 @@ define(function (){
         var title = $this.data('title');
 
         var html = [
-            '<a class="c-blocka mip-ad-box" href="'+ url +'" class="c-urljump">',
-            '    <div class="mip-ad-row">',
-            '        <div class="c-span12 c-line-clamp2">',
-            '            ' + title,
-            '        </div>',
+            '<div class="mip-ad-row">',
+            '    <div class="c-span12 c-line-clamp2">',
+            '        ' + title,
             '    </div>',
-            '</a>'
+            '</div>'
         ].join('');
 
-        $this.append(html);
+        var node = document.createElement("a");
+        node.setAttribute('href', url);
+        node.className += 'c-blocka c-urljump mip-ad-box';
+        node.innerHTML = html;
 
-        layout($this[0], me);
+        $this.append(node);
 
+        me.applyFillContent(node, true);
     }
+
 
     /**
      * [renderOneImg 单图样式渲染函数]
@@ -102,26 +110,27 @@ define(function (){
         var ratio = (size[1]/size[0]*100).toFixed(2);
 
         var html = [
-            '<a class="c-blocka mip-ad-box" href="'+ url +'" class="c-urljump">',
-            '    <div class="mip-ad-row">',
-            '        <div class="c-span4">',
-            '            <div class="c-img c-img-x" style="padding-bottom:'+ ratio +'%;">',
-            '                <img src="'+ src +'">',
-            '            </div>',
-            '        </div>',
-            '        <div class="c-span8 c-line-clamp2">',
-            '            ' + title,
+            '<div class="mip-ad-row">',
+            '    <div class="c-span4">',
+            '        <div class="c-img c-img-x" style="padding-bottom:'+ ratio +'%;">',
+            '            <img src="'+ src +'">',
             '        </div>',
             '    </div>',
-            '</a>'
+            '    <div class="c-span8 c-line-clamp2">',
+            '        ' + title,
+            '    </div>',
+            '</div>'
         ].join(''); 
 
-        $this.append(html);
+        var node = document.createElement("a");
+        node.setAttribute('href', url);
+        node.className += 'c-blocka c-urljump mip-ad-box';
+        node.innerHTML = html;
 
-        layout($this[0], me);
+        $this.append(node);
+
+        me.applyFillContent(node, true);
     }
-
-
 
 
     /**
@@ -160,19 +169,22 @@ define(function (){
             }
 
             var html = [
-                '<a class="c-blocka  mip-ad-box" href="'+ url +'" class="c-urljump">',
-                '    <div class="mip-ad-row c-gap-bottom-small">',
-                '        <div class="c-span12 c-title">' + title + '</div>',
-                '    </div>',
-                '    <div class="mip-ad-row">',
-                '         ' + img_html,
-                '    </div>',
-                '</a>'
+                '<div class="mip-ad-row c-gap-bottom-small">',
+                '    <div class="c-span12 c-title">' + title + '</div>',
+                '</div>',
+                '<div class="mip-ad-row">',
+                '    ' + img_html,
+                '</div>'
             ].join('');
 
-            $this.append(html);
+            var node = document.createElement("a");
+            node.setAttribute('href', url);
+            node.className += 'c-blocka c-urljump mip-ad-box';
+            node.innerHTML = html;
 
-            layout($this[0], me);
+            $this.append(node);
+
+            me.applyFillContent(node, true);
         }
     }
 
@@ -185,17 +197,6 @@ define(function (){
             ].join('');
         }
         return '';
-    }
-
-
-    function layout(parent, me) {
-        parent.childNodes.forEach(function(node) {
-
-            if(node.nodeType == 1 && node.nodeName !== 'MIP-I-SPACE' && node.nodeName !== 'SCRIPT') {
-                me.applyFillContent(node, true);
-            }
-                        
-        });
     }
 
     return {
