@@ -18,6 +18,10 @@ define(['../util'], function(util){
         var _this = this;
         var _element = _this.element;
 
+        _this.ext = {};
+
+        _this.iframeSrc = '';
+
         _this.isBlank = false;
 
         if (_element.isRender) {
@@ -46,29 +50,28 @@ define(['../util'], function(util){
         var me = _element;
         var $me = $(_element);
 
-        _this.ext = {}; //数据存储
         getVideoInfo.call(_this);
-
 
         _this.isBlank = isBlank.call(_this);
 
-
-        // var _Videoconfig = {}; //数据存储
-
-        // _Videoconfig = getVideoInfo.call(_this);
-
-        // _Videoconfig = getInfo.call(_element);
-        // listdataValida();
-
         //本地打开或者外部页打开
-        if(_this.isBlank) { //在本地打开
+        if(!_this.isBlank) { //在本地打开
             playnowpage.call(_this)
-        }else {
-             _this.element.addEventListener('click', function() {
-                toTranscoder.call(_this);
-             });
-        }
+        } else {
 
+            var str = '';
+            _this.ext.adInfo.map(function(data, index) {
+                if(index) {
+                    str += ',';
+                }
+                str += encodeURIComponent(data[0].src);
+            });
+            _this.ext.adInfo = str;
+
+            _this.element.addEventListener('click', function() {
+                toTranscoder.call(_this);
+            });
+        }
 
         
 
@@ -180,37 +183,24 @@ define(['../util'], function(util){
 
             var _this = this;
 
-            var allconfig = _this.ext;//getInfo.call(this);
-            // allconfig.title = _this.title;
-
             var baiduappbox = recognitionClient();
             bdPlayer && bdPlayer.remove();
 
             bdPlayer = new player({});
-
-            var configstr = baiduapp.call(_this);
-
-            // return;
 
             //一下为判断终端是否手百,ios与Android
             if(baiduappbox.baiduboxapp) { //手百
                 
                 if(getOS() == "Android" && baiduappbox.version > "6.4") {
 
-                    
                     var configstr = baiduapp.call(_this, true);
                     Box.android.invokeApp("Bdbox_android_capi_video","playVideo",[configstr]);
                 
                 } else if(getOS()=="IOS" && baiduappbox.version > "6.8") {
 
-                     _this.ext.tn = 'nohead';
-                   
                     var configstr = baiduapp.call(_this);
-
-                  //  alert('dad'+ configstr);
-                   try{        
                     Box.ios.invokeApp("video",{"action":"playVideo","params": configstr, "minver":"6.8.0.0"},"");
-              }catch(e){alert(e)}  
+
                 } else {
                     
                     superpage.call(_this);
@@ -227,9 +217,8 @@ define(['../util'], function(util){
         //http承载页跳转
         function superpage() {
             
-            top.location.href = alignment.call(this, 'dfdf')
-            
-            //console.log(alignment.call(this));        
+            top.location.href = alignment.call(this);
+
         }
 
         /**
@@ -237,12 +226,8 @@ define(['../util'], function(util){
          * encode参数为ios与安卓的配置方式不同
          */
         function baiduapp(encode) {
-            // alert(encode);
-            var url = alignment.call(this);
-            // alert(url);
+            var url = alignment.call(this) + 'tn=nohead';
 
-           // var geturl = alignment(allconfig)+"&tn=nohead"; //手百调取SF页面需要去掉SF页头部。
-           // var URL = encode ? geturl : encodeURIComponent(geturl)
             var $jsonString = {
                 "vid": +new Date(),
                 "title": encodeURIComponent(_this.title),
@@ -253,6 +238,7 @@ define(['../util'], function(util){
             }
 
             jsonString = JSON.stringify($jsonString);
+
             return jsonString;
         }
 
@@ -264,19 +250,16 @@ define(['../util'], function(util){
     function alignment() {
 
         var _this = this;
-        var str = '';
-
-        
-
-        // _this.adInfo = str;
+        var ext = _this.iframeSrc ? {iframeSrc: _this.iframeSrc}
+                                  : _this.ext;
 
         var data = {
             'pd': 'mms_mipvideo',
-            'title': _this.title,
+            'title': encodeURIComponent(_this.title),
             'dev_tpl': 'act_mip_video',
             'wd': '%E8%A7%86%E9%A2%91',
             'actname': 'act_mip_video',
-            'ext': _this.ext
+            'ext': encodeURIComponent(JSON.stringify(ext))
         };
 
         return getUrl(data);
@@ -289,43 +272,12 @@ define(['../util'], function(util){
         
         for(var key in params) {
             if(params.hasOwnProperty(key)) {
-                if(key == 'ext') {
-                    url += getEXTString(params[key]);
-                } else {
-                    url += key + '=' + params[key] + '&';
-                }
+                url += key + '=' + params[key] + '&';
             }
         }
 
-        var ext = params['ext'];
-        url +="ext={";
-        for(var i in ext) {
-            url += i + '=' + ext[i] + '&';
-        }
-
-        return url+"}";
-    }
-
-    function getEXTString(param) {
-        var str = '';
-        var flag = false;
-
-        for(var key in param) {
-            if(param.hasOwnProperty(key)) {
-                if(key == 'adInfo') {
-                    var adStr = '';
-                    for(var index = 0; index < param.adInfo.length; index ++) {
-                        adStr += param[key][index][0].src + ',';
-                    }
-                }
-
-                str += flag ? ',' + key + ':' + param[key] : key + ': ' + param[key]
-                flag = true;
-            }
-        }
-
-        return 'ext={' + str + '}&';
-    }
+        return url;
+    }    
 
 
     function getVideoInfo() {
@@ -340,29 +292,20 @@ define(['../util'], function(util){
         var adInfoStr = '';
 
         //广告信息序列化
-        
         if (adInfo && !isLtIOS8()) {
             try {
                 adInfoAry = new Function('return ' + (adInfo))();
             } catch (e) {}
         }
 
-        // adInfoAry.map(function(data, index) {
-        //     if(index) {
-        //         adInfoStr += ',';
-        //     }
-        //     adInfoStr += encodeURIComponent(data[0].src);
-        // });
-
 
         _this.title = title;
+        _this.iframeSrc = encodeURIComponent(iSrc);
         _this.ext = {
-            poster : poster,
-            src : src,
-            adInfo : adInfoAry,
-            iSrc: iSrc
+            poster : encodeURIComponent(poster),
+            src : encodeURIComponent(src),
+            adInfo : adInfoAry
         };
-
     }
 
     function isLtIOS8() {
@@ -378,31 +321,43 @@ define(['../util'], function(util){
         }
 
         if(version != "undefined" && version.length > 0){
-            version = version.substring(0,1);
+            version = version.substring(0, 1);
         }
 
         return version < 8;
     }
 
 
+    /**
+     * [isBlank open new page]
+     * 
+     * @return {Boolean} true or false
+     */
     function isBlank() {
 
         var _this = this;
+        if(_this.iframeSrc) return true;
+
         var info = _this.ext.adInfo;
-        var flag = isHttps(_this.ext.src);
+        var flag = !isHttps(_this.ext.src);
 
         for(var index = 0; index < info.length; index ++) {
-            flag = flag && isHttps(info[index][0].src);
+            flag = flag && !isHttps(info[index][0].src);
         }
 
         return flag;
-
     }
 
 
+    /**
+     * [isHttps is url a https url]
+     * 
+     * @param  {String}  url a source url or src 
+     * @return {Boolean} true or false
+     */
     function isHttps(url) {
 
-        var reg = /^https:\/\//;
+        var reg = /^https/;
         return reg.test(url) || reg.test(location.protocol);
 
     }
@@ -420,20 +375,20 @@ define(['../util'], function(util){
 
 
     /**
-         * 客户端验证-短线方案
-         * 主要验证手百,以提供调起服务
-         */
-        function recognitionClient() {
-            var userAgentconfig = {};
-            var userAgent = navigator.userAgent;
-            var baiduboxapp = userAgent.indexOf('baiduboxapp')>0?true:false;
+     * 客户端验证-短线方案
+     * 主要验证手百,以提供调起服务
+     */
+    function recognitionClient() {
+        var userAgentconfig = {};
+        var userAgent = navigator.userAgent;
+        var baiduboxapp = userAgent.indexOf('baiduboxapp') > 0 ? true : false;
 
-            if(baiduboxapp) {
-                userAgentconfig.version = Number(parseFloat(Box.version));
-                userAgentconfig.baiduboxapp = baiduboxapp;
-            }
-            return userAgentconfig;
-        }  
+        if(baiduboxapp) {
+            userAgentconfig.version = Number(parseFloat(Box.version));
+            userAgentconfig.baiduboxapp = baiduboxapp;
+        }
+        return userAgentconfig;
+    }  
 
     customElem.prototype.init = function(){
         this.build = build; 
