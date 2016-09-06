@@ -29,22 +29,6 @@ define(['../util'], function(util){
         }
         _element.isRender = true;
 
-        // for(var index = 0; index < _element.childNodes.length; index ++) {
-        //     var node = _element.childNodes[index];
-
-        //     if(node.nodeType == 1 && node.nodeName != 'MIP-IMG') {
-        //         _this.applyFillContent(node, true); 
-        //     }
-        // }
-
-        // var $childs = $(_element).children().not('mip-i-space');
-
-        // $childs.map(function(i,ele) {
-        //     if(ele.tagName.toLocaleLowerCase() == "mip-img") {
-        //         g_this.applyFillContent(ele,true);       
-        //     }
-        // });
-
         _this.applyFillContent(_element, true);
         
         var me = _element;
@@ -74,7 +58,6 @@ define(['../util'], function(util){
         }
 
         
-
         //本页打开
         //该函数源于@赵雷
         function playnowpage() {
@@ -250,9 +233,8 @@ define(['../util'], function(util){
     function alignment() {
 
         var _this = this;
-        var ext = _this.iframeSrc ? {iframeSrc: _this.iframeSrc}
-                                  : _this.ext;
-
+        var ext = !!_this.iframeSrc ? {iframeSrc: _this.iframeSrc}
+                                    : _this.ext;
         var data = {
             'pd': 'mms_mipvideo',
             'title': encodeURIComponent(_this.title),
@@ -266,6 +248,12 @@ define(['../util'], function(util){
     }
 
 
+    /**
+     * [getUrl splice URL by params]
+     * 
+     * @param  {Object} params
+     * @return {String} url
+     */
     function getUrl(params) {
         var url = 'http://cp01-sys-rath4-c32-qa270.cp01.baidu.com:8003/sf?'
         // var url = "http://transcoder.baidu.com/sf?";
@@ -280,6 +268,11 @@ define(['../util'], function(util){
     }    
 
 
+    /**
+     * [getVideoInfo video params init]
+     * 
+     * @return
+     */
     function getVideoInfo() {
         var _this = this;
 
@@ -298,7 +291,6 @@ define(['../util'], function(util){
             } catch (e) {}
         }
 
-
         _this.title = title;
         _this.iframeSrc = encodeURIComponent(iSrc);
         _this.ext = {
@@ -308,6 +300,12 @@ define(['../util'], function(util){
         };
     }
 
+
+    /**
+     * [isLtIOS8 is ios version left then 8]
+     * 
+     * @return {Boolean} true or false
+     */
     function isLtIOS8() {
 
         var agent = navigator.userAgent.toLowerCase() ;
@@ -363,7 +361,11 @@ define(['../util'], function(util){
     }
 
 
-    //判断是ios/Android
+    /**
+     * [getOS get OS name]
+     * 
+     * @return {String} 
+     */
     function getOS() {
         var agent = navigator.userAgent;
         var isAdr = agent.match(/(Android)|(Adr)/g);
