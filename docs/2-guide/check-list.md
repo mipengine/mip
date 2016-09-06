@@ -26,6 +26,8 @@ MIP页面会有严格的规范校验，不允许存在任何校验不通过的�
 |&lt;body&gt; |强制小写|
 |&lt;link rel="standardhtml" href="xxx"&gt; |强制小写|
 
+- P.S.: meta 标签 name="viewport" 时, content的值必须且最少含有 width=device-width, minimum-scale=1 以及 initial-scale=1这3个属性且顺序不固定。
+
 ### 2. 禁用标签
 
 |提示|DISALLOWED_TAG|  

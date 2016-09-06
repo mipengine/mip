@@ -40,6 +40,8 @@
     </script>
 </mip-embed>
 
+- P.S.: 需要注意的是，定制广告的 script 标签中的参数必须带双引号，也就是说 script 标签中的数据必须是 json 格式的
+
 - 非定制
 
 <div class="mip-adbd">
