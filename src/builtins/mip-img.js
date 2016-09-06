@@ -52,6 +52,7 @@ define(['util'], function(util){
                     width: $img.width(),
                     height: $img.height()
                 }, DURATION, function () {
+                    $img.css('opacity','1');
                     $popUp.hide();
                 });
             });
@@ -89,6 +90,7 @@ define(['util'], function(util){
                     width: info.wid,
                     height: info.hei
                 }, DURATION);
+                $img.css('opacity','0');
             });
         }
     };
