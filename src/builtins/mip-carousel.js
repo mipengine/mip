@@ -152,7 +152,7 @@ define(function(){
         }
 
         var gesture = new Gesture(element);
-        gesture.on('swipeleft swiperight', function (data) {
+        gesture.on('swipeleft swiperight', function (event, data) {
             if (!isAnimating) {
                 autoTimer && clearTimeout(autoTimer);
                 switchItem(data.type !== 'swiperight').then(function () {
