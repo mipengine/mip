@@ -1,34 +1,27 @@
 define(function(){
-    var $ = require('zepto');
     var customElem = require('customElement').create();
+    var Gesture = require('components/gesture');
+    var util = require('util');
+    var css = util.css;
+    var Naboo = require('naboo');
+    var eventHelper = util.event;
 
-    var build = function () {
+    customElem.prototype.build = function () {
+        var element = this.element;
 
-        var _ele = this.element;
-        var g_this = this;
-
-        // 避免多次渲染
-        if(this.isRender){
-            return; 
-        }
-        this.isRender = true;
-
-        $this = $(_ele);
-
-        var hei = $this.attr('height');
-
-
-        if (!hei) {
+        var height = element.getAttribute('height');
+        if (!height) {
             return;
         }
 
+        var children = Array.prototype.slice.call(element.children);
+        children = children.filter(function (element) {
+            return element.tagName.toLowerCase() !== 'mip-i-space';
+        });
 
-        // 如果子节点少于2个，则不需要轮播
-        var $childs = $this.children().not("mip-i-space");
-        if ($childs.length < 2) {
+        if (children.length < 2) {
             return;
         }
-
 
         // 当前展示的图片序号
         var currentIndex = 0;
@@ -42,7 +35,7 @@ define(function(){
         // 轮播思路：轮播只涉及2张图片，分别是当前图片和下一张要出现的图片，把下一张图片放到当前图片的前面或者后面，
         //         然后移动到当前图片的位置，其余不涉及的图片全部设置left:-9999px，具体可以看效果
         // 
-        $childs.css({
+        css(children, {
             'position': 'absolute',
             'left': HIDE_LEFT,
             'top': 0,
@@ -50,18 +43,11 @@ define(function(){
             'width':"100%"
         });
 
-        $childs.map(function(i,ele) {
-            if(ele.tagName.toLocaleLowerCase()== "mip-img") {
-                g_this.applyFillContent(ele, true);       
-            }else {
-                $(ele).find("mip-img").map(function(j,el){
-                     g_this.applyFillContent(el, true);
-                });
-            }
-        });
-           
-       
-        $childs.eq(currentIndex).css('left', 0);
+        var mipImgList = element.querySelectorAll('mip-img');
+        for (var i = 0; i < mipImgList; i++) {
+            this.applyFillContent(mipImgList[i], true);
+        }
+        css(children[currentIndex], 'left', 0);
 
         // 如果mip-carousel里子节点是mip-img，并且mip-img弹出了浮层
         var isMipImgPop = false;
@@ -79,55 +65,62 @@ define(function(){
         var switchItem = function (forward) {
             var index = forward ? (currentIndex + 1) : (currentIndex - 1);
             if (index < 0) {
-                index = $childs.length - 1;
+                index = children.length - 1;
             }
-            else if (index >= $childs.length) {
+            else if (index >= children.length) {
                 index = 0;
             }
             // 图片占据的一屏宽度
-            var perWid = $this.width();
+            var perWid = element.offsetWidth || window.innerWidth;
             var left = (forward ? 1 : -1) * perWid;
             var _promise;
-            $childs.filter(function (i) {
+            var filterElements = children.filter(function (i) {
                 return (i !== currentIndex && i !== index);
-            }).css('left', HIDE_LEFT);
-
-            $childs.css({
-                'display': 'block',
-                'opacity': 1,
-                'z-index': 1
+            });
+            css(filterElements, 'left', HIDE_LEFT);
+            css(children, {
+                display: 'block',
+                opacity: 1,
+                zIndex: 1
             });
 
+            var child = children[index];
 
-            $childs.eq(index).css({
-                'left': left,
-                'z-index': 2
+            css(child, {
+                left: left,
+                zIndex: 2
             });
 
             //手动触发不可见区域的mip-img
-            if($childs.eq(index)[0].tagName.toLocaleLowerCase()== "mip-img") {
-                MIP.prerenderElement($childs.eq(index)[0]);
+            if(child.tagName.toLocaleLowerCase()== "mip-img") {
+                MIP.prerenderElement(child);
             }else {
-                $box = $($childs.eq(index)[0]);
-                $box.find('mip-img').map(function(i,ele){
-                     MIP.prerenderElement(ele);
-                });
+                var imgList = child.querySelectorAll('mip-img');
+                for (var i = 0; i < imgList.length; i++) {
+                     MIP.prerenderElement(imgList[i]);
+                }
             }
-
-
             isAnimating = true;
 
-            _promise = new Promise(function(resolve,reject){
-                $childs.eq(index).animate({
-                    left: 0
+            _promise = new Promise(function(resolve, reject){
+                Naboo.css(child, {
+                    left: 0,
                 }, DURATION, function () {
                     currentIndex = index;
                     resolve();
                     isAnimating = false;
+                }).start();
+            });
+            var currChild = children[currentIndex];
+            css(currChild, 'opacity', 1);
+            Naboo.css(currChild, {
+                opacity: 0
+            }, DURATION).start(function () {
+                css(currChild, {
+                    'opacity': 1,
+                    'display': 'none'
                 });
             });
-
-            $childs.eq(currentIndex).fadeOut(DURATION);
 
             return _promise;
         };
@@ -145,9 +138,11 @@ define(function(){
 
         var defer;
         var isAutoPlay = false;
-        if ($this.attr('autoplay') === 'autoplay' || $this.attr('autoplay') === '') {
-            if (typeof +_ele.getAttribute('defer') === 'number') {
-                defer = +_ele.getAttribute('defer');
+        var autoAttr = element.getAttribute('autoplay');
+        if (autoAttr === 'autoplay' || autoAttr === '') {
+            var deferAttr = element.getAttribute('defer');
+            if (typeof +deferAttr === 'number') {
+                defer = +deferAttr;
             }
             else {
                 defer = 2000;
@@ -156,41 +151,32 @@ define(function(){
             autoPlay(defer);
         }
 
-        // var gesture = require('components/gesture');
-        // gesture.init();
-        // gesture.bind(function (evt, data) {
-        //     // 用户手指滑动结束且手势为横向滑动且当前不处于动画播放状态
-        //     if (data.event === 'touchend' && Math.abs(data.x) > Math.abs(data.y) && !isAnimating) {
-        //         autoTimer && clearTimeout(autoTimer);
-        //         // 向右滑（上一张）or 向左滑(下一张)
-        //         var forward = !(data.x > 0);
-        //         switchItem(forward).then(function () {
-        //             if (isAutoPlay) {
-        //                 autoPlay(defer);
-        //             }
-        //         });
-        //     }
-        // });
+        var gesture = new Gesture(element);
+        gesture.on('swipeleft swiperight', function (event, data) {
+            if (!isAnimating) {
+                autoTimer && clearTimeout(autoTimer);
+                switchItem(data.type !== 'swiperight').then(function () {
+                    if (isAutoPlay) {
+                        autoPlay(defer);
+                    }
+                })
+            }
+        });
 
         if (isAutoPlay) {
-            $this.delegate('mip-img', 'click', function () {
-                if ($(this).attr('popup') === 'popup' || $(this).attr('popup') === '') {
+            eventHelper.delegate(element, 'mip-img', 'click', function () {
+                if (this.hasAttribute('popup')) {
                     autoTimer && clearTimeout(autoTimer);
                     isMipImgPop = true;
                 }
             });
-
-            $this.delegate('.mip-img-popUp-wrapper', 'click', function () {
+            eventHelper.delegate(element, '.mip-img-popUp-wrapper', 'click', function () {
                 autoPlay(defer);
                 isMipImgPop = false;
                 return false;
             });
         }
 
-    };
-
-    customElem.prototype.init = function () {
-        this.build = build;
     };
 
     return customElem;

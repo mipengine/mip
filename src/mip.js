@@ -2,10 +2,12 @@
  * initialize mip
  **/
 require(['./components/platform', './element', './builtins/mip_builtins', 
-    './viewer', './viewport', './components/css', 'resources'], 
-    function (platform, registerMipElement, builtin, viewer, viewport, css, resources) {
+    './viewer', './viewport', './components/css', 'resources', './components/animation'], 
+    function (platform, registerMipElement, builtin, viewer, viewport, css, resources, animationRegister) {
     'use strict';
-
+    
+    animationRegister();
+        
     // mip 初始化
     !window.MIP && (window.MIP = {});
     MIP.css = {};

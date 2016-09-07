@@ -2,7 +2,7 @@
  *  mip element
  *  @exports register
  **/
-define(['./components/cssLoader', './components/layout', './resources'], function (cssLoader, layoutObj, Resources) {
+define(['./components/css-loader', './components/layout', './resources'], function (cssLoader, layoutObj, Resources) {
     var customElements = {};
     var resources;
 
@@ -148,6 +148,10 @@ define(['./components/cssLoader', './components/layout', './resources'], functio
             } catch (e) {
                 console.warn('build error:', e);
             }
+        };
+ 
+        proto.excuteActionEvent = function (action) {
+            this.customElement.excuteActionEvent(action);
         };
         return baseElementProto = proto;
     };

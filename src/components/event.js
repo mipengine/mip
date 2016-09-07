@@ -1,7 +1,24 @@
 define(function () {
     var reg = /\s+/;
-    var Event = function (context) {
-        this.__eventContext = context || this;
+    var Event = function (opt) {
+        if (opt) {
+            this.setEventContext(opt.context);
+            opt.createEventCallback && (this._createEventCallback = opt.createEventCallback);
+            opt.removeEventCallback && (this._removeEventCallback = opt.removeEventCallback);
+        }
+    };
+    var multiReg = /\s+/;
+    var multiArgs = function (obj, fn, name, args) {
+        if (multiReg.test(name)) {
+            var nameList = name.split(multiReg);
+            var isApply = typeof args !== 'function';
+            for (var i = 0; i < nameList.length; i++) {
+                isApply ? fn.apply(obj, [nameList[i]].concat(args)) :
+                    fn.call(obj, nameList[i], args);
+            }
+            return true;
+        }
+        return false;
     };
     var proto = Event.prototype = {
         /**
@@ -11,6 +28,9 @@ define(function () {
          *  @return {constructor}
          **/
         on: function (name, callback) {
+            if (multiArgs(this, this.on, name, callback)) {
+                return null;
+            }
             this._getEvent(name).push(callback);
             return this;
         },
@@ -19,6 +39,9 @@ define(function () {
                 this.__events = null;
                 this._removeEventCallback();
             } else if (arguments.length > 1) {
+                if (multiArgs(this, this.off, name, callback)) {
+                    return null;
+                }
                 var list = this._getEvent(name);
                 var index = list.indexOf(callback);
                 if (index > -1) {
@@ -29,23 +52,22 @@ define(function () {
                 delete this.__events[name];
                 this._removeEventCallback(this._removeEventCallback(name));
             } 
-            return this;
+            return this.__events[name];
         },
         once: function (name, callback) {
             var cb = callback.bind(this);
+            var self = this;
             cb.__once = true;
             this.on(name, cb);
+            return function () {
+                self.off(name, cb);
+                cb = self = null;
+            }
         },
         trigger: function (name) {
             var args = Array.prototype.slice.call(arguments, 1);
-            if (name.search(reg) > -1) {
-                name = name.split(reg);
-                for (var i = 0; i < name.length; i++) {
-                    args.unshift(name[i]);
-                    this.trigger.apply(this, args);
-                    args.shift();
-                }
-                return;
+            if (multiArgs(this, this.trigger, name, args)) {
+                return null;
             }
             var list = this._getEvent(name);
             var context = this.__eventContext || this;
@@ -55,6 +77,9 @@ define(function () {
                     list.splice(i, 1);
                 }
             }
+        },
+        setEventContext: function (context) {
+            this.__eventContext = context || this;
         },
         _getEvent: function (name) {
             if (!this.__events) {
@@ -66,12 +91,11 @@ define(function () {
             }
             return this.__events[name];
         },
-        // for override
-        // 创建事件时的回调，供继承用
+        // 创建事件时的回调
         _createEventCallback: function () {
 
         },
-        // 删除事件时的回调，供继承用
+        // 删除事件时的回调
         _removeEventCallback: function () {
 
         }
@@ -81,7 +105,7 @@ define(function () {
         'on bind',
         'off unbind',
         'once one',
-        'trigger fire'
+        'trigger fire emit'
     ].forEach(function (value) {
         var value = value.split(' ');
         for (var i = 1; i < value.length; i++) {

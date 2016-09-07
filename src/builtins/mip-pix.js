@@ -1,24 +1,27 @@
 /**
 * 统计标签
 * @exports modulename
-* @author shenzhou@baidu.com
-* @version 1.0
+* @version 1.1
 * @copyright 2015 Baidu.com, Inc. All Rights Reserved
 */
 define(function(){
     var customElem = require('customElement').create();
 
-    function build(){
-        if(this.isRender){
-            return; 
+    var addParas = function (src, paraName, paraVal) {
+        if (src.indexOf('?' + paraName) > -1 || src.indexOf('&' + paraName) > -1) {
+            return src;
         }
-        this.isRender = true;
+        src += src.indexOf('?') > -1 ? '&' : '?';
+        return src + paraName + '=' + paraVal;
+    }
+
+    customElem.prototype.build = function () {
         var _img = new Image();
         var ele = this.element;
         var src = ele.getAttribute('src');
         var host = window.location.href;
         var title = (document.querySelector('title') || {}).innerHTML || '';
-        var time = (new Date().getTime());
+        var time = Date.now();
         src = addParas(src, 't', time);
         src = addParas(src, 'title', encodeURIComponent(title));
         src = addParas(src, 'host', encodeURIComponent(host));
@@ -29,21 +32,5 @@ define(function(){
         ele.setAttribute('height','');
         ele.appendChild(_img);
     }
-
-    function addParas(src, paraName, paraVal) {
-        if (src.indexOf('?'+paraName) > -1 || src.indexOf('&'+paraName) > -1) {
-            return src;
-        }
-        src += src.indexOf('?') > -1 ? '&' : '?';
-        return src + paraName + '=' + paraVal;
-    }
-
-    customElem.prototype.init = function(){
-        this.build = build;
-        this.attachedCallback = function(){
-            this.build();
-        }
-
-    };
     return customElem;
 });

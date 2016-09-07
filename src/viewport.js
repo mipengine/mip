@@ -1,9 +1,8 @@
 /**
  * 界面可视窗口模块，提供窗口各属性，以及窗口整体scroll、resize等事件接口
  **/
-define(['./components/rect', './components/platform', './components/event', './util'], 
-    function (rect, platform, Event, util) {
-    'use strict';
+define(['./components/rect', './components/platform', './components/event', './components/fixedElement', './util'], 
+    function (rect, platform, Event, fixedElement, util) {
 
     var docElem = document.documentElement;
     var win = window;
@@ -40,43 +39,56 @@ define(['./components/rect', './components/platform', './components/event', './u
                 this.getHeight());
         }
     };
-    var _throttleChangeEvent;
-    var _scrolling;
-    var _init = function () {
-        _throttleChangeEvent = util.fn.throttle(_changeEvent.bind(this), 20);
+    var bindedChangeEvent;
+    var init = function () {
+        /* 处理 fixed 元素 */
+        fixedElement.init();
+        bindedChangeEvent = changeEvent.bind(this);
         (platform.needSpecialScroll ? document.body : win)
-            .addEventListener('scroll', _scrollEvent.bind(this), false);
-        win.addEventListener('resize', _resizeEvent.bind(this), false);
+            .addEventListener('scroll', scrollEvent.bind(this), false);
+        win.addEventListener('resize', resizeEvent.bind(this), false);
         return this;
     };
-    var _scrollEvent = function (event) {
-        if (this.getScrollTop() < 0) {
+    var changing = false;
+    var oldEvt = null;
+    var oldTime, oldTop;
+    var scrollEvent = function (event) {
+        var scrollTop = this.getScrollTop();
+        if (scrollTop < 0) {
             return;
         }
-        if (!this._scrolling) {
-            _scrolling = true;
-            _throttleChangeEvent(event);
+        var now = Date.now();
+        // 每次都会强制算时间差，如果大于 20ms，立即计算是否 changeEnd，
+        // PS: uc 在手指按住时不执行 timeout
+        if (!changing || now - oldTime >= 20) {
+            changing = true;
+            bindedChangeEvent();
+            oldTime = now;
+            oldTop = scrollTop;
+            oldEvt = event;
         }
         // trigger this.on('scroll', ...);
         this.trigger('scroll', event);
     };
-    var _resizeEvent = function (event) {
+    var resizeEvent = function (event) {
         // trigger this.on('resize', ...)
         this.trigger('resize', event);
     };
-    var _changeEvent = function (event, oldTop, oldTime) {
+    var changeTimer = null;
+    var changeEvent = function () {
         var now = Date.now();
-        var scrollTop = this.getScrollTop();
-        if (oldTime != now && Math.abs((oldTop - scrollTop) / (oldTime - now)) < 0.03) {
-            _scrolling = false;
-            this.trigger('changed', event, this.getRect());
+        var delay = oldTime - now || 0;
+        clearTimeout(changeTimer);
+        if (delay && Math.abs((oldTop - this.getScrollTop()) / delay) < 0.03) {
+            changing = false;
+            this.trigger('changed', oldEvt, this.getRect());
         } else {
-            _throttleChangeEvent(event, scrollTop, now);
+            changeTimer = setTimeout(bindedChangeEvent, delay >= 20 ? 20 - delay : 20);
         }
     };
 
 
     Event.mixin(Viewport);
 
-    return _init.call(Viewport);
+    return init.call(Viewport);
 });
