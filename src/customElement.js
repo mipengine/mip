@@ -29,10 +29,15 @@ define(['./components/event'], function (Event) {
     customElement.prototype.build = function () {};
     customElement.prototype.expendAttr = function (attrs, element) {
         for (var i = 0; i < attrs.length; i++) {
-            if (this.element.hasAttribute(attrs[i])) {
-                element.setAttribute(attrs[i], this.element.getAttribute(attrs[i]));
+            var attr = attrs[i];
+            if (this.element.hasAttribute(attr)) {
+                var val = this.element.getAttribute('attr');
+                element.setAttribute ?
+                    element.setAttribute(attr, val) :
+                    element[attr] = val;
             }
         }
+        return element;
     };
 
     customElement.prototype.addActionEvent = function () {

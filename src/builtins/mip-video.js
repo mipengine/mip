@@ -1,243 +1,186 @@
-/**
- * 视频播放组件
- * fengchuantao@baidu.com
- * 7.20
- */
-__inline('./video/sbbox');
-
+require.config({
+    paths: {
+        'builtins/video/player': __uri('./video/player').replace(/\.js$/g, '')
+    }
+});
 define(['../util'], function(util){
-    var $ = require('zepto');
     var customElem = require('customElement').create();
-    var player = require('./video/player');
-    
-
+    var player;
     var bdPlayer;
 
-    var build = function () {
+    var playerAttr = ['height', 'width', 'src', 'type', 'poster', 'autoplay', 'controls', 'loop', 'muted'];
+    customElem.prototype.build = function () {
+        var self = this;
+        var element = this.element;
 
-        var _this = this;
-        var _element = _this.element;
+        self.ext = {};
+        self.iframeSrc = '';
+        self.applyFillContent(element, true);
+        getVideoInfo.call(self);
 
-        _this.ext = {};
-
-        _this.iframeSrc = '';
-
-        _this.isBlank = false;
-
-        if (_element.isRender) {
-            return; 
-        }
-        _element.isRender = true;
-
-        _this.applyFillContent(_element, true);
+        self.isBlank = isBlank.call(self);
         
-        var me = _element;
-        var $me = $(_element);
-
-        getVideoInfo.call(_this);
-
-        _this.isBlank = isBlank.call(_this);
-
-        //本地打开或者外部页打开
-        if(!_this.isBlank) { //在本地打开
-            playnowpage.call(_this)
-        } else {
-
-            var str = '';
-            _this.ext.adInfo.map(function(data, index) {
-                if(index) {
-                    str += ',';
-                }
-                str += encodeURIComponent(data[0].src);
-            });
-            _this.ext.adInfo = str;
-
-            _this.element.addEventListener('click', function() {
-                toTranscoder.call(_this);
-            });
-        }
-
-        
-        //本页打开
-        //该函数源于@赵雷
-        function playnowpage() {
-            var elem = this.element;
-
-            $(this.element).on('click', function (event) {
-                if(event.target.tagName == 'VIDEO') {
-                    event.stopPropagation();
-                    return false;
-                }
-                // 如果有视屏正在播放，则移除视屏
-                bdPlayer && bdPlayer.remove();
-
-                bdPlayer = new player({});
-
-                // video容器  如果未设置的话  则传入me
-                var container = $me.attr('container');
-                if (container && $(container) && $(container).length) {
-                    container = $(container);
-                } else {
-                    container = me;
-                }
-
-                // 广告数据信息
-                var adInfo = [];
-                var adInfoString = $me.attr('adInfo');
-                if (adInfoString) {
-                    try {
-                        adInfo = new Function('return ' + adInfoString)()
-                    } catch (e) {}
-                }
-
-
-                //过滤ios qq
-                var userAgent = navigator.userAgent;
-                var qqbrower = userAgent.indexOf("QQ")>0?true:false;
-                var ios = !!userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
-                
-                //过滤ios7.0
-                var agent = navigator.userAgent.toLowerCase() ;
-                var version;
-                if(agent.indexOf("like mac os x") > 0){
-                    //ios
-                    var regStr_saf = /os [\d._]*/gi ;
-                    var verinfo = agent.match(regStr_saf) ;
-                    version = (verinfo+"").replace(/[^0-9|_.]/ig,"").replace(/_/ig,".");
-                }
-
-                var version_str = version+"";
-                if(version_str != "undefined" && version_str.length >0){
-                    version=version.substring(0,1);
-                }
-
-                if((qqbrower&&ios)||version < 8) {
-                    adInfo = [];
-                }
-
-                // 正片播放时 设置多type时 数据处理
-                var sources = $me.find('source');
-                var playInfo = [];
-                sources.each(function () {
-                    var src = $(this).attr('src');
-                    var type = $(this).attr('type');
-                    if (!src) {
-                        return;
+        require(['builtins/video/player'], function (Player) {
+            if (!player) {
+                player = Player;
+            }
+            if(!self.isBlank) {
+                playnowpage.call(self)
+            } else {
+                var str = '';
+                self.ext.adInfo.map(function(data, index) {
+                    if(index) {
+                        str += ',';
                     }
-                    playInfo.push({
-                        type: type,
-                        src: src
-                    });
+                    str += encodeURIComponent(data[0].src);
                 });
-                // 加载视频、并播放
-                bdPlayer.render({
-                    // 播放器容器，必选
-                    container: container,
+                self.ext.adInfo = str;
 
-                    height: $me.attr('height'),
-                    width: $me.attr('width'),
-                    src: $me.attr('src'),
-                    type: $me.attr('type'),
-                    poster: $me.attr('poster'),
-                    autoplay: $me.attr('autoplay'),
-                    controls: $me.attr('controls'),
-                    loop: $me.attr('loop'),
-                    muted: $me.attr('muted'),
-
-                    android: {
-                        playMode: $me.attr('android-mode') || ''
-                    },
-                    ios: {
-                        playMode: $me.attr('ios-mode') || ''
-                    },
-
-                    // 广告数据信息
-                    adInfo: adInfo,
-
-                    // 正片视频数据信息
-                    playInfo: playInfo
-                    // src: 'http://v1.bdstatic.com/8aa369effe2cc6280c1bd413723ce0ac/mp4/8aa369effe2cc6280c1bd413723ce0ac.mp4'
+                self.element.addEventListener('click', function() {
+                    toTranscoder.call(self);
                 });
-            });
-        }
+            }
+        });
+    };
 
-        //非本页打开
-        function toTranscoder() {
-
-            var _this = this;
-
-            var baiduappbox = recognitionClient();
+    //本页打开
+    function playnowpage() {
+        var element = this.element;
+        var self = this;
+        element.addEventListener('click', function (event) {
+            if(event.target.tagName == 'VIDEO') {
+                event.stopPropagation();
+                return false;
+            }
+            // 如果有视屏正在播放，则移除视屏
             bdPlayer && bdPlayer.remove();
-
             bdPlayer = new player({});
 
-            //一下为判断终端是否手百,ios与Android
-            if(baiduappbox.baiduboxapp) { //手百
-                
-                if(getOS() == "Android" && baiduappbox.version > "6.4") {
+            var container = document.querySelector(element.getAttribute('container'));
+            if (!container) {
+                container = element;
+            }
 
-                    var configstr = baiduapp.call(_this, true);
-                    Box.android.invokeApp("Bdbox_android_capi_video","playVideo",[configstr]);
-                
-                } else if(getOS()=="IOS" && baiduappbox.version > "6.8") {
+            // 广告数据信息
+            var adInfo = [];
+            var adInfoString = element.getAttribute('adInfo');
+            if (adInfoString) {
+                try {
+                    adInfo = new Function('return ' + adInfoString)()
+                } catch (e) {}
+            }
 
-                    var configstr = baiduapp.call(_this);
-                    Box.ios.invokeApp("video",{"action":"playVideo","params": configstr, "minver":"6.8.0.0"},"");
+            //过滤ios qq
+            var userAgent = navigator.userAgent;
+            var qqbrower = userAgent.indexOf("QQ") > 0 ? true : false;
+            var ios = !!userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
 
-                } else {
-                    
-                    superpage.call(_this);
-                
+            //过滤ios7.0
+            var agent = navigator.userAgent.toLowerCase() ;
+            var version;
+            if(agent.indexOf("like mac os x") > 0){
+                //ios
+                var regStr_saf = /os [\d._]*/gi ;
+                var verinfo = agent.match(regStr_saf) ;
+                version = (verinfo+"").replace(/[^0-9|_.]/ig,"").replace(/_/ig,".");
+            }
+
+            var version_str = version+"";
+            if(version_str != "undefined" && version_str.length >0){
+                version=version.substring(0,1);
+            }
+
+            if((qqbrower&&ios)||version < 8) {
+                adInfo = [];
+            }
+
+            var sources = element.querySelectorAll('source');
+            var playInfo = [];
+
+            for (var i = 0; i < sources.length; i++) {
+                var src = sources[i].getAttribute('src');
+                var type = sources[i].getAttribute('type');
+                if (!src) {
+                    continue;
                 }
-            
+                playInfo.push({
+                    type: type,
+                    src: src
+                });
+            }
+
+            var conf = self.expendAttr(playerAttr, {});
+            conf.container = container;
+            conf.android = {
+                playMode: element.getAttribute('android-mode') || ''
+            };
+            conf.ios = {
+                playMode: element.getAttribute('ios-mode') || ''
+            };
+            conf.adInfo = adInfo;
+            conf.playInfo = playInfo;
+            bdPlayer.render(conf);
+        });
+    }
+
+    //非本页打开
+    function toTranscoder() {
+        var self = this;
+
+        var baiduappbox = recognitionClient();
+        bdPlayer && bdPlayer.remove();
+
+        bdPlayer = new player({});
+        //一下为判断终端是否手百,ios与Android
+        if(baiduappbox.baiduboxapp) { //手百
+            if(getOS() == "Android" && baiduappbox.version > "6.4") {
+                var configstr = baiduapp.call(self, true);
+                Box.android.invokeApp("Bdbox_android_capi_video","playVideo",[configstr]);
+            } else if(getOS() == "IOS" && baiduappbox.version > "6.8") {
+                var configstr = baiduapp.call(self);
+                Box.ios.invokeApp("video",{"action":"playVideo","params": configstr, "minver":"6.8.0.0"},"");
             } else {
-                
-                superpage.call(_this);
-
+                superpage.call(self);
             }
+        } else {
+            superpage.call(self);
         }
+    }
 
-        //http承载页跳转
-        function superpage() {
-            
-            top.location.href = alignment.call(this);
+    //http承载页跳转
+    function superpage() {
+        top.location.href = alignment.call(this);
+    }
 
-        }
+    /**
+     * 手百调起数据组装
+     * encode参数为ios与安卓的配置方式不同
+     */
+    function baiduapp(encode) {
+        var url = alignment.call(this) + 'tn=nohead';
 
-        /**
-         * 手百调起数据组装
-         * encode参数为ios与安卓的配置方式不同
-         */
-        function baiduapp(encode) {
-            var url = alignment.call(this) + 'tn=nohead';
-
-            var $jsonString = {
-                "vid": +new Date(),
-                "title": encodeURIComponent(_this.title),
-                "src": encodeURIComponent(url),
-                "cate": "tvplay",
-                "pageUrl": location.href,
-                "type": "other"
-            }
-
-            jsonString = JSON.stringify($jsonString);
-
-            return jsonString;
-        }
-
-    };
+        var data = {
+            "vid": +new Date(),
+            "title": encodeURIComponent(self.title),
+            "src": encodeURIComponent(url),
+            "cate": "tvplay",
+            "pageUrl": location.href,
+            "type": "other"
+        };
+        return JSON.stringify(data);
+    }
 
     /**
      * 数据组装函数
      */
     function alignment() {
 
-        var _this = this;
-        var ext = !!_this.iframeSrc ? {iframeSrc: _this.iframeSrc}
-                                    : _this.ext;
+        var self = this;
+        var ext = !!self.iframeSrc ? {iframeSrc: self.iframeSrc}
+                                    : self.ext;
         var data = {
             'pd': 'mms_mipvideo',
-            'title': encodeURIComponent(_this.title),
+            'title': encodeURIComponent(self.title),
             'dev_tpl': 'act_mip_video',
             'wd': '%E8%A7%86%E9%A2%91',
             'actname': 'act_mip_video',
@@ -274,13 +217,13 @@ define(['../util'], function(util){
      * @return
      */
     function getVideoInfo() {
-        var _this = this;
+        var self = this;
 
-        var poster = _this.element.getAttribute("poster") || '';
-        var src = _this.element.getAttribute("src") || '';
-        var adInfo = _this.element.getAttribute("adInfo") || '';
-        var title = _this.element.getAttribute("title") || "视频";
-        var iSrc = _this.element.getAttribute("iframeSrc") || '';
+        var poster = self.element.getAttribute("poster") || '';
+        var src = self.element.getAttribute("src") || '';
+        var adInfo = self.element.getAttribute("adInfo") || '';
+        var title = self.element.getAttribute("title") || "视频";
+        var iSrc = self.element.getAttribute("iframeSrc") || '';
         var adInfoAry = [];
         var adInfoStr = '';
 
@@ -291,9 +234,9 @@ define(['../util'], function(util){
             } catch (e) {}
         }
 
-        _this.title = title;
-        _this.iframeSrc = encodeURIComponent(iSrc);
-        _this.ext = {
+        self.title = title;
+        self.iframeSrc = encodeURIComponent(iSrc);
+        self.ext = {
             poster : encodeURIComponent(poster),
             src : encodeURIComponent(src),
             adInfo : adInfoAry
@@ -333,11 +276,11 @@ define(['../util'], function(util){
      */
     function isBlank() {
 
-        var _this = this;
-        if(_this.iframeSrc) return true;
+        var self = this;
+        if(self.iframeSrc) return true;
 
-        var info = _this.ext.adInfo;
-        var flag = !isHttps(_this.ext.src);
+        var info = self.ext.adInfo;
+        var flag = !isHttps(self.ext.src);
 
         for(var index = 0; index < info.length; index ++) {
             flag = flag && !isHttps(info[index][0].src);
@@ -391,10 +334,6 @@ define(['../util'], function(util){
         }
         return userAgentconfig;
     }  
-
-    customElem.prototype.init = function(){
-        this.build = build; 
-    };
 
     return customElem;
 

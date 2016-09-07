@@ -1,5 +1,13 @@
 var option = fis.get('options')['_'][1];
 
+var domain;
+
+if (option === 'debug') {
+    domain = '/dist';
+} else {
+    domain = '//mipcache.bdstatic.com/static';
+}
+
 var fileList = {
     css: [
         '/less/mipmain.less'
@@ -8,7 +16,8 @@ var fileList = {
         '/extensions/**'
     ],
     mipmain: [
-        '/src/mipmain.js'
+        '/src/mipmain.js',
+        '/src/builtins/video/**'
     ]
 };
 if (option && fileList[option]) {
@@ -28,6 +37,7 @@ fis.match('*', {
     release: false
 });
 fis.hook('amd');
+
 
 /* css 配置 */
 fis.match('/less/(**).less', {
@@ -65,8 +75,13 @@ fis.match('/src/(**).js', {
 fis.match('/src/deps/(*).js', {
     moduleId: '$1'
 });
-fis.match('src/mipmain.js', {
-    release: 'mipmain.js'
+fis.match('src/(mipmain.js)', {
+    release: '$1'
+});
+fis.match('src/({builtins/video/**,deps/jquery.js})', {
+    release: '$1',
+    useHash: true,
+    domain: domain
 });
 
 
@@ -77,6 +92,5 @@ fis.media('extensions');
 
 
 fis.media('debug').match('*.{js,css,less}', {
-    useHash: false,
     optimizer: null
 });

@@ -50,8 +50,6 @@ __inline('./builtins/mip-pix.js');
 __inline('./builtins/mip-carousel.js');
 __inline('./builtins/mip-iframe.js');
 __inline('./builtins/mip-video.js');
-__inline('./builtins/video/player.js');
-__inline('./builtins/video/popup.js');
 __inline('./builtins/mip_builtins.js');
 
 /* initialize */
