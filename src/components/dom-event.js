@@ -20,8 +20,9 @@ define(['./dom'], function (dom) {
 
     // 事件类型，是否冒泡，是否可以被 preventDefault 阻止
     var createEvent = function (type, canBubble, cancelable) {
-        var event = document.createElement(specialEvents[type] || 'Event');
-        return event.initEvent(type, canBubble, cancelable);
+        var event = document.createEvent(specialEvents[type] || 'Event');
+        event.initEvent(type, canBubble, cancelable);
+        return event;
     };
     return {
         delegate: delegate,

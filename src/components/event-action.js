@@ -1,7 +1,7 @@
-define(['./fn'], function () {
+define(['./fn', './dom'], function (fn, dom) {
     'use strict';
 
-    var parseReg = /^(\w+):(\w+)\.(\w+)(?:\(([^\)]+)\))?$/;
+    var parseReg = /^(\w+):([\w-]+)\.([\w-]+)(?:\(([^\)]+)\))?$/;
     var checkReg = /^mip-/;
 
     var optKeys = ['get', 'excuteEventAction', 'parse', 'checkTarget'];
@@ -11,15 +11,23 @@ define(['./fn'], function () {
     };
 
     EventAction.prototype = {
-        attr: 'data-action',
+        attr: 'on',
         excute: function (type, target, nativeEvent) {
             if (!target) {
                 return;
             }
-            this._excute(
-                this.parse(target.getAttribute(this.attr), type, nativeEvent),
-                target
-                );
+            var attr, parent;
+            var attrSelector = '[' + this.attr + ']';
+            do {
+                if (attr = target.getAttribute(this.attr)) {
+                    this._excute(this.parse(attr, type, nativeEvent));
+                    target = target.parentElement;
+                    if (!target) {
+                        return;
+                    }
+                }
+                target = dom.closest(target, attrSelector);
+            } while (target);
         },
         checkTarget: function (target) {
             return target && target.tagName && checkReg.test(target.tagName.toLowerCase());

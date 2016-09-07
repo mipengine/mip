@@ -49,7 +49,7 @@ define(['./fn'], function (fn) {
         this.gesture = gesture;
         this.conflictList = {};
     };
-    Recognizer.prototype = {
+    fn.extend(Recognizer.prototype, {
         name: '',
         eventList: [],
         needAutoReset: true,
@@ -95,7 +95,6 @@ define(['./fn'], function (fn) {
             if (this.state === STATE_START || this.state === STATE_HOLD) {
                 return false;
             }
-            
             for (var i in this.conflictList) {
                 var conflictRecognizer = this.conflictList[i];
                 if (conflictRecognizer.level > this.level && this.conflictList[i].state !== STATE_HOLD) {
@@ -119,14 +118,13 @@ define(['./fn'], function (fn) {
         trigger: function (data) {
             this.gesture.trigger(data.type, data.event, data);
         }
-    };
+    });
 
     var recognizerList = {};
     var eventList = {};
-    Recognizer.register = function (Rec) {
+    Recognizer.register = function (Rec, name) {
         !Rec.conflictList && (Rec.conflictList = []);
-        var name = Rec.name;
-        Rec.prototype.name = name;
+        Rec.recName = Rec.prototype.recName = name;
         recognizerList[name] = Rec;
         var evlist = Rec.prototype.eventList;
         for (var i = 0; i < evlist.length; i++) {
@@ -151,8 +149,8 @@ define(['./fn'], function (fn) {
         if (!a || !b) {
             return;
         }
-        a.conflictList.push(b.name);
-        b.conflictList.push(a.name);
+        a.conflictList.push(b.recName);
+        b.conflictList.push(a.recName);
     };
 
 
@@ -274,14 +272,15 @@ define(['./fn'], function (fn) {
 
                 var dataSwipeDir = create(data);
                 dataSwipeDir.type = 'swipe' + direction[data.direction];
+                dataSwipeDir.swipeDirection = direction[data.direction];
                 this.trigger(dataSwipeDir);
             }
         }
     });
 
-    Recognizer.register(TapRecognizer);
-    Recognizer.register(DoubleTapRecognizer);
-    Recognizer.register(SwipeRecognizer);
+    Recognizer.register(TapRecognizer, 'tap');
+    Recognizer.register(DoubleTapRecognizer, 'doubletap');
+    Recognizer.register(SwipeRecognizer, 'swipe');
 
     Recognizer.conflict(DoubleTapRecognizer, TapRecognizer);
     return Recognizer;

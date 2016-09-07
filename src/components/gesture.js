@@ -167,16 +167,16 @@ define(['./event', './gesture-recognizer', './fn'], function (Event, Recognizer,
         if (!RecognizerClass) {
             return;
         }
-        name = RecognizerClass.name;
+        name = RecognizerClass.recName;
         var recognizer = this._recognizers[name] = new RecognizerClass(this);
         // 添加冲突关系
-        var conflictList = Recognizer.getConflictList(recognizer.name);
+        var conflictList = Recognizer.getConflictList(recognizer.recName);
         for (var i = 0; i < conflictList.length; i++) {
             name = conflictList[i];
             var conflictRecognizer = this._recognizers[name];
             if (conflictRecognizer) {
-                conflictRecognizer.conflictList[recognizer.name] = recognizer;
-                recognizer.conflictList[conflictRecognizer.name] = conflictRecognizer;
+                conflictRecognizer.conflictList[recognizer.recName] = recognizer;
+                recognizer.conflictList[conflictRecognizer.recName] = conflictRecognizer;
             }
         }
     };

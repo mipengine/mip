@@ -8,7 +8,7 @@ define(function () {
                 docElem.msMatchesSelector ||
                 docElem.matchesSelector;
     var matches = function (element, selector) {
-        if (!element || !element.nodeType) {
+        if (!element || element.nodeType != 1) {
             return false;
         }
         return nativeMatches.call(element, selector);
@@ -44,15 +44,18 @@ define(function () {
 
     var closestTo = function (element, selector, target) {
         var closestElement = closest(element, selector);
-        return contains(element, closestElement) ? closestElement : null;
+        return contains(closestElement, element) ? closestElement : null;
     };
 
     var createTmpElement = document.createElement('div');
     var create = function (str) {
         createTmpElement.innerHTML = str;
-        var children = createTmpElement.children;
+        if (!createTmpElement.children.length) {
+            return null;
+        }
+        var children = Array.prototype.slice.call(createTmpElement.children);
         createTmpElement.innerHTML = '';
-        return children.length > 1 ? children : children[0]; 
+        return children.length > 1 ? children : (children[0] || null); 
     };
 
 

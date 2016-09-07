@@ -39,7 +39,8 @@ define(function () {
             return value + unitCache[property];
         }
         supportElement.style[property] = 0;
-        var match = supportElement.style[property].match(unitReg);
+        var propValue = supportElement.style[property];
+        var match = propValue.match && propValue.match(unitReg);
         if (match) {
             return value + (unitCache[property] = match[1]);
         }

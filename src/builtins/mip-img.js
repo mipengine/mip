@@ -46,6 +46,7 @@ define(['util', 'naboo', 'viewport'],
                 popup.addEventListener('click', function () {
                     naboo.css(popupBg, {opacity: 0}).start();
                     naboo.css(popupImg, rect.getDomOffset(img)).start(function () {
+                        css(img, 'opacity', '1');
                         css(popup, 'display', 'none');
                     });
                 }, false);
@@ -58,6 +59,7 @@ define(['util', 'naboo', 'viewport'],
             css(popup, 'display', 'block');
 
             naboo.css(popupImg, getPopupImgPos(imgOffset.width, imgOffset.height)).start();
+            css(img, 'opacity', 0);
         }, false);
     };
     var inviewCallback = function(){
