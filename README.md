@@ -30,7 +30,24 @@ npm install -g fis-parse-less
 make
 
 # 开发者模式：包括文件监听
-make dev
+make debug
+
+# 运行一次测试
+make test
+
+# 生成测试报告 dist/test-coverate, dist/test-result
+make test-report
+
+# 监听测试目录（./dist）
+make test-watch
+# 构建测试目录（将会触发一次测试）
+make test-build
+
+# 手机端测试
+make test-listen
+# 用任何浏览器访问上述命令提示的URL
+# 执行测试
+make test-run
 ```
 
 ### 使用须知
