@@ -9,9 +9,10 @@
 __inline('./polyfills/promise.js');
 // https://github.com/camsong/fetch-ie8
 __inline('./polyfills/fetch.js');
+// https://github.com/WebReflection/document-register-element
+__inline('./polyfills/document-register-element.max.js');
 
 /* libs */
-__inline('./deps/document-register-element.max.js');
 __inline('./deps/esl.js');
 __inline('./deps/esl_config.js');
 __inline('./deps/zepto.js');
