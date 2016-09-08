@@ -1,8 +1,8 @@
 /**
  * 界面可视窗口模块，提供窗口各属性，以及窗口整体scroll、resize等事件接口
  **/
-define(['./components/rect', './components/platform', './components/event', './util'], 
-    function (rect, platform, Event, util) {
+define(['./components/rect', './components/platform', './components/event', './components/fixedElement', './util'], 
+    function (rect, platform, Event, fixedElement, util) {
 
     var docElem = document.documentElement;
     var win = window;
@@ -41,6 +41,8 @@ define(['./components/rect', './components/platform', './components/event', './u
     };
     var bindedChangeEvent;
     var init = function () {
+        /* 处理 fixed 元素 */
+        fixedElement.init();
         bindedChangeEvent = changeEvent.bind(this);
         (platform.needSpecialScroll ? document.body : win)
             .addEventListener('scroll', scrollEvent.bind(this), false);

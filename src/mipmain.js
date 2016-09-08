@@ -36,6 +36,7 @@ __inline('./components/dom-event.js');
 __inline('./components/animation.js');
 __inline('./components/gesture.js');
 __inline('./components/event-action.js');
+__inline('./components/fixedElement.js');
 
 /* mip frame */
 __inline('./viewport.js');

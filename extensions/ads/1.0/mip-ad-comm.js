@@ -13,7 +13,7 @@ define(function (){
      * render
      *
      */
-    var render = function(_this) {
+    var render = function(_this, me) {
         // if (this.isRender) {
         //     return;
         // }
@@ -26,16 +26,16 @@ define(function (){
 
         switch(tpl) {
             case 'onlyImg':
-                renderOnlyImg.call(_this);
+                renderOnlyImg(_this, me);
                 break;
             case 'noneImg':
-                renderNoneImg.call(_this);
+                renderNoneImg(_this, me);
                 break;
             case 'oneImg':
-                renderOneImg.call(_this);
+                renderOneImg(_this, me);
                 break;
             case 'moreImg':
-                renderMoreImg.call(_this);
+                renderMoreImg(_this, me);
                 break;
         }
     };
@@ -45,11 +45,11 @@ define(function (){
      * 
      * @return
      */
-    function renderOnlyImg() {
-        var $this = $(this);
+    function renderOnlyImg(_this, me) {
+        var $this = $(_this);
 
-        var url = this.getAttribute('href');
-        var src = this.getAttribute('src');
+        var url = _this.getAttribute('href');
+        var src = _this.getAttribute('src');
         var size = $this.data('size').trim().split(' ');
         var ratio = (size[1]/size[0]*100).toFixed(2);
 
@@ -62,6 +62,9 @@ define(function (){
         ].join('');
 
         $this.append(html);
+
+        layout($this[0], me);
+        
     }
 
     /**
@@ -69,10 +72,10 @@ define(function (){
      * 
      * @return
      */
-    function renderNoneImg() {
-        var $this = $(this);
+    function renderNoneImg(_this, me) {
+        var $this = $(_this);
 
-        var url = this.getAttribute('href');
+        var url = _this.getAttribute('href');
         var title = $this.data('title');
 
         var html = [
@@ -87,6 +90,8 @@ define(function (){
 
         $this.append(html);
 
+        layout($this[0], me);
+
     }
 
     /**
@@ -94,11 +99,11 @@ define(function (){
      * 
      * @return 
      */
-    function renderOneImg() {
-        var $this = $(this);
+    function renderOneImg(_this, me) {
+        var $this = $(_this);
 
-        var url = this.getAttribute('href');
-        var src = this.getAttribute('src');
+        var url = _this.getAttribute('href');
+        var src = _this.getAttribute('src');
         var title = $this.data('title');
         var size = $this.data('size').trim().split(' ');
         var ratio = (size[1]/size[0]*100).toFixed(2);
@@ -119,18 +124,23 @@ define(function (){
         ].join(''); 
 
         $this.append(html);
+
+        layout($this[0], me);
     }
+
+
+
 
     /**
      * [renderMoreImg 多图样式渲染函数]
      * 
      * @return
      */
-    function renderMoreImg() {
-        var $this = $(this);
+    function renderMoreImg(_this, me) {
+        var $this = $(_this);
 
-        var url = this.getAttribute('href');
-        var src = this.getAttribute('src').split(';');
+        var url = _this.getAttribute('href');
+        var src = _this.getAttribute('src').split(';');
         var txt = $this.data('txt') ? $this.data('txt').split(';') : [];
         var abs = $this.data('ads') ? $this.data('ads').split(';') : [];
         var title = $this.data('title') || '';
@@ -168,6 +178,8 @@ define(function (){
             ].join('');
 
             $this.append(html);
+
+            layout($this[0], me);
         }
     }
 
@@ -180,6 +192,17 @@ define(function (){
             ].join('');
         }
         return '';
+    }
+
+
+    function layout(parent, me) {
+        parent.childNodes.forEach(function(node) {
+
+            if(node.nodeType == 1 && node.nodeName !== 'MIP-I-SPACE' && node.nodeName !== 'SCRIPT') {
+                me.applyFillContent(node, true);
+            }
+                        
+        });
     }
 
     return {

@@ -22,9 +22,11 @@ MIP页面会有严格的规范校验，不允许存在任何校验不通过的�
 |&lt;meta charset="utf-8"&gt; |utf-8不区分大小写，无单引号或者双引号限制|
 |&lt;meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1"&gt; |强制小写，无单引号或者双引号限制|
 |&lt; link rel="stylesheet" type="text/css" href="https://mipcache.bdstatic.com/static/mipmain-v1.0.1.css" &gt; |强制小写，无单引号或者双引号限制，v1.0.1会根据版本不同而不同|
-|&lt;script src="https://mipcache.bdstatic.com/static/mipmain-v1.0.2.js" &gt;&lt;/script &gt; |强制小写，无单引号或者双引号限制，v1.0.2会根据版本不同而不同|
+|&lt;script src="https://mipcache.bdstatic.com/static/mipmain-v1.0.3.js" &gt;&lt;/script &gt; |强制小写，无单引号或者双引号限制，v1.0.2会根据版本不同而不同|
 |&lt;body&gt; |强制小写|
 |&lt;link rel="standardhtml" href="xxx"&gt; |强制小写|
+
+- P.S.: meta 标签 name="viewport" 时, content的值必须且最少含有 width=device-width, minimum-scale=1 以及 initial-scale=1这3个属性且顺序不固定。
 
 ### 2. 禁用标签
 
