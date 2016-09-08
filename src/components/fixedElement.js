@@ -166,9 +166,9 @@ define(['platform', 'layout', 'css'], function(platform, layout, css){
           try {
             var fixedSelector = cssRule.selectorText;
             var elements = document.querySelectorAll(fixedSelector);
-            for (var i = 0; i < elements.length; i++) {
+            for (var j = 0; j < elements.length; j++) {
               // remove ?
-              elements[i].parentElement.removeChild(elements[i]);
+              elements[j].parentElement.removeChild(elements[j]);
             }
           } catch (e) {
             // todo send error log
