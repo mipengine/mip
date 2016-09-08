@@ -1,4 +1,4 @@
-define(['platform', 'layout'], function(platform, layout){
+define(['platform', 'layout', 'css'], function(platform, layout, css){
 	function fixedElement(){
 
       /** @private {number} */
@@ -38,7 +38,7 @@ define(['platform', 'layout'], function(platform, layout){
         }
       }
       this.doUserDefDoms();
-  }
+  };
   
   /**
    * 处理 fixed 元素
@@ -68,7 +68,7 @@ define(['platform', 'layout'], function(platform, layout){
             ele.parentElement.removeChild(ele);
           }
         } 
-  }
+  };
 
   /**
    * @return {?Element}
@@ -79,12 +79,33 @@ define(['platform', 'layout'], function(platform, layout){
     }
     this._fixedLayer = document.createElement('body');
     this._fixedLayer.className = 'mip-fixedlayer';
-    this._fixedLayer.style="position: absolute; top: 0px; left: 0px; height: 0px; width: 0px; pointer-events: none; overflow: hidden; animation: none; -webkit-animation: none; border: none; box-sizing: border-box; box-shadow: none; " 
-                          +"display: block; float: none; margin: 0px; opacity: 1; outline: none; transform: none; transition: none; visibility: visible; background: none;"
+    css(this._fixedLayer, {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        height: 0,
+        width: 0, 
+        'pointer-events': 'none',
+        overflow: 'hidden', 
+        animation: 'none',
+        '-webkit-animation': 'none',
+        border: 'none',
+        'box-sizing': 'border-box',
+        'box-shadow': 'none',
+        display: 'block', 
+        float: 'none',
+        margin: 0,
+        opacity: 1, 
+        outline: 'none', 
+        transform: 'none', 
+        transition: 'none',
+        visibility: 'visible',
+        background: 'none'
+    });
     var html = document.getElementsByTagName('html')[0];
     html.appendChild(this._fixedLayer);
     return this._fixedLayer;
-  }
+  };
 
   /**
    * 将 mip-fixed 移到 fixed-layer
@@ -108,7 +129,7 @@ define(['platform', 'layout'], function(platform, layout){
     element.parentElement.replaceChild(fixedEle.placeholder, element);
     this.getFixedLayer().appendChild(element);
 
-  }
+  };
 
   /**
    * 处理用户自定义的 fixed 元素
@@ -120,8 +141,8 @@ define(['platform', 'layout'], function(platform, layout){
       }
       // 找到所有的自定义 `position:fixed` 的元素。
       var fixedSelectors = [];
-      for (let i = 0; i < stylesheets.length; i++) {
-        const stylesheet = stylesheets[i];
+      for (var i = 0; i < stylesheets.length; i++) {
+        var stylesheet = stylesheets[i];
         if (stylesheet.disabled ||
               !stylesheet.ownerNode ||
               stylesheet.ownerNode.tagName != 'STYLE' ||
@@ -130,7 +151,7 @@ define(['platform', 'layout'], function(platform, layout){
         }
         this._findFixedSelectors(stylesheet.cssRules);
       }
-  }
+  };
   /**
    *  找到所有是 fixed 定位的 selector
    *  CSSRule 参照 https://developer.mozilla.org/en-US/docs/Web/API/CSSRule#Type_constants
@@ -161,7 +182,7 @@ define(['platform', 'layout'], function(platform, layout){
         this._findFixedSelectors(cssRule.cssRules, foundSelectors);
       }
     }
-  }
+  };
 
   /**
    * 处理 fixed 元素
@@ -189,7 +210,7 @@ define(['platform', 'layout'], function(platform, layout){
               fixedEle.style.display = 'none';
       }
       /* mip fixed 规则限制 end */
-  }
+  };
   fixedElement.prototype.setStyle = function(ele) {
     var top = layout.parseLength(ele.getAttribute('top'));
     if (top) {
@@ -204,7 +225,7 @@ define(['platform', 'layout'], function(platform, layout){
       /* 不规范的 mip-fixed不计数 */
       this._fixedTypes.other -= 1;
     }
-  }
+  };
 
   return new fixedElement();
 });
