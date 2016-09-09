@@ -128,7 +128,7 @@ define(['./components/css-loader', './components/layout', './resources'], functi
             this._inViewport = inViewport;
             if (!this._firstInViewport) {
                 this._firstInViewport = true;
-                this.customElement.inviewCallback();
+                this.customElement.firstInviewCallback();
             }
             this.customElement.viewportCallback(inViewport);
         };

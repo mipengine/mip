@@ -62,7 +62,7 @@ define(['util', 'naboo', 'viewport'],
             css(img, 'opacity', 0);
         }, false);
     };
-    var inviewCallback = function(){
+    var firstInviewCallback = function () {
         var _img = new Image();
         this.applyFillContent(_img, true);
         var ele = this.element;
@@ -78,7 +78,7 @@ define(['util', 'naboo', 'viewport'],
             bindPopup(ele, _img);
         }
     };
-    customElem.prototype.inviewCallback = inviewCallback;
+    customElem.prototype.firstInviewCallback = firstInviewCallback;
 
 
     return customElem;

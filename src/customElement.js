@@ -22,7 +22,7 @@ define(['./components/event'], function (Event) {
     customElement.prototype.attachedCallback = function () {};
     customElement.prototype.detachedCallback = function () {};
     customElement.prototype.attributeChangedCallback = function () {};
-    customElement.prototype.inviewCallback = function () {};
+    customElement.prototype.firstInviewCallback = function () {};
     customElement.prototype.viewportCallback = function () {};
     customElement.prototype.prerenderAllowed = function () {return false;}
     // 模板的元素build功能，即元素的默认初始化功能 
