@@ -62,15 +62,8 @@ define(['./platform'], function (platform) {
                 ele.scrollIntoView(true);
             }
         },
-        _getscroll: function (attr) {
-            if (Rect.endElement !== document.body.lastElementChild) {
-                document.body.appendChild(Rect.endElement);
-            }
-            return Rect.endElement.getBoundingClientRect()[attr] -
-                Rect.getterElement.getBoundingClientRect()[attr]
-        },
         getScrollHeight: function () {
-            return round(Rect.endElement ? Rect._getscroll('top') : Rect.scrollingElement.scrollHeight);
+            return round(Rect.endElement ? Rect.endElement.offsetTop : Rect.scrollingElement.scrollHeight);
         },
         getScrollWidth: function () {
             return window.innerWidth;

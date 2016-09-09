@@ -40,6 +40,7 @@ define(function () {
             'width:' + viewport.getWidth(),
             'height:' + viewport.getHeight(),
             'scrollTop:' + viewport.getScrollTop(),
+            'scrollHeight:' + viewport.getScrollHeight(),
             'rect:' + JSON.stringify(viewport.getRect())
         ].join('<br>');
     };
