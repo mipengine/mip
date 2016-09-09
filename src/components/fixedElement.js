@@ -30,7 +30,7 @@ define(['platform', 'layout', 'css'], function(platform, layout, css){
       var mipFixedElements = document.querySelectorAll('mip-fixed');
       this.setFixedElement(mipFixedElements);
       var fixedLen = this._fixedElements.length;
-      var hasParentPage = window.parent !== window
+      var hasParentPage = true;//window.parent !== window;
       if (platform.isIos() && fixedLen > 0 && hasParentPage) {
         var fixedLayer = this.getFixedLayer();
         
@@ -120,7 +120,9 @@ define(['platform', 'layout', 'css'], function(platform, layout, css){
     }
 
     if (!fixedEle.placeholder) {
-      element.style = 'pointer-events:initial';
+      css(element, {
+        'pointer-events':'initial'
+      });
       fixedEle.placeholder = document.createElement('mip-i-ph');
       fixedEle.placeholder.setAttribute('mipdata-fixedIdx', fixedEle.id);
       fixedEle.placeholder.style.display = 'none';
