@@ -30,14 +30,17 @@ define(['platform', 'layout', 'css'], function(platform, layout, css){
       var mipFixedElements = document.querySelectorAll('mip-fixed');
       this.setFixedElement(mipFixedElements);
       var fixedLen = this._fixedElements.length;
-      if (platform.isIos() && fixedLen > 0) {
+      var hasParentPage = true;//window.parent !== window;
+      if (platform.isIos() && fixedLen > 0 && hasParentPage) {
         var fixedLayer = this.getFixedLayer();
         
         for (var i = 0; i < fixedLen; i++) {
           this.moveToFixedLayer(this._fixedElements[i], i);
         }
       }
-      this.doUserDefDoms();
+      if (hasParentPage) {
+        this.doUserDefDoms();
+      }
   };
   
   /**
@@ -117,7 +120,9 @@ define(['platform', 'layout', 'css'], function(platform, layout, css){
     }
 
     if (!fixedEle.placeholder) {
-      element.style = 'pointer-events:initial';
+      css(element, {
+        'pointer-events':'initial'
+      });
       fixedEle.placeholder = document.createElement('mip-i-ph');
       fixedEle.placeholder.setAttribute('mipdata-fixedIdx', fixedEle.id);
       fixedEle.placeholder.style.display = 'none';

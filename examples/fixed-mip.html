@@ -5,7 +5,7 @@
     <title>mip网盟组件</title>
     <meta name="viewport" content="width=device-width,user-scalable=no">
     <link rel="stylesheet" type="text/css" href="/dist/css/mipmain.css">
-    <style type="text/css">
+    <style mip-custom>
       .mip-adbd {
          width: 100%;
          overflow: hidden;
@@ -14,16 +14,24 @@
         height: 1000px;
         background: #eee;
       }
-    </style>
-    <style type="text/css">
       .fixed-element {
          position: fixed;
-         top: 0;
+         top: 100px;
          height:100px;
          width:100px;
          background: green;
       }
     </style>
+    <noscript>
+      <style mip-officialrelease>
+        body {
+            -webkit-animation:none;
+               -moz-animation:none;
+                -ms-animation:none;
+                    animation:none
+        }
+      </style>
+    </noscript>
   </head>
   <body>
      <div class="article">
