@@ -30,14 +30,17 @@ define(['platform', 'layout', 'css'], function(platform, layout, css){
       var mipFixedElements = document.querySelectorAll('mip-fixed');
       this.setFixedElement(mipFixedElements);
       var fixedLen = this._fixedElements.length;
-      if (platform.isIos() && fixedLen > 0) {
+      var hasParentPage = window.parent !== window
+      if (platform.isIos() && fixedLen > 0 && hasParentPage) {
         var fixedLayer = this.getFixedLayer();
         
         for (var i = 0; i < fixedLen; i++) {
           this.moveToFixedLayer(this._fixedElements[i], i);
         }
       }
-      this.doUserDefDoms();
+      if (hasParentPage) {
+        this.doUserDefDoms();
+      }
   };
   
   /**
