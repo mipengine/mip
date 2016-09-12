@@ -135,7 +135,7 @@ define(['./event', './gesture-recognizer', './fn'], function (Event, Recognizer,
      * @class
      **/
     var Gesture = function (element, opt) {
-        this._eventContext = this._element = element;
+        this.__eventContext = this._element = element;
         this.startX = this.startY = this.startT = 0;
         opt && (this._opt = fn.extend({}, this._opt, opt));
 

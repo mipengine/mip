@@ -35,15 +35,15 @@ define(['./fn', './dom'], function (fn, dom) {
         get: function (id) {
             return document.getElementById(id);
         },
-        excuteActionEvent: function (action, target) {
-            target.excuteActionEvent && target.excuteActionEvent(action);
+        excuteEventAction: function (action, target) {
+            target.excuteEventAction && target.excuteEventAction(action);
         },
         _excute: function (actions) {
             for (var i = 0; i < actions.length; i++) {
                 var action = actions[i];
                 var target = this.get(action.id);
                 if (this.checkTarget(target)) {
-                    this.excuteActionEvent(action, target);
+                    this.excuteEventAction(action, target);
                 }
             }
         },

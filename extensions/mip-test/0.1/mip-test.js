@@ -163,7 +163,7 @@ define(function () {
             <div  class="mip-test-button">Click For Event Action</div>\
         </div>'
         var resultForEventAction = this.eventActionElement.querySelector('.result-for-event');
-        this.addActionEvent('eventaction', function (event, str) {
+        this.addEventAction('eventaction', function (event, str) {
             resultForEventAction.innerHTML = str;
         });
 
@@ -247,7 +247,7 @@ define(function () {
     };
 
     // inviewTest
-    customEle.prototype.inviewCallback = function () {
+    customEle.prototype.firstInviewCallback = function () {
         if (!this.inviewCallbackCount) {
             this.inviewCallbackCount = 0;
         }

@@ -160,6 +160,7 @@ define(['./fn'], function (fn) {
     // Tap Recognizer
     var TapRecognizer = function () {
         Recognizer.apply(this, arguments);
+        this.boundHoldTimeFn = holdTimeFn.bind(this);
     };
     var holdTimeFn = function () {
         this.state = STATE_END;
@@ -210,7 +211,7 @@ define(['./fn'], function (fn) {
                 if (this.emitCheck()) {
                     return STATE_END;
                 } else {
-                    this.holdTimer = setTimeout(holdTimeFn.bind(this), this.holdTime);
+                    this.holdTimer = setTimeout(this.boundHoldTimeFn, this.holdTime);
                     return STATE_WAIT;
                 }
             }

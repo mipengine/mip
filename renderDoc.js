@@ -13,7 +13,7 @@ var config = {
       '5-ad-widget': '广告组件',
       '5_demos': '示例',
       'ads': '广告类型',
-      '999-help': '开发api'
+      '999-help': '组件开发文档'
     }
 };
 var fs = require('fs'),
@@ -48,7 +48,9 @@ function walkDoc(path){
             var mdTitleReg = /# +([^\n]+)/;
             var contentList = mdTitleReg.exec(fileContent);
             if(mdTitleReg){
+                try {
                 fileInfo.title = contentList[1];
+                } catch(e) {console.log(item)}
             }
             //fileInfo.content = fileContent;
             fileList.push(fileInfo);

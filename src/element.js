@@ -150,8 +150,8 @@ define(['./components/css-loader', './components/layout', './resources'], functi
             }
         };
  
-        proto.excuteActionEvent = function (action) {
-            this.customElement.excuteActionEvent(action);
+        proto.excuteEventAction = function (action) {
+            this.customElement.excuteEventAction(action);
         };
         return baseElementProto = proto;
     };

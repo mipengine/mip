@@ -40,7 +40,7 @@ define(['./components/event'], function (Event) {
         return element;
     };
 
-    customElement.prototype.addActionEvent = function () {
+    customElement.prototype.addEventAction = function () {
         var evt = this._actionEvent;
         if (!evt) {
             evt = this._actionEvent = new Event();
@@ -50,7 +50,7 @@ define(['./components/event'], function (Event) {
         evt.on.apply(evt, arguments);
     };
 
-    customElement.prototype.excuteActionEvent = function (action) {
+    customElement.prototype.excuteEventAction = function (action) {
         var eventObj = this._actionEvent;
         if (action && eventObj) {
             eventObj.trigger(action.handler, action.event, action.arg);
