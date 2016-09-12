@@ -62,7 +62,7 @@ define(['./event', './gesture-recognizer', './fn'], function (Event, Recognizer,
                 var instY = data.instantVelocityY = (data.y - this.preData.y) / instTime || 0;
                 if (data.eventState === 'move' && (preventX || preventY)) {
                     var curDirection = abs(instX) > abs(instY);
-                    if ((preventX && curDirection) || (preventY && curDirection)) {
+                    if ((preventX && curDirection) || (preventY && !curDirection)) {
                         event.preventDefault();
                     }
                 }
