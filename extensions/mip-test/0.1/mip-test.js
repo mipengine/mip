@@ -72,18 +72,36 @@ define(function () {
         });
 
         // Gesture
+        var gestureResult = create('<div style="height:30px;position:relative;font-weight:bold;font-size:18px;"></div>');
+        var firstGestureResult = create('<div style="background:#e6e6e6;color:#333;height:30px;position:absolute;left:0;top:0;"></div>');
+        var secondGestureResult = create('<div style="background:#e6e6e6;color:#987;height:30px;position:absolute;top:0;left:0;"></div>');
+        var resultsElements = [firstGestureResult, secondGestureResult];
+        gestureResult.appendChild(firstGestureResult);
+        gestureResult.appendChild(secondGestureResult);
+        this.gestureElement.appendChild(gestureResult);
+        var gestureCount = 0;
+        var changeGestureText = function (text) {
+            css(resultsElements, {transition: '', opacity: 1, zIndex: 0});
+            css(firstGestureResult, 'zIndex', 1);
+            secondGestureResult.innerHTML = text;
+            Naboo.css(firstGestureResult, {opacity: 0}).start();
+            var tmp = firstGestureResult;
+            firstGestureResult = secondGestureResult;
+            secondGestureResult = tmp;
+        };
+
         var gestureButton = createButton('Gesture Tap');
         this.gestureElement.appendChild(gestureButton);
         var tapGesture = new Gesture(gestureButton);
         tapGesture.on('tap', function (event, data) {
-            alert(data.type);
+            changeGestureText(data.type);
         });
 
         var gestureButton = createButton('Gesture Tap and Double Tap');
         this.gestureElement.appendChild(gestureButton);
         var tapanddobuleGesture = new Gesture(gestureButton);
         tapanddobuleGesture.on('tap doubletap', function (event, data) {
-            alert(data.type);
+            changeGestureText(data.type);
         });
 
         var gestureButton = createButton('Gesture Swipe');
@@ -93,7 +111,7 @@ define(function () {
             preventDefault: true
         });
         swipeGesture.on('swipe', function (event, data) {
-            alert(data.type + ' ' + data.swipeDirection);
+            changeGestureText(data.type + ' ' + data.swipeDirection);
         });
 
         // css

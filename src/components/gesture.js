@@ -73,7 +73,6 @@ define(['./event', './gesture-recognizer', './fn'], function (Event, Recognizer,
             this.preData = data;
 
             data.event = event;
-
             return Object.freeze(data);
         },
         // 计算触摸点的中心点 PS：暂时只做单点，后续看需求是否加多点

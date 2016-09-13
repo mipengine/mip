@@ -1,36 +1,70 @@
-/**
- * 界面可视窗口模块，提供窗口各属性，以及窗口整体scroll、resize等事件接口
- **/
 define(['./components/rect', './components/platform', './components/event', './components/fixedElement', './util'], 
     function (rect, platform, Event, fixedElement, util) {
 
     var docElem = document.documentElement;
     var win = window;
+    
+    /**
+     * The object is to solve a series of problems when the page in an iframe and
+     * provide some additional methods.
+     */
     var  Viewport = {
+        /**
+         * Get the current vertical position of the page
+         * @return {number}
+         */
         getScrollTop: function () {
-            return this._scrollTop = rect.getScrollTop();
+            return rect.getScrollTop();
         },
+        /**
+         * Get the current horizontal position of the page
+         * @return {number}
+         */
         getScrollLeft: function () {
             if (this._scrollLeft == null) {
                 this._scrollLeft = rect.getScrollLeft();
             }
             return this._scrollLeft;
         },
+        /**
+         * Set the current vertical position of the page
+         * @param {number} scrollTop
+         */
         setScrollTop: function (top) {
             rect.setScrollTop(top);
         },
+        /**
+         * Get the width of the viewport
+         * @return {number}
+         */
         getWidth: function () {
             return win.innerWidth || docElem.clientWidth;
         },
+        /**
+         * Get the height of the viewport
+         * @return {number}
+         */
         getHeight: function () {
             return win.innerHeight || docElem.clientHeight;
         },
+        /**
+         * Get the scroll width of the page
+         * @return {number}
+         */
         getScrollWidth: function () {
             return rect.getScrollWidth();
         },
+        /**
+         * Get the scroll height of the page
+         * @return {number}
+         */
         getScrollHeight: function () {
             return rect.getScrollHeight();
         },
+        /**
+         * Get the rect of the viewport.
+         * @return {Object}
+         */
         getRect: function () {
             return rect.get(
                 this.getScrollLeft(),
@@ -40,8 +74,12 @@ define(['./components/rect', './components/platform', './components/event', './c
         }
     };
     var bindedChangeEvent;
+    /**
+     * Initialize the viewport
+     * @return {Viewport}
+     */
     var init = function () {
-        /* 处理 fixed 元素 */
+        // deal width fixed element
         fixedElement.init();
         bindedChangeEvent = changeEvent.bind(this);
         (platform.needSpecialScroll ? document.body : win)
@@ -52,14 +90,18 @@ define(['./components/rect', './components/platform', './components/event', './c
     var changing = false;
     var oldEvt = null;
     var oldTime, oldTop;
+    /**
+     * The scroll handler
+     * @param {!Event}
+     */
     var scrollEvent = function (event) {
         var scrollTop = this.getScrollTop();
         if (scrollTop < 0) {
             return;
         }
         var now = Date.now();
-        // 每次都会强制算时间差，如果大于 20ms，立即计算是否 changeEnd，
-        // PS: uc 在手指按住时不执行 timeout
+        // If the delta time >= 20ms, immediately calculate whether to trigger changed
+        // PS: UC browser does not dispatch the scroll event, when the finger is pressed.
         if (!changing || now - oldTime >= 20) {
             changing = true;
             bindedChangeEvent();
@@ -67,14 +109,15 @@ define(['./components/rect', './components/platform', './components/event', './c
             oldTop = scrollTop;
             oldEvt = event;
         }
-        // trigger this.on('scroll', ...);
         this.trigger('scroll', event);
     };
     var resizeEvent = function (event) {
-        // trigger this.on('resize', ...)
         this.trigger('resize', event);
     };
     var changeTimer = null;
+    /**
+     * To determine whether to trigger a change event
+     */
     var changeEvent = function () {
         var now = Date.now();
         var delay = oldTime - now || 0;
@@ -87,7 +130,7 @@ define(['./components/rect', './components/platform', './components/event', './c
         }
     };
 
-
+    // Mix the methods and attributes of Event into the viewport.
     Event.mixin(Viewport);
 
     return init.call(Viewport);
