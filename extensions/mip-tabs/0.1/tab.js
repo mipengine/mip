@@ -1,6 +1,6 @@
 define(function () {
     var fn = function() {};
-
+    var inter;
     var _init = function(opt) {
             var _this = this,
                 $panel = $(_this.panel);
@@ -22,9 +22,11 @@ define(function () {
             var _this = this;
             getNavsWidth();
 
-            // 调用iscroll组件实现横滑功能
-            require(['./iscroll'], function (IScroll){
-                _this.tabScroll = new IScroll(_this.view[0], {
+
+            // 调用scroll组件实现横滑功能
+            require(['./scroll'], function (Scroll){
+
+                _this.tabScroll = new Scroll(_this.view[0], {
                     disableMouse: true,
                     scrollX: true,
                     scrollY: false,
@@ -36,7 +38,7 @@ define(function () {
                 if (_this.current > 0 && _this.current < _this.sum) {
                     var currentTab = Math.min(_this.current + 1, _this.sum - 1);
                     if (_this.navs.eq(currentTab).length && _this.navs.eq(currentTab).position().left > _this.view.width()) {
-                        _this.tabScroll.scrollToElement(_this.navs[_this.current], 500, _this.scrollSize, 0, '', {autoScroll: true});
+                        slideTo(currentTab, 1, _this.navs.eq(_this.current), _this.navs.length);
                     }
                 }
 
@@ -155,7 +157,8 @@ define(function () {
 
                     // 滑动对象存在,执行滑动并传递autoScroll标记用于scrollEnd事件判断
                     if (_this.tabScroll) {
-                        _this.tabScroll.scrollToElement($v[0], 500, _this.scrollSize, 0, '', {autoScroll: true});
+                        slideTo(_this.current + 1, 1, $v, _this.navs.length);
+                        //_this.tabScroll.scrollToElement($v[0], 500, _this.scrollSize, 0, '', {autoScroll: true});
                     };
                 });
             });
@@ -233,6 +236,38 @@ define(function () {
             $(navs[i]).removeClass(_this.currentClass);
         }
     });
+
+    function slideTo(index, leftNum, $thisDom, totalNum) {
+        var left = 0;
+        if (index < leftNum) {
+
+        } else if (index >= totalNum - leftNum) {
+            left = $thisDom.parent().offset().width;
+        } else {
+            left = $thisDom.offset().left - $thisDom.parent().offset().left - $thisDom.width();
+        }
+        if (!inter) {
+            animateSlide($thisDom.parent().parent().scrollLeft(), left, $thisDom.parent().parent());
+        }
+    }
+
+    function animateSlide (start, end, $dom) {
+        var x = (end - start)/8;
+        inter = setInterval(function () {
+            var scl = $dom.scrollLeft();
+
+            if ((x > 0 && scl >= end) || x == 0) {
+                x = 0;
+                clearInterval(inter);
+            } else if (x < 0 && scl <= end) {
+                x = 0;
+                clearInterval(inter);
+            }
+
+            $dom.scrollLeft(scl + x);
+        }, 30);
+        setTimeout(function(){clearInterval(inter); $dom.scrollLeft(end); inter = null;}, 270);
+    }
 
     return Tabs;
 });

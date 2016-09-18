@@ -91,17 +91,22 @@
 }
 
 .mip-tabs-nav-view .mip-tabs-nav {
-    display: block;
+    display: inline-block;
+    position: relative;
 }
 
 .mip-tabs-nav-view .mip-tabs-nav .mip-tabs-nav-li {
     display: inline-block;
+    vertical-align: middle;
     width: auto;
     padding: 0 15px;
 }
 
 .mip-tabs-nav.mip-tabs-nav-bottom {
     background-color: #fafafa;
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .mip-tabs-nav-layer {
@@ -153,6 +158,24 @@
         height: 6px;
         margin: -3px 0 0 -5px;
     }
+}
+
+.mip-tabs .mip-tabs-nav-toggle-holder {
+    display: inline-block;
+    width: 45px;
+    height: 1px;
+    visibility: hidden;
+}
+
+.mip-tabs-scroll-touch {
+    position: relative;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 30px;
+    margin-top: -30px;
+    -webkit-transform: translateY(30px);
+    transform: translateY(30px);
+    width: 100%;
 }
 
 .mip-tabs-episode-content {
