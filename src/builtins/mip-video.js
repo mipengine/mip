@@ -15,7 +15,6 @@ define(['../util'], function(util){
 
         self.ext = {};
         self.iframeSrc = '';
-        self.applyFillContent(element, true);
 
         var children = element.childNodes;
         for(var index = 0; index < children.length; index ++) {

@@ -1,5 +1,6 @@
 define(['./components/rect', './components/platform', './components/event', './components/fixedElement', './util'], 
     function (rect, platform, Event, fixedElement, util) {
+    'use strict';
 
     var docElem = document.documentElement;
     var win = window;
