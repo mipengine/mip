@@ -34,7 +34,6 @@ define(function(){
 
         // 轮播思路：轮播只涉及2张图片，分别是当前图片和下一张要出现的图片，把下一张图片放到当前图片的前面或者后面，
         //         然后移动到当前图片的位置，其余不涉及的图片全部设置left:-9999px，具体可以看效果
-        // 
         css(children, {
             'position': 'absolute',
             'left': HIDE_LEFT,
@@ -74,7 +73,7 @@ define(function(){
             var perWid = element.offsetWidth || window.innerWidth;
             var left = (forward ? 1 : -1) * perWid;
             var _promise;
-            var filterElements = children.filter(function (i) {
+            var filterElements = children.filter(function (element, i) {
                 return (i !== currentIndex && i !== index);
             });
             css(filterElements, 'left', HIDE_LEFT);
