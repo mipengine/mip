@@ -44,7 +44,7 @@ define(function () {
 
     var closestTo = function (element, selector, target) {
         var closestElement = closest(element, selector);
-        return contains(closestElement, element) ? closestElement : null;
+        return contains(target, closestElement) ? closestElement : null;
     };
 
     var createTmpElement = document.createElement('div');

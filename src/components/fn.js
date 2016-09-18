@@ -93,6 +93,7 @@ define(function () {
         throttle: throttle,
         values: values,
         extend: extend,
-        pick: pick
+        pick: pick,
+        isPlainObject: isPlainObject
     }
 });

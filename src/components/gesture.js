@@ -62,7 +62,7 @@ define(['./event', './gesture-recognizer', './fn'], function (Event, Recognizer,
                 var instY = data.instantVelocityY = (data.y - this.preData.y) / instTime || 0;
                 if (data.eventState === 'move' && (preventX || preventY)) {
                     var curDirection = abs(instX) > abs(instY);
-                    if ((preventX && curDirection) || (preventY && curDirection)) {
+                    if ((preventX && curDirection) || (preventY && !curDirection)) {
                         event.preventDefault();
                     }
                 }
@@ -73,7 +73,6 @@ define(['./event', './gesture-recognizer', './fn'], function (Event, Recognizer,
             this.preData = data;
 
             data.event = event;
-
             return Object.freeze(data);
         },
         // 计算触摸点的中心点 PS：暂时只做单点，后续看需求是否加多点
@@ -135,7 +134,7 @@ define(['./event', './gesture-recognizer', './fn'], function (Event, Recognizer,
      * @class
      **/
     var Gesture = function (element, opt) {
-        this._eventContext = this._element = element;
+        this.__eventContext = this._element = element;
         this.startX = this.startY = this.startT = 0;
         opt && (this._opt = fn.extend({}, this._opt, opt));
 

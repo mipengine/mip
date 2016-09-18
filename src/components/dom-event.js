@@ -19,9 +19,10 @@ define(['./dom'], function (dom) {
     specialEvents.click = specialEvents.mousedown = specialEvents.mouseup = specialEvents.mousemove = 'MouseEvents';
 
     // 事件类型，是否冒泡，是否可以被 preventDefault 阻止
-    var createEvent = function (type, canBubble, cancelable) {
+    var createEvent = function (type, data) {
         var event = document.createEvent(specialEvents[type] || 'Event');
-        event.initEvent(type, canBubble, cancelable);
+        event.initEvent(type, true, true);
+        data && (event.data = data);
         return event;
     };
     return {

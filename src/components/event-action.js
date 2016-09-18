@@ -4,7 +4,7 @@ define(['./fn', './dom'], function (fn, dom) {
     var parseReg = /^(\w+):([\w-]+)\.([\w-]+)(?:\(([^\)]+)\))?$/;
     var checkReg = /^mip-/;
 
-    var optKeys = ['get', 'excuteEventAction', 'parse', 'checkTarget'];
+    var optKeys = ['get', 'excuteEventAction', 'parse', 'checkTarget', 'attr'];
 
     var EventAction = function (opt) {
         opt && fn.extend(this, fn.pick(opt, optKeys));
@@ -32,19 +32,18 @@ define(['./fn', './dom'], function (fn, dom) {
         checkTarget: function (target) {
             return target && target.tagName && checkReg.test(target.tagName.toLowerCase());
         },
-        // for override
         get: function (id) {
             return document.getElementById(id);
         },
-        excuteActionEvent: function (action, target) {
-            target.excuteActionEvent && target.excuteActionEvent(action);
+        excuteEventAction: function (action, target) {
+            target.excuteEventAction && target.excuteEventAction(action);
         },
         _excute: function (actions) {
             for (var i = 0; i < actions.length; i++) {
                 var action = actions[i];
                 var target = this.get(action.id);
                 if (this.checkTarget(target)) {
-                    this.excuteActionEvent(action, target);
+                    this.excuteEventAction(action, target);
                 }
             }
         },

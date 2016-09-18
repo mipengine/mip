@@ -33,7 +33,7 @@ define(['components/gesture'], function (Gesture) {
                 console.log(data);
             });
         }
-        this.addActionEvent('test', function (event, title) {
+        this.addEventAction('test', function (event, title) {
             console.log(title);
         });
     };

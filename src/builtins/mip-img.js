@@ -2,6 +2,7 @@ define(['util', 'naboo', 'viewport'],
     function(util, naboo, viewport){
 
     var customElem = require('customElement').create();
+    var Gesture = require('components/gesture');
     var css = util.css;
     var rect = util.rect;
 
@@ -20,6 +21,10 @@ define(['util', 'naboo', 'viewport'],
     // 创建弹层 dom
     var createPopup = function (element, img) {
         var popup = document.createElement('div');
+        // 阻止纵向滑动
+        new Gesture(popup, {
+            preventY: true
+        });
         popup.className = 'mip-img-popUp-wrapper';
         popup.innerHTML = [
             '<div class="mip-img-popUp-bg"></div>',
@@ -62,7 +67,7 @@ define(['util', 'naboo', 'viewport'],
             css(img, 'opacity', 0);
         }, false);
     };
-    var inviewCallback = function(){
+    var firstInviewCallback = function () {
         var _img = new Image();
         this.applyFillContent(_img, true);
         var ele = this.element;
@@ -78,7 +83,7 @@ define(['util', 'naboo', 'viewport'],
             bindPopup(ele, _img);
         }
     };
-    customElem.prototype.inviewCallback = inviewCallback;
+    customElem.prototype.firstInviewCallback = firstInviewCallback;
 
 
     return customElem;

@@ -34,6 +34,7 @@
     };
     var testEl = document.createElement('div');
     var supportedTransforms = /^((translate|rotate|scale)(X|Y|Z|3d)?|matrix(3d)?|perspective|skew(X|Y)?)$/i;
+    var isNaN = Number.isNaN || window.isNaN;
     var transform;
     var transitionProperty;
     var transitionDuration;
@@ -208,7 +209,7 @@
                 var transformCollection = '';
                 for (var key in property) {
                     var value = property[key];
-                    if (!Number.isNaN(Number(value)) && needPx(key)) {
+                    if (!isNaN(Number(value)) && needPx(key)) {
                         value += 'px';
                     }
                     if (supportedTransforms.test(key)) {

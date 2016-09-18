@@ -1,9 +1,3 @@
-/* 
-   mipmain do not using jquery | zepto
-   see @https://github.com/oneuijs/You-Dont-Need-jQuery/blob/master/README.zh-CN.md
-   补充 css、dom、dom-event 文档
-*/
-
 /* polyfills */
 // https://github.com/lahmatiy/es6-promise-polyfill
 __inline('./polyfills/promise.js');

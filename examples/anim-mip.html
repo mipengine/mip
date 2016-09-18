@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>git图组件</title>
+	<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+	<link rel="stylesheet" href="/dist/css/mipmain.css">
+	<style>
+		h1 {
+			font-size: 13px;
+			color: #f44336;
+			margin: 20px 0px;
+		}
+		.gitbox {
+			width: 299px;
+		}
+	</style>
+</head>
+<body>
+
+	<h1>正常的git图加载</h1>
+	<mip-anim width=245
+      height=300
+      src="https://ampbyexample.com/img/gopher.gif"
+      alt="an animation"
+      >
+    </mip-anim>
+
+   <h1>带placeholder的加载方式(满屏模式)</h1>
+   <mip-anim layout="responsive" width=414
+	      height=414
+	      src="https://ampbyexample.com/img/gopher.gif"
+	      alt="an animation"
+	      >
+	       <mip-img
+	       		layout="responsive"
+		        width=414
+		        height=414
+		        src="https://ampbyexample.com/img/gopher.png">
+		    </mip-img>
+	</mip-anim>
+
+   <h1>带placeholder的加载方式(fixed定宽高)</h1>
+   <mip-anim layout="fixed" width=210
+	      height=210
+	      src="https://ampbyexample.com/img/gopher.gif"
+	      alt="an animation"
+	      >
+	       <mip-img
+	       		layout="fixed-height"
+		        width=210
+		        height=210
+		        src="https://ampbyexample.com/img/gopher.png">
+		    </mip-img>
+	</mip-anim>
+
+
+	<h1>带placeholder的加载方式模拟图片未加载成功时</h1>
+   <mip-anim layout="fixed" width=210
+	      height=210
+	      src="https://ampbyexample.com/img/goph.gif"
+	      alt="an animation"
+	      >
+	       <mip-img
+	       		layout="fixed-height"
+		        width=210
+		        height=210
+		        src="https://ampbyexample.com/img/gopher.png">
+		    </mip-img>
+	</mip-anim>
+
+</body>
+<script src="/dist/mipmain.js"></script>
+<script src="/dist/extensions/mip-anim/0.1/mip-anim.js"></script>
+</html>
