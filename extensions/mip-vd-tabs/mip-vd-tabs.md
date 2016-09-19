@@ -1,11 +1,11 @@
-# mip-tabs
+# mip-vd-tabs
 
-mip-tabs 用来支持网页中标签页的显示。标签页内元素较多时不建议使用,会影响页面性能.
+mip-vd-tabs 用来支持网页中标签页的显示。标签页内元素较多时不建议使用,会影响页面性能.
 
 描述|提供了一个标签页组件,迁移自pmd
 ----|----
 可用性|完成
-所需脚本|https://mipcache.bdstatic.com/static/v0.1/mip-tabs.js
+所需脚本|https://mipcache.bdstatic.com/static/v0.1/mip-vd-tabs.js
 示例|官网上线后增加示例
 
 
@@ -16,7 +16,7 @@ mip-tabs 用来支持网页中标签页的显示。标签页内元素较多时�
 - 等分固定标签页
 
 ```
-<mip-tabs>
+<mip-vd-tabs>
     <section>
         <li>第一页</li>
         <li>第二页</li>
@@ -27,12 +27,12 @@ mip-tabs 用来支持网页中标签页的显示。标签页内元素较多时�
     <div>内容2</div>
     <div>内容3</div>
     <div>内容4</div>
-</mip-tabs>
+</mip-vd-tabs>
 ```
 - 横滑标签页
 
 ```
-<mip-tabs allow-scroll>
+<mip-vd-tabs allow-scroll>
     <section>
         <li>第一季</li>
         <li>第二季</li>
@@ -47,13 +47,13 @@ mip-tabs 用来支持网页中标签页的显示。标签页内元素较多时�
     <div>内容4</div>
     <div>内容5</div>
     <div>内容6</div>
-</mip-tabs>
+</mip-vd-tabs>
 ```
 
 - 带下拉按钮的横滑标签页
 
 ```
-<mip-tabs allow-scroll toggle-more toggle-label="自定义文字">
+<mip-vd-tabs allow-scroll toggle-more toggle-label="自定义文字">
     <section>
         <li>第一季</li>
         <li>第二季</li>
@@ -64,13 +64,13 @@ mip-tabs 用来支持网页中标签页的显示。标签页内元素较多时�
     <div>内容2</div>
     <div>内容3</div>
     <div>内容4</div>
-</mip-tabs>
+</mip-vd-tabs>
 ```
 
 - 底部标签页
 
 ```
-<mip-tabs allow-scroll type="bottom" current="3">
+<mip-vd-tabs allow-scroll type="bottom" current="3">
     <div>内容1</div>
     <div>内容2</div>
     <div>内容3</div>
@@ -81,12 +81,12 @@ mip-tabs 用来支持网页中标签页的显示。标签页内元素较多时�
         <li>第三季</li>
         <li>第四季更新至09</li>
     </section>
-</mip-tabs>
+</mip-vd-tabs>
 ```
 
 - 剧情展开标签页
 ```
-<mip-tabs
+<mip-vd-tabs
     type="episode"
     toggle-more
     toggle-label="老九门剧情选集"
@@ -95,7 +95,7 @@ mip-tabs 用来支持网页中标签页的显示。标签页内元素较多时�
     current="11"
     text-tpl="看第{{x}}集"
     link-tpl="http://www.baidu.com/{{x}}/juji">
-</mip-tabs>
+</mip-vd-tabs>
 ```
 
 ## 2. 属性

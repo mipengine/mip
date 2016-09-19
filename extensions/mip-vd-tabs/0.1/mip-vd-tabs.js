@@ -22,14 +22,14 @@ define(function () {
     var TOGGLE_MORE = 'toggle-more';
     var CURRENT = 'current';
     var TYPE = 'type';
-    var WRAPPER_CLS = 'mip-tabs';
-    var CONTENT_CLS = 'mip-tabs-content';
-    var SELECTED_CLS = 'mip-tabs-nav-selected';
-    var ITEM_CLS = 'mip-tabs-nav-li';
-    var NAV_CLS = 'mip-tabs-nav';
-    var VIEW_CLS = 'mip-tabs-nav-view';
-    var TOGGLE_CLS = 'mip-tabs-nav-toggle';
-    var BOTTOM_CLS = 'mip-tabs-nav-bottom';
+    var WRAPPER_CLS = 'mip-vd-tabs';
+    var CONTENT_CLS = 'mip-vd-tabs-content';
+    var SELECTED_CLS = 'mip-vd-tabs-nav-selected';
+    var ITEM_CLS = 'mip-vd-tabs-nav-li';
+    var NAV_CLS = 'mip-vd-tabs-nav';
+    var VIEW_CLS = 'mip-vd-tabs-nav-view';
+    var TOGGLE_CLS = 'mip-vd-tabs-nav-toggle';
+    var BOTTOM_CLS = 'mip-vd-tabs-nav-bottom';
     var TPL_REG = /\{\{\w}}/g;
 
     /**
@@ -102,7 +102,7 @@ define(function () {
                     .append($header.children())
                 );
             if (toggleMore) {
-                $header.append('<div class="mip-tabs-nav-toggle"><img src=' + ICON_SRC + '></div>');
+                $header.append('<div class="mip-vd-tabs-nav-toggle"><img src=' + ICON_SRC + '></div>');
             }
         } else {
             $header.addClass(NAV_CLS);
@@ -130,10 +130,10 @@ define(function () {
             viewClass: VIEW_CLS,
             contClass: CONTENT_CLS,
             navClass: ITEM_CLS,
-            logClass: 'mip-tabs-log',
+            logClass: 'mip-vd-tabs-log',
             toggleClass: TOGGLE_CLS,
-            layerClass: 'mip-tabs-nav-layer',
-            layerUlClass: 'mip-tabs-nav-layer-ul'
+            layerClass: 'mip-vd-tabs-nav-layer',
+            layerUlClass: 'mip-vd-tabs-nav-layer-ul'
         });
     }
 
@@ -168,14 +168,14 @@ define(function () {
             tabList.map(function (v, index) {
                 var epFragment = '<div class="'
                     + CONTENT_CLS
-                    + ' mip-tabs-episode-content" '
+                    + ' mip-vd-tabs-episode-content" '
                     + (index === tabCurNum ? '' : 'style="display:none;" ')
                     + ' >';
                 for (var j = v.from; j <= v.to; j++) {
-                    var selectedClass = j === currentNum ? 'mip-tabs-episode-item-selected' : '';
+                    var selectedClass = j === currentNum ? 'mip-vd-tabs-episode-item-selected' : '';
                     var link = (linkTpl ? ' href="' + linkTpl.replace(TPL_REG, j) + '"' : '' );
                     epFragment = epFragment
-                        + '<span class="mip-tabs-episode-item '
+                        + '<span class="mip-vd-tabs-episode-item '
                         + selectedClass + '"'
                         + link + '>'
                         + j
@@ -187,24 +187,31 @@ define(function () {
         );
 
         if (tabCount > 1) {
-            var tabFragment = '<div class="' + VIEW_CLS + '">'
-                + '<ul class="' + NAV_CLS + ' ' + BOTTOM_CLS + '">';
+            var tabFragment = '';
+            var scrollNum = 4;
+            if (tabCount > scrollNum) {
+                tabFragment = '<div class="' + VIEW_CLS + '">';
+            }
+            tabFragment += '<ul class="' + NAV_CLS + ' ' + BOTTOM_CLS + '">';
             tabFragment += tabList.map(function (v, index) {
                 var selectedClass = index === tabCurNum ? SELECTED_CLS : '';
                 return '<li class="' + ITEM_CLS + ' ' + selectedClass + '">' + v.text + '</li>';
             }).join('');
-            tabFragment += '</ul></div>';
+            tabFragment += '</ul>';
+            if (tabCount > scrollNum) {
+                tabFragment += '</div>';
+            }
             wrapper.append(tabFragment);
 
             new Tab(wrapper, {
-                allowScroll: true,
+                allowScroll: tabCount > scrollNum,
                 current: Math.floor((currentNum - 1) / pageSize) || 1,
                 currentClass: SELECTED_CLS,
                 navWrapperClass: NAV_CLS,
                 viewClass: VIEW_CLS,
                 contClass: CONTENT_CLS,
                 navClass: ITEM_CLS,
-                logClass: 'mip-tabs-log',
+                logClass: 'mip-vd-tabs-log',
                 toggleClass: TOGGLE_CLS
             })
         }
@@ -270,7 +277,7 @@ define(function () {
             navWrapperClass: NAV_CLS,
             viewClass: VIEW_CLS,
             navClass: ITEM_CLS,
-            logClass: 'mip-tabs-log',
+            logClass: 'mip-vd-tabs-log',
             toggleClass: TOGGLE_CLS,
             toggleLabel: $el.attr('toggle-label') || '请选择'
         });
@@ -278,13 +285,13 @@ define(function () {
         // override toggle-more
         (function register(ptr) {
             var _this = tab;
-            var $navLayer = $('<div class="mip-tabs-nav-layer"><p>' + _this.toggleLabel + '</p></div>');
-            var $navLayerUl = $('<ul class="mip-tabs-nav-layer-ul"></ul>');
+            var $navLayer = $('<div class="mip-vd-tabs-nav-layer"><p>' + _this.toggleLabel + '</p></div>');
+            var $navLayerUl = $('<ul class="mip-vd-tabs-nav-layer-ul"></ul>');
 
             _this.toggleState = 0;   // 展开状态 0-收起,1-展开
 
             // 事件代理
-            $navLayerUl.on('click', '.mip-tabs-episode-item ', function(){
+            $navLayerUl.on('click', '.mip-vd-tabs-episode-item ', function(){
                 toggleUp();
             });
 
@@ -323,7 +330,7 @@ define(function () {
         })(this);
 
 
-        $el.delegate('.' + ITEM_CLS + ', .mip-tabs-episode-item', 'click' , function(ev) {
+        $el.delegate('.' + ITEM_CLS + ', .mip-vd-tabs-episode-item', 'click' , function(ev) {
 
             ev.preventDefault();
 
@@ -363,9 +370,9 @@ define(function () {
     return customElement;
 
 });
-require(['mip-tabs'], function (tabs) {
+require(['mip-vd-tabs'], function (tabs) {
     // 引入组件需要的css文件，选填
-    MIP.css.mipTabs = __inline('./mip-tabs.less');
+    MIP.css.mipVdTabs = __inline('./mip-vd-tabs.less');
     //注册组件
-    MIP.registerMipElement('mip-tabs', tabs, MIP.css.mipTabs);
+    MIP.registerMipElement('mip-vd-tabs', tabs, MIP.css.mipVdTabs);
 });
