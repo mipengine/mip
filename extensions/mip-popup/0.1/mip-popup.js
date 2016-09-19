@@ -1,5 +1,4 @@
 /* inline dep */
-__inline('./scroll');
 __inline('./tab');
 __inline('./popup');
 
