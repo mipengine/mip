@@ -50,6 +50,8 @@ make test-listen
 make test-run
 ```
 
+> 如何编写测试，和使用Karma，请参考：<http://gitlab.baidu.com/psfe/karma-testing>
+
 ### 使用须知
 
 直接clone该项目后，`dist`目录下为产出后的总js和css文件，直接引入即可
