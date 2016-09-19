@@ -18,6 +18,10 @@ var fileList = {
     mipmain: [
         '/src/mipmain.js',
         '/src/builtins/video/**'
+    ],
+    test: [
+        '/src/**',
+        '/test/**'
     ]
 };
 if (option && fileList[option]) {
@@ -93,4 +97,17 @@ fis.media('extensions');
 
 fis.media('debug').match('*.{js,css,less}', {
     optimizer: null
+});
+
+
+/* test */
+fis.media('test').match('src/(**).js', {
+    moduleId: '$1',
+    optimizer: null,
+    release: '$0'
+});
+fis.media('test').match('(test/**).js', {
+    moduleId: '$1',
+    optimizer: null,
+    release: '$0'
 });
