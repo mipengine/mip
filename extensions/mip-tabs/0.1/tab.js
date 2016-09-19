@@ -18,49 +18,42 @@ define(function () {
             this.allowScroll && this.view.length && _setScroll.call(this);
             this.toggleMore && this.allowScroll && this.view.length && _setToggerMore.call(this);
         },
+        _setWrap = function ($wrapper) {
+            var _this = this;
+            $wrapper.children().eq(0).wrap('<div class="mip-tabs-scroll-touch"></div>');
+            // UC浏览器对overflow-x兼容性太差,只能用元素占位的方式来解决
+            if ($wrapper.children().eq(1).hasClass(_this.toggleClass)) {
+                $wrapper.find('.' + _this.navWrapperClass).append(
+                    '<div class="mip-tabs-nav-toggle-holder"></div>'
+                );
+            }
+            return $wrapper;
+        },
         _setScroll = function() {
             var _this = this;
             getNavsWidth();
 
+            _this.tabScroll = _setWrap.call(_this, _this.view);
 
-            // 调用scroll组件实现横滑功能
-            require(['./scroll'], function (Scroll){
+            // 前置检测选中的tab是否在可视区
+            if (_this.current > 0 && _this.current < _this.sum) {
+                var currentTab = Math.min(_this.current + 1, _this.sum - 1);
+                if (_this.navs.eq(currentTab).length && _this.navs.eq(currentTab).position().left > _this.view.width()) {
+                    slideTo(currentTab, 1, _this.navs.eq(_this.current), _this.navs.length);
+                }
+            }
 
-                _this.tabScroll = new Scroll(_this.view[0], {
-                    disableMouse: true,
-                    scrollX: true,
-                    scrollY: false,
-                    eventPassthrough: true,
-                    scrollbars: false
-                });
-
-                // 前置检测选中的tab是否在可视区
-                if (_this.current > 0 && _this.current < _this.sum) {
-                    var currentTab = Math.min(_this.current + 1, _this.sum - 1);
-                    if (_this.navs.eq(currentTab).length && _this.navs.eq(currentTab).position().left > _this.view.width()) {
-                        slideTo(currentTab, 1, _this.navs.eq(_this.current), _this.navs.length);
+            // 若tab横滑回调方法存在,执行回调
+            if (typeof _this.onTabScrollEnd === 'function') {
+                _this.tabScroll.on('scrollEnd', function () {
+                    if (this.customFlag && this.customFlag.autoScroll) {
+                        // 若为自动触发滑动，不执行回调
+                        return;
                     }
-                }
-
-                // 若tab横滑回调方法存在,执行回调
-                if (typeof _this.onTabScrollEnd === 'function') {
-                    _this.tabScroll.on('scrollEnd', function () {
-                        if (this.customFlag && this.customFlag.autoScroll) {
-                            // 若为自动触发滑动，不执行回调
-                            return;
-                        };
-                        _this.onTabScrollEnd.call(_this, this);
-                    });
-                }
-
-                // 监听唯一答案展开事件，解决无法获取隐藏元素尺寸问题
-                $('body').one('onlyshowMore', function () {
-                    setTimeout(function() {
-                        getNavsWidth();
-                        _this.tabScroll.refresh();
-                    }, 0);
+                    ;
+                    _this.onTabScrollEnd.call(_this, this);
                 });
-            });
+            }
 
             function getNavsWidth() {
                 // 计算navs总宽度
@@ -158,7 +151,6 @@ define(function () {
                     // 滑动对象存在,执行滑动并传递autoScroll标记用于scrollEnd事件判断
                     if (_this.tabScroll) {
                         slideTo(_this.current + 1, 1, $v, _this.navs.length);
-                        //_this.tabScroll.scrollToElement($v[0], 500, _this.scrollSize, 0, '', {autoScroll: true});
                     };
                 });
             });

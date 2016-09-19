@@ -1,7 +1,6 @@
 /**
  * inline dep
  */
-__inline('./scroll');
 __inline('./tab');
 
 /**
