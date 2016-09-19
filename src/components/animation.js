@@ -21,6 +21,10 @@ define(['naboo', 'spark'], function (Naboo, Spark) {
         return args;
     };
     var register = function () {
+        // Register css animation
+        // Example:
+        //  Naboo.css(element, {left: 0}, 1000, 'ease-in', 0, function () {}).start();
+        // The parameters from the second can be omitted
         Naboo.register('css', function run(next/*, dom, properties, duration, ease, delay, callback*/) {
             var args = fillArgs(cssArgList, Array.prototype.slice.call(arguments, 1));
             args[2] = args[2] / 1000;

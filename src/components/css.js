@@ -1,6 +1,3 @@
-/**
- * 样式相关逻辑
- **/
 define(function () {
     'use strict';
     var camelReg = /(?:(^-)|-)+(.)?/g;
@@ -8,7 +5,13 @@ define(function () {
     var supportElement = document.createElement('div');
 
     var PREFIX_TYPE = ['webkit', 'moz', 'ms', 'o', 'Webkit', 'Moz', 'O'];
+    // Cache the checked properties.
     var prefixCache = {};
+    /**
+     * Make sure a property is supported by adding prefix.
+     * @param {String} a property to be checked
+     * @return {String} the property or its prefixed version
+     */
     var prefixProperty = function (property) {
         property = property.replace(camelReg, function (match, first, char) {
             return first ? char : char.toUpperCase();
@@ -31,6 +34,12 @@ define(function () {
 
     var unitCache = {};
     var unitReg = /^\d+([a-zA-Z]+)/;
+    /**
+     * Obtain the unit of a property and add it to the value has no unit if exists.
+     * @param {String} property name
+     * @param {String|Number} the value has no unit
+     * @return {String|Number}
+     */
     var unitProperty = function (property, value) {
         if (value !== +value) {
             return value;
@@ -48,21 +57,17 @@ define(function () {
     };
 
     /**
-     * 对dom元素设置css属性，或着返回css属性
-     * 用法：
-     *   1、css(element, 'left', -20);  // 设置元素的 left 属性为 20px
-     *   2、css(element, 'user-select', 'none'); // 如果在 webkit 下，会自动加上 -webkit 前缀
-     *   3、css(element, 'marginTop', 20);  // 可以使用驼峰式属性名
-     *   4、// 可使用 object
-     *      css(element, {
-     *         'margin': 0,
-     *         'padding-left': 0
-     *      });
-     *   5、css(elements, 'left', -20); // 设置一些元素的 left 为 -20px
-     *   6、css(document.body, 'margin-top');  // returns '0px'
-     *   7、css(elements, 'margin-top');    //  returns ['Npx', 'Npx', 'Npx']
-     * TODO: 优化代码结构，目前比较冗余
-     **/
+     * Set or get the value of the style properties of an element or any elements.
+     * Examples:
+     *    css(elements, 'left', 0);
+     *    css(element, 'left', 0);
+     *    css(element, {left: 0, top: 0});
+     *    css(element or elements, 'left'); // the value(s) of the computed left property of the element(s)
+     * @param {Array|HTMLElement} source element(s)
+     * @param {Object|String} object contains style properties or property name
+     * @param {String|Number|Undefined} the value of setting property
+     * @return {Array|HTMLElement|String}
+     */
     var css = function (elements, property, value) {
         var i;
         if (!property) {

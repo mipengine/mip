@@ -1,9 +1,8 @@
-/**
- * 自定义组件基类
- * @exports factory
- * @copyright 2016 Baidu.com, Inc. All Rights Reserved
- */
 define(['./components/event'], function (Event) {
+    /**
+     * The constructor of  base class of custom element
+     * @param {HTMLElement}
+     */
     function customElement(element) {
         this.element = element;
         if (this.init){
@@ -11,10 +10,14 @@ define(['./components/event'], function (Event) {
         }    
     }
 
-    // interface
-    customElement.prototype.applyFillContent = function (ele, isReplaceed) {
+    /**
+     * Apply the fill content style to an element
+     * @param {HTMLElement} element
+     * @param {Boolean} replaced?
+     */
+    customElement.prototype.applyFillContent = function (ele, isReplaced) {
         ele.classList.add('mip-fill-content');
-        if (isReplaceed) {
+        if (isReplaced) {
           ele.classList.add('mip-replaced-content');
         }
     };
@@ -25,8 +28,13 @@ define(['./components/event'], function (Event) {
     customElement.prototype.firstInviewCallback = function () {};
     customElement.prototype.viewportCallback = function () {};
     customElement.prototype.prerenderAllowed = function () {return false;}
-    // 模板的元素build功能，即元素的默认初始化功能 
     customElement.prototype.build = function () {};
+    /**
+     * Expend current element's attributes which selected by attrs to an other object.
+     * @param {Array} attributes' name list
+     * @param {Object} target
+     * @return {Object} the target obj
+     */
     customElement.prototype.expendAttr = function (attrs, element) {
         for (var i = 0; i < attrs.length; i++) {
             var attr = attrs[i];
@@ -40,7 +48,12 @@ define(['./components/event'], function (Event) {
         return element;
     };
 
-    customElement.prototype.addEventAction = function () {
+    /**
+     * Add event actions such as `this.addEventAction("default open", handler)`
+     * @param {String} name
+     * @param {Function} handler
+     */
+    customElement.prototype.addEventAction = function (/* name, handler */) {
         var evt = this._actionEvent;
         if (!evt) {
             evt = this._actionEvent = new Event();
@@ -50,6 +63,10 @@ define(['./components/event'], function (Event) {
         evt.on.apply(evt, arguments);
     };
 
+    /**
+     * Trigger the handlers had been added by `addEventAction` of an action
+     * @param {String} action name
+     */
     customElement.prototype.excuteEventAction = function (action) {
         var eventObj = this._actionEvent;
         if (action && eventObj) {
@@ -58,6 +75,10 @@ define(['./components/event'], function (Event) {
     };
 
     return {
+        /**
+         * Create a class of a new type mip element
+         * @return {Class}
+         */
         create: function () {
             var impl = function (element) {
                 customElement.call(this, element);
