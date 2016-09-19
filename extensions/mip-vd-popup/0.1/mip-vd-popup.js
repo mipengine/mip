@@ -15,14 +15,14 @@ define(function() {
     var customElement = require('customElement').create();
     var Tab = require('./tab');
     var Popup = require('./popup');
-    var WRAPPER_CLS = 'mip-tabs';
-    var CONTENT_CLS = 'mip-tabs-content';
-    var SELECTED_CLS = 'mip-tabs-nav-selected';
-    var ITEM_CLS = 'mip-tabs-nav-li';
-    var NAV_CLS = 'mip-tabs-nav';
-    var VIEW_CLS = 'mip-tabs-nav-view';
-    var TOGGLE_CLS = 'mip-tabs-nav-toggle';
-    var BOTTOM_CLS = 'mip-tabs-nav-bottom';
+    var WRAPPER_CLS = 'mip-vd-tabs';
+    var CONTENT_CLS = 'mip-vd-tabs-content';
+    var SELECTED_CLS = 'mip-vd-tabs-nav-selected';
+    var ITEM_CLS = 'mip-vd-tabs-nav-li';
+    var NAV_CLS = 'mip-vd-tabs-nav';
+    var VIEW_CLS = 'mip-vd-tabs-nav-view';
+    var TOGGLE_CLS = 'mip-vd-tabs-nav-toggle';
+    var BOTTOM_CLS = 'mip-vd-tabs-nav-bottom';
 
     var EPISODE_PAGE_SIZE = 50;
     var TPL_REG = /\{\{\w}}/g;
@@ -54,7 +54,7 @@ define(function() {
                 break;
             default:
                 $trigle = $el.children().eq(0);
-                $dom = $el.children().eq(1).addClass('mip-popup-dom');
+                $dom = $el.children().eq(1).addClass('mip-vd-popup-dom');
         }
         generatePopup.call(this, $trigle, $dom);
     }
@@ -84,14 +84,14 @@ define(function() {
         wrapper.append(tabList.map(function (v, index) {
                 var epFragment = '<div class="'
                     + CONTENT_CLS
-                    + ' mip-tabs-episode-content" '
+                    + ' mip-vd-tabs-episode-content" '
                     + (index === tabCurNum ? '' : 'style="display:none;" ')
                     + ' >';
                 for (var j = v.from; j <= v.to; j++) {
-                    var selectedClass = j === currentNum ? 'mip-tabs-episode-item-selected' : '';
+                    var selectedClass = j === currentNum ? 'mip-vd-tabs-episode-item-selected' : '';
                     var link = (linkTpl ? ' href="' + linkTpl.replace(TPL_REG, j) + '"' : '' );
                     epFragment = epFragment
-                        + '<span class="mip-tabs-episode-item '
+                        + '<span class="mip-vd-tabs-episode-item '
                         + selectedClass + '" '
                         + link + '>'
                         + j
@@ -103,13 +103,20 @@ define(function() {
             .append();
 
         if (tabCount > 1) {
-            var tabFragment = '<div class="' + VIEW_CLS + '">'
-                + '<ul class="' + NAV_CLS + ' ' + BOTTOM_CLS + '">';
+            var tabFragment = '';
+            var scrollNum = 4;
+            if (tabCount > scrollNum) {
+                tabFragment = '<div class="' + VIEW_CLS + '">';
+            }
+            tabFragment += '<ul class="' + NAV_CLS + ' ' + BOTTOM_CLS + '">';
             tabFragment += tabList.map(function (v, index) {
                 var selectedClass = index === tabCurNum ? SELECTED_CLS : '';
                 return '<li class="' + ITEM_CLS + ' ' + selectedClass + '">' + v.text + '</li>';
             }).join('');
-            tabFragment += '</ul></div>';
+            tabFragment += '</ul>';
+            if (tabCount > scrollNum) {
+                tabFragment += '</div>';
+            }
             wrapper.append(tabFragment);
         }
         return wrapper;
@@ -121,22 +128,24 @@ define(function() {
         var $el = $(el);
         var pageSize = parseInt($el.attr('page-size'), 10) || EPISODE_PAGE_SIZE;
         var currentNum = parseInt($el.attr('current'), 10) || 1;
+        var totalNum = parseInt($el.attr('total'), 10) || 1;
+        var tabCount = Math.ceil(totalNum / pageSize);
         $($trigle).on('click', function (e) {
             new Popup({
                 title: el.getAttribute('title') || '',
                 content: $dom,
                 fullView: false,
-                customClassName: 'mip-popup-custom-modal',
+                customClassName: 'mip-vd-popup-custom-modal',
                 onOpen: function () {
                     new Tab($dom, {
-                        allowScroll: true,
+                        allowScroll: tabCount > 4,
                         current: Math.floor((currentNum - 1) / pageSize) || 1,
                         currentClass: SELECTED_CLS,
                         navWrapperClass: NAV_CLS,
                         viewClass: VIEW_CLS,
                         contClass: CONTENT_CLS,
                         navClass: ITEM_CLS,
-                        logClass: 'mip-tabs-log',
+                        logClass: 'mip-vd-tabs-log',
                         toggleClass: TOGGLE_CLS
                     });
                 }
@@ -146,7 +155,7 @@ define(function() {
 
     function bindEvent($dom) {
         var headTitle = this.element.getAttribute('head-title');
-        $dom.delegate('.mip-tabs-episode-item', 'click' , function(ev) {
+        $dom.delegate('.mip-vd-tabs-episode-item', 'click' , function(ev) {
 
             ev.preventDefault();
 
@@ -183,9 +192,9 @@ define(function() {
     return customElement;
 
 });
-require(['mip-popup'], function (popup) {
+require(['mip-vd-popup'], function (popup) {
     // 引入组件需要的css文件，选填
-    MIP.css.mipPopup = __inline('./mip-popup.less');
+    MIP.css.mipVdPopup = __inline('./mip-vd-popup.less');
     //注册组件
-    MIP.registerMipElement('mip-popup', popup, MIP.css.mipPopup);
+    MIP.registerMipElement('mip-vd-popup', popup, MIP.css.mipVdPopup);
 });

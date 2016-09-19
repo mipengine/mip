@@ -1,11 +1,11 @@
-# mip-popup
+# mip-vd-popup
 
-mip-popup 用来支持网页中弹出浮层的显示。
+mip-vd-popup 用来支持网页中弹出浮层的显示。
 
 描述|提供了一个弹出复层组件,迁移自pmd
 ----|----
 可用性|完成
-所需脚本|https://mipcache.bdstatic.com/static/v0.1/mip-popup.js
+所需脚本|https://mipcache.bdstatic.com/static/v0.1/mip-vd-popup.js
 示例|官网上线后增加示例
 
 
@@ -16,22 +16,22 @@ mip-popup 用来支持网页中弹出浮层的显示。
 - 默认样式
 
 ```
-<mip-popup title="自定义标题">
+<mip-vd-popup title="自定义标题">
     <h4>点击触发</h4>
     <h4>浮层</h4>
-</mip-popup>
+</mip-vd-popup>
 ```
 - 剧集浮层
 
 ```
-<mip-popup
+<mip-vd-popup
     title="老九门剧情"
     type="episode"
     total="101"
     current="101"
     link-tpl="http://www.baidu.com/{{x}}">
     目录
-</mip-popup>
+</mip-vd-popup>
 ```
 
 ## 2. 属性

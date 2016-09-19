@@ -38,16 +38,16 @@ define(function () {
             me.popup();
         },
         /*
-         * 创建.mip-popup-wrapper父容器单例,所有pop内容都append到这个dom中
+         * 创建.mip-vd-popup-wrapper父容器单例,所有pop内容都append到这个dom中
          */
         _preparePopupWrapper: function () {
             var me = this;
-            var popWrapperDom = $('.mip-popup-wrapper');
+            var popWrapperDom = $('.mip-vd-popup-wrapper');
             if (popWrapperDom.length) {
                 me.$popupFrame = popWrapperDom;
                 me.$popupFrame.empty();
             } else {
-                me.$popupFrame = $('<div class="mip-popup-wrapper"></div>');
+                me.$popupFrame = $('<div class="mip-vd-popup-wrapper"></div>');
                 $(document.body).append(me.$popupFrame);
             }
         },
@@ -67,7 +67,7 @@ define(function () {
         _bindEvent: function () {
             var me = this;
             // mask遮罩和绑定退场事件
-            me.$popupFrame.on('click', '.mip-popup-mask,.mip-popup-remove', function () {
+            me.$popupFrame.on('click', '.mip-vd-popup-mask,.mip-vd-popup-remove', function () {
                 me.closePopup();
             });
         },
@@ -77,20 +77,20 @@ define(function () {
         _randerContent: function () {
             var me = this;
             // 遮罩层
-            me.$popupMask = $('<div class="mip-popup-mask"></div>');
+            me.$popupMask = $('<div class="mip-vd-popup-mask"></div>');
             // modal层
-            me.$popupModal = $('<div class="mip-popup-modal"></div>');
+            me.$popupModal = $('<div class="mip-vd-popup-modal"></div>');
             // modal内content
-            me.$popupContent = $('<div class="mip-popup-content"></div>');
+            me.$popupContent = $('<div class="mip-vd-popup-content"></div>');
             // modal内head
-            me.$popupHead = $('<div class="mip-popup-head"></div>');
+            me.$popupHead = $('<div class="mip-vd-popup-head"></div>');
             // 装填head内容
             if (me.options.title) {
-                var titleWrapper = $('<div class="mip-popup-title"></div>');
+                var titleWrapper = $('<div class="mip-vd-popup-title"></div>');
                 titleWrapper.append(me.options.title);
                 me.$popupHead.append(titleWrapper);
             }
-            var remove = $('<div class="mip-popup-remove"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqBAMAAAA37dRoAAAAElBMVEUAAABmZmZmZmZmZmZmZmZmZmYlNPltAAAABXRSTlMAnAFiY7dPC10AAACQSURBVCjPfdPdCYAgFIZhsQkKuq8m6KYRGiDK/Vep5MALL2IQfepD/nHSMCU/656Oa1Fnnu80l8m0XN8rnH+XhYMJhwJD+UIJpiQEEeDMOA2GwaI0oWDRwEGFt0qNx0qNS1BhUff6D93ZvLLuLrzj3un4JE2NfUPOYN+8EoIAEcVAwaahghq3q+VsVNbTrsIXTkQ1/j8utO4AAAAASUVORK5CYII="></div>');
+            var remove = $('<div class="mip-vd-popup-remove"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqBAMAAAA37dRoAAAAElBMVEUAAABmZmZmZmZmZmZmZmZmZmYlNPltAAAABXRSTlMAnAFiY7dPC10AAACQSURBVCjPfdPdCYAgFIZhsQkKuq8m6KYRGiDK/Vep5MALL2IQfepD/nHSMCU/656Oa1Fnnu80l8m0XN8rnH+XhYMJhwJD+UIJpiQEEeDMOA2GwaI0oWDRwEGFt0qNx0qNS1BhUff6D93ZvLLuLrzj3un4JE2NfUPOYN+8EoIAEcVAwaahghq3q+VsVNbTrsIXTkQ1/j8utO4AAAAASUVORK5CYII="></div>');
             me.$popupHead.append(remove);
             // 装填content
             me.$popupContent.append(me.options.content);
@@ -160,7 +160,7 @@ define(function () {
         _destroy: function () {
             var me = this;
             // 解绑事件
-            me.$popupFrame.off('click', '.mip-popup-mask,.mip-popup-remove');
+            me.$popupFrame.off('click', '.mip-vd-popup-mask,.mip-vd-popup-remove');
             // 清除dom
             me.$popupFrame.empty();
         }

@@ -1,8 +1,8 @@
-.mip-popup-wrapper {
+.mip-vd-popup-wrapper {
   z-index: 900;
 }
 
-.mip-popup-mask {
+.mip-vd-popup-mask {
   display: none;
   position: fixed;
   left: 0;
@@ -14,7 +14,7 @@
   z-index: 901;
 }
 
-.mip-popup-modal {
+.mip-vd-popup-modal {
   display: none;
   position: fixed;
   left: 0;
@@ -28,18 +28,18 @@
   transform: translate3d(0, 100%, 0);
 }
 
-.mip-popup-head {
+.mip-vd-popup-head {
   text-align: left;
   margin: 15px 17px;
 }
 
-.mip-popup-title {
+.mip-vd-popup-title {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-.mip-popup-remove {
+.mip-vd-popup-remove {
   position: absolute;
   padding: 15px 17px;
   right: 0px;
@@ -47,29 +47,29 @@
   z-index: 901;
 }
 
-.mip-popup-remove img{
+.mip-vd-popup-remove img{
   width: 14px;
   height: 14px;
 }
 
-.mip-popup-content {
+.mip-vd-popup-content {
   text-align: center;
   margin: 0;
 }
 
-.mip-popup-dom {
+.mip-vd-popup-dom {
   display: none;
 }
 
-.mip-popup-content .mip-popup-dom {
+.mip-vd-popup-content .mip-vd-popup-dom {
   display: block;
 }
 
-.mip-tabs {
+.mip-vd-tabs {
   position: relative;
 }
 
-.mip-tabs-nav {
+.mip-vd-tabs-nav {
   display: -webkit-box;
   display: -webkit-flex;
   min-width: 100%;
@@ -90,12 +90,12 @@
   -webkit-justify-content: space-between;
 }
 
-.mip-tabs-nav * {
+.mip-vd-tabs-nav * {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 
-.mip-tabs-nav-li {
+.mip-vd-tabs-nav-li {
   display: block;
   overflow: hidden;
   width: 16.66666667%;
@@ -113,24 +113,24 @@
   -webkit-flex: 1 1 auto;
 }
 
-.mip-tabs-nav .mip-tabs-nav-selected {
+.mip-vd-tabs-nav .mip-vd-tabs-nav-selected {
   border-bottom: 1px solid #38f;
   color: #38f;
 }
 
-.mip-tabs-nav-bottom {
+.mip-vd-tabs-nav-bottom {
   border-top: 1px solid #eee;
 }
 
-.mip-tabs-nav-bottom .mip-tabs-nav-li {
+.mip-vd-tabs-nav-bottom .mip-vd-tabs-nav-li {
   color: #666;
 }
 
-.mip-tabs-nav-bottom .mip-tabs-nav-icon {
+.mip-vd-tabs-nav-bottom .mip-vd-tabs-nav-icon {
   display: none;
 }
 
-.mip-tabs-nav-bottom .mip-tabs-nav-selected {
+.mip-vd-tabs-nav-bottom .mip-vd-tabs-nav-selected {
   position: relative;
   top: -1px;
   height: 44px;
@@ -141,15 +141,15 @@
   background-color: #fff;
 }
 
-.mip-tabs-nav-bottom .mip-tabs-nav-selected:first-child {
+.mip-vd-tabs-nav-bottom .mip-vd-tabs-nav-selected:first-child {
   margin-left: -1px;
 }
 
-.mip-tabs-nav-bottom .mip-tabs-nav-selected .mip-tabs-nav-icon {
+.mip-vd-tabs-nav-bottom .mip-vd-tabs-nav-selected .mip-vd-tabs-nav-icon {
   display: inline-block;
 }
 
-.mip-tabs-nav-view {
+.mip-vd-tabs-nav-view {
   position: relative;
   overflow: hidden;
   height: 44px;
@@ -157,26 +157,26 @@
   background-color: #fff;
 }
 
-.mip-tabs-nav-view .mip-tabs-nav {
+.mip-vd-tabs-nav-view .mip-vd-tabs-nav {
   display: inline-block;
   position: relative;
 }
 
-.mip-tabs-nav-view .mip-tabs-nav .mip-tabs-nav-li {
+.mip-vd-tabs-nav-view .mip-vd-tabs-nav .mip-vd-tabs-nav-li {
   display: inline-block;
   vertical-align: middle;
   width: auto;
   padding: 0 15px;
 }
 
-.mip-tabs-nav.mip-tabs-nav-bottom {
+.mip-vd-tabs-nav-view  .mip-vd-tabs-nav.mip-vd-tabs-nav-bottom {
   background-color: #fafafa;
   position: relative;
   display: inline-block;
   vertical-align: middle;
 }
 
-.mip-tabs-nav-layer {
+.mip-vd-tabs-nav-layer {
   position: absolute;
   z-index: 8;
   top: 0;
@@ -185,7 +185,7 @@
   background-color: #fff;
 }
 
-.mip-tabs-nav-layer p {
+.mip-vd-tabs-nav-layer p {
   height: 44px;
   padding: 0 17px;
   border-bottom: 1px solid #eee;
@@ -194,17 +194,17 @@
   color: #333;
 }
 
-.mip-tabs-nav-layer-ul .mip-tabs-nav-li {
+.mip-vd-tabs-nav-layer-ul .mip-vd-tabs-nav-li {
   display: inline-block;
   width: 16.66666667%;
   padding: 0;
 }
 
-.mip-tabs-nav-layer-ul .mip-tabs-nav-selected {
+.mip-vd-tabs-nav-layer-ul .mip-vd-tabs-nav-selected {
   color: #38f;
 }
 
-.mip-tabs .mip-tabs-nav-toggle {
+.mip-vd-tabs .mip-vd-tabs-nav-toggle {
   position: absolute;
   z-index: 9;
   top: 0;
@@ -227,14 +227,14 @@
   }
 }
 
-.mip-tabs .mip-tabs-nav-toggle-holder {
+.mip-vd-tabs .mip-vd-tabs-nav-toggle-holder {
   display: inline-block;
   width: 45px;
   height: 1px;
   visibility: hidden;
 }
 
-.mip-tabs-scroll-touch {
+.mip-vd-tabs-scroll-touch {
   position: relative;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
@@ -245,12 +245,12 @@
   width: 100%;
 }
 
-.mip-tabs-episode-content {
+.mip-vd-tabs-episode-content {
   padding: 15px 17px;
   text-align: left;
 }
 
-.mip-tabs-episode-item {
+.mip-vd-tabs-episode-item {
   display: inline-block;
   width: 20%;
   height: 40px;
@@ -258,7 +258,7 @@
   text-align: center;
 }
 
-.mip-tabs-episode-item-selected {
+.mip-vd-tabs-episode-item-selected {
   color: #38f;
 }
 

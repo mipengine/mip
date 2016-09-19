@@ -20,11 +20,11 @@ define(function () {
         },
         _setWrap = function ($wrapper) {
             var _this = this;
-            $wrapper.children().eq(0).wrap('<div class="mip-tabs-scroll-touch"></div>');
+            $wrapper.children().eq(0).wrap('<div class="mip-vd-tabs-scroll-touch"></div>');
             // UC浏览器对overflow-x兼容性太差,只能用元素占位的方式来解决
             if ($wrapper.children().eq(1).hasClass(_this.toggleClass)) {
                 $wrapper.find('.' + _this.navWrapperClass).append(
-                    '<div class="mip-tabs-nav-toggle-holder"></div>'
+                    '<div class="mip-vd-tabs-nav-toggle-holder"></div>'
                 );
             }
             return $wrapper;
