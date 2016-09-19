@@ -20,6 +20,8 @@ define(['platform', 'layout', 'css'], function(platform, layout, css){
         'other': 1
       };
 
+      this.isAndroidUc = platform.isUc() && !platform.isIos();
+
       /** @private {!Array<!FixedElement>} */
       this._fixedElements = [];
   }
@@ -30,8 +32,8 @@ define(['platform', 'layout', 'css'], function(platform, layout, css){
       var mipFixedElements = document.querySelectorAll('mip-fixed');
       this.setFixedElement(mipFixedElements);
       var fixedLen = this._fixedElements.length;
-      var hasParentPage = true;//window.parent !== window;
-      if (platform.isIos() && fixedLen > 0 && hasParentPage) {
+      var hasParentPage = window.parent !== window;
+      if ((platform.isIos()) && fixedLen > 0 && hasParentPage) {
         var fixedLayer = this.getFixedLayer();
         
         for (var i = 0; i < fixedLen; i++) {
@@ -51,6 +53,12 @@ define(['platform', 'layout', 'css'], function(platform, layout, css){
       var fixedTypeCount = {};
       for (var i = 0; i < fixedElements.length; i++) {
         var ele = fixedElements[i];
+        /* android uc 下直接变成 absolute */
+        if (this.isAndroidUc) {
+          css(ele, {
+            position: 'absolute'
+          });
+        }
         var fType = ele.getAttribute('type');
         var transfType = (fType == 'right' || fType == 'left') ? 'other' : fType; 
         if (this._fixedTypes[transfType] && this._fixedTypes[transfType] < 2) {
@@ -82,12 +90,14 @@ define(['platform', 'layout', 'css'], function(platform, layout, css){
     }
     this._fixedLayer = document.createElement('body');
     this._fixedLayer.className = 'mip-fixedlayer';
+    var height = (this.isAndroidUc) ? '100%' : 0;
+    var width = (this.isAndroidUc) ? '100%' : 0;
     css(this._fixedLayer, {
         position: 'absolute',
         top: 0,
         left: 0,
-        height: 0,
-        width: 0, 
+        height: height,
+        width: width, 
         'pointer-events': 'none',
         overflow: 'hidden', 
         animation: 'none',
@@ -118,7 +128,6 @@ define(['platform', 'layout', 'css'], function(platform, layout, css){
     if (element.parentElement == this._fixedLayer) {
       return;
     }
-
     if (!fixedEle.placeholder) {
       css(element, {
         'pointer-events':'initial'
