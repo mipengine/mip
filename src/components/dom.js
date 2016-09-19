@@ -1,4 +1,3 @@
-// dom
 define(function () {
     var docElem = document.documentElement;
     var nativeMatches = docElem.matches ||
@@ -14,6 +13,7 @@ define(function () {
         return nativeMatches.call(element, selector);
     };
 
+    // Support for closest
     var closest = docElem.closest ? 
         function (element, selector) {
             return element.closest(selector);
@@ -28,6 +28,7 @@ define(function () {
             return null;
         };
 
+    // Support for contains
     var contains = docElem.contains ?
         function (element, child) {
             return element && element.contains(child);
@@ -42,12 +43,24 @@ define(function () {
             return false;
         };
 
+    /**
+     * Find a element by selector until the target element
+     * @param {HTMLElement} source element
+     * @param {string} selector
+     * @param {HTMLElement} target element
+     * @return {?HTMLElement}
+     */
     var closestTo = function (element, selector, target) {
         var closestElement = closest(element, selector);
         return contains(target, closestElement) ? closestElement : null;
     };
 
     var createTmpElement = document.createElement('div');
+    /**
+     * Create a element by string
+     * @param {string} html
+     * @return {HTMLElement}
+     */
     var create = function (str) {
         createTmpElement.innerHTML = str;
         if (!createTmpElement.children.length) {

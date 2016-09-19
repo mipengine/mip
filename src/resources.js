@@ -49,8 +49,8 @@ define(['./util', 'viewport', './components/rect'], function (util, viewport, re
         },
         /**
          * Remove element from this
-         * @param {MIPElement|String} mip element or _eid of element
-         * @return {Boolean} the removed state of element
+         * @param {MIPElement|string} mip element or _eid of element
+         * @return {boolean} the removed state of element
          */
         remove: function (element/* or id */) {
             var id = element._eid || element;
@@ -77,7 +77,7 @@ define(['./util', 'viewport', './components/rect'], function (util, viewport, re
         /**
          * Set an element's viewport state to TRUE or FALSE.
          * @param {MIPElement}
-         * @param {Boolean}
+         * @param {boolean}
          */
         setInViewport: function (element, inViewport) {
             if (element.inViewport() !== inViewport) {

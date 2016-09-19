@@ -1,7 +1,3 @@
-/**
- * 一些功能 function
- * 后续看需求决定是否需要引入 underscore 或者 lodash
- **/
 define(function () {
     'use strict';
     var throttle = function (fn, delay) {

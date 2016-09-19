@@ -85,7 +85,7 @@ define(['./components/css-loader', './components/layout', './resources'], functi
 
     /**
      * Create a mip element prototype by name
-     * @param {String} element name
+     * @param {string} element name
      * @return {Object}
      */
     var createMipElementProto = function (name) {
@@ -96,7 +96,7 @@ define(['./components/css-loader', './components/layout', './resources'], functi
 
     /**
      * Add a style tag to head by csstext
-     * @param {String} css text
+     * @param {string} css text
      */
     var loadCss = function (css) {
         if (css) {

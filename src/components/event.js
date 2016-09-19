@@ -1,5 +1,10 @@
 define(function () {
     var reg = /\s+/;
+    /**
+     * Custom event
+     * @class
+     * @param {?Object} options
+     */
     var Event = function (opt) {
         if (opt) {
             this.setEventContext(opt.context);
@@ -22,28 +27,36 @@ define(function () {
     };
     var proto = Event.prototype = {
         /**
-         *  挂载事件
-         *  @param {string} name 事件名
-         *  @param {function} callback 事件回调
-         *  @return {constructor}
-         **/
-        on: function (name, callback) {
-            if (multiArgs(this, this.on, name, callback)) {
+         * Add handler to events
+         * @param {string} events' name
+         * @param {Function} handler
+         * @return {Object}
+         */
+        on: function (name, handler) {
+            if (multiArgs(this, this.on, name, handler)) {
                 return null;
             }
-            this._getEvent(name).push(callback);
+            this._getEvent(name).push(handler);
             return this;
         },
-        off: function (name, callback) {
+        /**
+         * Remove handler from events.
+         * @param {?string} events' name
+         * @param {?Function} handler
+         * @return {?Object}
+         */
+        off: function (name, handler) {
+            // If arguments` length is 0, remove all handlers.
             if (arguments.length == 0) {
                 this.__events = null;
                 this._removeEventCallback();
+            // If no handlers, remove all handlers from the event(s)
             } else if (arguments.length > 1) {
-                if (multiArgs(this, this.off, name, callback)) {
+                if (multiArgs(this, this.off, name, handler)) {
                     return null;
                 }
                 var list = this._getEvent(name);
-                var index = list.indexOf(callback);
+                var index = list.indexOf(handler);
                 if (index > -1) {
                     list.splice(index, 1);
                 }
@@ -54,8 +67,14 @@ define(function () {
             } 
             return this.__events[name];
         },
-        once: function (name, callback) {
-            var cb = callback.bind(this);
+        /**
+         * Add a one-off handler to events
+         * @param {string} events' name
+         * @param {Function} handler
+         * @return {Function} the unbinder of the handler
+         */
+        once: function (name, handler) {
+            var cb = handler.bind(this);
             var self = this;
             cb.__once = true;
             this.on(name, cb);
@@ -64,6 +83,10 @@ define(function () {
                 cb = self = null;
             }
         },
+        /**
+         * Trigger events.
+         * @param {string} events' name
+         */
         trigger: function (name) {
             var args = Array.prototype.slice.call(arguments, 1);
             if (multiArgs(this, this.trigger, name, args)) {
@@ -78,9 +101,18 @@ define(function () {
                 }
             }
         },
+        /**
+         * Set the handlers' context
+         * @param {Function}
+         */
         setEventContext: function (context) {
             this.__eventContext = context || this;
         },
+        /**
+         * Get an event's handler list. If not exist, create it.
+         * @param {string} name
+         * @return {Object}
+         */
         _getEvent: function (name) {
             if (!this.__events) {
                 this.__events = {};
@@ -91,11 +123,9 @@ define(function () {
             }
             return this.__events[name];
         },
-        // 创建事件时的回调
         _createEventCallback: function () {
 
         },
-        // 删除事件时的回调
         _removeEventCallback: function () {
 
         }
@@ -114,7 +144,12 @@ define(function () {
     });
 
     var keys = Object.keys(proto);
-    Event.mixin = function (obj, context) {
+    /**
+     * Mix Event's prototype into target object
+     * @param {Object}
+     * @return {Object}
+     */
+    Event.mixin = function (obj) {
         for (var i = 0; i < keys.length; i++) {
             obj[keys[i]] = proto[keys[i]];
         }

@@ -1,30 +1,15 @@
 define(['./fn'], function (fn) {
     var abs = Math.abs;
     var create = Object.create;
-    /**
-     * Recognizer(tap、swipe .. 手势类)
-     *     |
-     *     |    register
-     *     ↓
-     * GlobalController(全局手势控制器)
-     *     |
-     *     |    get
-     *     ↓
-     * gestureController (gesture实例)
-     *     |
-     *     |    create recognizer
-     *     ↓
-     * recognizer 
-     **/
 
     var STATE_START = 1;
-    // wait timer or other recognizer
+    // Wait timer or other recognizer
     var STATE_WAIT = 2;
-    // maybe emitting
+    // Maybe emitting
     var STATE_PENDING = 3;
-    // can emit
+    // Can emit
     var STATE_END = 4;
-    // hold new circle
+    // Hold until new circle
     var STATE_HOLD = 5;
 
     var state = {
@@ -43,7 +28,8 @@ define(['./fn'], function (fn) {
         4: 'left'
     };
 
-    // RecognizerController & base class
+    // Reference hammer.js to a certain extent. Because the hammer.js is too heavy,
+    // we have to implement our own recognizers to reduce the amount of code.
     var Recognizer = function (gesture) {
         this.state = STATE_START;
         this.gesture = gesture;
@@ -59,12 +45,10 @@ define(['./fn'], function (fn) {
                 this.state = STATE_START;
                 this.needReset && this.reset();
             }
-            // 如果是 hold，停止计算
             if (this.state === STATE_HOLD) {
                 return;
             }
             var state = this.process(data);
-            // process 中可能会执行 hold
             if (this.state === STATE_HOLD) {
                 return;
             }
@@ -107,11 +91,8 @@ define(['./fn'], function (fn) {
         emit: function () {
             // emtting
         },
-        // 默认每个点击周期都会 reset
         reset: function () {
-
         },
-        // 如果失败或者执行完毕，暂时 hold。等待下一轮事件
         hold: function () {
             return this.state = STATE_HOLD;
         },
@@ -140,7 +121,6 @@ define(['./fn'], function (fn) {
     Recognizer.getByEventname = function (event) {
         return eventList[event];
     };
-    // 把 a 类与 b 类设置为冲突
     Recognizer.conflict = function (a, b) {
         if (typeof a === 'string') {
             a = Recognizer.get(a);
@@ -155,7 +135,7 @@ define(['./fn'], function (fn) {
 
 
 
-    /* --------------    手势类 --------------- */
+    /* --------------    Recognizers  --------------- */
 
     // Tap Recognizer
     var TapRecognizer = function () {
@@ -168,22 +148,15 @@ define(['./fn'], function (fn) {
     };
     TapRecognizer.prototype = fn.extend(create(Recognizer.prototype), {
         eventList: ['tap'],
-        // 点击次数限制
         taps: 1,
         count: 0,
-        // 双击的等待时间
         holdTime: 300,
-        // 单击的等待时间，超过时间将会置为 hold
         time: 250,
-        // 距离原点的移动范围
         moveRange: 10,
-        // 优先级
         level: 1,
 
-        // 不需要自动 reset
         needAutoReset: false,
         process: function (data) {
-            // 如果时间超过等待时间，或者移动了位置，或者N指点击。置为 hold 状态
             if (data.deltaTime > this.time || data.distance > this.moveRange || data.pointers.length > 1) {
                 this.reset();
                 return this.hold();
@@ -191,13 +164,10 @@ define(['./fn'], function (fn) {
             if (data.eventState === 'start') {
                 clearTimeout(this.holdTimer);
             }
-            // 如果不是 end 事件，返回 wait 状态，直到 end 触发
             if (data.eventState !== 'end') {
                 return STATE_WAIT;
             }
-            // 计算两次点击的时间差
             var holdTime = this.preTime && (data.timeStamp - this.preTime);
-            // 记录上一次时间戳
             this.preTime = data.timeStamp;
             // 记录点击的次数
             if (holdTime < this.holdTime) {
@@ -234,7 +204,7 @@ define(['./fn'], function (fn) {
         }
     });
 
-    // DoubleTap Recognizer
+    
     var DoubleTapRecognizer = function () {
         TapRecognizer.apply(this, arguments);
     };
@@ -244,7 +214,7 @@ define(['./fn'], function (fn) {
         level: 2
     });
 
-    // Swipe Recognizer
+    
     var SwipeRecognizer = function () {
         Recognizer.apply(this, arguments);
     };
@@ -254,7 +224,6 @@ define(['./fn'], function (fn) {
         distance: 30,   
         duration: 1000,
         process: function (data) {
-            // 超时或者N个点都会执行 HOLD
             if (data.pointers.length > 1 || data.deltaTime > this.duration) {
                 return STATE_HOLD;
             }

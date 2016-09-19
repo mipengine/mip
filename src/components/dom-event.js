@@ -1,4 +1,12 @@
 define(['./dom'], function (dom) {
+    'use strict';
+
+    /**
+     * Event delegator
+     * @param {HTMLElement} the parent node
+     * @param {string} selector
+     * @param {string} 
+     */ 
     var delegate = function (element, selector, event, handler, capture) {
         capture = !!capture;
         var eventHandler = function (event) {
@@ -18,7 +26,12 @@ define(['./dom'], function (dom) {
     var specialEvents = {};
     specialEvents.click = specialEvents.mousedown = specialEvents.mouseup = specialEvents.mousemove = 'MouseEvents';
 
-    // 事件类型，是否冒泡，是否可以被 preventDefault 阻止
+    /**
+     * Create a event object to dispatch
+     * @param {string} event name
+     * @param {?Object} custom data
+     * @return {Event}
+     */
     var createEvent = function (type, data) {
         var event = document.createEvent(specialEvents[type] || 'Event');
         event.initEvent(type, true, true);

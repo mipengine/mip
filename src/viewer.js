@@ -52,7 +52,7 @@ define(['./components/platform', './components/event', './components/css', './co
         },
         /**
          * Send the message to the parent frame
-         * @param {String} event name
+         * @param {string} event name
          * @param {Object} message body
          */
         sendMessage: function (eventName, data) {

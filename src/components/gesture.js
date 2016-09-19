@@ -1,15 +1,9 @@
-/**
- * 手势组件
- **/
 define(['./event', './gesture-recognizer', './fn'], function (Event, Recognizer, fn) {
     var round = Math.round;
     var max = Math.max;
     var abs = Math.abs;
 
-    /**
-     * 数据处理，暂不考虑多点触控。接口暂时按照多点预留
-     *
-     **/
+    // Data processor of touch event object.
     var dataProcessor = {
         startCenter: null,
         lastCenter: null,
@@ -18,7 +12,6 @@ define(['./event', './gesture-recognizer', './fn'], function (Event, Recognizer,
             var data = {};
             var now = Date.now();
             var touches = event.touches.length ? event.touches : event.changedTouches;
-            // 初始化并记录第一个坐标点
             if (event.type === 'touchstart') {
                 this.startCenter = this.getCenter(touches);
                 this.startTime = now;
@@ -34,26 +27,16 @@ define(['./event', './gesture-recognizer', './fn'], function (Event, Recognizer,
             data.x = center.x;
             data.y = center.y;
 
-            // 横轴位移
             var deltaX = data.deltaX = center.x - startCenter.x;
-            // 纵轴位移
             var deltaY = data.deltaY = center.y - startCenter.y;
 
-            // 横轴速度
             data.velocityX = deltaX / deltaTime || 0;
-            // 纵轴速度
             data.velocityY = deltaY / deltaTime || 0;
-            // 速度
             data.velocity = max(abs(data.velocityX), abs(data.velocityY));
-            // 角度
             data.angle = this.getAngle(startCenter, center);
-            // 距离
             data.distance = this.getDistance(startCenter, center);
-            // 方向
             data.direction = this.getDirection(deltaX, deltaY);
-            // 类型
             data.eventState = event.type.replace('touch', '');
-            // 时间戳
             data.timeStamp = now;
 
             if (this.preData) {
@@ -75,7 +58,6 @@ define(['./event', './gesture-recognizer', './fn'], function (Event, Recognizer,
             data.event = event;
             return Object.freeze(data);
         },
-        // 计算触摸点的中心点 PS：暂时只做单点，后续看需求是否加多点
         getCenter: function (points) {
             return {
                 x: round(points[0].clientX),
@@ -91,17 +73,16 @@ define(['./event', './gesture-recognizer', './fn'], function (Event, Recognizer,
             return Math.sqrt(x * x + y * y);
         },
         /**
-         *  0: 原位置
-         *  1: 上
-         *  2: 右
-         *  3: 下
-         *  4: 左
-         **/
+         * 0: origin
+         * 1: up
+         * 2: right
+         * 3: down
+         * 4: left
+         */
         getDirection: function (x, y) {
             if (x === y) {
                 return 0;
             }
-            // x >= y 时，当前点在 x 轴移动更远，说明是横向滑动
             if (abs(x) >= abs(y)) {
                 return x > 0 ? 2 : 4;
             }
@@ -130,9 +111,11 @@ define(['./event', './gesture-recognizer', './fn'], function (Event, Recognizer,
     };
 
     /**
-     * 手势
+     * Gesture
      * @class
-     **/
+     * @param {HTMLElement} element that need gestures
+     * @param {Object} options
+     */
     var Gesture = function (element, opt) {
         this.__eventContext = this._element = element;
         this.startX = this.startY = this.startT = 0;
@@ -168,7 +151,6 @@ define(['./event', './gesture-recognizer', './fn'], function (Event, Recognizer,
         }
         name = RecognizerClass.recName;
         var recognizer = this._recognizers[name] = new RecognizerClass(this);
-        // 添加冲突关系
         var conflictList = Recognizer.getConflictList(recognizer.recName);
         for (var i = 0; i < conflictList.length; i++) {
             name = conflictList[i];
@@ -184,7 +166,6 @@ define(['./event', './gesture-recognizer', './fn'], function (Event, Recognizer,
             this._recognizers = {};
         } else {
             var recognizer = this._recognizers[name];
-            // 删除冲突关系
             for (var i in recognizer.conflictList) {
                 delete recognizer.conflictList[i][name];
             } 

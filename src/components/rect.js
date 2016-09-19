@@ -13,6 +13,8 @@ define(['./platform'], function (platform) {
         return null;
     };
 
+    // Browsers have some bugs in frame of IOS, the native getBoundingClientRect() also needs to recalculate,
+    // so increase the "Rect" module.
     var Rect = {    
         get: function (left, top, width, height) {
             left = round(left);

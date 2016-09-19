@@ -93,7 +93,7 @@ define(['./components/rect', './components/platform', './components/event', './c
     var oldTime, oldTop;
     /**
      * The scroll handler
-     * @param {!Event}
+     * @param {Event}
      */
     var scrollEvent = function (event) {
         var scrollTop = this.getScrollTop();

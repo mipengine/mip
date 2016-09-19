@@ -5,12 +5,12 @@ define(function () {
     var supportElement = document.createElement('div');
 
     var PREFIX_TYPE = ['webkit', 'moz', 'ms', 'o', 'Webkit', 'Moz', 'O'];
-    // Cache the checked properties.
+    // To cache the checked properties.
     var prefixCache = {};
     /**
      * Make sure a property is supported by adding prefix.
-     * @param {String} a property to be checked
-     * @return {String} the property or its prefixed version
+     * @param {string} a property to be checked
+     * @return {string} the property or its prefixed version
      */
     var prefixProperty = function (property) {
         property = property.replace(camelReg, function (match, first, char) {
@@ -36,9 +36,9 @@ define(function () {
     var unitReg = /^\d+([a-zA-Z]+)/;
     /**
      * Obtain the unit of a property and add it to the value has no unit if exists.
-     * @param {String} property name
-     * @param {String|Number} the value has no unit
-     * @return {String|Number}
+     * @param {string} property name
+     * @param {(string|number)} the value has no unit
+     * @return {(string|number)}
      */
     var unitProperty = function (property, value) {
         if (value !== +value) {
@@ -63,10 +63,10 @@ define(function () {
      *    css(element, 'left', 0);
      *    css(element, {left: 0, top: 0});
      *    css(element or elements, 'left'); // the value(s) of the computed left property of the element(s)
-     * @param {Array|HTMLElement} source element(s)
-     * @param {Object|String} object contains style properties or property name
-     * @param {String|Number|Undefined} the value of setting property
-     * @return {Array|HTMLElement|String}
+     * @param {(Array.<HTMLElement>|HTMLElement)} source element(s)
+     * @param {(Object|string)} object contains style properties or property name
+     * @param {?(string|number)} the value of setting property
+     * @return {(Array.<HTMLElement>|HTMLElement|string)}
      */
     var css = function (elements, property, value) {
         var i;
