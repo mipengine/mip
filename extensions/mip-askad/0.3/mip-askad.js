@@ -5,7 +5,7 @@
  */
 
 define(function() {
-    var $ = require('zepto');
+    var $ = require('jquery');
     var customElement = require('customElement').create();
 
     var newYWBD;
@@ -22,16 +22,19 @@ define(function() {
         _element.isRender = true;
 
         var _this = _element;
-        var  params = _element.getAttribute("paramsid") || "";
-        var  otherparamkey = _element.getAttribute("otherparamkey") || "0";
-        var  otherparamvalue = _element.getAttribute("otherparamvalue") || "";
-        var callbackconfig = _element.getAttribute("cboptions") || [] ;
+        var type = _element.getAttribute("type") || "yw-other";
+        var arg = {};
+        arg['ID'] = _element.getAttribute("paramsid") || "";
+        arg['classparams'] = _element.getAttribute("classparams") || "";
+        arg['otherparamkey'] = _element.getAttribute("otherparamkey") || "0";
+        arg['otherparamvalue'] = _element.getAttribute("otherparamvalue") || "";
+        arg['callbackconfig'] = _element.getAttribute("cboptions") || [] ;
 
         //回调配置序列化
         var callbackdata = [];
-        if (callbackconfig) {
+        if (arg['callbackconfig']) {
             try {
-                callbackdata = new Function('return ' + callbackconfig)()
+                callbackdata = new Function('return ' + arg['callbackconfig'])()
             } catch (e) {}
         }
 
@@ -45,7 +48,8 @@ define(function() {
             var content = $title.html() +" "+ $dse.html().slice(0,30);
         }
         innerJs(content,function(){
-             getadDate(params,Number(otherparamkey),otherparamvalue.toString(),callbackdata,_this)
+            getadDate(type, arg, callbackdata, _this);
+
         })
     }
 
@@ -86,9 +90,8 @@ define(function() {
     /**
      * 执行ask网站js获取广告数据
      */
-    function getadDate(params,otherparamkey,otherparamvalue,callbackdata,layout) {
-
-        // //重写YWBD原型方法以实现标签替换
+    function getadDate(type, arg, callbackdata, layout) {
+        //重写YWBD原型方法以实现标签替换
         YWBD.prototype.YWBD_WRITE =  function(backdata,OBJ,EXCEPTION,NONE) {
             var code = backdata.code;
             if(location.href.indexOf('mipcache.bdstatic.com') >= 0 ) { //如果是mip页
@@ -102,12 +105,24 @@ define(function() {
 
         //以下为广告投放原始代码
         newYWBD = new YWBD();
-        newYWBD.YWBD_SET_PARAMS('Id', params);
-        newYWBD.YWBD_SET_OTHER_PARAM(otherparamkey, otherparamvalue);
+        newYWBD.YWBD_SET_PARAMS('Id', arg['ID']);
+        switch(type) {
+            case "yw-class":
+                newYWBD.YWBD_SET_CLASS_PARAMS(arg['classparams'].toString());
+                break;
+            case "yw-keyword":
+                newYWBD.YWBD_SET_KEYWORD_PARAMS();
+                break;
+            default:
+                newYWBD.YWBD_SET_OTHER_PARAM(Number(arg['otherparamkey']), arg['otherparamvalue'].toString());
+        }
+
         newYWBD.YWBD_SET_AREA_PARAMS();
         newYWBD.YWBD_SET_LOG();
         newYWBD.YWBD_AD_AJAX($(layout),callbackdata);
     }
+
+
 
     /**
      * https环境下修正日志链接
@@ -133,13 +148,14 @@ define(function() {
      * 渲染回调
      */
     function renderCallback(callbackdata) {
-        for(var i = 0; i<callbackdata.length; i++ ) {
-            if(callbackdata[i].type == "show") {
-                showdom(callbackdata[i].target)
-            }else if(callbackdata[i].type == "hide") {
-                hidedom(callbackdata[i].target)
-            }else if(callbackdata[i].type == "remove") {
-                removedom(callbackdata[i].target)
+        var index = 0;
+        for(index = 0; index < callbackdata.length; index++ ) {
+            if(callbackdata[index].type == "show") {
+                showdom(callbackdata[index].target)
+            } else if(callbackdata[index].type == "hide") {
+                hidedom(callbackdata[index].target)
+            } else if(callbackdata[index].type == "remove") {
+                removedom(callbackdata[index].target)
             }
         }
     }
