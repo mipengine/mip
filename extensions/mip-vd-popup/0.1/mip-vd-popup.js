@@ -41,6 +41,11 @@ define(function() {
      */
     function render() {
         var el = this.element;
+        if (el.isRender) {
+            return;
+        }
+
+        el.isRender = true;
         var $el = $(el);
         var type = el.getAttribute('type');
         var linkTpl = el.getAttribute('link-tpl');

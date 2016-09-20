@@ -31,7 +31,10 @@
 
 .mip-vd-popup-head {
   text-align: left;
-  margin: 15px 16px;
+  padding: 0 16px;
+  height: 43px;
+  line-height: 43px;
+  border-bottom: 1px solid #eeeeee;
 }
 
 .mip-vd-popup-title {
@@ -45,6 +48,7 @@
   padding: 15px 16px;
   right: 0px;
   top: 0px;
+  line-height: 14px;
   z-index: 901;
 }
 
@@ -65,7 +69,9 @@
 .mip-vd-popup-content .mip-vd-popup-dom {
   display: block;
 }
-
+.mip-vd-popup-modal .mip-vd-tabs-nav-view {
+  height: 38px;
+}
 .mip-vd-tabs {
   position: relative;
 }
@@ -121,7 +127,7 @@
 
 .mip-vd-tabs-nav-bottom {
   border-top: 1px solid #eee;
-  background: #fafafa;
+  background: #f8f8f8;
 }
 
 .mip-vd-tabs-nav-bottom .mip-vd-tabs-nav-li {
@@ -132,13 +138,13 @@
   display: none;
 }
 
-.mip-vd-tabs-nav-bottom .mip-vd-tabs-nav-selected {
+.mip-vd-tabs-nav-bottom .mip-vd-tabs-nav-li.mip-vd-tabs-nav-selected {
   position: relative;
   top: -1px;
-  height: 45px;
+  height: 38px;
   border: 1px solid #f1f1f1;
   border-color: #fff #f1f1f1 #38f #f1f1f1;
-  line-height: 45px;
+  line-height: 38px;
   color: #333;
   background-color: #fff;
 }
@@ -168,11 +174,11 @@
   display: inline-block;
   vertical-align: middle;
   width: auto;
-  padding: 0 14px 0 15px;
+  padding: 0 15px;
 }
 
 .mip-vd-tabs-nav-view .mip-vd-tabs-nav.mip-vd-tabs-nav-bottom {
-  background-color: #fafafa;
+  background-color: #f8f8f8;
   position: relative;
   display: inline-block;
   vertical-align: middle;
@@ -212,7 +218,7 @@
   top: 0;
   right: 0;
   display: block;
-  width: 44px;
+  width: 42px;
   height: 26px;
   margin: 9px 0;
   border-left: 1px solid #ccc;
@@ -266,6 +272,12 @@
 
 .mip-vd-tabs-episode-bottom-nav {
   padding: 0;
+  height: 38px;
+}
+
+.mip-vd-tabs-episode-bottom-nav .mip-vd-tabs-nav-li {
+  height: 38px;
+  line-height: 38px;
 }
 
 .mip-vd-tabs-nav-view > .mip-vd-tabs-scroll-touch > .mip-vd-tabs-episode-bottom-nav.mip-vd-tabs-nav > .mip-vd-tabs-nav-li {
