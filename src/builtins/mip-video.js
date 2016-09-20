@@ -205,8 +205,8 @@ define(['../util'], function(util){
      * @return {String} url
      */
     function getUrl(params) {
-        var url = 'http://cp01-sys-rath4-c32-qa270.cp01.baidu.com:8003/sf?'
-        // var url = "http://transcoder.baidu.com/sf?";
+        // var url = 'http://cp01-sys-rath4-c32-qa270.cp01.baidu.com:8003/sf?'
+        var url = "http://transcoder.baidu.com/sf?";
         
         for(var key in params) {
             if(params.hasOwnProperty(key)) {
