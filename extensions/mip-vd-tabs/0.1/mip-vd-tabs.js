@@ -46,6 +46,11 @@ define(function () {
      */
     function render() {
         var el = this.element;
+        if (el.isRender) {
+            return;
+        }
+
+        el.isRender = true;
         var type = el.getAttribute(TYPE);
         switch (type) {
             case 'episode':
@@ -224,24 +229,28 @@ define(function () {
     }
 
     function generateWrapper() {
-        var el = this.element;
         var $el = $(this.element);
         var $result = null;
         $el.addClass(WRAPPER_CLS);
-        if (el.hasAttribute(ALLOW_SCROLL)) {
+        var totalNum = parseInt($el.attr('total'), 10) || 1;
+        if (totalNum > 4) {
             $result = $('<div class="' + VIEW_CLS + '">'
                 + '<ul class="' + NAV_CLS + '"></ul>'
                 + '</div>'
             );
         } else {
-            $result = $('<ul class="' + NAV_CLS + '"></ul>');
+            $result = $('<div class="mip-vd-tabs-row-tile">'
+                + '<ul class="' + NAV_CLS + '"></ul>'
+                + '</div>'
+            );
         }
         return $result;
     }
 
     function generateToggle($result) {
-        var el = this.element;
-        if (!el.hasAttribute(ALLOW_SCROLL)) {
+        var $el = $(this.element);
+        var totalNum = parseInt($el.attr('total'), 10) || 1;
+        if (totalNum <= 4) {
             return $result;
         }
 
