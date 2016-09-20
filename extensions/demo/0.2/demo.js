@@ -4,12 +4,13 @@
  * @time 2016.07.11
  */
 
-define(function (){
+define(['components/gesture'], function (Gesture) {
     var customElement = require('customElement').create();
     var index = 0;
     customElement.prototype.build = function () {
         var element = this.element;
         this.id = index ++;
+        element.id = this.id;
         if (element.getAttribute('width')) {
             element.style.width = element.getAttribute('width') + 'px';
         }
@@ -20,12 +21,30 @@ define(function (){
         if (this.id === 6) {
             this.prerender = true;
         }
+        if (this.id === 3) {
+            var ges = new Gesture(element);
+            ges.on('tap', function () {
+                console.log('test_tap');
+            });
+            // ges.on('doubletap', function () {
+            //     console.log('test_doubletap');
+            // });
+            ges.on('swipeleft', function (data) {
+                console.log(data);
+            });
+        }
+        this.addEventAction('test', function (event, title) {
+            console.log(title);
+        });
     };
     customElement.prototype.viewportCallback = function (inview) {
         console.log(this.id, inview);
     };
     customElement.prototype.prerenderAllowed = function () {
         return this.prerender || false;
+    };
+    customElement.prototype.inviewCallback = function () {
+        this.element.style.background = '#333';
     };
     return customElement;
 });

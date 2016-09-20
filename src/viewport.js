@@ -1,37 +1,71 @@
-/**
- * 界面可视窗口模块，提供窗口各属性，以及窗口整体scroll、resize等事件接口
- **/
-define(['./components/rect', './components/platform', './components/event', './util'], 
-    function (rect, platform, Event, util) {
+define(['./components/rect', './components/platform', './components/event', './components/fixedElement', './util'], 
+    function (rect, platform, Event, fixedElement, util) {
     'use strict';
 
     var docElem = document.documentElement;
     var win = window;
+    
+    /**
+     * The object is to solve a series of problems when the page in an iframe and
+     * provide some additional methods.
+     */
     var  Viewport = {
+        /**
+         * Get the current vertical position of the page
+         * @return {number}
+         */
         getScrollTop: function () {
-            return this._scrollTop = rect.getScrollTop();
+            return rect.getScrollTop();
         },
+        /**
+         * Get the current horizontal position of the page
+         * @return {number}
+         */
         getScrollLeft: function () {
             if (this._scrollLeft == null) {
                 this._scrollLeft = rect.getScrollLeft();
             }
             return this._scrollLeft;
         },
+        /**
+         * Set the current vertical position of the page
+         * @param {number} scrollTop
+         */
         setScrollTop: function (top) {
             rect.setScrollTop(top);
         },
+        /**
+         * Get the width of the viewport
+         * @return {number}
+         */
         getWidth: function () {
             return win.innerWidth || docElem.clientWidth;
         },
+        /**
+         * Get the height of the viewport
+         * @return {number}
+         */
         getHeight: function () {
             return win.innerHeight || docElem.clientHeight;
         },
+        /**
+         * Get the scroll width of the page
+         * @return {number}
+         */
         getScrollWidth: function () {
             return rect.getScrollWidth();
         },
+        /**
+         * Get the scroll height of the page
+         * @return {number}
+         */
         getScrollHeight: function () {
             return rect.getScrollHeight();
         },
+        /**
+         * Get the rect of the viewport.
+         * @return {Object}
+         */
         getRect: function () {
             return rect.get(
                 this.getScrollLeft(),
@@ -40,43 +74,65 @@ define(['./components/rect', './components/platform', './components/event', './u
                 this.getHeight());
         }
     };
-    var _throttleChangeEvent;
-    var _scrolling;
-    var _init = function () {
-        _throttleChangeEvent = util.fn.throttle(_changeEvent.bind(this), 20);
+    var bindedChangeEvent;
+    /**
+     * Initialize the viewport
+     * @return {Viewport}
+     */
+    var init = function () {
+        // deal width fixed element
+        fixedElement.init();
+        bindedChangeEvent = changeEvent.bind(this);
         (platform.needSpecialScroll ? document.body : win)
-            .addEventListener('scroll', _scrollEvent.bind(this), false);
-        win.addEventListener('resize', _resizeEvent.bind(this), false);
+            .addEventListener('scroll', scrollEvent.bind(this), false);
+        win.addEventListener('resize', resizeEvent.bind(this), false);
         return this;
     };
-    var _scrollEvent = function (event) {
-        if (this.getScrollTop() < 0) {
+    var changing = false;
+    var oldEvt = null;
+    var oldTime, oldTop;
+    /**
+     * The scroll handler
+     * @param {Event}
+     */
+    var scrollEvent = function (event) {
+        var scrollTop = this.getScrollTop();
+        if (scrollTop < 0) {
             return;
         }
-        if (!this._scrolling) {
-            _scrolling = true;
-            _throttleChangeEvent(event);
+        var now = Date.now();
+        // If the delta time >= 20ms, immediately calculate whether to trigger changed
+        // PS: UC browser does not dispatch the scroll event, when the finger is pressed.
+        if (!changing || now - oldTime >= 20) {
+            changing = true;
+            bindedChangeEvent();
+            oldTime = now;
+            oldTop = scrollTop;
+            oldEvt = event;
         }
-        // trigger this.on('scroll', ...);
         this.trigger('scroll', event);
     };
-    var _resizeEvent = function (event) {
-        // trigger this.on('resize', ...)
+    var resizeEvent = function (event) {
         this.trigger('resize', event);
     };
-    var _changeEvent = function (event, oldTop, oldTime) {
+    var changeTimer = null;
+    /**
+     * To determine whether to trigger a change event
+     */
+    var changeEvent = function () {
         var now = Date.now();
-        var scrollTop = this.getScrollTop();
-        if (oldTime != now && Math.abs((oldTop - scrollTop) / (oldTime - now)) < 0.03) {
-            _scrolling = false;
-            this.trigger('changed', event, this.getRect());
+        var delay = oldTime - now || 0;
+        clearTimeout(changeTimer);
+        if (delay && Math.abs((oldTop - this.getScrollTop()) / delay) < 0.03) {
+            changing = false;
+            this.trigger('changed', oldEvt, this.getRect());
         } else {
-            _throttleChangeEvent(event, scrollTop, now);
+            changeTimer = setTimeout(bindedChangeEvent, delay >= 20 ? 20 - delay : 20);
         }
     };
 
-
+    // Mix the methods and attributes of Event into the viewport.
     Event.mixin(Viewport);
 
-    return _init.call(Viewport);
+    return init.call(Viewport);
 });

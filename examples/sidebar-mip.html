@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+<html mip>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="https://mipcache.bdstatic.com/static/mipmain-v1.0.1.css">
+        <title> Sidebar </title>
+        <style mip-custom>
+            body {
+                background-color: #fff; 
+                text-align: left;
+            }
+            h4, p {
+                padding: 15px 20px;
+                word-break: break-all;
+                word-wrap: break-word;
+                text-align: left;
+            }
+            h4 {
+                line-height: 30px;
+                font-size: 18px;
+            }
+
+            p {
+                line-height: 26px;
+                font-size: 16px;
+            }
+            .code {
+                background-color: #dcedf7;
+                border-radius: 8px;
+                margin: 20px;
+                padding: 10px 10px 0;
+            }
+            header {
+                top: calc(0px);
+                height: 56px;
+                flex-direction: row;
+                position: fixed;
+                width: 100%;
+                z-index: 1000;
+                background-color: #607D8B;
+                box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
+                display: flex;
+            }
+            ul {
+                padding: 20px 10px;
+                color: #000;
+            }
+            li {
+                line-height: 40px;
+                font-size: 20px;
+            }
+            li:first-child {
+                line-height: 80px;
+                font-size: 34px;
+                color: #000;
+            }
+            .mip-button {
+                align-self: flex-start;
+                padding: 16px 8px;
+                margin-left: 8px;
+            }
+            #logo {
+                font-size: 28px;
+                line-height: 56px;
+                padding-left: 10px;
+                color: #fff;
+                text-align: left;
+            }
+            article {
+                margin-top: 56px;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- 页面主体 -->
+        <mip-sidebar layout="nodisplay"
+            id='sidebar'
+            layout="nodisplay"
+            side="right">
+            <ul>
+              <li>
+                <a href="/">Home</a>
+                <button class="mip-button" on="tap:sidebar.close"> X </button>
+              </li>
+              <li> Nav item 1</li>
+              <li>
+                <amp-fit-text width="220"
+                    height="20"
+                    layout="responsive"
+                    max-font-size="24">
+                  Nav item 2 - &lt;amp-fit-text&gt;
+                </amp-fit-text>
+              </li>
+              <li>
+                <amp-fit-text width="220"
+                    height="20"
+                    layout="responsive"
+                    max-font-size="24">
+                  Nav item 3 - &lt;amp-fit-text&gt; longer text
+                </amp-fit-text>
+              </li>
+              <li> Nav item 4 - Image
+                <amp-img class='amp-sidebar-image'
+                    src="/img/favicon.png"
+                    width="20"
+                    height="20"
+                    alt="an image"></amp-img>
+              </li>
+              <li> Nav item 5</li>
+              <li> Nav item 6</li>
+              <li> Nav item 1</li>
+              <li>
+                <amp-fit-text width="220"
+                    height="20"
+                    layout="responsive"
+                    max-font-size="24">
+                  Nav item 2 - &lt;amp-fit-text&gt;
+                </amp-fit-text>
+              </li>
+              <li>
+                <amp-fit-text width="220"
+                    height="20"
+                    layout="responsive"
+                    max-font-size="24">
+                  Nav item 3 - &lt;amp-fit-text&gt; longer text
+                </amp-fit-text>
+              </li>
+              <li> Nav item 4 - Image
+                <amp-img class='amp-sidebar-image'
+                    src="/img/favicon.png"
+                    width="20"
+                    height="20"
+                    alt="an image"></amp-img>
+              </li>
+              <li> Nav item 5</li>
+              <li> Nav item 6</li>
+              <li>
+                <a href="/">Home</a>
+              </li>
+              <li> Nav item 1</li>
+              <li>
+                <amp-fit-text width="220"
+                    height="20"
+                    layout="responsive"
+                    max-font-size="24">
+                  Nav item 2 - &lt;amp-fit-text&gt;
+                </amp-fit-text>
+              </li>
+              <li>
+                <amp-fit-text width="220"
+                    height="20"
+                    layout="responsive"
+                    max-font-size="24">
+                  Nav item 3 - &lt;amp-fit-text&gt; longer text
+                </amp-fit-text>
+              </li>
+              <li> Nav item 4 - Image
+                <amp-img class='amp-sidebar-image'
+                    src="/img/favicon.png"
+                    width="20"
+                    height="20"
+                    alt="an image"></amp-img>
+              </li>
+              <li> Nav item 5</li>
+              <li> Nav item 6</li>
+            </ul>
+        </mip-sidebar>
+
+        <header>
+            <button id="hamburger" class="mip-button" on="tap:sidebar.close">
+                <mip-img width="24" height="24"
+                    class="mip-img" 
+                    alt="baidu mip img" 
+                    src="static/button.png">
+                </mip-img>
+            </button>
+            <button class="mip-button" on="tap:sidebar.toggle">
+                <mip-img width="24" height="24"
+                    class="mip-img" 
+                    alt="baidu mip img" 
+                    src="static/button.png">
+                </mip-img>
+            </button>
+            <a id="logo" href="/">MIP by Example</a>
+        </header>
+
+        <article>
+            <h3>amp-sidebar</h3>
+
+            <h4>Introduction</h4>
+
+            <p>A sidebar provides a way to display meta content intended for temporary access (navigation links, buttons, menus, etc.). The sidebar can be revealed by a button tap while the main content remains visually underneath.</p>
+
+            <h4>Setup</h4>
+
+            <p>Import the amp-sidebar component.</p>
+
+            <p class="code">&lt;script async custom-element="amp-sidebar" src="https://cdn.ampproject.org/v0/amp-sidebar-0.1.js" &gt;&lt;/script&gt;</p>
+
+            <h4>Basic Usage</h4>
+
+            <p>There can be only one amp-sidebar in an AMP document. The amp-sidebar should be a direct child of the &lt;body&gt;. It must have a layout of nodisplay.
+
+            Theamp-sidebar may not contain any AMP Elements except for amp-accordion, amp-img and amp-fit-text.
+
+            amp-fit-text expands or shrinks its font size to fit the content within the space given to in the menu.</p>
+
+            <h4>Basic Usage</h4>
+
+            <p>There can be only one amp-sidebar in an AMP document. The amp-sidebar should be a direct child of the &lt;body&gt;. It must have a layout of nodisplay.
+
+            Theamp-sidebar may not contain any AMP Elements except for amp-accordion, amp-img and amp-fit-text.
+
+            amp-fit-text expands or shrinks its font size to fit the content within the space given to in the menu.</p>
+
+            <h4>Basic Usage</h4>
+
+            <p>There can be only one amp-sidebar in an AMP document. The amp-sidebar should be a direct child of the &lt;body&gt;. It must have a layout of nodisplay.
+
+            Theamp-sidebar may not contain any AMP Elements except for amp-accordion, amp-img and amp-fit-text.
+
+            amp-fit-text expands or shrinks its font size to fit the content within the space given to in the menu.</p>
+        </article>
+        
+      
+         <script src="/dist/mipmain.js"></script>
+         <script src="/dist/extensions/mip-sidebar/1.0/mip-sidebar.js"></script>
+    </body>
+</html>

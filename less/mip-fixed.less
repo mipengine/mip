@@ -1,0 +1,26 @@
+mip-fixed {
+	position: fixed;
+}
+mip-fixed[type="top"] {
+	top: 0;
+}
+mip-fixed[type="bottom"] {
+	bottom: 0;
+}
+mip-fixed[type="left"] {
+	left: 0;
+}
+mip-fixed[type="right"] {
+	right: 0;
+}
+mip-fixed[type="top"], mip-fixed[type="bottom"] {
+	width: 100%;
+	max-height: 85px;
+	overflow: hidden;
+}
+
+mip-fixed[type="left"], mip-fixed[type="right"] {
+	max-width: 10%;
+	max-height: 25%;
+	overflow: hidden;
+}

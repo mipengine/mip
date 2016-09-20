@@ -1,12 +1,13 @@
-/**
- * initialize mip
- **/
+// MIP initialization
 require(['./components/platform', './element', './builtins/mip_builtins', 
-    './viewer', './viewport', './components/css', 'resources'], 
-    function (platform, registerMipElement, builtin, viewer, viewport, css, resources) {
+    './viewer', './viewport', './components/css', 'resources', './components/animation'], 
+    function (platform, registerMipElement, builtin, viewer, viewport, css, resources, animationRegister) {
     'use strict';
-
-    // mip 初始化
+    
+    // Register builtin animaters
+    animationRegister();
+        
+    // The global variable of MIP
     !window.MIP && (window.MIP = {});
     MIP.css = {};
     MIP['registerMipElement'] = registerMipElement;
@@ -16,11 +17,12 @@ require(['./components/platform', './element', './builtins/mip_builtins',
     MIP.viewport = viewport;
     MIP.prerenderElement = resources.prerenderElement;
 
+    // Initialize viewer
     viewer.init();
 
-    // 注册内置组件
+    // Register builtin extensions
     builtin.register();
 
-    // 显示页面
+    // Show page
     viewer.show();
 });

@@ -165,5 +165,93 @@ define(function(){
     Layout.prototype.isLoadingAllowed = function(tagName) {
       return this._LOADING_ELEMENTS[tagName.toLowerCase()] || false;
     }
+
+    Layout.prototype.applyLayout = function (element) {
+        var layoutAttr = element.getAttribute('layout');
+        var widthAttr = element.getAttribute('width');
+        var heightAttr = element.getAttribute('height');
+        var sizesAttr = element.getAttribute('sizes');
+        var heightsAttr = element.getAttribute('heights');
+
+        // Input layout attributes.
+        var inputLayout = layoutAttr ? this.parseLayout(layoutAttr) : null;
+        var inputWidth = (widthAttr && widthAttr != 'auto') ?
+            this.parseLength(widthAttr) : widthAttr;
+        var inputHeight = heightAttr ? this.parseLength(heightAttr) : null;
+
+        // Effective layout attributes. These are effectively constants.
+        var width;
+        var height;
+        var layout;
+
+        // Calculate effective width and height.
+        if ((!inputLayout || inputLayout == this.Layout.FIXED ||
+            inputLayout == this.Layout.FIXED_HEIGHT) &&
+            (!inputWidth || !inputHeight) && this.hasNaturalDimensions(element.tagName)) {
+          // Default width and height: handle elements that do not specify a
+          // width/height and are defined to have natural browser dimensions.
+          var dimensions = this.getNaturalDimensions(element);
+          width = (inputWidth || inputLayout == this.Layout.FIXED_HEIGHT) ? inputWidth :
+              dimensions.width;
+          height = inputHeight || dimensions.height;
+        } else {
+          width = inputWidth;
+          height = inputHeight;
+        }
+
+        // Calculate effective layout.
+        if (inputLayout) {
+          layout = inputLayout;
+        } else if (!width && !height) {
+          layout = this.Layout.CONTAINER;
+        } else if (height && (!width || width == 'auto')) {
+          layout = this.Layout.FIXED_HEIGHT;
+        } else if (height && width && (sizesAttr || heightsAttr)) {
+          layout = this.Layout.RESPONSIVE;
+        } else {
+          layout = this.Layout.FIXED;
+        }
+
+        
+
+        // Apply UI.
+        element.classList.add(this.getLayoutClass(layout));
+        if (this.isLayoutSizeDefined(layout)) {
+          element.classList.add('mip-layout-size-defined');
+        }
+        if (layout == this.Layout.NODISPLAY) {
+          element.style.display = 'none';
+        } else if (layout == this.Layout.FIXED) {
+          element.style.width = width;
+          element.style.height = height;
+        } else if (layout == this.Layout.FIXED_HEIGHT) {
+          element.style.height = height;
+        } else if (layout == this.Layout.RESPONSIVE) {
+          var space = element.ownerDocument.createElement('mip-i-space');
+          space.style.display = 'block';
+          space.style.paddingTop =
+              ((this.getLengthNumeral(height) / this.getLengthNumeral(width)) * 100) + '%';
+          element.insertBefore(space, element.firstChild);
+          element._spaceElement = space;
+        } else if (layout == this.Layout.FILL) {
+          // Do nothing.
+        } else if (layout == this.Layout.CONTAINER) {
+          // Do nothing. Elements themselves will check whether the supplied
+          // layout value is acceptable. In particular container is only OK
+          // sometimes.
+        } else if (layout == this.Layout.FLEX_ITEM) {
+          // Set height and width to a flex item if they exist.
+          // The size set to a flex item could be overridden by `display: flex` later.
+          if (width) {
+            element.style.width = width;
+          }
+          if (height) {
+            element.style.height = height;
+          }
+        }
+        return layout;
+    };
+
+
     return new Layout();
 });
