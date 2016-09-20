@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>mip网盟组件</title>
+    <title>mip-fixed</title>
     <meta name="viewport" content="width=device-width,user-scalable=no">
     <link rel="stylesheet" type="text/css" href="/dist/css/mipmain.css">
     <style mip-custom>
@@ -24,6 +24,18 @@
       mip-fixed {
         background: green;
       }
+
+      #fixed {
+        padding: 10px 0;
+      }
+      .fixed-close {
+          text-align: center;
+          background: royalblue;
+          color: #fff;
+          font-size: 20px;
+          padding: 10px 0;
+          margin: 10px 0;
+      }
     </style>
     <noscript>
       <style mip-officialrelease>
@@ -43,8 +55,9 @@
         </p>
     </div>
     <div class="fixed-element">我是站长自己写的 fixed</div>
-    <mip-fixed type="top">
+    <mip-fixed type="top" id="fixed">
       <div>我是顶部的fixed</div>
+      <div class="fixed-close" on="tap:fixed.close">我是关闭按钮</div>
     </mip-fixed>
     <mip-fixed type="bottom">
       <div class="mip-adbd">
@@ -68,6 +81,7 @@
       </div>
     </mip-fixed>
     <script src="/dist/mipmain.js"></script>
-    <script src="https://mipcache.bdstatic.com/static/v1.2/mip-ad.js"></script>
+    <!-- <script src="https://mipcache.bdstatic.com/static/v1.2/mip-ad.js"></script> -->
+    <script src="/dist/extensions/mip-fixed/0.1/mip-fixed.js"></script>
   </body>
 </html>
