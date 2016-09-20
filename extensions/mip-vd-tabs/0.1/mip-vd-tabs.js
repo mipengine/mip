@@ -105,7 +105,12 @@ define(function () {
                 $header.append('<div class="mip-vd-tabs-nav-toggle"><img src=' + ICON_SRC + '></div>');
             }
         } else {
-            $header.addClass(NAV_CLS);
+            $header
+                .addClass('mip-vd-tabs-row-tile')
+                .append(
+                    $('<div class="' + NAV_CLS + '"></div>')
+                        .append($header.children())
+                );
         }
 
         $el.children()

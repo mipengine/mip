@@ -5,7 +5,6 @@
 .mip-vd-tabs-nav {
     display: -webkit-box;
     display: -webkit-flex;
-    min-width: 100%;
     height: 44px;
     font-size: 14px;
     white-space: nowrap;
@@ -21,6 +20,7 @@
     -webkit-flex-direction: row;
     -webkit-flex-wrap: nowrap;
     -webkit-justify-content: space-between;
+    padding: 0 16px;
 }
 
 .mip-vd-tabs-nav * {
@@ -33,7 +33,7 @@
     overflow: hidden;
     width: 16.66666667%;
     height: 44px;
-    padding: 0 15px;
+    padding: 0 14px 0 15px;
     line-height: 44px;
     text-align: center;
     white-space: nowrap;
@@ -53,6 +53,7 @@
 
 .mip-vd-tabs-nav-bottom {
     border-top: 1px solid #eee;
+    background: #fafafa;
 }
 
 .mip-vd-tabs-nav-bottom .mip-vd-tabs-nav-li {
@@ -66,7 +67,7 @@
 .mip-vd-tabs-nav-bottom .mip-vd-tabs-nav-selected {
     position: relative;
     top: -1px;
-    height: 44px;
+    height: 45px;
     border: 1px solid #f1f1f1;
     border-color: #fff #f1f1f1 #38f #f1f1f1;
     line-height: 45px;
@@ -99,7 +100,7 @@
     display: inline-block;
     vertical-align: middle;
     width: auto;
-    padding: 0 15px;
+    padding: 0 14px 0 15px;
 }
 
 .mip-vd-tabs-nav-view .mip-vd-tabs-nav.mip-vd-tabs-nav-bottom {
@@ -120,7 +121,7 @@
 
 .mip-vd-tabs-nav-layer p {
     height: 44px;
-    padding: 0 17px;
+    padding: 0 16px;
     border-bottom: 1px solid #eee;
     line-height: 44px;
     text-align: left;
@@ -162,7 +163,7 @@
 
 .mip-vd-tabs .mip-vd-tabs-nav-toggle-holder {
     display: inline-block;
-    width: 45px;
+    width: 29px;
     height: 1px;
     visibility: hidden;
 }
@@ -179,7 +180,7 @@
 }
 
 .mip-vd-tabs-episode-content {
-    padding: 15px 17px;
+    padding: 15px 16px;
     text-align: left;
 }
 
@@ -195,10 +196,20 @@
     color: #38f;
 }
 
-.mip-vd-tabs-nav-view > .mip-vd-tabs-episode-bottom-nav.mip-vd-tabs-nav > .mip-vd-tabs-nav-li {
+.mip-vd-tabs-episode-bottom-nav {
+    padding: 0;
+}
+
+.mip-vd-tabs-nav-view > .mip-vd-tabs-scroll-touch > .mip-vd-tabs-episode-bottom-nav.mip-vd-tabs-nav > .mip-vd-tabs-nav-li {
     display: inline-block;
 }
 
 .mip-vd-tabs-episode-bottom-nav.mip-vd-tabs-nav .mip-vd-tabs-nav-li {
     display: block;
+}
+
+.mip-vd-tabs-row-tile {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
 }

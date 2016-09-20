@@ -31,7 +31,6 @@ define(function () {
         },
         _setScroll = function() {
             var _this = this;
-            getNavsWidth();
 
             _this.tabScroll = _setWrap.call(_this, _this.view);
 
@@ -55,15 +54,6 @@ define(function () {
                 });
             }
 
-            function getNavsWidth() {
-                // 计算navs总宽度
-                _this.navsWidth = 0;
-                _this.navs.each(function(i, v) {
-                    _this.navsWidth += $(v).width();
-                });
-                // 设置tabs实际区域宽度
-                _this.wrapper.width(_this.navsWidth + _this.toggle.width());
-            }
         },
         _setToggerMore = function() {
             var _this = this;
