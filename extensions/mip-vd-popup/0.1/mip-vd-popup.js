@@ -108,7 +108,7 @@ define(function() {
             if (tabCount > scrollNum) {
                 tabFragment = '<div class="' + VIEW_CLS + '">';
             }
-            tabFragment += '<ul class="' + NAV_CLS + ' ' + BOTTOM_CLS + '">';
+            tabFragment += '<ul class="' + NAV_CLS + ' ' + BOTTOM_CLS + ' ' + 'mip-vd-tabs-episode-bottom-nav">';
             tabFragment += tabList.map(function (v, index) {
                 var selectedClass = index === tabCurNum ? SELECTED_CLS : '';
                 return '<li class="' + ITEM_CLS + ' ' + selectedClass + '">' + v.text + '</li>';
