@@ -3,7 +3,7 @@ define(function () {
     /**
      * Custom event
      * @class
-     * @param {?Object} options
+     * @param {?Object} opt Options
      */
     var Event = function (opt) {
         if (opt) {
@@ -28,7 +28,7 @@ define(function () {
     var proto = Event.prototype = {
         /**
          * Add handler to events
-         * @param {string} events' name
+         * @param {string} name 
          * @param {Function} handler
          * @return {Object}
          */
@@ -41,7 +41,7 @@ define(function () {
         },
         /**
          * Remove handler from events.
-         * @param {?string} events' name
+         * @param {?string} name
          * @param {?Function} handler
          * @return {?Object}
          */
@@ -69,7 +69,7 @@ define(function () {
         },
         /**
          * Add a one-off handler to events
-         * @param {string} events' name
+         * @param {string} name
          * @param {Function} handler
          * @return {Function} the unbinder of the handler
          */
@@ -85,7 +85,7 @@ define(function () {
         },
         /**
          * Trigger events.
-         * @param {string} events' name
+         * @param {string} name
          */
         trigger: function (name) {
             var args = Array.prototype.slice.call(arguments, 1);
@@ -103,7 +103,7 @@ define(function () {
         },
         /**
          * Set the handlers' context
-         * @param {Function}
+         * @param {Function} context
          */
         setEventContext: function (context) {
             this.__eventContext = context || this;
@@ -146,7 +146,7 @@ define(function () {
     var keys = Object.keys(proto);
     /**
      * Mix Event's prototype into target object
-     * @param {Object}
+     * @param {Object} obj
      * @return {Object}
      */
     Event.mixin = function (obj) {

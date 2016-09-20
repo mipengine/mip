@@ -45,9 +45,9 @@ define(function () {
 
     /**
      * Find a element by selector until the target element
-     * @param {HTMLElement} source element
+     * @param {HTMLElement} element
      * @param {string} selector
-     * @param {HTMLElement} target element
+     * @param {HTMLElement} target
      * @return {?HTMLElement}
      */
     var closestTo = function (element, selector, target) {
@@ -58,7 +58,7 @@ define(function () {
     var createTmpElement = document.createElement('div');
     /**
      * Create a element by string
-     * @param {string} html
+     * @param {string} str Html string
      * @return {HTMLElement}
      */
     var create = function (str) {

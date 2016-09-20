@@ -52,8 +52,8 @@ define(['./components/platform', './components/event', './components/css', './co
         },
         /**
          * Send the message to the parent frame
-         * @param {string} event name
-         * @param {Object} message body
+         * @param {string} eventName
+         * @param {Object} data Message body
          */
         sendMessage: function (eventName, data) {
             if (this.isIframed) {

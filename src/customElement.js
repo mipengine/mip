@@ -1,7 +1,7 @@
 define(['./components/event'], function (Event) {
     /**
      * The constructor of  base class of custom element
-     * @param {HTMLElement}
+     * @param {HTMLElement} element
      */
     function customElement(element) {
         this.element = element;
@@ -12,8 +12,8 @@ define(['./components/event'], function (Event) {
 
     /**
      * Apply the fill content style to an element
-     * @param {HTMLElement} element
-     * @param {boolean} replaced?
+     * @param {HTMLElement} ele
+     * @param {boolean} isReplaced
      */
     customElement.prototype.applyFillContent = function (ele, isReplaced) {
         ele.classList.add('mip-fill-content');
@@ -31,9 +31,9 @@ define(['./components/event'], function (Event) {
     customElement.prototype.build = function () {};
     /**
      * Expend current element's attributes which selected by attrs to an other object.
-     * @param {Array.<string>} attributes' name list
-     * @param {Object} target
-     * @return {Object} the target obj
+     * @param {Array.<string>} attrs Attributes' name list
+     * @param {Object} element The target element
+     * @return {Object} 
      */
     customElement.prototype.expendAttr = function (attrs, element) {
         for (var i = 0; i < attrs.length; i++) {
@@ -65,7 +65,7 @@ define(['./components/event'], function (Event) {
 
     /**
      * Trigger the handlers had been added by `addEventAction` of an action
-     * @param {string} action name
+     * @param {string} action The action's name
      */
     customElement.prototype.excuteEventAction = function (action) {
         var eventObj = this._actionEvent;

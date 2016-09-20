@@ -9,7 +9,7 @@ define(['./fn', './dom'], function (fn, dom) {
     /**
      * MIP does not support external JavaScript so we provide EventAction to trigger events between elements.
      * @class
-     * @param {?Object} options
+     * @param {?Object} opt Options
      */
     var EventAction = function (opt) {
         opt && fn.extend(this, fn.pick(opt, optKeys));

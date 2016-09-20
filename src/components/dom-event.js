@@ -3,9 +3,11 @@ define(['./dom'], function (dom) {
 
     /**
      * Event delegator
-     * @param {HTMLElement} the parent node
+     * @param {HTMLElement} element The parent node
      * @param {string} selector
-     * @param {string} 
+     * @param {string} event Event name
+     * @param {Function} handler
+     * @param {boolean} capture
      */ 
     var delegate = function (element, selector, event, handler, capture) {
         capture = !!capture;
@@ -28,8 +30,8 @@ define(['./dom'], function (dom) {
 
     /**
      * Create a event object to dispatch
-     * @param {string} event name
-     * @param {?Object} custom data
+     * @param {string} type Event name
+     * @param {?Object} data Custom data
      * @return {Event}
      */
     var createEvent = function (type, data) {

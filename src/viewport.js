@@ -29,7 +29,7 @@ define(['./components/rect', './components/platform', './components/event', './c
         },
         /**
          * Set the current vertical position of the page
-         * @param {number} scrollTop
+         * @param {number} top The target scrollTop
          */
         setScrollTop: function (top) {
             rect.setScrollTop(top);
@@ -93,7 +93,7 @@ define(['./components/rect', './components/platform', './components/event', './c
     var oldTime, oldTop;
     /**
      * The scroll handler
-     * @param {Event}
+     * @param {Event} event
      */
     var scrollEvent = function (event) {
         var scrollTop = this.getScrollTop();

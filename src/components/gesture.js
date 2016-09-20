@@ -113,8 +113,8 @@ define(['./event', './gesture-recognizer', './fn'], function (Event, Recognizer,
     /**
      * Gesture
      * @class
-     * @param {HTMLElement} element that need gestures
-     * @param {Object} options
+     * @param {HTMLElement} element Element that need gestures
+     * @param {Object} opt Options
      */
     var Gesture = function (element, opt) {
         this.__eventContext = this._element = element;

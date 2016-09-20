@@ -39,7 +39,7 @@ define(['./util', 'viewport', './components/rect'], function (util, viewport, re
         },
         /**
          * Add an element for current object and update all the elements's state
-         * @param {MIPElement} mip element
+         * @param {MIPElement} element A mip element
          */
         add: function (element) {
             element._eid = this._eid ++;
@@ -49,7 +49,7 @@ define(['./util', 'viewport', './components/rect'], function (util, viewport, re
         },
         /**
          * Remove element from this
-         * @param {MIPElement|string} mip element or _eid of element
+         * @param {MIPElement|string} element Mip element or _eid of element
          * @return {boolean} the removed state of element
          */
         remove: function (element/* or id */) {
@@ -76,8 +76,8 @@ define(['./util', 'viewport', './components/rect'], function (util, viewport, re
         },
         /**
          * Set an element's viewport state to TRUE or FALSE.
-         * @param {MIPElement}
-         * @param {boolean}
+         * @param {MIPElement} element
+         * @param {boolean} inViewport
          */
         setInViewport: function (element, inViewport) {
             if (element.inViewport() !== inViewport) {
@@ -101,7 +101,7 @@ define(['./util', 'viewport', './components/rect'], function (util, viewport, re
 
     /**
      * Forced set the element's viewport state to be `true`.
-     * @param {MIPElement}
+     * @param {MIPElement} element
      */
     Resources.prerenderElement = function (element) {
         if (element.inViewport && !element.inViewport()) {

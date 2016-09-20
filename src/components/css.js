@@ -9,7 +9,7 @@ define(function () {
     var prefixCache = {};
     /**
      * Make sure a property is supported by adding prefix.
-     * @param {string} a property to be checked
+     * @param {string} property A property to be checked
      * @return {string} the property or its prefixed version
      */
     var prefixProperty = function (property) {
@@ -36,8 +36,8 @@ define(function () {
     var unitReg = /^\d+([a-zA-Z]+)/;
     /**
      * Obtain the unit of a property and add it to the value has no unit if exists.
-     * @param {string} property name
-     * @param {(string|number)} the value has no unit
+     * @param {string} property
+     * @param {(string|number)} value A value maybe needs unit.
      * @return {(string|number)}
      */
     var unitProperty = function (property, value) {
@@ -63,9 +63,9 @@ define(function () {
      *    css(element, 'left', 0);
      *    css(element, {left: 0, top: 0});
      *    css(element or elements, 'left'); // the value(s) of the computed left property of the element(s)
-     * @param {(Array.<HTMLElement>|HTMLElement)} source element(s)
-     * @param {(Object|string)} object contains style properties or property name
-     * @param {?(string|number)} the value of setting property
+     * @param {(Array.<HTMLElement>|HTMLElement)} elements The source element(s)
+     * @param {(Object|string)} property Object contains style properties or property name
+     * @param {?(string|number)} value The value of setting property
      * @return {(Array.<HTMLElement>|HTMLElement|string)}
      */
     var css = function (elements, property, value) {
