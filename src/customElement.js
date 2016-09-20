@@ -39,7 +39,7 @@ define(['./components/event'], function (Event) {
         for (var i = 0; i < attrs.length; i++) {
             var attr = attrs[i];
             if (this.element.hasAttribute(attr)) {
-                var val = this.element.getAttribute('attr');
+                var val = this.element.getAttribute(attr);
                 element.setAttribute ?
                     element.setAttribute(attr, val) :
                     element[attr] = val;
