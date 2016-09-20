@@ -36,7 +36,7 @@ module.exports = function(config) {
         // list of files / patterns to load in the browser
         files: [
             'src/polyfills/promise.js',
-            'src/deps/document-register-element.max.js',
+            'src/polyfills/document-register-element.max.js',
             'src/deps/esl.js',
             'src/deps/esl_config.js',
             'src/deps/zepto.js',
