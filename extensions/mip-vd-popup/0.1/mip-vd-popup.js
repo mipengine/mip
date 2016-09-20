@@ -144,7 +144,7 @@ define(function() {
                 onOpen: function () {
                     new Tab($dom, {
                         allowScroll: tabCount > 4,
-                        current: Math.floor((currentNum - 1) / pageSize) || 1,
+                        current: Math.floor((currentNum - 1) / pageSize) || 0,
                         currentClass: SELECTED_CLS,
                         navWrapperClass: NAV_CLS,
                         viewClass: VIEW_CLS,
