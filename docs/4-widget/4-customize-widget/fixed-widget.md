@@ -6,7 +6,7 @@ mip-fixed 用来支持 mip 中的悬浮元素整体使用方案。
 ----|----
 可用性|稳定
 支持布局|不使用布局
-所需脚本|https://mipcache.bdstatic.com/static/v1.0/mip-fixed.js
+所需脚本|https://mipcache.bdstatic.com/static/v1.2/mip-fixed.js
 
 ## 1. 使用
 
