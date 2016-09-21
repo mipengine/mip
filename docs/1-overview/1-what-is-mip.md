@@ -21,10 +21,10 @@ MIP HTML 基于HTML中的基础标签制定了全新的规范，通过对一部�
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-        <link rel="stylesheet" type="text/css" href="https://mipcache.bdstatic.com/static/mipmain-v1.0.1.css">
+        <link rel="stylesheet" type="text/css" href="https://mipcache.bdstatic.com/static/mipmain-v1.1.1.css">
     </head>
     <body>Hello World!</body>
-    <script src="https://mipcache.bdstatic.com/static/mipmain-v1.0.3.js"></script>   
+    <script src="https://mipcache.bdstatic.com/static/mipmain-v1.1.0.js"></script>   
 </html>
 ```
 
