@@ -33,7 +33,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "ssh://g@gitlab.baidu.com:8022/MIP/mipmain.git"
+        "url": "git@github.com:mipengine/mip.git"
     },
     "keywords": [
         "mip"

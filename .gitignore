@@ -1,6 +1,11 @@
-*.swp
-*.~
-server.log
-dist
-.DS_Store
 node_modules/
+dist/
+.idea/
+public/
+npm-debug.log
+server.log
+Thumbs.db
+.DS_Store
+*.swp
+*.gz
+*.~
