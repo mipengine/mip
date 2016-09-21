@@ -226,13 +226,15 @@ define(['platform', 'layout', 'css'], function(platform, layout, css){
       /* mip fixed 规则限制 end */
   };
   fixedElement.prototype.setStyle = function(ele) {
-    var top = layout.parseLength(ele.getAttribute('top'));
-    if (top) {
-      ele.style.top = top;
-    }
     var bottom = layout.parseLength(ele.getAttribute('bottom'));
     if (bottom) {
       ele.style.bottom = bottom;
+      return;
+    }
+    var top = layout.parseLength(ele.getAttribute('top'));
+    if (top) {
+      ele.style.top = top;
+      return;
     }
     if (!top && !bottom) {
       ele.parentElement.removeChild(ele);
