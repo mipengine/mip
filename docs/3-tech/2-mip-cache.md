@@ -98,7 +98,7 @@
 - link 标签中的 href
     
     ```
-        1. <link rel="stylesheet" href="https://mipcache.bdstatic.com/static/mipmain-v1.0.1.css">
+        1. <link rel="stylesheet" href="https://mipcache.bdstatic.com/static/mipmain-v1.1.1.css">
         2. <link rel="miphtml" href="页面h5 url">
     ```
 - style 标签中的 background-image, background
@@ -110,7 +110,7 @@
 - script 标签中的 src
 
 	```
-		1. <script src="https://mipcache.bdstatic.com/static/mipmain-v1.0.3.js"></script>
+		1. <script src="https://mipcache.bdstatic.com/static/mipmain-v1.1.0.js"></script>
 	```
 
 ### 组件
