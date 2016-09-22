@@ -12,7 +12,7 @@ define(function () {
      * @param {string} property A property to be checked
      * @return {string} the property or its prefixed version
      */
-    var prefixProperty = function (property) {
+    var prefixProperty = function (property) { 
         property = property.replace(camelReg, function (match, first, char) {
             return first ? char : char.toUpperCase();
         });
@@ -70,8 +70,8 @@ define(function () {
      */
     var css = function (elements, property, value) {
         var i;
-        if (!property) {
-            return element;
+        if (!property || !elements) {
+            return elements;
         };
         if (elements.length && elements[0]) {
             if (property && value !== undefined) {
@@ -87,6 +87,9 @@ define(function () {
                 }
                 return ret;
             }
+        }
+        if (!elements.nodeType) {
+            return elements;
         }
         var element = elements;
         if (typeof property !== 'string' || value !== undefined) {

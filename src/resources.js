@@ -19,7 +19,7 @@ define(['./util', 'viewport', './components/rect'], function (util, viewport, re
         this._eid = 0;
 
         // add to resources
-        resources[this._rid] = [];
+        resources[this._rid] = {};
 
         // Reduce the frequency of updating viewport state
         var update = this._update.bind(this);
