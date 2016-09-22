@@ -1,5 +1,7 @@
 # 手势
 
+MIP封装了单击，双击，滑动等手势，可在组件中使用
+
 ## 示例
 
 ```
@@ -24,6 +26,14 @@ var build = function () {
 
 gesture 实例化时第二个参数可以传一个obj做为配置参数
 
+示例：
+```
+    // 默认阻止纵向滑动事件
+    var gesture = new Gesture(element, {
+        preventY: true
+    });
+```
+
 具体参数介绍：
 
     preventDefault         是否阻止默认事件
@@ -40,14 +50,6 @@ gesture 实例化时第二个参数可以传一个obj做为配置参数
         preventX: true,
         preventY: false
     }
-
-示例：
-```
-    // 默认阻止纵向滑动事件
-    var gesture = new Gesture(element, {
-        preventY: true
-    });
-```
 
 ## gesture 数据对象介绍
 
@@ -99,6 +101,7 @@ gesture.on('tap', function (event, data) {
     console.log('单击');
 });
 ```
+
 
 ### doubletap
 
