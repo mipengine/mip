@@ -53,6 +53,10 @@ define(['platform', 'layout', 'css'], function(platform, layout, css){
       var fixedTypeCount = {};
       for (var i = 0; i < fixedElements.length; i++) {
         var ele = fixedElements[i];
+        // Calculate z-index based on the declared z-index and DOM position.
+        css(ele, {
+            'z-index': 10000 - i
+        });
         /* android uc 下直接变成 absolute */
         if (this.isAndroidUc) {
           css(ele, {
@@ -136,9 +140,6 @@ define(['platform', 'layout', 'css'], function(platform, layout, css){
       fixedEle.placeholder.setAttribute('mipdata-fixedIdx', fixedEle.id);
       fixedEle.placeholder.style.display = 'none';
     }
-
-    // Calculate z-index based on the declared z-index and DOM position.
-    element.style.zIndex = 10000 - idx;
 
     element.parentElement.replaceChild(fixedEle.placeholder, element);
     this.getFixedLayer().appendChild(element);
