@@ -68,8 +68,8 @@ define(['./components/platform', './components/event', './components/css', './co
          */
         setupEventAction: function () {
             var eventAction = this.eventAction = new EventAction();
-            this._gesture.on('tap', function (event, data) {
-                eventAction.excute('tap', event.target, data);
+            this._gesture.on('tap', function (event) {
+                eventAction.excute('tap', event.target, event);
             });
         }
     };
