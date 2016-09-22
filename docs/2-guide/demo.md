@@ -45,11 +45,11 @@
     </div>
     <p class="mip-text">这是另一个段落，纯文本形式</p>
     <div class="mip-html">
-        <p style="text-align:center">自定义的文字居中</p>
+        <p>自定义的文字居中</p>
     </div>
     <div class="mip-html">
         <p>
-            <span style="color:#f00">自定义的红色字体</span>
+            <span>自定义的红色字体</span>
         </p>
     </div>
     <div class="mip-html">
@@ -110,7 +110,7 @@
 其中，居左不需要做特殊处理，居右需要设置`text-align:  center`
 
 ```
-<p style="text-align: center">居中文本</p>
+<p>居中文本</p>
 ```
 
 * 列表
@@ -138,7 +138,7 @@
 和前面的机制一样，都是通过加style来解决
 
 ```
-<p style="font-color: #f00">红色文字</p>
+<p>红色文字</p>
 ```
 
 * 下划线(u)

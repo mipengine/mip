@@ -18,7 +18,7 @@ mip-carousel 用来支持 mip 中图片的一种展示方式，支出多图轮�
                 alt="胖子突围记！讲讲你的突围历程？" 
                 src="http://a2.att.hudong.com/71/04/300224654811132504044925945_950.jpg" layout="responsive"  width=600 height="300">
             </mip-img>
-        <a target="_blank" href="http://wenda.tianya.cn/m/question/1almfj0foas94gc7vtoq6ejbfbmdk3e78ehaa" style="width:100%">
+        <a target="_blank" href="http://wenda.tianya.cn/m/question/1almfj0foas94gc7vtoq6ejbfbmdk3e78ehaa">
             <mip-img 
                 class="mip-img"  
                 alt="招募行家！欢迎加入！" 
@@ -26,7 +26,7 @@ mip-carousel 用来支持 mip 中图片的一种展示方式，支出多图轮�
             </mip-img>
             <p class="mip-img-subtitle">招募行家！欢迎加入！</p>
         </a>
-        <a target="_blank" href="http://wenda.tianya.cn/m/question/1almfj0foas94gc7vtoq6ejbfbmdk3e78ehaa" style="width:100%">
+        <a target="_blank" href="http://wenda.tianya.cn/m/question/1almfj0foas94gc7vtoq6ejbfbmdk3e78ehaa">
             <mip-img 
                 class="mip-img"  
                 alt="招募行家！欢迎加入！" 
