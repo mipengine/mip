@@ -49,12 +49,16 @@
         <!--mip-ad type="ad-baidu" cproid="u2648386"></mip-ad-->
       </div>
     </mip-fixed>
-    <mip-fixed type="left" bottom="50px">
+    <mip-fixed type="left" bottom="50px" id="fixed">
       <div class="mip-adbd">
          我在左侧
       </div>
+      <div class="mip-adbd" on="tap:fixed.close">
+         我是关闭按钮
+      </div>
     </mip-fixed>
     <script src="/dist/mipmain.js"></script>
+    <script src="/dist/extensions/mip-fixed/0.1/mip-fixed.js"></script>
     <script src="https://mipcache.bdstatic.com/static/v1.2/mip-ad.js"></script>
   </body>
 </html>

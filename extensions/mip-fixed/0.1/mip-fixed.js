@@ -22,7 +22,8 @@ define(function (){
 
         _this.element.isRender = true;
 
-        _this.addEventAction('close', function() {
+        _this.addEventAction('close', function(event) {
+            event.preventDefault();
             setStyles(_this.element, {'display': 'none'});
         });
 

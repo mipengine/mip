@@ -2,6 +2,7 @@
  * @author: laoono
  * @date:  2016-09-01
  * @time: 15:35
+ * @file: mip-fh-ad.js
  * @contact: laoono.com
  * @description: #
  */
@@ -45,13 +46,10 @@ define(['require', 'customElement', 'zepto'], function (require) {
                         switch (+k) {
                             // 底部悬浮广告
                             case 1:
-                                $('body').append('<div id="ad_position_1">' + v + '</div>');
+                                element.html('<div id="ad_position_1">' + v + '</div>');
                                 // 去除三种广告：顶部网盟嵌入，右上漂浮：猪，右下漂浮：图片
                                 // $('div[id*='wrapper_u2311978'],.imagepluspage_entry,#icon_0').remove();
                                 $('.direct_ad_effect_style').removeClass('direct_ad_effect_style');
-                                break;
-                            case 11:
-                                $('body').append(v);
                                 break;
                             case 14:
                                 $('#liveAdBlock').html(v);
@@ -65,9 +63,10 @@ define(['require', 'customElement', 'zepto'], function (require) {
                                 $('div.introduce-list').find('a.btn').remove();
                                 $('div.introduce-list').append(v);
                                 break;
+                            // 底部广告位
+                            case 11:
                             // 我要提问下方热图广告位
                             case 49:
-                                // $('#ad-s-1255').prepend(v);
                                 element.html(v);
                                 break;
 
@@ -117,7 +116,7 @@ define(['require', 'customElement', 'zepto'], function (require) {
         opt.lazy === 'false' && init(opt);
     };
     // 第一次进入可视区回调,只会执行一次，做懒加载，利于网页速度
-    customElem.prototype.inviewCallback = function () {
+    customElem.prototype.firstInviewCallback = function () {
         var opt = getOpt(this.element);
         opt.lazy !== 'false' && init(opt);
     };

@@ -82,6 +82,9 @@ define(function() {
                         }
                     }
                     calbacklen  = calbacklen - 1;
+                    if (calbacklen === 0) {
+                        callback();
+                    }
                 }
             }
         }
