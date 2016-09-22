@@ -1,5 +1,5 @@
 /**
- *  for test
+ * @file For test
  *
  **/
 define(function () {
@@ -182,6 +182,7 @@ define(function () {
         </div>'
         var resultForEventAction = this.eventActionElement.querySelector('.result-for-event');
         this.addEventAction('eventaction', function (event, str) {
+            event.preventDefault();
             resultForEventAction.innerHTML = str;
         });
 

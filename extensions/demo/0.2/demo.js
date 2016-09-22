@@ -6,6 +6,8 @@
 
 define(['components/gesture'], function (Gesture) {
     var customElement = require('customElement').create();
+    var Gesture = require('components/gesture');
+    var util = require('util');
     var index = 0;
     customElement.prototype.build = function () {
         var element = this.element;
@@ -36,6 +38,17 @@ define(['components/gesture'], function (Gesture) {
         this.addEventAction('test', function (event, title) {
             console.log(title);
         });
+        element.addEventListener('click', function () {
+            console.log('点透测试' + element.id);
+        }, false);
+        var popup = util.dom.create('<div style="position:absolute;top:0;left:0;right:0;bottom:0;background:#fff"></div>');
+        document.body.appendChild(popup);
+        util.css(popup, util.rect.getDomRect(element));
+        var gesture = new Gesture(popup);
+        gesture.on('tap', function (e) {
+            e.preventDefault();
+            this.style.display = 'none';
+        });
     };
     customElement.prototype.viewportCallback = function (inview) {
         console.log(this.id, inview);
@@ -43,7 +56,7 @@ define(['components/gesture'], function (Gesture) {
     customElement.prototype.prerenderAllowed = function () {
         return this.prerender || false;
     };
-    customElement.prototype.inviewCallback = function () {
+    customElement.prototype.firstInviewCallback = function () {
         this.element.style.background = '#333';
     };
     return customElement;

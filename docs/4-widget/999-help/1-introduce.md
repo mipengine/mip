@@ -1,21 +1,24 @@
-# 基础开发
+# 开发辅助工具和模块
 
-## 介绍
+mip内置了一些开发工具和模块，为解决一些mip开发中遇到的问题和支持原生JS。
 
-mip 不推荐使用 jquery 或者 zepto。
-并且为替代 jquery 准备了一套解决方案。
+本文包含三个部分：  
+1、替代jquery、zepto    
+2、viewport帮助    
+3、jquery、zepto引入  
 
-为什么不推荐使用 jQuery：  
+
+## 1、替代 jquery、zepto
+
+mip 不推荐使用 jquery 和 zepto。
+
+为什么不推荐?  
 1、原生JS已经足够好用  
 2、jquery、zepto 性能相对于原生JS比较差  
-3、减少页面负担，不必引入额外的文件
+3、减少页面负担，不必引入额外的文件  
 
-如果对于 jquery 有强依赖，mip也提供 amd 引入的方式使用<a href="javascript:;" onclick="document.getElementById('jquery').scrollIntoView(true)">jquery</a>
-
-viewport 提供了一些视图接口，由于iframe状态下 jquery 和 zepto 有bug，  
-所以即使引入了 jquery 也需要使用<a href="javascript:;" onclick="document.getElementById('viewport').scrollIntoView(true)">viewport</a>。
-
-## 如何替代 jquery
+没有jquery&zepto的情况下如何开发？  
+请参见后面的帮助，大部分都可以用原生JS替代，mip也提供了一些内置组件以解决兼容问题。
 
 ### 选择器
 
@@ -294,11 +297,57 @@ platform.isUc();
 platform.isWebkit();
 ```
 
-<div id="viewport"></div>
-## viewport
+### animate
 
-viewport 提供了视图相关的功能
+jquery: 
+```
+// jquery
+$(element).animate({
+    left: 100,
+    top: 100
+});
+```
 
+```
+// mip
+
+var Naboo = require('naboo');
+var property = {
+    opacity: 0
+};
+var duration = 1000;
+var method = 'ease-in';
+var delay = 500;
+var callback = function () {
+    console.log('callback');
+};
+
+
+// 使用 css 动画
+Naboo.css(element, property, callback).start();
+Naboo.css(element, property, duration, callback).start();
+Naboo.css(element, property, duration, delay, callback).start();
+Naboo.css(element, property, duration, method, callback).start();
+Naboo.css(element, property /* .... 支持参数组合 */).start();
+
+// 动画组合
+Naboo.css(element, {opacity: 0})
+     .css(element, {opacity: 1})
+     .css(element, {marginTop: 200})
+     .css(element, {'margin-top': 0})
+     .css(element, {'transform': 'scale(0)'})
+     .start();
+
+```
+
+## 2、viewport 帮助
+
+viewport 提供了视图相关的功能。  
+
+为什么要使用viewport?
+
+1、提供一些视图相关的扩展功能    
+2、当页面被嵌入到iframe中，滚动以及页面相关的计算有一些bug
 
 ### 使用方式
 
@@ -331,23 +380,19 @@ viewport.on('changed', function () {
 });
 ```
 
-<div id="jquery"></div>
-## 引入 jquery
+## 3、引入jquery or zepto
 
-由于 jquery 是异步引入，并且 jquery 性能与原生 JS 有一定差距。
-所以使用 jquery 页面速度和JS执行效率会有一定程度的将低。
+靠虑到一些现状，jquery 和 zepto 可能仍然有一定需求。
+所以mip也为使用它们提供了异步引入的方式。
 
 引入方式：
 ```
 define(function () {
     var $ = require('jquery'); 
+    // or
+    var $ = require('zepto');
 });
 
-// 或者也可以
-
-define(['jquery'], function ($) {
-    
-});
 ```
 
 

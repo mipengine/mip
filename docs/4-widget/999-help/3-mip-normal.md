@@ -1,17 +1,21 @@
-# mip相关
+# 其它
+
+mip提供一些功能，以解决在组件中遇到的各种问题和提升开发效率。
 
 ## prerenderElement
 
 提前渲染 mip 元素。
-如果元素不在 viewport 内，强制触发元素的 viewportCallback 方法，并设置为 true。
-如果 firstInviewCallback 还没有执行过，则执行 firstInviewCallback
+
+如果元素不在 viewport 内，强制触发元素的 viewportCallback firstInviewCallback 方法。
 
 ```
 var element = document.getElementById('mip-test');
-Mip.prerenderElement(element);
+MIP.prerenderElement(element);
 ```
 
 ## event-action
+
+由于mip不允许使用附加的JS代码。所以提供了一套事件action机制，可以通过dom属性来触发某个mip元素的自定义事件。
 
 html:  
 ```
