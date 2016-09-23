@@ -37,8 +37,8 @@ define(function () {
             // 前置检测选中的tab是否在可视区
             if (_this.current > 0 && _this.current < _this.sum) {
                 var currentTab = Math.min(_this.current + 1, _this.sum - 1);
-                if (_this.navs.eq(currentTab).length && _this.navs.eq(currentTab).position().left > _this.view.width()) {
-                    slideTo(currentTab, 1, _this.navs.eq(_this.current), _this.navs.length);
+                if (_this.navs.eq(currentTab).length && _this.navs.eq(currentTab).position().left > _this.view.width() - 29) {
+                    slideTo(currentTab, 1, _this.navs.eq(_this.current), _this.navs.length, false);
                 }
             }
 
@@ -53,6 +53,7 @@ define(function () {
                     _this.onTabScrollEnd.call(_this, this);
                 });
             }
+
         },
         _setToggerMore = function() {
             var _this = this;
@@ -139,7 +140,7 @@ define(function () {
 
                     // 滑动对象存在,执行滑动并传递autoScroll标记用于scrollEnd事件判断
                     if (_this.tabScroll) {
-                        slideTo(_this.current + 1, 1, $v, _this.navs.length);
+                        slideTo(_this.current + 1, 1, $v, _this.navs.length, true);
                     };
                 });
             });
@@ -218,7 +219,7 @@ define(function () {
         }
     });
 
-    function slideTo(index, leftNum, $thisDom, totalNum) {
+    function slideTo(index, leftNum, $thisDom, totalNum, animate) {
         var left = 0;
         if (index < leftNum) {
 
@@ -228,7 +229,11 @@ define(function () {
             left = $thisDom.offset().left - $thisDom.parent().offset().left - $thisDom.width();
         }
         if (!inter) {
-            animateSlide($thisDom.parent().parent().scrollLeft(), left, $thisDom.parent().parent());
+            if (animate) {
+                animateSlide($thisDom.parent().parent().scrollLeft(), left, $thisDom.parent().parent());
+            } else {
+                $thisDom.parent().parent().scrollLeft(left);
+            }
         }
     }
 

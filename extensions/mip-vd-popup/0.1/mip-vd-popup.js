@@ -179,7 +179,6 @@ define(function() {
                 "event": "loadiframe",
                 "data": {
                     "url": href,
-                    "enc": "no",
                     "title": headTitle || head
                 }
             };
