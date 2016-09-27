@@ -10,6 +10,20 @@ define(function() {
     var customElement = require('customElement').create();
 
     /**
+     * [is_noCache 判断是否禁止缓存]
+     * 
+     * @return {Boolean} 
+     */
+    function is_noCache() {
+        var cache_meta = document.querySelector('meta[property="mip:use_cache"]');
+        if(cache_meta && cache_meta.getAttribute('content') === 'no') {
+            return true;
+        }
+        return false
+    }
+
+
+    /**
      * 点击链接事件
      *
      * @param  {Event} e event
@@ -19,6 +33,7 @@ define(function() {
         e.preventDefault();
 
         var href = this.getAttribute('href');
+        var pageType = is_noCache() ? 2 : 1;
 
         if (!href) { return; }
 
@@ -30,7 +45,8 @@ define(function() {
                 'data': {
                     'url': href,
                     'title': (elem.attr('title') || elem.text().trim().split('\n')[0]),
-                    'click': elem.data('click')
+                    'click': elem.data('click'),
+                    'pageType': pageType 
                 }
             };
 
