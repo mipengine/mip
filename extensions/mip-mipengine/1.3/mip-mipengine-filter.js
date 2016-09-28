@@ -10,10 +10,6 @@ define(function (){
      * build
      */
     function build () {
-        var _this = this;
-        if (_this.element.isRender) return;
-        _this.element.isRender = true;
-
         var filter = new Filter({
             'filterWrap' : document.querySelector('.filter'),
             'itemWrap' : document.querySelector('.timeline-content-wrap'),
@@ -24,7 +20,7 @@ define(function (){
     var util = {
         /* used multiple times */
         containReg: function(txt) {
-            return new RegExp('(\\s|^)' + txt + '(\\s|$)');
+            return new RegExp('(\\s+|^)' + txt + '(\\s+|$)');
         },
         /* check if dom has certain class */
         hasClass : function(ele, cls) {
@@ -33,7 +29,7 @@ define(function (){
         /* add certain class to dom*/
         addClass : function(ele, cls) {
             if(this.hasClass(ele, cls)) return;
-            ele.className = ele.className + ' ' + cls;
+            ele.className = (ele.className + ' ' + cls).trim();
         },
         /* remove certain class from dom*/
         removeClass : function(ele, cls) {
@@ -48,7 +44,6 @@ define(function (){
                 this.addClass(ele, cls);
             }
         }
-
     }
     /*
     * define a Filter, 
@@ -64,7 +59,7 @@ define(function (){
     * emptyTip: shown to user if no item applys to filter
     */
     function Filter(opt) {
-        var me = this;
+        var _this = this;
         if(!opt || !opt.filterWrap || !opt.itemWrap) return;
 
         opt.mobileWidth = opt.mobileWidth || 767;
@@ -95,9 +90,9 @@ define(function (){
             opt.filterWrap.querySelector('.filter-result').innerText = '筛选：' + text;
             // in wise, when select, collapse filter
             if(window.innerWidth <= opt.mobileWidth) {
-                me.toggleFilter();
+                _this.toggleFilter();
             }
-            me.applyFilter(newEle.dataset.filtertype);
+            _this.applyFilter(newEle.dataset.filtertype);
         }
 
         /* 
@@ -116,6 +111,7 @@ define(function (){
                 } else {
                     // show filter list
                     listWrap.style.transition = 'none';
+                    listWrap.style.WebkitTransition = 'none';
                     listWrap.style.height = 'auto';
                     var height = getComputedStyle(listWrap).height;
 
@@ -171,14 +167,14 @@ define(function (){
         * if wise, collapse filter list.
         */
         opt.filterWrap.querySelectorAll('a').forEach(function(ele) {
-            ele.addEventListener('click', me.filterSelect);
+            ele.addEventListener('click', _this.filterSelect);
         });
 
         /* 
         * add click event to filter result, which show only on wise.
         * when clicked, uncollapse and collapse filter list.
         */
-        opt.filterWrap.querySelector('.filter-result').addEventListener('click', me.toggleFilter);
+        opt.filterWrap.querySelector('.filter-result').addEventListener('click', _this.toggleFilter);
     }
 
     /**
