@@ -159,12 +159,47 @@ define(function() {
                 hidedom(callbackdata[index].target)
             } else if(callbackdata[index].type == "remove") {
                 removedom(callbackdata[index].target)
+            } else if(callbackdata[index].type == "removead") {
+                removeAdDom(callbackdata[index].target)
             }
         }
     }
 
     /**
      * 删除节点
+     */
+    
+    function removeAdDom(uid) {
+        if (!uid) {
+            return;
+        }
+        //find 对应的 iframe
+        var iframes = document.querySelectorAll('iframe');
+        var len = iframes.length;
+        var targetIframe;
+        for (var i = 0; i < len; i++) {
+            if (iframes[i].id.indexOf(uid) > -1) {
+                targetIframe = iframes[i];
+            }
+        }
+        if (!targetIframe) {
+            return;
+        }
+        var parent = targetIframe.parentNode;
+        while (true) {
+            if (parent.style.position === 'fixed') {
+                parent.outerHTML = '';
+                break;
+            }
+            var parent = parent.parentNode;
+            if (parent.tagName.toUpperCase() === 'BODY') {
+                break;
+            }
+        }
+    }
+
+    /**
+     * 删除对应广告节点
      */
     
     function removedom(obj) {
