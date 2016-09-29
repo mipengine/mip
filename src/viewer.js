@@ -35,7 +35,8 @@ define(['./components/platform', './components/event', './components/css', './co
             if (platform.needSpecialScroll) {
                 css([document.documentElement, document.body], {
                     height: '100%',
-                    overflow: 'auto'
+                    overflow: 'auto',
+                    '-webkit-overflow-scrolling': 'touch'
                 });
                 css(document.body, 'position', 'relative');
             }
