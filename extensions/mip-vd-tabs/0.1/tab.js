@@ -37,9 +37,7 @@ define(function () {
             // 前置检测选中的tab是否在可视区
             if (_this.current > 0 && _this.current < _this.sum) {
                 var currentTab = Math.min(_this.current + 1, _this.sum - 1);
-                if (_this.navs.eq(currentTab).length && _this.navs.eq(currentTab).position().left > _this.view.width() - 29) {
-                    slideTo(currentTab, 1, _this.navs.eq(_this.current), _this.navs.length, false);
-                }
+                slideTo(currentTab, 1, _this.navs.eq(_this.current), _this.navs.length, false);
             }
 
             // 若tab横滑回调方法存在,执行回调
