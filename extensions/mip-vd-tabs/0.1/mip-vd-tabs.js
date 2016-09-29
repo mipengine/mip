@@ -301,12 +301,19 @@ define(function () {
             var _this = tab;
             var $navLayer = $('<div class="mip-vd-tabs-nav-layer"><p>' + _this.toggleLabel + '</p></div>');
             var $navLayerUl = $('<ul class="mip-vd-tabs-nav-layer-ul"></ul>');
+            var $mask = $('<div class="mip-vd-tabs-mask"></div>');
 
             _this.toggleState = 0;   // 展开状态 0-收起,1-展开
 
             // 事件代理
             $navLayerUl.on('click', '.mip-vd-tabs-episode-item ', function(){
                 toggleUp();
+            });
+
+            $mask.on('click', function () {
+                toggleUp();
+            }).on('touchmove', function (e) {
+                e.preventDefault();
             });
 
             _this.toggle.on('click', function() {
@@ -323,6 +330,13 @@ define(function () {
             function toggleUp() {
                 $navLayerUl.empty();
                 $navLayer.hide();
+                $mask.hide();
+                $el
+                    .find('.mip-vd-tabs-nav-toggle,.mip-vd-tabs-scroll-touch')
+                    .css({'position': '', 'top': ''});
+                $el
+                    .find('.mip-vd-tabs-nav-layer')
+                    .css({'position': '', 'border-top': '', 'top': ''});
                 _this.toggle.css({
                     '-webkit-transform': 'scaleY(1)',
                     'transform': 'scaleY(1)'
@@ -334,7 +348,14 @@ define(function () {
             function toggleDown() {
                 $navLayerUl.html(generateEpisodeDown.call(ptr, linkTpl));
                 $navLayer.append($navLayerUl);
+                $el.append($mask.show());
                 _this.view.after($navLayer.show());
+                $el
+                    .find('.mip-vd-tabs-scroll-touch,.mip-vd-tabs-nav-toggle')
+                    .css({'position': 'fixed', 'top': '1px'});
+                $el
+                    .find('.mip-vd-tabs-nav-layer')
+                    .css({'position': 'fixed', 'border-top': '1px solid #ccc', 'top': '0'});
                 _this.toggle.css({
                     '-webkit-transform': 'scaleY(1)',
                     'transform': 'scaleY(-1)'
