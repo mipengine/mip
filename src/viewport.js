@@ -80,7 +80,6 @@ define(function (require) {
      * @return {Viewport}
      */
     function init() {
-        // deal width fixed element
         fixedElement.init();
         bindedChangeEvent = changeEvent.bind(this);
         (util.platform.needSpecialScroll ? document.body : win)
