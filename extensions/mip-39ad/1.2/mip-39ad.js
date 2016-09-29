@@ -709,7 +709,7 @@ define(["require", "zepto", "customElement"], function(require) {
 
     return customElem;
 }),
-require(["extensions/mip-39ad/0.1/mip-39ad"], function(t) {
-    MIP.registerMipElement("mip-39ad", t)
+require(["mip-39ad"], function(mip39Ad) {
+    MIP.registerMipElement("mip-39ad", mip39Ad)
 });
 
