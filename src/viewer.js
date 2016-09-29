@@ -11,7 +11,7 @@ define(function (require) {
     /**
      * The mip viewer.Complement native viewer, and solve the page-level problems.
      */
-    var Viewer = {
+    var viewer = {
         /**
          * The initialise method of viewer
          */
@@ -31,6 +31,11 @@ define(function (require) {
             });
             this.setupEventAction();
         },
+        /**
+         * The iframed state
+         * @type {Boolean}
+         * @public
+         */
         isIframed: win !== top,
         /** 
          * Patch for iframe
@@ -80,8 +85,8 @@ define(function (require) {
         }
     };
 
-    EventEmitter.mixin(Viewer);
+    EventEmitter.mixin(viewer);
 
-    return Viewer;
+    return viewer;
 });
 
