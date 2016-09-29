@@ -1,7 +1,7 @@
 /**
  * @file Test for elements related modules
  */
-define(function () {
+define(function (require) {
     'use strict';
     var viewer = require('src/viewer');
     var registerElement = require('src/element');
@@ -61,8 +61,6 @@ define(function () {
     ].join('');
 
     registerElement('mip-test', MipTestElement, mipTestCssText);
-
-    // This will be ignored.
     registerElement('mip-test', MipTestElement, mipTestCssText);
 
     var mipTest = document.createElement('mip-test');
@@ -72,7 +70,7 @@ define(function () {
     document.body.appendChild(mipTest);
     
     var mipTestPrerender = document.createElement('mip-test');
-    mipTestPrerender.style.cssText = 'visibility: hidden; margin-top: -100px';
+    mipTestPrerender.style.cssText = 'visibility: hidden; position: absolute; top: -100px';
     mipTestPrerender.renderTest = true;
     document.body.appendChild(mipTestPrerender);
 
@@ -99,10 +97,8 @@ define(function () {
         });
 
         it('applyFillContent', function () {
-            expect(
-                mipTest.children[0].classList.contains('mip-fill-content') &&
-                mipTest.children[0].classList.contains('mip-replaced-content')
-                ).to.equal(true);
+            expect(mipTest.children[0].classList.contains('mip-fill-content')).to.be.true;
+            expect(mipTest.children[0].classList.contains('mip-replaced-content')).to.be.true;
         });
 
         it('expendAttr', function () {
@@ -110,7 +106,7 @@ define(function () {
         });
 
         it('detached', function () {
-            expect(detachTestElement.customElement.removed).to.equal(true);
+            expect(detachTestElement.customElement.removed).to.be.true;
         });
 
         it('multi build', function () {
@@ -123,7 +119,23 @@ define(function () {
         });
 
         it('init', function () {
-            expect(mipTest.customElement.inited).to.equal(true);
-        })
+            expect(mipTest.customElement.inited).to.be.true;
+        });
+
+        it('error check', function () {
+            var ErrorElement = customElement.create();
+            ErrorElement.prototype.build = function () {
+                // This will throw 'testVariable undefined'
+                alert(testVariable);
+            };
+
+            registerElement('mip-error', ErrorElement);
+
+            var errorElem = document.createElement('mip-error');
+
+            expect(errorElem.build.bind(errorElem)).to.not.throw(Error);
+
+            expect(document.querySelectorAll('[mip-extension=mip-test]').length).to.equal(1);
+        });
     });
 });

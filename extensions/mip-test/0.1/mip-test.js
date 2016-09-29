@@ -7,11 +7,11 @@ define(function () {
     var customEle = require('customElement').create();
     var util = require('util');
     var create = util.dom.create;
-    var Event = require('components/event');
+    var Event = require('util/event-emitter');
     var viewport = require('viewport');
     var fetchJsonp = require('fetch-jsonp');
     var Naboo = require('naboo');
-    var Gesture = require('components/gesture');
+    var Gesture = require('util/gesture');
     var css = util.css;
 
     var createElements = function (fragment, name, obj) {

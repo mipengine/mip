@@ -1,7 +1,13 @@
-define(['./components/platform', './components/event', './components/css', './components/event-action',
-    './components/gesture'], function (platform, Event, css, EventAction, Gesture) {
+define(function (require) {
     'use strict';
     var win = window;
+    var util = require('./util');
+
+    var Gesture = util.Gesture;
+    var css = util.css;
+    var platform = util.platform;
+    var EventAction = require('./util/event-action');
+    var EventEmitter = require('./util/event-emitter');
     /**
      * The mip viewer.Complement native viewer, and solve the page-level problems.
      */
@@ -74,7 +80,7 @@ define(['./components/platform', './components/event', './components/css', './co
         }
     };
 
-    Event.mixin(Viewer);
+    EventEmitter.mixin(Viewer);
 
     return Viewer;
 });

@@ -35,11 +35,11 @@ module.exports = function(config) {
 
         // list of files / patterns to load in the browser
         files: [
-            'src/polyfills/promise.js',
-            'src/polyfills/document-register-element.max.js',
-            'src/deps/esl.js',
-            'src/deps/esl_config.js',
-            'src/deps/zepto.js',
+            'deps/promise.js',
+            'deps/document-register-element.max.js',
+            'deps/esl.js',
+            'deps/esl_config.js',
+            'deps/zepto.js',
             'test/index.js', {
                 pattern: 'src/**/*.js',
                 included: false
@@ -60,7 +60,7 @@ module.exports = function(config) {
             // source files, that you wanna generate coverage for 
             // do not include tests or libraries 
             // (these files will be instrumented by Istanbul) 
-            'src/!(deps){**/,}*.js': ['coverage']
+            'src/**/*.js': ['coverage']
         },
 
 

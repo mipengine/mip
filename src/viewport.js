@@ -1,15 +1,18 @@
-define(['./components/rect', './components/platform', './components/event', './components/fixedElement', './util'], 
-    function (rect, platform, Event, fixedElement, util) {
+define(function (require) {
     'use strict';
 
     var docElem = document.documentElement;
     var win = window;
+    var util = require('util');
+    var EventEmitter = require('util/event-emitter');
+    var fixedElement = require('./fixed-element');
+    var rect = util.rect;
     
     /**
      * The object is to solve a series of problems when the page in an iframe and
      * provide some additional methods.
      */
-    var  Viewport = {
+    var  viewport = {
         /**
          * Get the current vertical position of the page
          * @return {number}
@@ -22,10 +25,7 @@ define(['./components/rect', './components/platform', './components/event', './c
          * @return {number}
          */
         getScrollLeft: function () {
-            if (this._scrollLeft == null) {
-                this._scrollLeft = rect.getScrollLeft();
-            }
-            return this._scrollLeft;
+            return rect.getScrollLeft();
         },
         /**
          * Set the current vertical position of the page
@@ -79,11 +79,11 @@ define(['./components/rect', './components/platform', './components/event', './c
      * Initialize the viewport
      * @return {Viewport}
      */
-    var init = function () {
+    function init() {
         // deal width fixed element
         fixedElement.init();
         bindedChangeEvent = changeEvent.bind(this);
-        (platform.needSpecialScroll ? document.body : win)
+        (util.platform.needSpecialScroll ? document.body : win)
             .addEventListener('scroll', scrollEvent.bind(this), false);
         win.addEventListener('resize', resizeEvent.bind(this), false);
         return this;
@@ -95,11 +95,9 @@ define(['./components/rect', './components/platform', './components/event', './c
      * The scroll handler
      * @param {Event} event
      */
-    var scrollEvent = function (event) {
+    function scrollEvent(event) {
         var scrollTop = this.getScrollTop();
-        if (scrollTop < 0) {
-            return;
-        }
+
         var now = Date.now();
         // If the delta time >= 20ms, immediately calculate whether to trigger changed
         // PS: UC browser does not dispatch the scroll event, when the finger is pressed.
@@ -112,27 +110,27 @@ define(['./components/rect', './components/platform', './components/event', './c
         }
         this.trigger('scroll', event);
     };
-    var resizeEvent = function (event) {
+    function resizeEvent(event) {
         this.trigger('resize', event);
     };
     var changeTimer = null;
     /**
      * To determine whether to trigger a change event
      */
-    var changeEvent = function () {
+    function changeEvent() {
         var now = Date.now();
-        var delay = oldTime - now || 0;
+        var delay = now - oldTime || 0;
         clearTimeout(changeTimer);
         if (delay && Math.abs((oldTop - this.getScrollTop()) / delay) < 0.03) {
             changing = false;
             this.trigger('changed', oldEvt, this.getRect());
         } else {
-            changeTimer = setTimeout(bindedChangeEvent, delay >= 20 ? 20 - delay : 20);
+            changeTimer = setTimeout(bindedChangeEvent, delay >= 20 ? 20 : 20 - delay);
         }
     };
 
     // Mix the methods and attributes of Event into the viewport.
-    Event.mixin(Viewport);
+    EventEmitter.mixin(viewport);
 
-    return init.call(Viewport);
+    return init.call(viewport);
 });

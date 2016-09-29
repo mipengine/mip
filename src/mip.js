@@ -1,17 +1,16 @@
 // MIP initialization
-require(['./components/platform', './element', './builtins/mip_builtins', 
-    './viewer', './viewport', './components/css', 'resources', './components/animation'], 
-    function (platform, registerMipElement, builtin, viewer, viewport, css, resources, animationRegister) {
+require(['./element', './components/index', 
+    './viewer', './viewport', 'resources', './util/animation'], 
+    function (registerMipElement, components, viewer, viewport, resources, animation) {
     'use strict';
+
     
     // Register builtin animaters
-    animationRegister();
+    animation.register();
         
     // The global variable of MIP
     !window.MIP && (window.MIP = {});
     MIP.css = {};
-    MIP['registerMipElement'] = registerMipElement;
-    window.platform = platform;
     MIP.registerMipElement = registerMipElement;
     MIP.viewer = viewer;
     MIP.viewport = viewport;
@@ -21,7 +20,7 @@ require(['./components/platform', './element', './builtins/mip_builtins',
     viewer.init();
 
     // Register builtin extensions
-    builtin.register();
+    components.register();
 
     // Show page
     viewer.show();

@@ -1,38 +1,39 @@
-/* polyfills */
+/* deps */
 // https://github.com/lahmatiy/es6-promise-polyfill
-__inline('./polyfills/promise.js');
+__inline('../deps/promise.js');
 // https://github.com/camsong/fetch-ie8
-__inline('./polyfills/fetch.js');
+__inline('../deps/fetch.js');
 // https://github.com/WebReflection/document-register-element
-__inline('./polyfills/document-register-element.max.js');
-
-/* libs */
-__inline('./deps/esl.js');
-__inline('./deps/esl_config.js');
-__inline('./deps/zepto.js');
-__inline('./deps/naboo.js');
-__inline('./deps/spark.js');
+__inline('../deps/document-register-element.max.js');
+__inline('../deps/esl.js');
+__inline('../deps/zepto.js');
+__inline('../deps/naboo.js');
+__inline('../deps/spark.js');
 // https://github.com/camsong/fetch-json
-__inline('./deps/fetch-jsonp.js');
+__inline('../deps/fetch-jsonp.js');
+__inline('./esl_config.js');
 
-/* components */
-__inline('./components/fn.js');
-__inline('./components/css-loader.js');
-__inline('./components/layout.js');
-__inline('./components/gesture-recognizer.js');
-__inline('./components/gesture.js');
-__inline('./components/platform.js');
-__inline('./components/rect.js');
-__inline('./components/event.js');
-__inline('./components/css.js');
-__inline('./components/dom.js');
-__inline('./components/dom-event.js');
-__inline('./components/animation.js');
-__inline('./components/gesture.js');
-__inline('./components/event-action.js');
-__inline('./components/fixedElement.js');
+/* util */
+__inline('./util/fn.js');
+__inline('./util/gesture/gesture-recognizer.js');
+__inline('./util/gesture/data-processor.js');
+__inline('./util/gesture.js');
+__inline('./util/platform.js');
+__inline('./util/event-emitter.js');
+__inline('./util/animation.js');
+__inline('./util/event-action.js');
+
+/* dom */
+__inline('./dom/css-loader.js');
+__inline('./dom/rect.js');
+__inline('./dom/event.js');
+__inline('./dom/css.js');
+__inline('./dom/dom.js');
+
 
 /* mip frame */
+__inline('./layout.js');
+__inline('./fixed-element.js');
 __inline('./viewport.js');
 __inline('./customElement.js');
 __inline('./element.js');
@@ -40,14 +41,13 @@ __inline('./util.js');
 __inline('./resources.js');
 __inline('./viewer.js');
 
-/* builtins */
-__inline('./builtins/mip-img.js');
-__inline('./builtins/mip-pix.js');
-__inline('./builtins/mip-carousel.js');
-__inline('./builtins/mip-iframe.js');
-__inline('./builtins/mip-video.js');
-__inline('./builtins/mip_builtins.js');
+/* builtin components */
+__inline('./components/mip-img.js');
+__inline('./components/mip-pix.js');
+__inline('./components/mip-carousel.js');
+__inline('./components/mip-iframe.js');
+__inline('./components/mip-video.js');
+__inline('./components/index.js');
 
 /* initialize */
 __inline('./mip.js');
-

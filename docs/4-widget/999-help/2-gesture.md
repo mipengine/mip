@@ -5,7 +5,12 @@ MIP封装了单击，双击，滑动等手势，可在组件中使用
 ## 示例
 
 ```
-var Gesture = require('components/gesture');
+var Gesture = require('util/gesture');
+// 或者
+var util = require('util');
+var Gesture = util.Gesture;
+
+
 var customEle = require('customElemenet').create();
 
 

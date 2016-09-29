@@ -1,4 +1,8 @@
-define(['./components/event'], function (Event) {
+define(function (require) {
+    'use strict';
+
+    var EventEmitter = require('./util/event-emitter');
+
     /**
      * The constructor of  base class of custom element
      * @param {HTMLElement} element
@@ -56,7 +60,7 @@ define(['./components/event'], function (Event) {
     customElement.prototype.addEventAction = function (/* name, handler */) {
         var evt = this._actionEvent;
         if (!evt) {
-            evt = this._actionEvent = new Event();
+            evt = this._actionEvent = new EventEmitter();
             evt.setEventContext(this);
         }
         
@@ -80,7 +84,7 @@ define(['./components/event'], function (Event) {
          * @return {Function}
          */
         create: function () {
-            var impl = function (element) {
+            function impl(element) {
                 customElement.call(this, element);
             };
             impl.prototype = Object.create(customElement.prototype);

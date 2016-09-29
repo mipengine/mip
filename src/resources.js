@@ -1,17 +1,19 @@
-define(['./util', 'viewport', './components/rect'], function (util, viewport, rect) {
+define(function (require) {
     'use strict';
 
     // For storing the resources.
     var resources = {};
     var counter = 0;
 
-    var fn = util.fn;
+    var fn = require('./util/fn');
+    var viewport = require('./viewport');
+    var rect = require('./dom/rect');
 
     /**
      * MIP Elements's controller. It's use to manage all the elements's custom life circle and
      * provide the overall interfaces of the MIP Elements.
      */
-    var Resources = function () {
+    function Resources() {
         // resource id
         this._rid = counter ++;
         

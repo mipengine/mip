@@ -1,5 +1,4 @@
-define(['./components/fn', './components/dom', './components/dom-event', './components/css',
-    './components/rect'], function (fn, dom, event, css, rect) {
+define(function (require) {
     'use strict';
     /**
      *  页面资源url转成可用的cache url
@@ -27,10 +26,13 @@ define(['./components/fn', './components/dom', './components/dom-event', './comp
     }
     return {
         urlToCacheUrl: urlToCacheUrl,
-        fn: fn,
-        dom: dom,
-        event: event,
-        rect: rect,
-        css: css
+        fn: require('./util/fn'),
+        dom: require('./dom/dom'),
+        event: require('./dom/event'),
+        rect: require('./dom/rect'),
+        css: require('./dom/css'),
+        Gesture: require('./util/gesture'),
+        EventEmitter: require('./util/event-emitter'),
+        platform: require('./util/platform')
     }
 });

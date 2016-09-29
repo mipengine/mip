@@ -1,5 +1,8 @@
-define(['./components/css-loader', './components/layout', './resources'], function (cssLoader, layout, Resources) {
+define(function (require) {
     'use strict';
+
+    var cssLoader = require('./dom/css-loader');
+    var layout = require('./layout');
 
     // To save custom Classes
     var customElements = {};
@@ -13,7 +16,7 @@ define(['./components/css-loader', './components/layout', './resources'], functi
      * Create a basic prototype of mip elements classes
      * @return {Object}
      */
-    var createBaseElementProto = function () {
+    function createBaseElementProto() {
         if (baseElementProto) {
             return baseElementProto;
         }
@@ -88,7 +91,7 @@ define(['./components/css-loader', './components/layout', './resources'], functi
      * @param {string} name The mip element's name
      * @return {Object}
      */
-    var createMipElementProto = function (name) {
+    function createMipElementProto(name) {
         var proto = Object.create(createBaseElementProto());
         proto.name = name;
         return proto;
@@ -98,22 +101,23 @@ define(['./components/css-loader', './components/layout', './resources'], functi
      * Add a style tag to head by csstext
      * @param {string} css Css code
      */
-    var loadCss = function (css) {
+    function loadCss(css, name) {
         if (css) {
             cssLoader.insertStyleElement(document, document.head, css, name, false);
         }
     };
 
-    var registerElement = function (name, elementClass, css) {
+    function registerElement(name, elementClass, css) {
         if (customElements[name]) {
             return;
         }
 
         if (!resources) {
+            var Resources = require('./resources');
             resources = new Resources();
         }
         customElements[name] = elementClass;
-        loadCss(css);
+        loadCss(css, name);
         document.registerElement(name, {
             prototype: createMipElementProto(name)
         });

@@ -3,10 +3,10 @@
  * @author lilangbo
  * @time 2016.07.11
  */
-
-define(['components/gesture'], function (Gesture) {
+define(function (require) {
+    'use strict';
     var customElement = require('customElement').create();
-    var Gesture = require('components/gesture');
+    var Gesture = require('util/gesture');
     var util = require('util');
     var index = 0;
     customElement.prototype.build = function () {

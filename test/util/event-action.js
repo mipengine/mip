@@ -1,0 +1,36 @@
+define(function (require) {
+    'use strict';
+
+    var EventAction = require('src/util/event-action');
+
+    var mockElement = {
+        excuteEventAction: function (action) {
+            this.arg = action.arg;
+        },
+        tagName: 'mip-test'
+    };
+
+    describe('event-action', function () {
+        it('normal', function () {
+            var action = new EventAction({
+                get: function () {
+                    return mockElement;
+                }
+            });
+
+            action.excute('tap', {
+                getAttribute: function () {
+                    return 'tap:id.abc(123)';
+                }
+            }, 'event');
+            expect(mockElement.arg).to.equal('123');
+        });
+
+        it('error check', function () {
+            var action = new EventAction();
+            expect(action.excute).to.not.throw();
+            expect(action.parse(123)).to.eql([]);
+            expect(action.parse('scroll:id.abc(123', 'tab')).to.eql([]);
+        });
+    });
+});
