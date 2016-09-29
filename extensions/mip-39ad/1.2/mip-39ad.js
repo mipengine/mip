@@ -1,8 +1,3 @@
-/**
- * @date:  2016-09-19
- * @time: 12:18
- * @description: #
- */
 define(["require", "zepto", "customElement"], function(require) {
     //var customElem = require('customElement');
     var customElem = require('customElement').create();
@@ -15,7 +10,7 @@ define(["require", "zepto", "customElement"], function(require) {
         var id = element.getAttribute("asid");
         var n = require("zepto");
         var i = n(element);
-        var script = ['<script type="text/javascript" id="ads_'+id+'">', 'ac_as_id = '+id+';ac_format = 0;ac_mode = 1;ac_group_id = 1;ac_server_base_url = "d-test.39.net/";','</script>'];
+        var script = ['<script type="text/javascript" id="ads_'+id+'">', 'ac_as_id = '+id+';ac_format = 0;ac_mode = 1;ac_group_id = 1;ac_server_base_url = "d-mip.39.net/";','</script>'];
         i.append(script.join(""));
         ks(id);
     };
