@@ -18,6 +18,31 @@ define(['require', 'customElement', 'zepto'], function (require) {
     // 页面广告参数
     var param = $('#adParam');
     var paramObj = param.data('keyword');
+    // 加载js文件
+    var loadJSFile = function (url, callback) {
+
+        // Adding the script tag to the head as suggested before
+        var head = document.getElementsByTagName('head')[0];
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = url;
+
+        // Then bind the event to the callback function.
+        // There are several events for cross browser compatibility.
+        script.onreadystatechange = callback;
+        script.onload = callback;
+
+        // Fire the loading
+        head.appendChild(script);
+    };
+    // load btm baidu ad
+    var loadBdAd = function () {
+        window.cpro_psid = 'u2355234';
+        window.cpro_psdata = {
+            staticDomain: 'su.bdimg.com'
+        };
+        loadJSFile('https://su.bdimg.com/static/dspui/js/umf.js');
+    };
 
     // 初始化直投广告
     var init = function (opt) {
@@ -40,16 +65,13 @@ define(['require', 'customElement', 'zepto'], function (require) {
 
                 // 遍历直投广告ID
                 $.each(adObj, function (k, v) {
+                    // 有特定广告位id的直投广告
                     if ($.trim(v)) {
-                        $('[id^=BAIDU_DUP_wrapper]').remove();
                         // 根据广告id，判断广告的显示位置
                         switch (+k) {
                             // 底部悬浮广告
                             case 1:
                                 element.html('<div id="ad_position_1">' + v + '</div>');
-                                // 去除三种广告：顶部网盟嵌入，右上漂浮：猪，右下漂浮：图片
-                                // $('div[id*='wrapper_u2311978'],.imagepluspage_entry,#icon_0').remove();
-                                $('.direct_ad_effect_style').removeClass('direct_ad_effect_style');
                                 break;
                             case 14:
                                 $('#liveAdBlock').html(v);
@@ -75,18 +97,26 @@ define(['require', 'customElement', 'zepto'], function (require) {
                                 break;
                         }
                     }
+                    // 无特定广告位id投广告
                     else {
-                        // 广告位id为1时，加载底部漂浮的百度广告
-                        // if (+k === 1) {
-                        // loadBdAd();
-                        // }
+                        switch (+k) {
+                            // 广告位id为1时，加载底部漂浮的百度广告
+                            case 1:
+                                loadBdAd();
+                                break;
+                            // 广告位id为47时，加载我要提问下方文字广告和问题详情下方网盟广告
+                            case 47:
+                                $('#ad-s-1255').show();
+                                $('#ask-inof-blew-ad').show();
+                                break;
+                        }
                     }
                 });
-                $('.direct_ad_effect_style').remove();
             });
         }
         else {
-            $('.direct_ad_effect_style').remove();
+            $('#ad-s-1255').show();
+            $('#ask-inof-blew-ad').show();
         }
     };
 
@@ -108,12 +138,33 @@ define(['require', 'customElement', 'zepto'], function (require) {
         };
         return opt;
     };
+    var menuCtrl = function () {
+        // 菜单
+        var state = true;
+        var $menuBar = $('#menuBar');
+        $('#menu').on('click', function () {
+            if (state) {
+                state = false;
+                $menuBar.show();
+            }
+            else {
+                state = true;
+                $menuBar.hide();
+            }
+        });
+        $('.returns').on('click', function () {
+            state = true;
+            $('#menuBar').hide();
+        });
+    };
 
     // build 方法，元素插入到文档时执行，仅会执行一次
     customElem.prototype.build = function () {
         // this.element 可取到当前实例对应的 dom 元素
         var opt = getOpt(this.element);
         opt.lazy === 'false' && init(opt);
+        // 导航菜单的显隐
+        menuCtrl();
     };
     // 第一次进入可视区回调,只会执行一次，做懒加载，利于网页速度
     customElem.prototype.firstInviewCallback = function () {

@@ -5,36 +5,70 @@
  */
 
 define(function (){
-    var customElem = require('customElement');
+    var customElem = require('customElement').create();
+    var platform = require('components/platform');
+    //console.log(platform);
     /**
      * buildCallback
      *
      * @param  {Event} e event
      */
-    function buildCallback (e) {
-        if (this.isRender) {
-            return;
-        }
-        this.isRender = true;
-        var container = document.createElement('div');
+    function buildCallback () {
+        var util = require('util');
+        var css = util.css;
+        var element = this.element;
+
+        var children = Array.prototype.slice.call(element.children);
+
+        /* android uc 的兼容性有问题，特殊处理 */
+        var classname = (!platform.isIos() && platform.isUc())?'carpet-normal carpet-androiduc':'carpet-normal';
+        
+        var clip = document.createElement('div');
+
         var wapper = document.createElement('div');
 
-        wapper.setAttribute('class', 'mip-fx-flying-carpet-wapper');
-        container.setAttribute('class', 'mip-fx-flying-carpet-container');
-        wapper.appendChild(container);
-        this.appendChild(wapper); 
-        container.appendChild(this.childNodes[1]);  
+        clip.className = 'mip-fx-flying-carpet-clip';
+        
+        wapper.className = classname;
+        element.appendChild(clip); 
+        clip.appendChild(wapper); 
 
+        children = children.filter(function (element) {
+            return element.tagName.toLowerCase() !== 'mip-i-space';
+        });
+
+        if (children.length !== 1) {
+            return;
+        }
+        children.forEach(function(child){  
+            wapper.appendChild(child); 
+            var width = child.offsetWidth;
+            var winWidth = document.body.clientWidth;
+            if (width > winWidth) {
+                css(child, {
+                    'margin-left': - (width - winWidth) / 2 + 'px'
+                })
+            }
+
+        }); 
+        setTimeout(function () {
+        }, 2000); 
     }
 
     /**
      * 初始化
      *
      */
-    customElem.prototype.init = function() {
-        //如果在build里面定义渲染,用户在可视区域内，才会渲染
-        this.build = buildCallback;
+    customElem.prototype.build = buildCallback;
+
+    customElem.prototype.viewportCallback = function (isInview) {
+        if (isInview) {
+            //this.element.style.zIndex = 10;
+        } else {
+            //this.element.style.zIndex = 1;
+        }
     };
+
     return customElem;
 });
 require(['mip-fx-flying-carpet'], function (carpet) {
@@ -43,4 +77,3 @@ require(['mip-fx-flying-carpet'], function (carpet) {
     //注册组件
     MIP.registerMipElement('mip-fx-flying-carpet', carpet, MIP.css.flyCarpet);
 });
-
