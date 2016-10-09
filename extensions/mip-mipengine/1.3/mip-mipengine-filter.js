@@ -3,7 +3,7 @@
  * @author liangjiaying@baidu.com
  * @time 2016.09
  */
-define(function () {
+define(function (require) {
     var customElement = require('customElement').create();
 
     /**
@@ -14,6 +14,7 @@ define(function () {
             filterWrap: document.querySelector('.filter'),
             itemWrap: document.querySelector('.timeline-content-wrap')
         });
+
         filter.init();
     }
 
@@ -80,7 +81,7 @@ define(function () {
             util.addClass(initOpt, 'active');
             var text = initOpt.innerText.split(' ')[0];
             opt.filterWrap.querySelector('.filter-result').innerText = '筛选：无';
-        },
+        };
 
         /* 
         * shoot: when a filter is clicked.
@@ -101,7 +102,7 @@ define(function () {
                 _this.toggleFilter();
             }
             _this.applyFilter(newEle.dataset.filtertype);
-        },
+        };
 
         /* 
         * shoot: on mobile when filter btn is clicked.
@@ -133,7 +134,7 @@ define(function () {
                 }
                 util.toggleClass(listWrap, 'show');
             }
-        },
+        };
 
         /* 
         * shoot: when filter btn is clicked.
@@ -166,16 +167,18 @@ define(function () {
                 }
             }
             window.scrollTo(0,0);
-        }
+        };
+
 
         /* 
         * add click event to all filters
         * when clicked, select the filter,
         * if wise, collapse filter list.
         */
-        opt.filterWrap.querySelectorAll('a').forEach(function(ele) {
+        for (var i = 0; i < opt.filterWrap.querySelectorAll('a').length; i++) {
+            var ele = opt.filterWrap.querySelectorAll('a')[i];
             ele.addEventListener('click', _this.filterSelect);
-        });
+        }
 
         /* 
         * add click event to filter result, which show only on wise.
