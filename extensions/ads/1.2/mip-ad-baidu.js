@@ -73,12 +73,10 @@ define(function(){
         });
 
         script.onload = function() {
-            console.log('onload');
             setTimeout(function() {
                 var pos = window.getComputedStyle(document.getElementById(s), null)
                         .getPropertyValue('position');
 
-                console.log(pos);
                 if(pos == 'fixed') {
                     $elemID.append(document.getElementById(s));
                 }
