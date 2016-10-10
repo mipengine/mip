@@ -8,7 +8,7 @@
 require.config({
     paths: {
         "extensions/ads/1.2/mip-ad-comm": "https://mipcache.bdstatic.com/static/v1.2/ads/mip-ad-comm",
-        "extensions/ads/1.2/mip-ad-baidu": "http://172.20.176.164:8056/dist/extensions/ads/1.2/mip-ad-baidu",
+        "extensions/ads/1.2/mip-ad-baidu": "https://mipcache.bdstatic.com/static/v1.2/ads/mip-ad-baidu",
         "extensions/ads/1.2/mip-ad-qwang": "https://mipcache.bdstatic.com/static/v1.2/ads/mip-ad-qwang"
     }
     
