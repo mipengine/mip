@@ -30,8 +30,8 @@ define(function(){
 
         }
         
-        initJs();
-        initadbaidu($this, cproID, me);
+        var script = initJs();
+        initadbaidu($this, cproID, me, script);
     };
 
     /**
@@ -48,6 +48,8 @@ define(function(){
         script.id = "MIP_DUP_JS";
         document.body.appendChild(script);  
 
+        return script;
+
     }
 
     /**
@@ -57,7 +59,7 @@ define(function(){
      * @param  {String} cproID  广告id
      * @return
      */
-    function initadbaidu($elemID, cproID, me) {
+    function initadbaidu($elemID, cproID, me, script) {
 
         var s = "_" + Math.random().toString(36).slice(2);
         var html = '<div style="" id="' + s + '"></div>';
@@ -70,8 +72,24 @@ define(function(){
             async: true
         });
 
+        script.onload = function() {
+            console.log('onload');
+            setTimeout(function() {
+                var pos = window.getComputedStyle(document.getElementById(s), null)
+                        .getPropertyValue('position');
+
+                console.log(pos);
+                if(pos == 'fixed') {
+                    $elemID.append(document.getElementById(s));
+                }
+            }, 100);
+            
+        };
+
         me.applyFillContent(document.getElementById(s), true);
+
     }
+
 
     /**
      * [isJsonScriptTag 判断是否是定制化script标签]
