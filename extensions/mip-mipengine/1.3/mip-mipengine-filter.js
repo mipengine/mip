@@ -50,7 +50,7 @@ define(function (require) {
             }
         }
     };
-    /*
+    /**
     * define a Filter, 
     * opt = {
         'filterWrap' : document.querySelector('.xx1'),
@@ -72,7 +72,7 @@ define(function (require) {
         opt.mobileWidth = opt.mobileWidth || 767;
         opt.emptyTip = opt.emptyTip || '没有符合的内容';
 
-        /* 
+        /**
         * shoot: at first time,
         * add filter color and text to default-"none"
         */
@@ -83,7 +83,7 @@ define(function (require) {
             opt.filterWrap.querySelector('.filter-result').innerText = '筛选：无';
         };
 
-        /* 
+        /**
         * shoot: when a filter is clicked.
         * add filter color and text to selected one.
         */
@@ -104,7 +104,7 @@ define(function (require) {
             _this.applyFilter(newEle.dataset.filtertype);
         };
 
-        /* 
+        /**
         * shoot: on mobile when filter btn is clicked.
         * slide up or down the whole filter.
         */
@@ -136,13 +136,15 @@ define(function (require) {
             }
         };
 
-        /* 
+        /**
         * shoot: when filter btn is clicked.
         * hide items that cant pass the filter.
         */
         this.applyFilter = function (filter) {
             var num = 0;
-            opt.itemWrap.querySelectorAll('.filter-item').forEach(function (item) {
+            //hack: arr.forEach() cannot be used in uc&qq browser
+            for (var i = 0; i < opt.itemWrap.querySelectorAll('.filter-item').length; i++) {
+                var item = opt.itemWrap.querySelectorAll('.filter-item')[i];
                 if (item.dataset.filtertype.match(util.containReg(filter)) || filter === 'all') {
                     // show item
                     num ++;
@@ -151,7 +153,7 @@ define(function (require) {
                     // hide item
                     item.style.display = 'none';
                 }
-            });
+            }
             if (!num) {
                 // no item can be shown, add "no item" text
                 if (!opt.itemWrap.querySelector('.filter-emptytip')) {
@@ -169,8 +171,7 @@ define(function (require) {
             window.scrollTo(0,0);
         };
 
-
-        /* 
+        /**
         * add click event to all filters
         * when clicked, select the filter,
         * if wise, collapse filter list.
@@ -180,7 +181,7 @@ define(function (require) {
             ele.addEventListener('click', _this.filterSelect);
         }
 
-        /* 
+        /**
         * add click event to filter result, which show only on wise.
         * when clicked, uncollapse and collapse filter list.
         */
