@@ -10,6 +10,9 @@
          width: 100%;
          overflow: hidden;
       }
+      .article {
+        height: 1000px;
+      }
     </style>
   </head>
   <body>
@@ -19,7 +22,10 @@
         </p>
     </div>
      <div class="mip-adbd">
-      <mip-embed 
+     <mip-fixed type="bottom">
+     <mip-embed type="ad-baidu" cproid="u2770782" class="mip-element mip-layout-container"></mip-embed>
+     </mip-fixed>
+      <!-- <mip-embed 
             layout="fixed"
             width="414"
             height="157" 
@@ -43,11 +49,11 @@
                 "ptp": "1"
             }
             </script>
-      </mip-embed>
+      </mip-embed> -->
     </div>
 
 
-    <div class="mip-adbd">
+    <!-- <div class="mip-adbd">
       <mip-embed 
           layout="fixed"
             width="414"
@@ -75,8 +81,9 @@
     </div>
     <div class="mip-adbd">
       <mip-embed type="ad-baidu" cproid="u1780480"></mip-embed>
-    </div>
+    </div> -->
     <script src="/dist/mipmain.js"></script>
+    <script src="/dist/extensions/mip-fixed/0.1/mip-fixed.js"></script>
     <script src="/dist/extensions/ads/1.2/mip-ad.js"></script>
   </body>
 </html>
