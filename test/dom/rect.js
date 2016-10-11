@@ -5,8 +5,8 @@ define(function (require) {
     platform.needSpecialScroll = true;
     var rect = require('src/dom/rect');
     describe('rect', function () {
-        it('getDomRect', function () {
-            expect(rect.getDomRect(document.body).bottom).to.be.above(0);
+        it('getElementRect', function () {
+            expect(rect.getElementRect(document.body).bottom).to.be.above(0);
         });
     });
 });

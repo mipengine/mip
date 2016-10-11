@@ -3,11 +3,17 @@ define(function (require) {
 
     var EventEmitter = require('./util/event-emitter');
 
+
     /**
      * The constructor of  base class of custom element
-     * @param {HTMLElement} element
+     * @param {MIPElement} element
+     * @class
      */
     function customElement(element) {
+        /**
+         * @type {MIPElement}
+         * @public
+         */
         this.element = element;
         if (this.init){
             this.init();
@@ -25,14 +31,48 @@ define(function (require) {
           ele.classList.add('mip-replaced-content');
         }
     };
+
+    /**
+     * Called when the MIPElement is created.
+     */
     customElement.prototype.createdCallback = function () {};
+
+    /**
+     * Called when the MIPElement is inserted into the DOM.
+     */
     customElement.prototype.attachedCallback = function () {};
+
+    /**
+     * Called when the MIPElement is removed from the DOM.
+     */
     customElement.prototype.detachedCallback = function () {};
+
+    /**
+     * Called when the MIPElement's attribute is changed.
+     */
     customElement.prototype.attributeChangedCallback = function () {};
+
+    /**
+     * Called when the MIPElement first enters the viewport.
+     */
     customElement.prototype.firstInviewCallback = function () {};
+
+    /**
+     * Called when the MIPElement has entered or exited the viewport.
+     */
     customElement.prototype.viewportCallback = function () {};
+
+    /**
+     * Control whether the MIPElement is rendred ahead.
+     * @return {Boolean} If the result is TRUE, the element will be rendred ahead.
+     */
     customElement.prototype.prerenderAllowed = function () {return false;}
+
+    /**
+     * Called when the MIPElement is first inserted into the document.
+     */
     customElement.prototype.build = function () {};
+
     /**
      * Expend current element's attributes which selected by attrs to an other object.
      * @param {Array.<string>} attrs Attributes' name list
@@ -71,7 +111,7 @@ define(function (require) {
      * Trigger the handlers had been added by `addEventAction` of an action
      * @param {string} action The action's name
      */
-    customElement.prototype.excuteEventAction = function (action) {
+    customElement.prototype.executeEventAction = function (action) {
         var eventObj = this._actionEvent;
         if (action && eventObj) {
             eventObj.trigger(action.handler, action.event, action.arg);

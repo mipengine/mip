@@ -43,7 +43,7 @@ define(function (require) {
         }, false);
         var popup = util.dom.create('<div style="position:absolute;top:0;left:0;right:0;bottom:0;background:#fff"></div>');
         document.body.appendChild(popup);
-        util.css(popup, util.rect.getDomRect(element));
+        util.css(popup, util.rect.getElementRect(element));
         var gesture = new Gesture(popup);
         gesture.on('tap', function (e) {
             e.preventDefault();

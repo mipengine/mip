@@ -53,7 +53,7 @@ define(function (require) {
 
                 popup.addEventListener('click', function () {
                     naboo.css(popupBg, {opacity: 0}).start();
-                    naboo.css(popupImg, rect.getDomOffset(img)).start(function () {
+                    naboo.css(popupImg, rect.getElementOffset(img)).start(function () {
                         css(img, 'opacity', '1');
                         css(popup, 'display', 'none');
                     });
@@ -76,7 +76,7 @@ define(function (require) {
         this.applyFillContent(_img, true);
         var ele = this.element;
         
-        var src = util.urlToCacheUrl(document.location.href, ele.getAttribute('src'), 'img');
+        var src = util.makeCacheUrl(ele.getAttribute('src'), 'img');
         _img.src = src;
 
         if(ele.getAttribute('alt')) {

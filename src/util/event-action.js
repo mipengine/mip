@@ -4,23 +4,54 @@ define(function (require) {
     var fn = require('./fn');
     var dom = require('../dom/dom');
 
-    var parseReg = /^(\w+):([\w-]+)\.([\w-]+)(?:\(([^\)]+)\))?$/;
-    var checkReg = /^mip-/;
-
-    var optKeys = ['get', 'excuteEventAction', 'parse', 'checkTarget', 'attr'];
+    /**
+     * Regular for parsing params.
+     * @const
+     * @inner
+     * @type {RegExp}
+     */
+    var PARSE_REG = /^(\w+):([\w-]+)\.([\w-]+)(?:\(([^\)]+)\))?$/;
 
     /**
-     * MIP does not support external JavaScript so we provide EventAction to trigger events between elements.
+     * Regular for checking elements.
+     * @const
+     * @inner
+     * @type {RegExp}
+     */
+    var CHECK_REG = /^mip-/;
+
+    /**
+     * Key list of picking options.
+     * @const
+     * @inner
+     * @type {Array}
+     */
+    var OPTION_KEYS = ['get', 'executeEventAction', 'parse', 'checkTarget', 'attr'];
+
+
+    /**
+     * MIP does not support external JavaScript, so we provide EventAction to trigger events between elements.
      * @class
      * @param {?Object} opt Options
      */
     function EventAction(opt) {
-        opt && fn.extend(this, fn.pick(opt, optKeys));
+        opt && fn.extend(this, fn.pick(opt, OPTION_KEYS));
     };
 
     EventAction.prototype = {
+        /**
+         * Attribute name to trigger events.
+         * @type {string}
+         */
         attr: 'on',
-        excute: function (type, target, nativeEvent) {
+
+        /**
+         * Execute the event-action.
+         * @param {string} type The event's type
+         * @param {HTMLElement} target The source element of native event.
+         * @param {Event} nativeEvent The native event.
+         */
+        execute: function (type, target, nativeEvent) {
             if (!target) {
                 return;
             }
@@ -28,7 +59,7 @@ define(function (require) {
             var attrSelector = '[' + this.attr + ']';
             do {
                 if (attr = target.getAttribute(this.attr)) {
-                    this._excute(this.parse(attr, type, nativeEvent));
+                    this._execute(this.parse(attr, type, nativeEvent));
                     target = target.parentElement;
                     if (!target) {
                         return;
@@ -37,25 +68,54 @@ define(function (require) {
                 target = dom.closest(target, attrSelector);
             } while (target);
         },
+        
+        /**
+         * Ensure the target element is a MIPElement
+         * @param {HTMLElement} target 
+         * @return {boolean}
+         */
         checkTarget: function (target) {
-            return target && target.tagName && checkReg.test(target.tagName.toLowerCase());
+            return target && target.tagName && CHECK_REG.test(target.tagName.toLowerCase());
         },
+
+        /**
+         * Get the target element by ID
+         * @param {string} id
+         * @return {HTMLElement}
+         */
         get: function (id) {
             return document.getElementById(id);
         },
-        excuteEventAction: function (action, target) {
-            target.excuteEventAction && target.excuteEventAction(action);
+
+        /**
+         * Excute the 'executeEventAction' of a MIPElement.
+         * @param {Object} action
+         * @param {MIPElement} target
+         */
+        executeEventAction: function (action, target) {
+            target.executeEventAction && target.executeEventAction(action);
         },
-        _excute: function (actions) {
+
+        /**
+         * Excute the parsed actions.
+         * @private
+         * @param {Array.<Object>} actions
+         */
+        _execute: function (actions) {
             for (var i = 0; i < actions.length; i++) {
                 var action = actions[i];
                 var target = this.get(action.id);
                 if (this.checkTarget(target)) {
-                    this.excuteEventAction(action, target);
+                    this.executeEventAction(action, target);
                 }
             }
         },
-        // 'tap:a.open tap:b.close tap:c.show(Title)'
+
+        /**
+         * Parse the action string.
+         * @param {string} actionString
+         * @retrun {Array.<Object>}
+         */
         parse: function (actionString, type, nativeEvent) {
             if (typeof actionString !== 'string') {
                 return [];
@@ -63,7 +123,7 @@ define(function (require) {
             var actions = actionString.trim().split(' ');
             var result = [];
             for (var i = 0; i < actions.length; i++) {
-                var matchedResult = actions[i].match(parseReg);
+                var matchedResult = actions[i].match(PARSE_REG);
                 if (matchedResult && matchedResult[1] === type) {
                     result.push({
                         type: matchedResult[1],

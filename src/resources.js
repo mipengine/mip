@@ -1,23 +1,43 @@
 define(function (require) {
     'use strict';
 
-    // For storing the resources.
-    var resources = {};
-    var counter = 0;
-
     var fn = require('./util/fn');
     var viewport = require('./viewport');
     var rect = require('./dom/rect');
 
     /**
+     * Store the resources.
+     * @inner
+     * @type {Object}
+     */
+    var resources = {};
+
+    /**
+     * Resources counter.
+     * @inner
+     * @type {number}
+     */
+    var counter = 0;
+
+
+    /**
      * MIP Elements's controller. It's use to manage all the elements's custom life circle and
      * provide the overall interfaces of the MIP Elements.
+     * @class
      */
     function Resources() {
-        // resource id
+        /**
+         * Resources id
+         * @private
+         * @type {number}
+         */
         this._rid = counter ++;
-        
-        // element id
+       
+        /**
+         * Element id
+         * @private
+         * @type {number}
+         */ 
         this._eid = 0;
 
         // add to resources
@@ -25,13 +45,26 @@ define(function (require) {
 
         // Reduce the frequency of updating viewport state
         var update = this._update.bind(this);
+
+        /**
+         * The method to udpate state.
+         * @type {Function}
+         */
         this.updateState = fn.throttle(update);
 
+        /**
+         * Viewport
+         * @private
+         * @type {Object}
+         */
         this._viewport = viewport;
         this._bindEvent();
     };
 
     Resources.prototype = {
+        /**
+         * Bind the events of current object.
+         */
         _bindEvent: function () {
             var self = this;
             this._viewport.on('changed', function () {
@@ -39,8 +72,9 @@ define(function (require) {
             });
             this.updateState();
         },
+
         /**
-         * Add an element for current object and update all the elements's state
+         * Add an element for current object and update all the elements's state.
          * @param {MIPElement} element A mip element
          */
         add: function (element) {
@@ -49,12 +83,13 @@ define(function (require) {
             element.build();
             this.updateState();
         },
+
         /**
-         * Remove element from this
+         * Remove element from current resources object.
          * @param {MIPElement|string} element Mip element or _eid of element
          * @return {boolean} the removed state of element
          */
-        remove: function (element/* or id */) {
+        remove: function (element/* or eid */) {
             var id = element._eid || element;
             if (Number.isFinite(+id) && resources[this._rid][id]) {
                 delete resources[this._rid][id];
@@ -63,6 +98,7 @@ define(function (require) {
                 return false;
             }
         },
+
         /**
          * Return an object of resources.
          * @return {Array}
@@ -70,14 +106,16 @@ define(function (require) {
         getResources: function () {
             return resources[this._rid];
         },
+
         /**
          * Return an array of resources.
          */
         getResourcesList: function () {
             return fn.values(this.getResources());
         },
+
         /**
-         * Set an element's viewport state to TRUE or FALSE.
+         * Set an element's viewport state to 'true' or 'false'.
          * @param {MIPElement} element
          * @param {boolean} inViewport
          */
@@ -86,8 +124,10 @@ define(function (require) {
                 element.viewportCallback(inViewport);
             }
         },
+
         /**
-         * The real function for updating elements's viewport state.
+         * Update elements's viewport state.
+         * @private
          */
         _update: function () {
             var resources = this.getResources();
@@ -95,14 +135,14 @@ define(function (require) {
             for (var i in resources) {
                 // Compute the viewport state of current element.
                 // If current element`s prerenderAllowed returns `true` always set the state to be `true`.
-                var inViewport = resources[i].prerenderAllowed() || rect.overlapping(rect.getDomRect(resources[i]), viewportRect);
+                var inViewport = resources[i].prerenderAllowed() || rect.overlapping(rect.getElementRect(resources[i]), viewportRect);
                 this.setInViewport(resources[i], inViewport);
             }
         }
     };
 
     /**
-     * Forced set the element's viewport state to be `true`.
+     * Forced set the element's viewport state to 'true'.
      * @param {MIPElement} element
      */
     Resources.prerenderElement = function (element) {

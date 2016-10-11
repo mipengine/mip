@@ -27,6 +27,11 @@ define(function (require) {
         };
     };
 
+    /**
+     * Object for getting event's type.
+     * @inner
+     * @type {Object}
+     */
     var specialEvents = {};
     specialEvents.click = specialEvents.mousedown = specialEvents.mouseup = specialEvents.mousemove = 'MouseEvents';
 

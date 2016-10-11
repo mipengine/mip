@@ -4,7 +4,7 @@ define(function (require) {
     var EventAction = require('src/util/event-action');
 
     var mockElement = {
-        excuteEventAction: function (action) {
+        executeEventAction: function (action) {
             this.arg = action.arg;
         },
         tagName: 'mip-test'
@@ -18,7 +18,7 @@ define(function (require) {
                 }
             });
 
-            action.excute('tap', {
+            action.execute('tap', {
                 getAttribute: function () {
                     return 'tap:id.abc(123)';
                 }
@@ -28,7 +28,7 @@ define(function (require) {
 
         it('error check', function () {
             var action = new EventAction();
-            expect(action.excute).to.not.throw();
+            expect(action.execute).to.not.throw();
             expect(action.parse(123)).to.eql([]);
             expect(action.parse('scroll:id.abc(123', 'tab')).to.eql([]);
         });

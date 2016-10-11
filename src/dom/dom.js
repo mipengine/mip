@@ -1,11 +1,31 @@
-define(function () {
+define(function (require) {
+    'use strict';
+
+    /**
+     * Save documentElement.
+     * @inner
+     * @type {Object}
+     */    
     var docElem = document.documentElement;
+
+    /**
+     * Get the supported matches method.
+     * @inner
+     * @type {Function}
+     */
     var nativeMatches = docElem.matches ||
                 docElem.webkitMatchesSelector ||
                 docElem.mozMatchesSelector ||
                 docElem.oMatchesSelector ||
                 docElem.msMatchesSelector ||
                 docElem.matchesSelector;
+
+    /**
+     * Support for matches. Check whether a element matches a selector.
+     * @param {HTMLElement} element
+     * @param {string} selector
+     * @return {boolean}
+     */
     function matches(element, selector) {
         if (!element || element.nodeType != 1) {
             return false;
@@ -13,7 +33,12 @@ define(function () {
         return nativeMatches.call(element, selector);
     };
 
-    // Support for closest
+    /**
+     * Support for closest. Find the closest parent node that matches the selector.
+     * @param {HTMLElement} element
+     * @param {string} selector
+     * @return {?HTMLElement}
+     */
     var closest = docElem.closest ? 
         function (element, selector) {
             return element.closest(selector);
@@ -28,7 +53,12 @@ define(function () {
             return null;
         };
 
-    // Support for contains
+    /**
+     * Support for contains.
+     * @param {HTMLElement} element
+     * @param {HTMLElement} child
+     * @return {boolean}
+     */
     var contains = docElem.contains ?
         function (element, child) {
             return element && element.contains(child);
@@ -44,7 +74,7 @@ define(function () {
         };
 
     /**
-     * Find a element by selector until the target element
+     * Find the nearest element that matches the selector from current element to target element.
      * @param {HTMLElement} element
      * @param {string} selector
      * @param {HTMLElement} target
@@ -55,7 +85,13 @@ define(function () {
         return contains(target, closestElement) ? closestElement : null;
     };
 
+    /**
+     * Temp element for creating element by string.
+     * @inner
+     * @type {HTMLElement}
+     */
     var createTmpElement = document.createElement('div');
+
     /**
      * Create a element by string
      * @param {string} str Html string

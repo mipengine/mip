@@ -11,7 +11,7 @@ define(function (require) {
         expect(cElement.firstInviewCallback).to.not.throw(Error);
         expect(cElement.viewportCallback).to.not.throw(Error);
         expect(cElement.prerenderAllowed).to.not.throw(Error);
-        expect(cElement.excuteEventAction.bind(cElement)).to.not.throw(Error);
+        expect(cElement.executeEventAction.bind(cElement)).to.not.throw(Error);
 
         it('init', function () {
             var InitElement = require('src/customElement').create();
@@ -30,7 +30,7 @@ define(function (require) {
                 isClose = true;
             });
 
-            cElement.excuteEventAction({
+            cElement.executeEventAction({
                 handler: 'open'
             });
             expect(isOpen).to.be.true;

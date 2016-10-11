@@ -1,5 +1,12 @@
-define(function () {
+define(function (require) {
     'use strict';
+
+    /**
+     * Throttle a function.
+     * @param {Function} fn
+     * @param {number} delay The run time interval
+     * @return {Function}
+     */
     function throttle(fn, delay) {
         var context, args, timerId;
         var execTime = 0;
@@ -22,6 +29,11 @@ define(function () {
         }
     };
 
+    /**
+     * Get all values of an object.
+     * @param {Object} obj
+     * @return {Array}
+     */
     function values(obj) {
         var keys = Object.keys(obj);
         var length = keys.length;
@@ -32,10 +44,22 @@ define(function () {
         return ret;
     };
 
+    /**
+     * Return an object is a plain object or not.
+     * @param {Object} obj
+     * @return {boolean}
+     */
     function isPlainObject(obj) {
         return obj && Object.getPrototypeOf(obj) == Object.prototype;
     };
 
+    /**
+     * Extend an object to another object.
+     * @inner
+     * @param {Object} target
+     * @param {Object} source
+     * @param {boolean} deep Extend deeply
+     */
     function _extend(target, source, deep) {
         for (var key in source) {
             if (deep) {
@@ -53,6 +77,12 @@ define(function () {
             }
         }
     };
+
+    /**
+     * Extend some objects to an object.
+     * @param {Object} target
+     * @return {Object}
+     */
     function extend(target) {
         var hasDeep = typeof target === 'boolean';
         var deep = false;
@@ -66,6 +96,11 @@ define(function () {
         return target;
     };
 
+    /**
+     * Pick some attributes from an object.
+     * @param {Object} obj
+     * @return {Object}
+     */
     function pick(obj/*, key1, key2 or [keys] */) {
         var keys = arguments[1];
         var result = {}; 

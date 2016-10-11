@@ -1,12 +1,22 @@
-define(function () {
+define(function (require) {
     'use strict';
     var camelReg = /(?:(^-)|-)+(.)?/g;
 
+    /**
+     * Temp element for checking css properties.
+     */
     var supportElement = document.createElement('div');
 
+    /**
+     * Prefix type for browsers.
+     * @const
+     */
     var PREFIX_TYPE = ['webkit', 'moz', 'ms', 'o', 'Webkit', 'Moz', 'O'];
-    // To cache the checked properties.
+    /**
+     * Storage of css properties' prefix.
+     */
     var prefixCache = {};
+
     /**
      * Make sure a property is supported by adding prefix.
      * @param {string} property A property to be checked
@@ -32,8 +42,17 @@ define(function () {
         return prefixCache[property] = prop || property;
     };
 
+    /**
+     * Regular expression of checking a string whether has a unit.
+     * @const
+     */
+    var UNIT_REG = /^\d+([a-zA-Z]+)/;
+
+    /**
+     * Storage of css properties' units.
+     */
     var unitCache = {};
-    var unitReg = /^\d+([a-zA-Z]+)/;
+
     /**
      * Obtain the unit of a property and add it to the value has no unit if exists.
      * @param {string} property
@@ -49,7 +68,7 @@ define(function () {
         }
         supportElement.style[property] = 0;
         var propValue = supportElement.style[property];
-        var match = propValue.match && propValue.match(unitReg);
+        var match = propValue.match && propValue.match(UNIT_REG);
         if (match) {
             return value + (unitCache[property] = match[1]);
         }

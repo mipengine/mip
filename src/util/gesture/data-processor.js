@@ -4,11 +4,36 @@ define(function () {
     var max = Math.max;
     var abs = Math.abs;
 
-    // Data processor of touch event object.
+    /**
+     * Data processor of touch event object.
+     * @type {Object}
+     */
     var dataProcessor = {
+        /**
+         * The center point of starting gesture.
+         * @type {?Object}
+         */
         startCenter: null,
+
+        /**
+         * The center point of last gesture.
+         * @type {?Object}
+         */
         lastCenter: null,
+
+        /**
+         * The starting time of event.
+         * @type {?number}
+         */
         startTime: null,
+
+        /**
+         * Event data processor.
+         * @param {Event} event
+         * @param {boolean} preventX
+         * @param {boolean} preventY
+         * @return {Object}
+         */
         process: function (event, preventX, preventY) {
             var data = {};
             var now = Date.now();
@@ -59,26 +84,53 @@ define(function () {
             data.event = event;
             return Object.freeze(data);
         },
+
+        /**
+         * Get the center point from some points.
+         * TODO: Calculates the center point of multiple points.
+         * @param {Array} points
+         * @return {Object}
+         */
         getCenter: function (points) {
             return {
                 x: round(points[0].clientX),
                 y: round(points[0].clientY)
             }
         },
+
+        /**
+         * Get the angle of two points.
+         * @param {Object} point1
+         * @Param {Object} point2
+         * @return {number}
+         */
         getAngle: function (point1, point2) {
             return Math.atan2(point2.y - point1.y, point2.x - point1.x) * 180 / Math.PI;
         },
+
+        /**
+         * Get the distance of two points.
+         * @param {Object} point1
+         * @param {Object} point2
+         * @return {number}
+         */
         getDistance: function (point1, point2) {
             var x = point2.x - point1.x;
             var y = point2.y - point1.y
             return Math.sqrt(x * x + y * y);
         },
+
         /**
-         * 0: origin
-         * 1: up
-         * 2: right
-         * 3: down
-         * 4: left
+         * Calculate direction according to a coordinate.
+         * The meaning of return values:         
+         *  0: origin
+         *  1: up
+         *  2: right
+         *  3: down
+         *  4: left
+         * @param {number} x
+         * @param {number} y
+         * @return {number}
          */
         getDirection: function (x, y) {
             if (x === y) {

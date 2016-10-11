@@ -258,7 +258,7 @@ define(function () {
         });
         this.rectElement.appendChild(rectElement);
         setTimeout(function () {
-            rectElement.innerHTML = JSON.stringify(util.rect.getDomRect(rectElement));
+            rectElement.innerHTML = JSON.stringify(util.rect.getElementRect(rectElement));
         }, 0);
 
         element.appendChild(fragment);

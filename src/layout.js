@@ -1,39 +1,67 @@
-define(function(){
-	function Layout(){
-        this.Layout = {
-            NODISPLAY: 'nodisplay',
-            FIXED: 'fixed',
-            FIXED_HEIGHT: 'fixed-height',
-            RESPONSIVE: 'responsive',
-            CONTAINER: 'container',
-            FILL: 'fill',
-            FLEX_ITEM: 'flex-item'
-        };
-        this._naturalDimensions = {
-          'mip-pix': {width: '1px', height: '1px'},
-          'mip-stats': {width: '1px', height: '1px'},
-          // TODO: audio should have width:auto.
-          'mip-audio': null,
-          'mip-share': {width: '60px', height: '44px'}
-        };
-        this._LOADING_ELEMENTS = {
-            'mip-anim': true,
-            'mip-brightcove': true,
-            'mip-embed': true,
-            'mip-iframe': true,
-            'mip-img': true,
-            'mip-list': true,
-            'mip-video': true
-        };
+define(function () {
+    'use strict';
+
+    /**
+     * Layout types.
+     * @inner
+     * @const
+     * @type {Object}
+     */
+    var LAYOUT = {
+        NODISPLAY: 'nodisplay',
+        FIXED: 'fixed',
+        FIXED_HEIGHT: 'fixed-height',
+        RESPONSIVE: 'responsive',
+        CONTAINER: 'container',
+        FILL: 'fill',
+        FLEX_ITEM: 'flex-item'
+    };
+
+    /**
+     * Natural dimensions.
+     * @inner
+     * @const
+     * @type {Object}
+     */
+    var NATURAL_DIMENSIONS = {
+        'mip-pix': {width: '1px', height: '1px'},
+        'mip-stats': {width: '1px', height: '1px'},
+        // TODO: audio should have width:auto.
+        'mip-audio': null,
+        'mip-share': {width: '60px', height: '44px'}        
+    };
+
+    /**
+     * Loading elements.
+     * @inner
+     * @const
+     * @type {Object}
+     */
+    var LOADING_ELEMENTS = {
+        'mip-anim': true,
+        'mip-brightcove': true,
+        'mip-embed': true,
+        'mip-iframe': true,
+        'mip-img': true,
+        'mip-list': true,
+        'mip-video': true
+    };
+
+    /**
+     * Layout for MIPElement.
+     * @class
+     */
+	function Layout() {
     }
+
     /**
      * @param {string} s
      * @return {Layout|undefined} Returns undefined in case of failure to parse
      *   the layout string.
      */
     Layout.prototype.parseLayout = function(s) {
-      for (var i in this.Layout) {
-        if (this.Layout[i] == s) {
+      for (var i in LAYOUT) {
+        if (LAYOUT[i] == s) {
           return s;
         }
       }
@@ -41,7 +69,7 @@ define(function(){
     }
 
     /**
-     * @param {!Layout} layout
+     * @param {Layout} layout
      * @return {string}
      */
     Layout.prototype.getLayoutClass = function(layout) {
@@ -50,15 +78,15 @@ define(function(){
 
     /**
      * Whether an element with this layout inherently defines the size.
-     * @param {!Layout} layout
+     * @param {Layout} layout
      * @return {boolean}
      */
     Layout.prototype.isLayoutSizeDefined = function (layout) {
-      return (layout == this.Layout.FIXED ||
-          layout == this.Layout.FIXED_HEIGHT ||
-          layout == this.Layout.RESPONSIVE ||
-          layout == this.Layout.FILL ||
-          layout == this.Layout.FLEX_ITEM);
+      return (layout == LAYOUT.FIXED ||
+          layout == LAYOUT.FIXED_HEIGHT ||
+          layout == LAYOUT.RESPONSIVE ||
+          layout == LAYOUT.FILL ||
+          layout == LAYOUT.FLEX_ITEM);
     }
 
     /**
@@ -86,7 +114,7 @@ define(function(){
 
     /**
      * Returns the numeric value of a CSS length value.
-     * @param {!LengthDef|string} length
+     * @param {string} length
      * @return {number}
      */
     Layout.prototype.getLengthNumeral = function(length) {
@@ -102,7 +130,7 @@ define(function(){
      */
     Layout.prototype.hasNaturalDimensions = function(tagName) {
       tagName = tagName.toLowerCase();
-      return this._naturalDimensions[tagName] !== undefined;
+      return NATURAL_DIMENSIONS[tagName] !== undefined;
     }
 
 
@@ -116,7 +144,7 @@ define(function(){
      */
     Layout.prototype.getNaturalDimensions = function(element) {
       var tagName = element.tagName.toLowerCase();
-      if (!this._naturalDimensions[tagName]) {
+      if (!NATURAL_DIMENSIONS[tagName]) {
         var doc = element.ownerDocument;
         var naturalTagName = tagName.replace(/^mip\-/, '');
         var temp = doc.createElement(naturalTagName);
@@ -125,13 +153,13 @@ define(function(){
         temp.style.position = 'absolute';
         temp.style.visibility = 'hidden';
         doc.body.appendChild(temp);
-        this._naturalDimensions[tagName] = {
+        NATURAL_DIMENSIONS[tagName] = {
           width: (temp.offsetWidth || 1) + 'px',
           height: (temp.offsetHeight || 1) + 'px',
         };
         doc.body.removeChild(temp);
       }
-      return this._naturalDimensions[tagName];
+      return NATURAL_DIMENSIONS[tagName];
     }
 
 
@@ -143,9 +171,14 @@ define(function(){
      * @return {boolean}
      */
     Layout.prototype.isLoadingAllowed = function(tagName) {
-      return this._LOADING_ELEMENTS[tagName.toLowerCase()] || false;
+      return LOADING_ELEMENTS[tagName.toLowerCase()] || false;
     }
 
+    /**
+     * Apply layout for a MIPElement.
+     * @param {MIPElement} element
+     * @return {string}
+     */
     Layout.prototype.applyLayout = function (element) {
         var layoutAttr = element.getAttribute('layout');
         var widthAttr = element.getAttribute('width');
@@ -165,13 +198,13 @@ define(function(){
         var layout;
 
         // Calculate effective width and height.
-        if ((!inputLayout || inputLayout == this.Layout.FIXED ||
-            inputLayout == this.Layout.FIXED_HEIGHT) &&
+        if ((!inputLayout || inputLayout == LAYOUT.FIXED ||
+            inputLayout == LAYOUT.FIXED_HEIGHT) &&
             (!inputWidth || !inputHeight) && this.hasNaturalDimensions(element.tagName)) {
           // Default width and height: handle elements that do not specify a
           // width/height and are defined to have natural browser dimensions.
           var dimensions = this.getNaturalDimensions(element);
-          width = (inputWidth || inputLayout == this.Layout.FIXED_HEIGHT) ? inputWidth :
+          width = (inputWidth || inputLayout == LAYOUT.FIXED_HEIGHT) ? inputWidth :
               dimensions.width;
           height = inputHeight || dimensions.height;
         } else {
@@ -183,13 +216,13 @@ define(function(){
         if (inputLayout) {
           layout = inputLayout;
         } else if (!width && !height) {
-          layout = this.Layout.CONTAINER;
+          layout = LAYOUT.CONTAINER;
         } else if (height && (!width || width == 'auto')) {
-          layout = this.Layout.FIXED_HEIGHT;
+          layout = LAYOUT.FIXED_HEIGHT;
         } else if (height && width && (sizesAttr || heightsAttr)) {
-          layout = this.Layout.RESPONSIVE;
+          layout = LAYOUT.RESPONSIVE;
         } else {
-          layout = this.Layout.FIXED;
+          layout = LAYOUT.FIXED;
         }
 
         
@@ -199,27 +232,27 @@ define(function(){
         if (this.isLayoutSizeDefined(layout)) {
           element.classList.add('mip-layout-size-defined');
         }
-        if (layout == this.Layout.NODISPLAY) {
+        if (layout == LAYOUT.NODISPLAY) {
           element.style.display = 'none';
-        } else if (layout == this.Layout.FIXED) {
+        } else if (layout == LAYOUT.FIXED) {
           element.style.width = width;
           element.style.height = height;
-        } else if (layout == this.Layout.FIXED_HEIGHT) {
+        } else if (layout == LAYOUT.FIXED_HEIGHT) {
           element.style.height = height;
-        } else if (layout == this.Layout.RESPONSIVE) {
+        } else if (layout == LAYOUT.RESPONSIVE) {
           var space = element.ownerDocument.createElement('mip-i-space');
           space.style.display = 'block';
           space.style.paddingTop =
               ((this.getLengthNumeral(height) / this.getLengthNumeral(width)) * 100) + '%';
           element.insertBefore(space, element.firstChild);
           element._spaceElement = space;
-        } else if (layout == this.Layout.FILL) {
+        } else if (layout == LAYOUT.FILL) {
           // Do nothing.
-        } else if (layout == this.Layout.CONTAINER) {
+        } else if (layout == LAYOUT.CONTAINER) {
           // Do nothing. Elements themselves will check whether the supplied
           // layout value is acceptable. In particular container is only OK
           // sometimes.
-        } else if (layout == this.Layout.FLEX_ITEM) {
+        } else if (layout == LAYOUT.FLEX_ITEM) {
           // Set height and width to a flex item if they exist.
           // The size set to a flex item could be overridden by `display: flex` later.
           if (width) {

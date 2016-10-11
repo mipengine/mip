@@ -1,7 +1,38 @@
-define(function () {
+define(function (require) {
     'use strict';
 
-    var reg = /\s+/;
+    /**
+     * For determining whether a string is splitted by space or not.
+     * @const
+     * @inner
+     * @type {RegExp}
+     */
+    var MULTI_REG = /\s+/;
+
+    /**
+     * If a string is splitted by space, convert string to array and
+     * execute function N(n = Array.length) times with the args.
+     * Return the result that the string is multiple or not.
+     * @param {Object} obj The execute context
+     * @param {Function} fn The function to be runned
+     * @param {string} name 
+     * @param {Array} args
+     * @return {boolean}
+     */
+    function multiArgs(obj, fn, name, args) {
+        if (MULTI_REG.test(name)) {
+            var nameList = name.split(MULTI_REG);
+            var isApply = typeof args !== 'function';
+            for (var i = 0; i < nameList.length; i++) {
+                isApply ? fn.apply(obj, [nameList[i]].concat(args)) :
+                    fn.call(obj, nameList[i], args);
+            }
+            return true;
+        }
+        return false;
+    };
+
+
     /**
      * Custom event
      * @class
@@ -13,19 +44,6 @@ define(function () {
             opt.createEventCallback && (this._createEventCallback = opt.createEventCallback);
             opt.removeEventCallback && (this._removeEventCallback = opt.removeEventCallback);
         }
-    };
-    var multiReg = /\s+/;
-    function multiArgs(obj, fn, name, args) {
-        if (multiReg.test(name)) {
-            var nameList = name.split(multiReg);
-            var isApply = typeof args !== 'function';
-            for (var i = 0; i < nameList.length; i++) {
-                isApply ? fn.apply(obj, [nameList[i]].concat(args)) :
-                    fn.call(obj, nameList[i], args);
-            }
-            return true;
-        }
-        return false;
     };
     var proto = EventEmitter.prototype = {
         /**
@@ -41,6 +59,7 @@ define(function () {
             this._getEvent(name).push(handler);
             return this;
         },
+
         /**
          * Remove handler from events.
          * @param {?string} name
@@ -72,6 +91,7 @@ define(function () {
             } 
             return name ? this.__events && this.__events[name] : null;
         },
+
         /**
          * Add a one-off handler to events
          * @param {string} name
@@ -88,6 +108,7 @@ define(function () {
                 cb = self = null;
             }
         },
+
         /**
          * Trigger events.
          * @param {string} name
@@ -106,6 +127,7 @@ define(function () {
                 }
             }
         },
+
         /**
          * Set the handlers' context
          * @param {Function} context
@@ -113,6 +135,7 @@ define(function () {
         setEventContext: function (context) {
             this.__eventContext = context || this;
         },
+
         /**
          * Get an event's handler list. If not exist, create it.
          * @param {string} name
@@ -128,10 +151,21 @@ define(function () {
             }
             return this.__events[name];
         },
-        _createEventCallback: function () {
+
+        /**
+         * Called when an event is created.
+         * @param {string} name Event name
+         * @param {Array.<Function>} handlers The bound handlers
+         */
+        _createEventCallback: function (name, handlers) {
 
         },
-        _removeEventCallback: function () {
+
+        /**
+         * Called when an event is removed.
+         * @param {string} name Event name
+         */
+        _removeEventCallback: function (name) {
 
         }
     };
@@ -148,7 +182,13 @@ define(function () {
         }
     });
 
+    /**
+     * Keys for extending to another object.
+     * @inner
+     * @type {Ojbect}
+     */
     var keys = Object.keys(proto);
+
     /**
      * Mix EventEmitter's prototype into target object
      * @param {Object} obj
