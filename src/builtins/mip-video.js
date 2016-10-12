@@ -1,350 +1,233 @@
-require.config({
-    paths: {
-        'builtins/video/player': __uri('./video/player').replace(/\.js$/g, '')
-    }
-});
-define(['../util'], function(util){
+define(function() {
     var customElem = require('customElement').create();
-    var player;
-    var bdPlayer;
 
-    var playerAttr = ['height', 'width', 'src', 'type', 'poster', 'autoplay', 'controls', 'loop', 'muted'];
-    customElem.prototype.build = function () {
-        var self = this;
-        var element = this.element;
+    // videoAttributes are applied to <video> directory,
+    // while managed attributes: ['ads', 'src', 'controls', 'loop', 'autoplay'] are not applied directly.
+    var videoAttributes = ['autoplay', 'autobuffer', 'crossorigin', 'height', 'muted', 'preload', 'poster', 'width'];
 
-        self.ext = {};
-        self.iframeSrc = '';
-
-        var children = element.childNodes;
-        for(var index = 0; index < children.length; index ++) {
-            if(children[index].nodeType == 1 && children[index].nodeName != 'MIP-I-SPACE') {
-                self.applyFillContent(children[index], true);
-            }
-        }
-        
-        getVideoInfo.call(self);
-
-        self.isBlank = isBlank.call(self);
-        
-        require(['builtins/video/player'], function (Player) {
-            if (!player) {
-                player = Player;
-            }
-            if(!self.isBlank) {
-                playnowpage.call(self)
-            } else {
-                var str = '';
-                self.ext.adInfo.map(function(data, index) {
-                    if(index) {
-                        str += ',';
-                    }
-                    str += encodeURIComponent(data[0].src);
-                });
-                self.ext.adInfo = str;
-
-                self.element.addEventListener('click', function() {
-                    toTranscoder.call(self);
-                });
-            }
-        });
+    customElem.prototype.build = function() {
+        this.attributes = getAttributeSet(this.element.attributes);
+        this.normalVideo = {
+            sources: this.getNormalSources(),
+            forceStart: false
+        };
+        this.videoElement = this.render();
+        this.applyFillContent(this.videoElement, true);
+        this.startPlaySequence();
     };
 
-    //本页打开
-    function playnowpage() {
-        var element = this.element;
-        var self = this;
-        element.addEventListener('click', function (event) {
-            if(event.target.tagName == 'VIDEO') {
-                event.stopPropagation();
-                return false;
-            }
-            // 如果有视屏正在播放，则移除视屏
-            bdPlayer && bdPlayer.remove();
-            bdPlayer = new player({});
+    /*
+     * parse "ads" attribute, as JSON format
+     */
+    customElem.prototype.parseAds = function() {
+        var ads = [];
 
-            var container = document.querySelector(element.getAttribute('container'));
-            if (!container) {
-                container = element;
-            }
+        var str = this.attributes.ads;
+        if (str) ads = JSON.parse(str);
 
-            // 广告数据信息
-            var adInfo = [];
-            var adInfoString = element.getAttribute('adInfo');
-            if (adInfoString) {
-                try {
-                    adInfo = new Function('return ' + adInfoString)()
-                } catch (e) {}
-            }
-
-            //过滤ios qq
-            var userAgent = navigator.userAgent;
-            var qqbrower = userAgent.indexOf("QQ") > 0 ? true : false;
-            var ios = !!userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
-
-            //过滤ios7.0
-            var agent = navigator.userAgent.toLowerCase() ;
-            var version;
-            if(agent.indexOf("like mac os x") > 0){
-                //ios
-                var regStr_saf = /os [\d._]*/gi ;
-                var verinfo = agent.match(regStr_saf) ;
-                version = (verinfo+"").replace(/[^0-9|_.]/ig,"").replace(/_/ig,".");
-            }
-
-            var version_str = version+"";
-            if(version_str != "undefined" && version_str.length >0){
-                version=version.substring(0,1);
-            }
-
-            if((qqbrower&&ios)||version < 8) {
-                adInfo = [];
-            }
-
-            var sources = element.querySelectorAll('source');
-            var playInfo = [];
-
-            for (var i = 0; i < sources.length; i++) {
-                var src = sources[i].getAttribute('src');
-                var type = sources[i].getAttribute('type');
-                if (!src) {
-                    continue;
-                }
-                playInfo.push({
-                    type: type,
-                    src: src
-                });
-            }
-
-            var conf = self.expendAttr(playerAttr, {});
-            conf.container = container;
-            conf.android = {
-                playMode: element.getAttribute('android-mode') || ''
-            };
-            conf.ios = {
-                playMode: element.getAttribute('ios-mode') || ''
-            };
-            conf.adInfo = adInfo;
-            conf.playInfo = playInfo;
-            bdPlayer.render(conf);
+        ads.forEach(function(ad, i) {
+            ad.disableSeeking = true;
+            ad.forceStart = (i > 0);
         });
-    }
+        return ads;
+    };
 
-    //非本页打开
-    function toTranscoder() {
-        var self = this;
+    /*
+     * Prepare <video> attributes and styles for Ad play
+     */
+    customElem.prototype.setupAdEnvironment = function() {
+        var el = this.videoElement;
+        el.removeAttribute('loop');
+        el.setAttribute('controls', 'controls');
+        this.videoStyle.innerHTML = 'video#' + el.getAttribute('id') +
+            '::-webkit-media-controls-timeline {display: none!important;}';
+    };
 
-        var baiduappbox = recognitionClient();
-        bdPlayer && bdPlayer.remove();
-
-        bdPlayer = new player({});
-        //一下为判断终端是否手百,ios与Android
-        if(baiduappbox.baiduboxapp) { //手百
-            if(getOS() == "Android" && baiduappbox.version > "6.4") {
-                var configstr = baiduapp.call(self, true);
-                Box.android.invokeApp("Bdbox_android_capi_video","playVideo",[configstr]);
-            } else if(getOS() == "IOS" && baiduappbox.version > "6.8") {
-                var configstr = baiduapp.call(self);
-                Box.ios.invokeApp("video",{"action":"playVideo","params": configstr, "minver":"6.8.0.0"},"");
-            } else {
-                superpage.call(self);
-            }
+    /*
+     * Prepare <video> attributes and styles for Normal play
+     */
+    customElem.prototype.setupNormalEnvironment = function() {
+        var el = this.videoElement;
+        if (this.attributes.controls !== undefined) {
+            el.setAttribute('controls', 'controls');
         } else {
-            superpage.call(self);
+            el.removeAttribute('controls');
         }
-    }
+        if (this.attributes.loop !== undefined) {
+            el.setAttribute('loop', 'loop');
+        } else {
+            el.removeAttribute('loop');
+        }
+        this.videoStyle.innerHTML = '';
+    };
 
-    //http承载页跳转
-    function superpage() {
-        top.location.href = alignment.call(this);
-    }
-
-    /**
-     * 手百调起数据组装
-     * encode参数为ios与安卓的配置方式不同
+    /*
+     * Start the play sequence: play ads if any, then play the origin video
      */
-    function baiduapp(encode) {
-        var url = alignment.call(this) + 'tn=nohead';
+    customElem.prototype.startPlaySequence = function() {
+        this.playAds(this.playNormal);
+    };
 
-        var data = {
-            "vid": +new Date(),
-            "title": encodeURIComponent(self.title),
-            "src": encodeURIComponent(url),
-            "cate": "tvplay",
-            "pageUrl": location.href,
-            "type": "other"
+    /*
+     * Play the ad list, one by one.
+     * @param {Function} onEnded will be called (on this customElement)
+     *      when all ads have been played
+     */
+    customElem.prototype.playAds = function(onEnded) {
+        var ads = this.parseAds();
+        if (ads.length === 0) {
+            return onEnded && onEnded.call(this);
+        }
+
+        // force start when there'are ads before
+        this.normalVideo.forceStart = true;
+        this.setupAdEnvironment();
+        this.doPlay(ads, onEnded);
+    };
+
+    /*
+     * Play the origin video
+     */
+    customElem.prototype.playNormal = function(onEnded) {
+        this.setupNormalEnvironment();
+        this.doPlay([this.normalVideo], onEnded);
+    };
+
+    /*
+     * Do play the video queue
+     * @param {Array} queue the video sequence
+     * @param {Array} onEndedCb will be called (on this customElement) 
+     *      when videos within the queue have been all played
+     * Legacy:
+     *      doPlay([{
+     *          disableSeeking: true,
+     *          forceStart: false,
+     *          sources: [{
+     *              type: 'video/mp4',
+     *              src: 'http://xxx.com/xx.mp4'
+     *      }], function(){
+     *          console.log('all videos have been played');
+     *      });
+     */
+    customElem.prototype.doPlay = function(queue, onEndedCb) {
+        if (!queue.length) {
+            return onEndedCb && onEndedCb.call(this);
+        }
+        var video = queue.shift();
+
+        // clearing
+        var videoEl = this.videoElement;
+        videoEl.pause();
+        videoEl.removeAttribute('src');
+        Array.prototype.forEach.call(videoEl.querySelectorAll('source'), function(el) {
+            videoEl.removeChild(el);
+        });
+
+        // setup player context
+        var supposedCurrentTime = 0;
+        video.sources.forEach(function(source) {
+            var el = document.createElement('source');
+            el.setAttribute('src', source.src);
+            source.type && el.setAttribute('type', source.type);
+            videoEl.appendChild(el);
+        });
+
+        var onSeeking = function() {
+            if (video.disableSeeking) {
+                var delta = videoEl.currentTime - supposedCurrentTime;
+                if (Math.abs(delta) > 0.01) {
+                    videoEl.currentTime = supposedCurrentTime;
+                }
+            }
         };
-        return JSON.stringify(data);
-    }
-
-    /**
-     * 数据组装函数
-     */
-    function alignment() {
-
-        var self = this;
-        var ext = !!self.iframeSrc ? {iframeSrc: self.iframeSrc}
-                                    : self.ext;
-        var data = {
-            'pd': 'mms_mipvideo',
-            'title': encodeURIComponent(self.title),
-            'dev_tpl': 'act_mip_video',
-            'wd': '%E8%A7%86%E9%A2%91',
-            'actname': 'act_mip_video',
-            'ext': encodeURIComponent(JSON.stringify(ext))
+        var onTimeupdate = function() {
+            if (!videoEl.seeking) {
+                supposedCurrentTime = videoEl.currentTime;
+            }
         };
+        var onEnded = function() {
+            videoEl.removeEventListener('timeupdate', onTimeupdate);
+            videoEl.removeEventListener('ended', onEnded);
+            videoEl.removeEventListener('error', onEnded);
+            videoEl.removeEventListener('seeking', onSeeking);
+            this.doPlay(queue, onEndedCb);
+        }.bind(this);
 
-        return getUrl(data);
-    }
+        videoEl.addEventListener('timeupdate', onTimeupdate);
+        videoEl.addEventListener('ended', onEnded);
+        videoEl.addEventListener('error', onEnded);
+        videoEl.addEventListener('seeking', onSeeking);
+        videoEl.load();
+        if (video.forceStart) videoEl.play();
+    };
 
-
-    /**
-     * [getUrl splice URL by params]
-     * 
-     * @param  {Object} params
-     * @return {String} url
+    /*
+     * Get sources from "src" attribute and <source> childrens of this.videoElement
+     * @return {Array} the source list, legacy:
+     *      [{
+     *          src: 'http://xxx/x.mp4',
+     *          type: 'video/mp4'
+     *      },{
+     *          src: 'http://foo.avi',
+     *          typ: ''
+     *      }]
      */
-    function getUrl(params) {
-        // var url = 'http://cp01-sys-rath4-c32-qa270.cp01.baidu.com:8003/sf?'
-        var url = "http://transcoder.baidu.com/sf?";
-        
-        for(var key in params) {
-            if(params.hasOwnProperty(key)) {
-                url += key + '=' + params[key] + '&';
+    customElem.prototype.getNormalSources = function() {
+        var sources = [];
+        if (this.attributes.src) {
+            sources.push({
+                src: this.attributes.src
+            });
+        }
+        Array.prototype.forEach.call(this.element.querySelectorAll('source'), function(el) {
+            sources.push({
+                src: el.getAttribute('src'),
+                type: el.getAttribute('type')
+            });
+        });
+        return sources;
+    };
+
+    /*
+     * Render the <video> element, and set `this.videoStyle`
+     */
+    customElem.prototype.render = function() {
+        var videoEl = document.createElement('video');
+        for (var k in this.attributes) {
+            if (!this.attributes.hasOwnProperty(k)) continue;
+            if (videoAttributes.indexOf(k) > -1) {
+                videoEl.setAttribute(k, this.attributes[k]);
             }
         }
+        Array.prototype.slice.apply(this.element.childNodes).forEach(function(node) {
+            if (node.nodeName.toLowerCase() === 'mip-i-space') return;    // mip layout related
+            videoEl.appendChild(node);
+        });
+        videoEl.setAttribute('id', 'mip-video-' + Date.now());
+        var style = document.createElement('style');
+        this.element.appendChild(style);
+        this.element.appendChild(videoEl);
+        this.videoStyle = style;
+        return videoEl;
+    };
 
-        return url;
-    }    
-
-
-    /**
-     * [getVideoInfo video params init]
-     * 
-     * @return
+    /*
+     * Get attribute Set from attribute List
+     * @param {NamedNodeMap} attributes the attribute list, spec: https://dom.spec.whatwg.org/#interface-namednodemap
+     * @return {Object} the attribute set, legacy:
+     *      {
+     *          "src": "http://xx.mp4",
+     *          "autoplay": "",
+     *          "width": "720"
+     *      }
      */
-    function getVideoInfo() {
-        var self = this;
-
-        var poster = self.element.getAttribute("poster") || '';
-        var src = self.element.getAttribute("src") || '';
-        var adInfo = self.element.getAttribute("adInfo") || '';
-        var title = self.element.getAttribute("title") || "视频";
-        var iSrc = self.element.getAttribute("iframeSrc") || '';
-        var adInfoAry = [];
-        var adInfoStr = '';
-
-        //广告信息序列化
-        if (adInfo && !isLtIOS8()) {
-            try {
-                adInfoAry = new Function('return ' + (adInfo))();
-            } catch (e) {}
-        }
-
-        self.title = title;
-        self.iframeSrc = encodeURIComponent(iSrc);
-        self.ext = {
-            poster : encodeURIComponent(poster),
-            src : encodeURIComponent(src),
-            adInfo : adInfoAry
-        };
+    function getAttributeSet(attributes) {
+        var attrs = {};
+        Array.prototype.slice.apply(attributes).forEach(function(attr) {
+            attrs[attr.name] = attr.value;
+        });
+        return attrs;
     }
-
-
-    /**
-     * [isLtIOS8 is ios version left then 8]
-     * 
-     * @return {Boolean} true or false
-     */
-    function isLtIOS8() {
-
-        var agent = navigator.userAgent.toLowerCase() ;
-        var version = '';
-            
-        if(agent.indexOf("like mac os x") > 0){
-            
-            version = agent.match(/os [\d._]*/gi).toString()
-                        .replace(/[^0-9|_.]/ig,"")
-                        .replace(/_/ig,".").toString();
-        }
-
-        if(version != "undefined" && version.length > 0){
-            version = version.substring(0, 1);
-        }
-
-        return version < 8;
-    }
-
-
-    /**
-     * [isBlank open new page]
-     * 
-     * @return {Boolean} true or false
-     */
-    function isBlank() {
-
-        var self = this;
-        if(self.iframeSrc) return true;
-
-        var info = self.ext.adInfo;
-        var flag = !isHttps(self.ext.src);
-
-        for(var index = 0; index < info.length; index ++) {
-            flag = flag && !isHttps(info[index][0].src);
-        }
-
-        return flag;
-    }
-
-
-    /**
-     * [isHttps is url a https url]
-     * 
-     * @param  {String}  url a source url or src 
-     * @return {Boolean} true or false
-     */
-    function isHttps(url) {
-
-        var reg = /^https/;
-        return reg.test(url) || reg.test(location.protocol);
-
-    }
-
-
-    /**
-     * [getOS get OS name]
-     * 
-     * @return {String} 
-     */
-    function getOS() {
-        var agent = navigator.userAgent;
-        var isAdr = agent.match(/(Android)|(Adr)/g);
-        var isIOS = !!agent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); 
-
-        return isAdr ? "Android" : (isIOS ? "IOS" : "other");
-
-    }  
-
-
-    /**
-     * 客户端验证-短线方案
-     * 主要验证手百,以提供调起服务
-     */
-    function recognitionClient() {
-        var userAgentconfig = {};
-        var userAgent = navigator.userAgent;
-        var baiduboxapp = userAgent.indexOf('baiduboxapp') > 0 ? true : false;
-
-        if(baiduboxapp) {
-            userAgentconfig.version = Number(parseFloat(Box.version));
-            userAgentconfig.baiduboxapp = baiduboxapp;
-        }
-        return userAgentconfig;
-    }  
 
     return customElem;
-
 });
-
-
-
