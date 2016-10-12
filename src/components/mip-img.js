@@ -60,7 +60,7 @@ define(function (require) {
                 }, false);
             }
 
-            var imgOffset = rect.getDomOffset(img);
+            var imgOffset = rect.getElementOffset(img);
 
             css(popupImg, imgOffset);
             css(popupBg, 'opacity', 1);
