@@ -31,17 +31,14 @@ var requireConfig = {
 var amdCompiler = new AMDCompiler({
     config: requireConfig,
     files: [
-        '!deps/**/*',
-        'deps/naboo.js',
-        'deps/spark.js',
-        'deps/zepto.js',
-        'deps/fetch-jsonp.js'
+        '**/*.js',
+        '!deps/**/*'
     ]
 });
 
 var amdPacker = new AMDPacker({
     config: requireConfig,
-    modules: [this.mainModule]
+    modules: ['mip']
 });
 
 var lessProcessor = new LessProcessor({
@@ -53,36 +50,28 @@ var jsCompressor = new JSCompressor();
 var requireConfigAdder = {
     process: function (builder) {
         var file = builder.getFile('src/mip.js');
-
-        file.setData(
-            require('fs').readFileSync(
-                path.resolve(__dirname, 'require-config.js'), 'UTF-8'
-            )
-            + '\n',
-            + file.getData()
+        var configFileContent = require('fs').readFileSync(
+            path.resolve(__dirname, 'require-config.js'), 'UTF-8'
         );
 
+        file.setData(configFileContent + '\n' + file.getData());
         return Promise.resolve();
     }
 };
 
-var envPrepareProcessor = {
-    process: function (builder) {
-        var file = builder.getFile('src/mip.js');
-
-        var content = [
-            builder.getFile('deps/promise.js').getData(),
-            builder.getFile('deps/fetch.js').getData(),
-            builder.getFile('deps/document-register-element.max.js').getData(),
-            builder.getFile('deps/esl.js').getData(),
-            file.getData()
-        ];
-
-        file.setData(content.join('\n\n'));
-
-        return Promise.resolve();
+var Combiner = require('./file-combiner');
+var mainCombiner = new Combiner({
+    sep: '\n\n',
+    files: {
+        'src/mip.js': [
+            'deps/promise.js',
+            'deps/fetch.js',
+            'deps/document-register-element.max.js',
+            'deps/esl.js',
+            'src/mip.js'
+        ]
     }
-};
+});
 
 
 var builder = new Builder({
@@ -92,15 +81,38 @@ var builder = new Builder({
         amdPacker,
         lessProcessor,
         requireConfigAdder,
-        envPrepareProcessor
+        mainCombiner,
+        jsCompressor,
+        {
+            name: 'OutputFilter',
+            processFile: function (file) {
+                if (file.outputPath !== 'src/mip.js'
+                    && file.outputPath !== 'deps/jquery.js'
+                    && file.outputPath !== 'src/less/mipmain.css'
+                ) {
+                    file.outputPath = null;
+                }
+            }
+        },
+        {
+            name: 'PathMapper',
+            processFile: function (file) {
+                if (file.outputPath) {
+                    file.outputPath = file.outputPath.slice(file.outputPath.lastIndexOf('/') + 1);
+                }
+            }
+        }
     ],
 
     files: [
+        '!**/.*',
         '!package.json',
+        '!node_modules/**/*',
+        '!.git/**/*',
         '!Makefile',
         '!karma.conf.js',
         '!.editorconfig',
-        '!.gitconfig',
+        '!.gitignore',
         '!README.md',
         '!dist/**/*',
         '!examples/**/*',
@@ -115,4 +127,7 @@ var builder = new Builder({
 builder.setReporter(reporter);
 
 // do build
-return builder.build();
+builder.build()
+    .catch(function (e) {
+        console.log(e);
+    });
