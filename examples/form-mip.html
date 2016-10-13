@@ -8,7 +8,7 @@
             body {
                 background-color: #eee;
             }
-            input {
+            /*input {
                     padding: 6px 12px;
                     font-size: 14px;
                     line-height: 1.42857143;
@@ -20,7 +20,7 @@
                     display: block;
                     margin: 10px 0;
                     width: 90%;
-            }
+            }*/
             input[type="submit"] {
                 box-sizing: content-box;
             }
@@ -32,7 +32,7 @@
         </style>    
     </head>
     <body>
-         <mip-form method="post" url="www.baidu.com">
+         <mip-form method="post" url="http://172.20.176.152:8056/examples/form-mip-get.html">
              <input type="input" name="username" validatetarget="username" validatetype="must" placeholder="姓名">
              <div target="username">姓名不能为空</div>
              <input type="input" name="email" validatetarget="email" validatetype="email" placeholder="邮件">
@@ -44,6 +44,7 @@
              <input type="submit" value="提交">
          </mip-form>
          <script src="/dist/mipmain.js"></script>
-         <script src="/dist/extensions/mip-form/0.2/mip-form.js"></script>
+         <script src="/dist/extensions/mip-form/1.2/mip-form.js"></script>
+
     </body>
 </html>
