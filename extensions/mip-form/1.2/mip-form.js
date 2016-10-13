@@ -21,34 +21,38 @@ define(function() {
              domcrete.call(_element);
         }
 
-        const INPUTS = _element.getElementsByTagName('input');
-        var index = 0;
-        var cross = document.createElement("div");
-        cross.id = 'mip-form-cross';
+        var isAddClearBtn = _element.getAttribute('clear');
+        if(isAddClearBtn) {
+          const INPUTS = _element.getElementsByTagName('input');
+          var index = 0;
+          var cross = document.createElement("div");
+          cross.id = 'mip-form-cross';
 
-        for(index = 0; index < INPUTS.length; index ++) {
-            INPUTS[index].onfocus = function() {
-              var self = this;
-              cross.setAttribute("name", self.getAttribute('name'));
-              cross.style.top = self.offsetTop + 'px';
-              self.parentNode.appendChild(cross);
-              if(self.value != '') {
-                  cross.style.display = 'block';
-                  
-              } else {
-                  cross.style.display = 'none';
-                  self.oninput = function() {
-                    cross.style.display = self.value != '' ? 'block' : 'none';
-                  }
+          for(index = 0; index < INPUTS.length; index ++) {
+              INPUTS[index].onfocus = function() {
+                var self = this;
+                cross.setAttribute("name", self.getAttribute('name'));
+                cross.style.top = self.offsetTop + 'px';
+                self.parentNode.appendChild(cross);
+                if(self.value != '') {
+                    cross.style.display = 'block';
+                    
+                } else {
+                    cross.style.display = 'none';
+                    self.oninput = function() {
+                      cross.style.display = self.value != '' ? 'block' : 'none';
+                    }
+                }
               }
-            }
-        }
+          }
 
-        cross.addEventListener('click', function() {
-            var name = this.getAttribute('name');
-            cross.parentNode.querySelector('input[name="' + name + '"]').value = '';
-            cross.style.display = 'none';
-        });
+          cross.addEventListener('click', function() {
+              var name = this.getAttribute('name');
+              cross.parentNode.querySelector('input[name="' + name + '"]').value = '';
+              cross.style.display = 'none';
+          });
+        }
+        
 
         //验证规则暂定三个
         var valita = {
