@@ -12,7 +12,7 @@
 
     "devDependencies": {
         "mip-builder": "^1.1.1",
-        "mip-processor-amd": "^1.1.0",
+        "mip-processor-amd": "^1.1.1",
         "mip-processor-less": "^1.1.0",
         "mip-processor-jscompress": "^1.1.0",
 
