@@ -5,22 +5,24 @@
         <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
         <title>form提交</title>
         <style type="text/css">
-            body {
-                background-color: #eee;
+            h3 {
+                margin-top: 50px;
+                text-align: center;
             }
-            /*input {
-                    padding: 6px 12px;
-                    font-size: 14px;
-                    line-height: 1.42857143;
-                    color: #555;
-                    background-color: #fff;
-                    background-image: none;
-                    border: 1px solid #ccc;
-                    border-radius: 4px;
-                    display: block;
-                    margin: 10px 0;
-                    width: 90%;
-            }*/
+            form {
+                width: 80%;
+                margin: auto;
+            }
+            input {
+                font-size: 14px;
+                line-height: 1.42857143;
+                color: #555;
+                background-color: #fff;
+                background-image: none;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                display: block;
+            }
             input[type="submit"] {
                 box-sizing: content-box;
             }
@@ -29,10 +31,27 @@
                 color: #ec1f5c;
                 font-size: 12px;
             }
+            h4 {
+                margin: 0 10%;
+                margin-top: 30px;
+                line-height: 30px;
+                color: #666;
+            }
+            ul {
+                margin: 0 10%;
+                font-size: 13px;
+                line-height: 20px;
+                color: #999;
+            }
+            li {
+                font-size: 16px;
+                line-height: 22px;
+            }
         </style>    
     </head>
     <body>
-         <mip-form method="post" url="http://172.20.176.152:8056/examples/form-mip-get.html">
+        <h3>mip-form 组件示例</h3>
+         <mip-form method="post" url="http://172.20.176.152:8056/examples/form-mip-get.html" clear>
              <input type="input" name="username" validatetarget="username" validatetype="must" placeholder="姓名">
              <div target="username">姓名不能为空</div>
              <input type="input" name="email" validatetarget="email" validatetype="email" placeholder="邮件">
@@ -43,6 +62,15 @@
              <div target="custom">请输入正确的数字</div>
              <input type="submit" value="提交">
          </mip-form>
+            <h4>新增功能说明</h4>
+            <ul>
+            <li>新增功能</li>
+                <p>
+                 新增清空按钮功能，当输入框被选中的时候，输入框右侧显示清空按钮，点击清空按钮，当前输入框中的文案被清空
+                </p>
+            <li>time: 16.10.13</li>
+            </ul>
+            
          <script src="/dist/mipmain.js"></script>
          <script src="/dist/extensions/mip-form/1.2/mip-form.js"></script>
 
