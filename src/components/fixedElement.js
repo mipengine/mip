@@ -191,10 +191,10 @@ define(['platform', 'layout', 'css'], function(platform, layout, css){
         }
       } else if (rType == 4) {
         /* CSSMediaRule */
-        this._findFixedSelectors(cssRule.cssRules, foundSelectors);
+        this._findFixedSelectors(cssRule.cssRules);
       } else if (rType == 12) {
         /* CSSSupportsRule */
-        this._findFixedSelectors(cssRule.cssRules, foundSelectors);
+        this._findFixedSelectors(cssRule.cssRules);
       }
     }
   };

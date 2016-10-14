@@ -72,17 +72,20 @@ define(function(){
             async: true
         });
 
-        script.onload = function() {
-            setTimeout(function() {
-                var pos = window.getComputedStyle(document.getElementById(s), null)
-                        .getPropertyValue('position');
+        if(script) {
+            script.onload = function() {
+                setTimeout(function() {
+                    var elem = window.getComputedStyle(document.getElementById(s), null);
+                    var pos = elem && elem.getPropertyValue() ? 
+                              elem.getPropertyValue('position') : '';
 
-                if(pos == 'fixed') {
-                    $elemID.append(document.getElementById(s));
-                }
-            }, 100);
-            
-        };
+                    if(pos == 'fixed') {
+                        $elemID.append(document.getElementById(s));
+                    }
+                }, 100);
+                
+            };
+        }
 
         me.applyFillContent(document.getElementById(s), true);
 
