@@ -12,7 +12,6 @@ define(function (require) {
         registerEle('mip-img', require('./mip-img'));
         registerEle('mip-carousel', require('./mip-carousel'));
         registerEle('mip-iframe', require('./mip-iframe'));
-        registerEle('mip-video', require('./mip-video'));
     };
 
     return {
