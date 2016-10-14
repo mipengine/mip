@@ -37,7 +37,6 @@ define(function (require) {
     require('./components/mip-pix');
     require('./components/mip-carousel');
     require('./components/mip-iframe');
-    require('./components/mip-video');
     var components = require('./components/index');
 
     // Register builtin animaters
