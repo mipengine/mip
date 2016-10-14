@@ -12,11 +12,11 @@
 
     "devDependencies": {
         "chalk": "^1.1.3",
-        "mip-builder": "^1.1.2",
-        "mip-processor": "^1.1.1",
-        "mip-processor-amd": "^1.1.2",
-        "mip-processor-less": "^1.1.0",
-        "mip-processor-jscompress": "^1.1.0",
+        "mip-builder": "^1.2.1",
+        "mip-processor": "^1.2.0",
+        "mip-processor-amd": "^1.2.1",
+        "mip-processor-less": "^1.2.0",
+        "mip-processor-jscompress": "^1.2.0",
 
         "fis-parser-less": "^0.1.3",
         "fis3": "^3.4.14",
