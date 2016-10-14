@@ -42,7 +42,7 @@ var amdPacker = new AMDPacker({
 });
 
 var lessProcessor = new LessProcessor({
-    files: ['src/less/mipmain.less']
+    files: ['src/less/mip.less']
 });
 
 var jsCompressor = new JSCompressor();
@@ -88,7 +88,7 @@ var builder = new Builder({
             processFile: function (file) {
                 if (file.outputPath !== 'src/mip.js'
                     && file.outputPath !== 'deps/jquery.js'
-                    && file.outputPath !== 'src/less/mipmain.css'
+                    && file.outputPath !== 'src/less/mip.css'
                 ) {
                     file.outputPath = null;
                 }
