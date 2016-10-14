@@ -31,8 +31,11 @@ var requireConfig = {
 var amdCompiler = new AMDCompiler({
     config: requireConfig,
     files: [
-        '**/*.js',
-        '!deps/**/*'
+        'src/**/*.js',
+        'deps/naboo.js',
+        'deps/zepto.js',
+        'deps/spark.js',
+        'deps/fetch-jsonp.js'
     ]
 });
 
@@ -47,17 +50,6 @@ var lessProcessor = new LessProcessor({
 
 var jsCompressor = new JSCompressor();
 
-var requireConfigAdder = {
-    process: function (builder) {
-        var file = builder.getFile('src/mip.js');
-        var configFileContent = require('fs').readFileSync(
-            path.resolve(__dirname, 'require-config.js'), 'UTF-8'
-        );
-
-        file.setData(configFileContent + '\n' + file.getData());
-        return Promise.resolve();
-    }
-};
 
 var Combiner = require('./file-combiner');
 var mainCombiner = new Combiner({
@@ -80,11 +72,23 @@ var builder = new Builder({
         amdCompiler,
         amdPacker,
         lessProcessor,
-        requireConfigAdder,
+        {
+            name: 'AddRequireConfigToMip',
+            process: function (builder) {
+                var file = builder.getFile('src/mip.js');
+                var configFileContent = require('fs').readFileSync(
+                    path.resolve(__dirname, 'require-config.js'), 'UTF-8'
+                );
+
+                file.setData(configFileContent + '\n' + file.getData());
+                return Promise.resolve();
+            }
+        },
         mainCombiner,
         jsCompressor,
         {
             name: 'OutputFilter',
+            files: ['**/*'],
             processFile: function (file) {
                 if (file.outputPath !== 'src/mip.js'
                     && file.outputPath !== 'deps/jquery.js'
@@ -96,6 +100,7 @@ var builder = new Builder({
         },
         {
             name: 'PathMapper',
+            files: ['**/*'],
             processFile: function (file) {
                 if (file.outputPath) {
                     file.outputPath = file.outputPath.slice(file.outputPath.lastIndexOf('/') + 1);
