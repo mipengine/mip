@@ -4,3 +4,5 @@ require.config({
         'jquery': '//mipcache.bdstatic.com/static/deps/jquery'
     }
 });
+
+require(['mip']);

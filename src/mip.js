@@ -66,4 +66,3 @@ define(function (require) {
     return Mip;
 });
 
-require(['mip']);

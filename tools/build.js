@@ -72,20 +72,20 @@ var builder = new Builder({
         amdCompiler,
         amdPacker,
         lessProcessor,
+        mainCombiner,
         {
-            name: 'AddRequireConfigToMip',
+            name: 'AddBootStrap',
             process: function (builder) {
                 var file = builder.getFile('src/mip.js');
                 var configFileContent = require('fs').readFileSync(
-                    path.resolve(__dirname, 'require-config.js'), 'UTF-8'
+                    path.resolve(__dirname, 'mip-bootstrap.js'), 'UTF-8'
                 );
 
-                file.setData(configFileContent + '\n' + file.getData());
+                file.setData(file.getData() + '\n\n' + configFileContent);
                 return Promise.resolve();
             }
         },
-        mainCombiner,
-        jsCompressor,
+        // jsCompressor,
         {
             name: 'OutputFilter',
             files: ['**/*'],
