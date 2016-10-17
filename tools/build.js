@@ -17,6 +17,7 @@ var requireConfig = {
         'spark' : '../deps/spark',
         'fetch-jsonp' : '../deps/fetch-jsonp'
     }
+    
     // ,
     // packages: [
     //     {
@@ -151,7 +152,7 @@ var processors = {
         amdPacker,
         // lessProcessor,
         mainCombiner,
-        bootstrapper,
+        bootstrapper
         // jsCompressor,
         // outputFilter,
         // pathMapper
@@ -159,7 +160,7 @@ var processors = {
 };
 
 var args = process.argv.slice(2);
-// build, debug, test
+// build, dev, test
 var runType = args && args[0];
 if (!runType || !(runType in processors)) {
     runType = 'build';
