@@ -42,7 +42,7 @@ define(function (require) {
             setTimeout(function () {
                 clearInterval(interval);
                 console.log(count);
-                done(count <= 5 ? 'throttle error' : null);
+                done(count > 5 ? 'throttle error' : null);
             }, 100);
         });
 
