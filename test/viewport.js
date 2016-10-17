@@ -3,7 +3,7 @@
  */
 define(function (require) {
     'use strict';
-    var viewport = require('src/viewport');
+    var viewport = require('viewport');
     viewport.on('scroll', function () {
         this.scrolled = true;
     });

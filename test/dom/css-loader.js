@@ -4,8 +4,8 @@
 define(function (require) {
     'use strict';
     
-    var cssLoader = require('src/dom/css-loader');
-    var util = require('src/util');
+    var cssLoader = require('dom/css-loader');
+    var util = require('util');
     var create = util.dom.create;
 
     var cssTest = '#test{margin:0; padding:0; opacity: 0.5}';

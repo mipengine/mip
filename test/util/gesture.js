@@ -1,8 +1,8 @@
 define(function (require) {
     'use strict';
 
-    var Gesture = require('src/util/gesture');
-    var domEvent = require('src/dom/event');
+    var Gesture = require('util/gesture');
+    var domEvent = require('dom/event');
     var docBody = document.body;
 
     function mockTouchEvent(name, clientX, clientY) {

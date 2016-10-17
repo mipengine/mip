@@ -4,7 +4,7 @@ define(function (require) {
     var docElem = document.documentElement;
     docElem.closest = docElem.contains = null;
 
-    var dom = require('src/dom/dom');
+    var dom = require('dom/dom');
     var element = dom.create(
 '<div class="dom-test test">\
 <div class="dom-closest-target">\

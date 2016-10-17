@@ -1,7 +1,7 @@
 define(function (require) {
     'use strict';
 
-    var fn = require('src/util/fn');
+    var fn = require('util/fn');
 
     describe('fn', function () {
         it('extend', function () {
@@ -41,7 +41,8 @@ define(function (require) {
             var interval = setInterval(throttledExec, 1);
             setTimeout(function () {
                 clearInterval(interval);
-                done(count !== 5 ? 'throttle error' : null);
+                console.log(count);
+                done(count <= 5 ? 'throttle error' : null);
             }, 100);
         });
 

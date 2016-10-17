@@ -35,7 +35,7 @@ define(function () {
             return false;
         }
     });
-    var Resources = require('src/resources');
+    var Resources = require('resources');
 
     var resources1 = new Resources();
     var resources2 = new Resources();

@@ -1,6 +1,6 @@
 define(function (require) {
     'use strict';
-    var CustomElement = require('src/customElement').create();
+    var CustomElement = require('customElement').create();
 
     describe('customElement', function () {
         var cElement = new CustomElement();
@@ -14,7 +14,7 @@ define(function (require) {
         expect(cElement.executeEventAction.bind(cElement)).to.not.throw(Error);
 
         it('init', function () {
-            var InitElement = require('src/customElement').create();
+            var InitElement = require('customElement').create();
             InitElement.prototype.init = sinon.spy();
             var initElement = new InitElement();
             expect(initElement.init).to.have.been.called;

@@ -4,9 +4,9 @@
 define(function (require) {
     'use strict';
 
-    var util = require('src/util');
+    var util = require('util');
     var create = util.dom.create;
-    var FixedElement = require('src/fixed-element').constructor;
+    var FixedElement = require('fixed-element').constructor;
     var fixedElement;
     var reset = function () {
         var elements = document.querySelectorAll('mip-fixed');

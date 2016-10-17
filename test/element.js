@@ -3,10 +3,10 @@
  */
 define(function (require) {
     'use strict';
-    var viewer = require('src/viewer');
-    var registerElement = require('src/element');
-    var customElement = require('src/customElement');
-    var util = require('src/util');
+    var viewer = require('viewer');
+    var registerElement = require('element');
+    var customElement = require('customElement');
+    var util = require('util');
 
     viewer.init();
 

@@ -1,7 +1,7 @@
 define(function (require) {
     'use strict';
 
-    var event = require('src/dom/event');
+    var event = require('dom/event');
 
     describe('event', function () {
         it('delegate', function () {

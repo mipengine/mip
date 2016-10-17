@@ -1,7 +1,7 @@
 define(function (require) {
     'use strict';
 
-    var css = require('src/dom/css');
+    var css = require('dom/css');
 
     describe('css', function () {
         var element = document.createElement('div');

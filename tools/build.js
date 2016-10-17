@@ -39,6 +39,28 @@ var amdCompiler = new AMDCompiler({
     ]
 });
 
+var testAmdCompiler = new AMDCompiler({
+    config: {
+        baseUrl: path.resolve(__dirname, '..', 'src'),
+        paths: {
+            'test': '../test',
+            'zepto' : '../deps/zepto',
+            'naboo' : '../deps/naboo',
+            'spark' : '../deps/spark',
+            'fetch-jsonp' : '../deps/fetch-jsonp'
+        }
+    },
+    files: [
+        'src/**/*.js',
+        'deps/naboo.js',
+        'deps/zepto.js',
+        'deps/spark.js',
+        'deps/fetch-jsonp.js',
+        'test/**/*.js'
+    ]
+});
+
+
 var amdPacker = new AMDPacker({
     config: requireConfig,
     modules: ['mip']
@@ -65,49 +87,87 @@ var mainCombiner = new Combiner({
     }
 });
 
+var bootstrapper = {
+    name: 'AddBootStrap',
+    process: function (builder) {
+        var file = builder.getFile('src/mip.js');
+        var configFileContent = require('fs').readFileSync(
+            path.resolve(__dirname, 'mip-bootstrap.js'), 'UTF-8'
+        );
 
-var builder = new Builder({
-    dir: path.resolve(__dirname, '..'),
-    processors: [
+        file.setData(file.getData() + '\n\n' + configFileContent);
+        return Promise.resolve();
+    }
+};
+
+var outputFilter = {
+    name: 'OutputFilter',
+    files: ['**/*'],
+    processFile: function (file) {
+        if (file.outputPath !== 'src/mip.js'
+            && file.outputPath !== 'deps/jquery.js'
+            && file.outputPath !== 'src/less/mip.css'
+        ) {
+            file.outputPath = null;
+        }
+    }
+};
+
+
+var pathMapper = {
+    name: 'PathMapper',
+    files: ['**/*'],
+    processFile: function (file) {
+        if (file.outputPath) {
+            file.outputPath = file.outputPath.slice(file.outputPath.lastIndexOf('/') + 1);
+        }
+    }
+};
+
+// Processors
+var processors = {
+    'build': [
         amdCompiler,
         amdPacker,
         lessProcessor,
         mainCombiner,
-        {
-            name: 'AddBootStrap',
-            process: function (builder) {
-                var file = builder.getFile('src/mip.js');
-                var configFileContent = require('fs').readFileSync(
-                    path.resolve(__dirname, 'mip-bootstrap.js'), 'UTF-8'
-                );
-
-                file.setData(file.getData() + '\n\n' + configFileContent);
-                return Promise.resolve();
-            }
-        },
-        // jsCompressor,
-        {
-            name: 'OutputFilter',
-            files: ['**/*'],
-            processFile: function (file) {
-                if (file.outputPath !== 'src/mip.js'
-                    && file.outputPath !== 'deps/jquery.js'
-                    && file.outputPath !== 'src/less/mip.css'
-                ) {
-                    file.outputPath = null;
-                }
-            }
-        },
-        {
-            name: 'PathMapper',
-            files: ['**/*'],
-            processFile: function (file) {
-                if (file.outputPath) {
-                    file.outputPath = file.outputPath.slice(file.outputPath.lastIndexOf('/') + 1);
-                }
-            }
-        }
+        bootstrapper,
+        jsCompressor,
+        outputFilter,
+        pathMapper
     ],
+    'debug': [
+        amdCompiler,
+        amdPacker,
+        lessProcessor,
+        mainCombiner,
+        bootstrapper,
+        // jsCompressor,
+        outputFilter,
+        pathMapper
+    ],
+    'test': [
+        testAmdCompiler,
+        amdPacker,
+        // lessProcessor,
+        mainCombiner,
+        bootstrapper,
+        // jsCompressor,
+        // outputFilter,
+        // pathMapper
+    ]
+};
+
+// build, debug, test
+var runType = 'build';
+
+if (!(runType in processors)) {
+    throw 'Command error: '+ runType;
+}
+
+var builder = new Builder({
+    dir: path.resolve(__dirname, '..'),
+    processors: processors[runType],
 
     files: [
         '!**/.*',
@@ -121,7 +181,7 @@ var builder = new Builder({
         '!README.md',
         '!dist/**/*',
         '!examples/**/*',
-        '!test/**/*',
+        runType !== 'test' ? '!test/**/*' : '',
         '!extensions/**/*',
         '!tools/**/*'
     ],

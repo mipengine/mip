@@ -4,9 +4,9 @@
 define(function (require) {
     'use strict';
 
-    var util = require('src/util');
+    var util = require('util');
 
-    var viewer = require('src/viewer');
+    var viewer = require('viewer');
 
     describe('viewer', function () {
         it('patchForIframe', function () {

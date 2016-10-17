@@ -4,8 +4,8 @@
 define(function (require) {
     'use strict';
 
-    var util = require('src/util');
-    var layout = require('src/layout');
+    var util = require('util');
+    var layout = require('layout');
     var elementFixed = util.dom.create('<div layout="fixed"></div>');
     var elementNoDisplay = util.dom.create('<div layout="nodisplay"></div>');
     var elementFixedHeight = util.dom.create('<div height="100"></div>');

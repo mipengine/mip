@@ -1,7 +1,7 @@
 define(function (require) {
     'use strict';
 
-    var domEvent = require('src/dom/event');
+    var domEvent = require('dom/event');
 
     function mockTouchEvent(name, clientX, clientY) {
         var evt = domEvent.create(name);
@@ -12,7 +12,7 @@ define(function (require) {
         return evt;
     }
 
-    var dataProcessor = require('src/util/gesture/data-processor');
+    var dataProcessor = require('util/gesture/data-processor');
 
     describe('gesture/data-processor', function () {
         var startEvent = mockTouchEvent('touchstart');

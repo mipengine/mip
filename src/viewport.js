@@ -1,8 +1,8 @@
 define(function (require) {
     'use strict';
 
-    var util = require('util');
-    var EventEmitter = require('util/event-emitter');
+    var util = require('./util');
+    var EventEmitter = require('./util/event-emitter');
     var fixedElement = require('./fixed-element');
     var rect = util.rect;
     

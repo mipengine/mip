@@ -9,6 +9,7 @@ var TEST_FILES = Object.keys(window.__karma__.files).filter(isTestFile);
  * 依赖配置
  */
 var paths = pathMap(TEST_FILES);
+console.log(paths);
 require.config({
     baseUrl: '/base/src',
     paths: paths
