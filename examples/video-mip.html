@@ -39,18 +39,18 @@
 
   <section>
     <h1>Attributes
-      <small>所有属性均会传递给video标签</small>
+      <small>所有属性均会传递给video标签，下面的视频设置了width, height, controls, loop, muted</small>
     </h1>
     <p>&lt;video&gt;属性包括autobuffer, crossorigin, loop, muted等，请参考:
       <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/mip-video" target="_blank">MDN文档</a>
     </p>
     <blockquote> 提示：为防止视频加载造成页面抖动，指定视频的高度和宽度是一个好习惯。MIP中，指定宽高是强制的。</blockquote>
-    <blockquote> 提示：请勿通过 height 和 width 属性来缩放视频！MIP允许元素响应式缩放，但视频的拉伸、缩放操作最好在资源上完成。</blockquote>
+    <blockquote> 提示：如果定义了layout属性，width和height属性将配合layout进行缩放。</blockquote>
     
     <mip-video
       layout="responsive" width="640" height="360" 
       src="https://gss0.bdstatic.com/-b1Caiqa0d9Bmcmop9aC2jh9h2w8e4_h7sED0YQ_t9iCPK/mda-gjkt21pkrsd8ae5y/mda-gjkt21pkrsd8ae5y.mp4"
-      controls loop>
+      controls loop muted>
     </mip-video>
   </section>
 
@@ -65,17 +65,6 @@
       <source src="https://clips.vorwaerts-gmbh.de/VfE.webm" type="video/webm">
       <!-- Chrome10+, Ffx4+, Opera10.6+ -->
       <source src="https://clips.vorwaerts-gmbh.de/VfE.ogv" type="video/ogg">
-    </mip-video>
-  </section>
-
-  <section>
-    <h1>前置广告
-      <small>可以前置若干广告片段，每个广告可有多个视频源</small>
-    </h1>
-    <mip-video controls
-      layout="responsive" width="640" height="360" 
-      src="https://gss0.bdstatic.com/-b1Caiqa0d9Bmcmop9aC2jh9h2w8e4_h7sED0YQ_t9iCPK/mda-gjkt21pkrsd8ae5y/mda-gjkt21pkrsd8ae5y.mp4"
-      ads='[{"sources": [{"type": "video/mp4","src": "https://gss0.bdstatic.com/-b1Caiqa0d9Bmcmop9aC2jh9h2w8e4_h7sED0YQ_t9iCPK/mda-gjjx1teirnw0bgme/mda-gjjx1teirnw0bgme.mp4"}]},{"sources": [{"type": "video/mp4","src": "https://gss0.bdstatic.com/-b1Caiqa0d9Bmcmop9aC2jh9h2w8e4_h7sED0YQ_t9iCPK/mda-ghqn0j5zrhttwtjf/mda-ghqn0j5zrhttwtjf.mp4"}]}]'>
     </mip-video>
   </section>
 
