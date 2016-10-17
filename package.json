@@ -39,8 +39,9 @@
     },
 
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "node tools/build.js"
+        "build": "node tools/build.js",
+        "dev": "node tools/build.js dev",
+        "test": "node tools/build.js test;./node_modules/karma/bin/karma --port 9877 start --reporters mocha,html,coverage"
     },
 
     "repository": {

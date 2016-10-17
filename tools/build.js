@@ -136,7 +136,7 @@ var processors = {
         outputFilter,
         pathMapper
     ],
-    'debug': [
+    'dev': [
         amdCompiler,
         amdPacker,
         lessProcessor,
@@ -158,11 +158,11 @@ var processors = {
     ]
 };
 
+var args = process.argv.slice(2);
 // build, debug, test
-var runType = 'build';
-
-if (!(runType in processors)) {
-    throw 'Command error: '+ runType;
+var runType = args && args[0];
+if (!runType || !(runType in processors)) {
+    runType = 'build';
 }
 
 var builder = new Builder({
