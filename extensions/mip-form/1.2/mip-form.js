@@ -22,8 +22,9 @@ define(function() {
         }
 
         var isAddClearBtn = _element.getAttribute('clear');
+        
         if(isAddClearBtn) {
-          const INPUTS = _element.getElementsByTagName('input');
+          const INPUTS = _element.querySelectorAll('input[type=input]');
           var index = 0;
           var cross = document.createElement("div");
           cross.id = 'mip-form-cross';
