@@ -5,14 +5,10 @@
  * @version 1.1
  * @copyright 2016 Baidu.com, Inc. All Rights Reserved
  */
-require.config({
-    paths: {
-        "extensions/ads/1.2/mip-ad-comm": "https://mipcache.bdstatic.com/static/v1.2/ads/mip-ad-comm",
-        "extensions/ads/1.2/mip-ad-baidu": "https://mipcache.bdstatic.com/static/v1.2/ads/mip-ad-baidu",
-        "extensions/ads/1.2/mip-ad-qwang": "https://mipcache.bdstatic.com/static/v1.2/ads/mip-ad-qwang"
-    }
-    
-});
+
+__inline('mip-ad-comm')
+__inline('mip-ad-baidu')
+__inline('mip-ad-qwang')
 
 define(function (){
     var customElement = require('customElement').create();
