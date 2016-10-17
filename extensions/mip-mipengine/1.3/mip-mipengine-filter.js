@@ -176,8 +176,8 @@ define(function (require) {
         * when clicked, select the filter,
         * if wise, collapse filter list.
         */
-        for (var i = 0; i < opt.filterWrap.querySelectorAll('a').length; i++) {
-            var ele = opt.filterWrap.querySelectorAll('a')[i];
+        for (var i = 0; i < opt.filterWrap.querySelectorAll('.filter-link').length; i++) {
+            var ele = opt.filterWrap.querySelectorAll('.filter-link')[i];
             ele.addEventListener('click', _this.filterSelect);
         }
 

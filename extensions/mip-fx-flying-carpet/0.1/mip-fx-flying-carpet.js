@@ -51,8 +51,16 @@ define(function (){
             }
 
         }); 
+        // fix android zindex fixed problem
+        element.addEventListener('click', function (e) {
+            alert('it\'s me');
+        });
+        document.body.addEventListener('click', function (e) {
+            alert('it\'s mes');
+        });
         setTimeout(function () {
-        }, 2000); 
+            document.body.click();
+        }, 2000);
     }
 
     /**
