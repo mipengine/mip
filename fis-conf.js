@@ -10,13 +10,13 @@ if (option === 'debug') {
 
 var fileList = {
     css: [
-        '/src/less/mipmain.less'
+        '/src/less/mip.less'
     ],
     extensions: [
         '/extensions/**'
     ],
-    mipmain: [
-        '/src/mipmain.js',
+    mip: [
+        '/src/mip.js',
         '/src/builtins/video/**',
         '/deps/**'
     ],
@@ -73,7 +73,7 @@ fis.match('extensions/*/**.{svg,eot,woff,woff2,ttf,otf,jpg,png}', {
 });
 
 
-/* mipmain */
+/* mip */
 fis.match('/src/(**).js', {
     optimizer: fis.plugin('uglify-js'),
     moduleId: '$1'
@@ -82,7 +82,7 @@ fis.match('/deps/(*).js', {
     optimizer: fis.plugin('uglify-js'),
     moduleId: '$1'
 });
-fis.match('src/(mipmain.js)', {
+fis.match('src/(mip.js)', {
     release: '$1'
 });
 fis.match('{src/(components/video/**),(deps/jquery.js)}', {
@@ -93,7 +93,7 @@ fis.match('{src/(components/video/**),(deps/jquery.js)}', {
 
 
 
-fis.media('mipmain');
+fis.media('mip');
 fis.media('css');
 fis.media('extensions');
 
