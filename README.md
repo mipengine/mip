@@ -26,10 +26,13 @@ npm install -g fis-parse-less
 #### 编译命令说明
 
 ```
-# 默认编译：包括压缩、md5等
+# 发布
 make
 
-# 开发者模式：包括文件监听
+# 构建
+make build
+
+# 调试：构建+打开浏览器
 make debug
 
 # 运行一次测试

@@ -2,14 +2,15 @@ export PORT=9877
 export KARMA_BIN=./node_modules/karma/bin/karma
 export TEST=$(KARMA_BIN) --port $(PORT)
 
-.PHONY: clean
+.PHONY: clean build debug
 
-# make 默认make命令只做编译
+# release: core and extensions
 default:
 	 fis3 release -d ./dist
-# 开发这模式：此种模式下，会开启本地服务器，并且监听src下文件，实时编译，看效果
-debug:
+# build and serve
+debug: build
 	 fis3 server start --root=./ --port=8056
+build: 
 	 fis3 release debug -d ./dist
 doc:
 	node renderDoc.js
