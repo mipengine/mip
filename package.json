@@ -1,13 +1,8 @@
 {
-    "name": "mipmain",
+    "name": "mip",
     "version": "1.0.0",
     "description": "mobile instant page",
-    "main": "main.js",
-    "directories": {
-        "doc": "docs",
-        "example": "examples"
-    },
-
+    "main": "dist/mip.js",
     "dependencies": {},
 
     "devDependencies": {
@@ -18,13 +13,9 @@
         "mip-processor-less": "^1.2.0",
         "mip-processor-jscompress": "^1.2.0",
 
-        "fis-parser-less": "^0.1.3",
-        "fis3": "^3.4.14",
-        "fis3-hook-commonjs": "^0.1.1",
-        "fis3-hook-amd": "^0.2.0",
         "chai": "^3.5.0",
         "chai-as-promised": "^5.3.0",
-        "karma": "^0.12.31",
+        "karma": "^1.3.0",
         "karma-chai": "^0.1.0",
         "karma-chai-as-promised": "^0.1.2",
         "karma-chai-sinon": "^0.1.5",
@@ -52,6 +43,6 @@
     "keywords": [
         "mip"
     ],
-    "author": "shenzhou",
+    "author": "The authors of MIP",
     "license": "MIT"
 }

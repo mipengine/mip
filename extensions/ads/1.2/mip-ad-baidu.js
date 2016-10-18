@@ -75,8 +75,9 @@ define(function(){
         if(script) {
             script.onload = function() {
                 setTimeout(function() {
-                    var pos = window.getComputedStyle(document.getElementById(s), null)
-                            .getPropertyValue('position');
+                    var elem = window.getComputedStyle(document.getElementById(s), null);
+                    var pos = elem && elem.getPropertyValue() ? 
+                              elem.getPropertyValue('position') : '';
 
                     if(pos == 'fixed') {
                         $elemID.append(document.getElementById(s));
