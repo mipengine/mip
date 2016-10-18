@@ -1,7 +1,7 @@
 define(function (require) {
     'use strict';
 
-    var EventAction = require('util/event-action');
+    var EventAction = require('utils/event-action');
 
     var mockElement = {
         executeEventAction: function (action) {

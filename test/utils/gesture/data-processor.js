@@ -12,7 +12,7 @@ define(function (require) {
         return evt;
     }
 
-    var dataProcessor = require('util/gesture/data-processor');
+    var dataProcessor = require('utils/gesture/data-processor');
 
     describe('gesture/data-processor', function () {
         var startEvent = mockTouchEvent('touchstart');

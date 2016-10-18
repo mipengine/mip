@@ -6,7 +6,7 @@
 define(function (require) {
     'use strict';
     var customElement = require('customElement').create();
-    var Gesture = require('util/gesture');
+    var Gesture = require('utils/gesture');
     var util = require('util');
     var index = 0;
     customElement.prototype.build = function () {

@@ -1,7 +1,7 @@
 define(function (require) {
     'use strict';
 
-    var Gesture = require('util/gesture');
+    var Gesture = require('utils/gesture');
     var domEvent = require('dom/event');
     var docBody = document.body;
 

@@ -1,7 +1,7 @@
 define(function (require) {
     'use strict';
 
-    var fn = require('./util/fn');
+    var fn = require('./utils/fn');
     var viewport = require('./viewport');
     var rect = require('./dom/rect');
 

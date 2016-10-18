@@ -2,7 +2,7 @@ define(function (require) {
     'use strict';
 
     var util = require('./util');
-    var EventEmitter = require('./util/event-emitter');
+    var EventEmitter = require('./utils/event-emitter');
     var fixedElement = require('./fixed-element');
     var rect = util.rect;
     

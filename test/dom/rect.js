@@ -1,7 +1,7 @@
 define(function (require) {
     'use strict';
 
-    var platform = require('util/platform');
+    var platform = require('utils/platform');
     platform.needSpecialScroll = true;
     var rect = require('dom/rect');
     describe('rect', function () {

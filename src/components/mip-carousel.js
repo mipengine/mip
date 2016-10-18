@@ -1,6 +1,6 @@
 define(function (require) {
     var customElem = require('customElement').create();
-    var Gesture = require('util/gesture');
+    var Gesture = require('utils/gesture');
     var util = require('util');
     var css = util.css;
     var naboo = require('naboo');

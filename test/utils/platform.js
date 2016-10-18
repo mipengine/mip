@@ -1,7 +1,7 @@
 define(function (require) {
     'use strict';
 
-    var platform = require('util/platform');
+    var platform = require('utils/platform');
 
     describe('platform', function () {
         expect(platform.isIos()).to.be.false;

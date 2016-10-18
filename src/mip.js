@@ -5,14 +5,14 @@ define(function (require) {
     require('fetch-jsonp');
 
 
-    require('./util/fn');
-    require('./util/gesture/gesture-recognizer');
-    require('./util/gesture/data-processor');
-    require('./util/gesture');
-    require('./util/platform');
-    require('./util/event-emitter');
-    var animation = require('./util/animation');
-    require('./util/event-action');
+    require('./utils/fn');
+    require('./utils/gesture/gesture-recognizer');
+    require('./utils/gesture/data-processor');
+    require('./utils/gesture');
+    require('./utils/platform');
+    require('./utils/event-emitter');
+    var animation = require('./utils/animation');
+    require('./utils/event-action');
 
     /* dom */
     require('./dom/css-loader');

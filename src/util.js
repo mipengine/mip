@@ -27,13 +27,13 @@ define(function (require) {
 
     return {
         makeCacheUrl: makeCacheUrl,
-        fn: require('./util/fn'),
+        fn: require('./utils/fn'),
         dom: require('./dom/dom'),
         event: require('./dom/event'),
         rect: require('./dom/rect'),
         css: require('./dom/css'),
-        Gesture: require('./util/gesture'),
-        EventEmitter: require('./util/event-emitter'),
-        platform: require('./util/platform')
+        Gesture: require('./utils/gesture'),
+        EventEmitter: require('./utils/event-emitter'),
+        platform: require('./utils/platform')
     }
 });

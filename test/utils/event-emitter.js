@@ -1,7 +1,7 @@
 define(function (require) {
     'use strict';
 
-    var EventEmitter = require('util/event-emitter');
+    var EventEmitter = require('utils/event-emitter');
 
     var emitter = new EventEmitter({
         createEventCallback: function (name) {

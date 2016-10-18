@@ -1,7 +1,7 @@
 define(function (require) {
     'use strict';
 
-    var Recognizer = require('util/gesture/gesture-recognizer');
+    var Recognizer = require('utils/gesture/gesture-recognizer');
 
     var mockGesture = {
         trigger: function () {

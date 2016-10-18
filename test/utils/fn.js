@@ -1,7 +1,7 @@
 define(function (require) {
     'use strict';
 
-    var fn = require('util/fn');
+    var fn = require('utils/fn');
 
     describe('fn', function () {
         it('extend', function () {

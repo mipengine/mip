@@ -5,8 +5,8 @@ define(function (require) {
     var Gesture = util.Gesture;
     var css = util.css;
     var platform = util.platform;
-    var EventAction = require('./util/event-action');
-    var EventEmitter = require('./util/event-emitter');
+    var EventAction = require('./utils/event-action');
+    var EventEmitter = require('./utils/event-emitter');
 
     /**
      * Save window.
