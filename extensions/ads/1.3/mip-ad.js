@@ -5,6 +5,7 @@
  * @version 1.1
  * @copyright 2016 Baidu.com, Inc. All Rights Reserved
  */
+
 __inline('mip-ad-comm')
 __inline('mip-ad-baidu')
 __inline('mip-ad-qwang')
@@ -28,7 +29,7 @@ define(function (){
         _element.isRender = true;
 
         var type = _element.getAttribute('type');
-        var adFile = 'extensions/ads/1.2/mip-' + type;
+        var adFile = 'extensions/ads/1.3/mip-' + type;
 
         require([adFile], function(mipAd) {
             mipAd.render(_this, me);

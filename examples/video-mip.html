@@ -1,167 +1,86 @@
-
 <!DOCTYPE html>
 <html lang="zh" mip>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-        <link rel="stylesheet" type="text/css" href="/dist/css/mipmain.css">
-        <style>
-            mip-video {
-                margin: 20px 0;
-            }
-            h1 {
-                margin: 30px 0px;
-                color: #902;
-                font-size: 13px;
-            }
-        </style>
-    </head>
-    <body>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="/dist/css/mipmain.css">
+  <style>
+    section{
+      margin: 40px 20px;
+    }
+    h1{
+      margin-bottom: 15px;
+      font-size: 18px;
+    }
+    p, blockquote{
+      margin-bottom: 15px;
+    }
+    small, blockquote{
+      color: #aaa;
+      font-size: 15px;
+    }
+    a {
+      color: #0095dd;
+    }
+  </style>
+</head>
+
+<body>
+
+  <section>
+    <h1>基本使用</h1>
+    <mip-video poster="https://placehold.it/640x360" 
+      layout="responsive" width="640" height="360" 
+      src="https://gss0.bdstatic.com/-b1Caiqa0d9Bmcmop9aC2jh9h2w8e4_h7sED0YQ_t9iCPK/mda-gjkt21pkrsd8ae5y/mda-gjkt21pkrsd8ae5y.mp4"
+      controls>
+    </mip-video>
+  </section>
+
+  <section>
+    <h1>Attributes
+      <small>所有属性均会传递给video标签，下面的视频设置了width, height, controls, loop, muted</small>
+    </h1>
+    <p>&lt;video&gt;属性包括autobuffer, crossorigin, loop, muted等，请参考:
+      <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/mip-video" target="_blank">MDN文档</a>
+    </p>
+    <blockquote> 提示：为防止视频加载造成页面抖动，指定视频的高度和宽度是一个好习惯。MIP中，指定宽高是强制的。</blockquote>
+    <blockquote> 提示：如果定义了layout属性，width和height属性将配合layout进行缩放。</blockquote>
     
-    <h1>responsive布局演示</h1>
-    <!-- adInfo="[[{type: 'video/mp4',src: 'http://v1.bdstatic.com/7217528220198269875/mp4/7217528220198269875.mp4'}],[{type: 'video/mp4',src: 'http://v1.bdstatic.com/8aa369effe2cc6280c1bd413723ce0ac/mp4/8aa369effe2cc6280c1bd413723ce0ac.mp4'}]]" -->
-    <mip-video layout="responsive"  width="480" height="400" class="mip-video" 
-    poster="https://gss0.bdstatic.com/yqACvGbaBA94lNC68IqT0jB-xx1xbK/ztd/whfpf%3D660%2C371%2C31%3Bq%3D70/sign=432ab2923101213fcf661d9c32da00e7/d4628535e5dde7115ed5c5bdafefce1b9d166172.jpg"
-    src="https://gss0.bdstatic.com/-b1Caiqa0d9Bmcmop9aC2jh9h2w8e4_h7sED0YQ_t9iCPK/mda-ghqrbvv83yt1f0xz/mda-ghqrbvv83yt1f0xz.mp4"
-    controls=""
-    adInfo="[[{type: 'video/mp4',src: 'https://gss0.bdstatic.com/-b1Caiqa0d9Bmcmop9aC2jh9h2w8e4_h7sED0YQ_t9iCPK/mda-ghqwymk83u5vzn8c/mda-ghqwymk83u5vzn8c.mp4'}],[{type: 'video/mp4',src: 'https://gss0.bdstatic.com/-b1Caiqa0d9Bmcmop9aC2jh9h2w8e4_h7sED0YQ_t9iCPK/mda-ghqn0j5zrhttwtjf/mda-ghqn0j5zrhttwtjf.mp4'}]]"
-    type="video/mp4" 
-    android-mode="fullscreen"
-    ios-mode = 'hide'
-    >
-        <mip-img  layout="responsive"  width="480" height="269"  class="mip-video-container" src="https://gss0.bdstatic.com/yqACvGbaBA94lNC68IqT0jB-xx1xbK/ztd/whfpf%3D660%2C371%2C31%3Bq%3D70/sign=432ab2923101213fcf661d9c32da00e7/d4628535e5dde7115ed5c5bdafefce1b9d166172.jpg">
-            <div class="mip-video-icon"></div>
-        </mip-img>
+    <mip-video
+      layout="responsive" width="640" height="360" 
+      src="https://gss0.bdstatic.com/-b1Caiqa0d9Bmcmop9aC2jh9h2w8e4_h7sED0YQ_t9iCPK/mda-gjkt21pkrsd8ae5y/mda-gjkt21pkrsd8ae5y.mp4"
+      controls loop muted>
     </mip-video>
+  </section>
 
-
-    <h1>fixed-height布局演示</h1>
-    <!-- adInfo="[[{type: 'video/mp4',src: 'http://v1.bdstatic.com/7217528220198269875/mp4/7217528220198269875.mp4'}],[{type: 'video/mp4',src: 'http://v1.bdstatic.com/8aa369effe2cc6280c1bd413723ce0ac/mp4/8aa369effe2cc6280c1bd413723ce0ac.mp4'}]]" -->
-    <mip-video layout="fixed-height"  width="480" height="200" class="mip-video" 
-    poster="https://gss0.bdstatic.com/yqACvGbaBA94lNC68IqT0jB-xx1xbK/ztd/whfpf%3D660%2C371%2C31%3Bq%3D70/sign=432ab2923101213fcf661d9c32da00e7/d4628535e5dde7115ed5c5bdafefce1b9d166172.jpg"
-    src="https://gss0.bdstatic.com/-b1Caiqa0d9Bmcmop9aC2jh9h2w8e4_h7sED0YQ_t9iCPK/mda-ghqrbvv83yt1f0xz/mda-ghqrbvv83yt1f0xz.mp4"
-    controls=""
-    adInfo="[[{type: 'video/mp4',src: 'https://gss0.bdstatic.com/-b1Caiqa0d9Bmcmop9aC2jh9h2w8e4_h7sED0YQ_t9iCPK/mda-ghqwymk83u5vzn8c/mda-ghqwymk83u5vzn8c.mp4'}],[{type: 'video/mp4',src: 'https://gss0.bdstatic.com/-b1Caiqa0d9Bmcmop9aC2jh9h2w8e4_h7sED0YQ_t9iCPK/mda-ghqn0j5zrhttwtjf/mda-ghqn0j5zrhttwtjf.mp4'}]]"
-    type="video/mp4" 
-    android-mode="fullscreen"
-    ios-mode = 'hide'
-    >
-        <mip-img  layout="fixed-height"  width="480" height="200"  class="mip-video-container" src="https://gss0.bdstatic.com/yqACvGbaBA94lNC68IqT0jB-xx1xbK/ztd/whfpf%3D660%2C371%2C31%3Bq%3D70/sign=432ab2923101213fcf661d9c32da00e7/d4628535e5dde7115ed5c5bdafefce1b9d166172.jpg">
-            <div class="mip-video-icon"></div>
-        </mip-img>
+  <section>
+    <h1>多视频源
+      <small>用于兼容不同解码库的浏览器</small>
+    </h1>
+    <mip-video controls layout="responsive" width="640" height="360">
+      <!-- MP4 must be first for iPad! -->
+      <source src="https://gss0.bdstatic.com/-b1Caiqa0d9Bmcmop9aC2jh9h2w8e4_h7sED0YQ_t9iCPK/mda-gjkt21pkrsd8ae5y/mda-gjkt21pkrsd8ae5y.mp4" type="video/mp4">
+      <!-- Safari / iOS, IE9 -->
+      <source src="https://clips.vorwaerts-gmbh.de/VfE.webm" type="video/webm">
+      <!-- Chrome10+, Ffx4+, Opera10.6+ -->
+      <source src="https://clips.vorwaerts-gmbh.de/VfE.ogv" type="video/ogg">
     </mip-video>
+  </section>
 
-
-    <h1>安卓全屏打开</h1>
-    <!-- adInfo="[[{type: 'video/mp4',src: 'http://v1.bdstatic.com/7217528220198269875/mp4/7217528220198269875.mp4'}],[{type: 'video/mp4',src: 'http://v1.bdstatic.com/8aa369effe2cc6280c1bd413723ce0ac/mp4/8aa369effe2cc6280c1bd413723ce0ac.mp4'}]]" -->
-    <mip-video class="mip-video" 
-    poster="https://gss0.bdstatic.com/yqACvGbaBA94lNC68IqT0jB-xx1xbK/ztd/whfpf%3D660%2C371%2C31%3Bq%3D70/sign=432ab2923101213fcf661d9c32da00e7/d4628535e5dde7115ed5c5bdafefce1b9d166172.jpg"
-    src="https://gss0.bdstatic.com/-b1Caiqa0d9Bmcmop9aC2jh9h2w8e4_h7sED0YQ_t9iCPK/mda-ghqrbvv83yt1f0xz/mda-ghqrbvv83yt1f0xz.mp4"
-    controls=""
-    adInfo="[[{type: 'video/mp4',src: 'https://gss0.bdstatic.com/-b1Caiqa0d9Bmcmop9aC2jh9h2w8e4_h7sED0YQ_t9iCPK/mda-ghqwymk83u5vzn8c/mda-ghqwymk83u5vzn8c.mp4'}],[{type: 'video/mp4',src: 'https://gss0.bdstatic.com/-b1Caiqa0d9Bmcmop9aC2jh9h2w8e4_h7sED0YQ_t9iCPK/mda-ghqn0j5zrhttwtjf/mda-ghqn0j5zrhttwtjf.mp4'}]]"
-    type="video/mp4" 
-    android-mode="fullscreen"
-    ios-mode = 'hide'
-    >
-        <mip-img  layout="responsive"  width="480" height="269"  class="mip-video-container" src="https://gss0.bdstatic.com/yqACvGbaBA94lNC68IqT0jB-xx1xbK/ztd/whfpf%3D660%2C371%2C31%3Bq%3D70/sign=432ab2923101213fcf661d9c32da00e7/d4628535e5dde7115ed5c5bdafefce1b9d166172.jpg">
-            <div class="mip-video-icon"></div>
-        </mip-img>
+  <section>
+    <h1>失效提示
+      <small>不兼容&lt;mip-video&gt;标签的浏览器中显示提示信息</small>
+    </h1>
+    <mip-video controls
+      layout="responsive" width="640" height="360" 
+      src="https://gss0.bdstatic.com/-b1Caiqa0d9Bmcmop9aC2jh9h2w8e4_h7sED0YQ_t9iCPK/mda-gjkt21pkrsd8ae5y/mda-gjkt21pkrsd8ae5y.mp4">
+      您的浏览器不支持视频播放，可以从
+      <a href="http://www.baidu.com" target="_blank">这里</a> 下载该视频。
     </mip-video>
+  </section>
 
-    <h1>安卓非全屏打开</h1>
-    <!-- adInfo="[[{type: 'video/mp4',src: 'http://v1.bdstatic.com/7217528220198269875/mp4/7217528220198269875.mp4'}],[{type: 'video/mp4',src: 'http://v1.bdstatic.com/8aa369effe2cc6280c1bd413723ce0ac/mp4/8aa369effe2cc6280c1bd413723ce0ac.mp4'}]]" -->
-    <mip-video class="mip-video" 
-    poster="https://gss0.bdstatic.com/yqACvGbaBA94lNC68IqT0jB-xx1xbK/ztd/whfpf%3D660%2C371%2C31%3Bq%3D70/sign=432ab2923101213fcf661d9c32da00e7/d4628535e5dde7115ed5c5bdafefce1b9d166172.jpg"
-    src="https://gss0.bdstatic.com/-b1Caiqa0d9Bmcmop9aC2jh9h2w8e4_h7sED0YQ_t9iCPK/mda-ghqrbvv83yt1f0xz/mda-ghqrbvv83yt1f0xz.mp4"
-    controls=""
-    adInfo="[[{type: 'video/mp4',src: 'https://gss0.bdstatic.com/-b1Caiqa0d9Bmcmop9aC2jh9h2w8e4_h7sED0YQ_t9iCPK/mda-ghqwymk83u5vzn8c/mda-ghqwymk83u5vzn8c.mp4'}],[{type: 'video/mp4',src: 'https://gss0.bdstatic.com/-b1Caiqa0d9Bmcmop9aC2jh9h2w8e4_h7sED0YQ_t9iCPK/mda-ghqn0j5zrhttwtjf/mda-ghqn0j5zrhttwtjf.mp4'}]]"
-    type="video/mp4" 
-    ios-mode = 'hide'
-    >
-        <source type="video/mp4" src="https://gss0.bdstatic.com/-b1Caiqa0d9Bmcmop9aC2jh9h2w8e4_h7sED0YQ_t9iCPK/mda-ghqrbvv83yt1f0xz/mda-ghqrbvv83yt1f0xz.mp4"></source>
-        <mip-img  class="mip-video-container" src="https://gss0.bdstatic.com/yqACvGbaBA94lNC68IqT0jB-xx1xbK/ztd/whfpf%3D660%2C371%2C31%3Bq%3D70/sign=432ab2923101213fcf661d9c32da00e7/d4628535e5dde7115ed5c5bdafefce1b9d166172.jpg">
-            <div class="mip-video-icon"></div>
-        </mip-img>
-    </mip-video>
-
-    <h1>全屏打开</h1>
-    <mip-video class="mip-video" 
-    poster="https://p1.bdstatic.com/7217528220198269875.jpg"
-    src="https://gss0.bdstatic.com/-b1Caiqa0d9Bmcmop9aC2jh9h2w8e4_h7sED0YQ_t9iCPK/mda-ghqrbvv83yt1f0xz/mda-ghqrbvv83yt1f0xz.mp4"
-    android-mode="fullscreen" ios-mode="hide"
-    >
-        立即播放
-    </mip-video>
-
-
-     <h1>非htth1s视频源调起sf页面</h1>
-    <!-- adInfo="[[{type: 'video/mp4',src: 'http://v1.bdstatic.com/7217528220198269875/mp4/7217528220198269875.mp4'}],[{type: 'video/mp4',src: 'http://v1.bdstatic.com/8aa369effe2cc6280c1bd413723ce0ac/mp4/8aa369effe2cc6280c1bd413723ce0ac.mp4'}]]" -->
-    <mip-video class="mip-video" 
-    poster="http://gss0.bdstatic.com/yqACvGbaBA94lNC68IqT0jB-xx1xbK/ztd/whfpf%3D660%2C371%2C31%3Bq%3D70/sign=432ab2923101213fcf661d9c32da00e7/d4628535e5dde7115ed5c5bdafefce1b9d166172.jpg"
-    src="http://gss0.bdstatic.com/-b1Caiqa0d9Bmcmop9aC2jh9h2w8e4_h7sED0YQ_t9iCPK/mda-ghqrbvv83yt1f0xz/mda-ghqrbvv83yt1f0xz.mp4"
-    controls=""
-    adInfo="[[{type: 'video/mp4',src: 'http://gss0.bdstatic.com/-b1Caiqa0d9Bmcmop9aC2jh9h2w8e4_h7sED0YQ_t9iCPK/mda-ghqwymk83u5vzn8c/mda-ghqwymk83u5vzn8c.mp4'}],[{type: 'video/mp4',src: 'http://gss0.bdstatic.com/-b1Caiqa0d9Bmcmop9aC2jh9h2w8e4_h7sED0YQ_t9iCPK/mda-ghqn0j5zrhttwtjf/mda-ghqn0j5zrhttwtjf.mp4'}]]"
-    iframeSrc="http://3g.163.com/touch/videoplay.html?channel=news&child=all&offset=19&offset=3&vid=VBVBFEIRQ#/recommend"
-    type="video/mp4"
-    ios-mode="hide"
-    >
-        <source type="video/mp4" src="http://v1.bdstatic.com/7e313590bc0d1eb605c376b326538356/mp4/7e313590bc0d1eb605c376b326538356.mp4"></source>
-        <mip-img class="mip-video-container" src="http://p1.bdstatic.com/7217528220198269875.jpg">
-            <div class="mip-video-icon"></div>
-        </mip-img>
-    </mip-video>
-
-    <mip-video class="mip-video" 
-    poster="http://gss0.bdstatic.com/yqACvGbaBA94lNC68IqT0jB-xx1xbK/ztd/whfpf%3D660%2C371%2C31%3Bq%3D70/sign=432ab2923101213fcf661d9c32da00e7/d4628535e5dde7115ed5c5bdafefce1b9d166172.jpg"
-    src="http://gss0.bdstatic.com/-b1Caiqa0d9Bmcmop9aC2jh9h2w8e4_h7sED0YQ_t9iCPK/mda-ghqrbvv83yt1f0xz/mda-ghqrbvv83yt1f0xz.mp4"
-    controls=""
-    adInfo="[[{type: 'video/mp4',src: 'http://gss0.bdstatic.com/-b1Caiqa0d9Bmcmop9aC2jh9h2w8e4_h7sED0YQ_t9iCPK/mda-ghqwymk83u5vzn8c/mda-ghqwymk83u5vzn8c.mp4'}],[{type: 'video/mp4',src: 'http://gss0.bdstatic.com/-b1Caiqa0d9Bmcmop9aC2jh9h2w8e4_h7sED0YQ_t9iCPK/mda-ghqn0j5zrhttwtjf/mda-ghqn0j5zrhttwtjf.mp4'}]]"
-    type="video/mp4"
-    ios-mode="hide"
-    >
-        <source type="video/mp4" src="http://v1.bdstatic.com/7e313590bc0d1eb605c376b326538356/mp4/7e313590bc0d1eb605c376b326538356.mp4"></source>
-        <mip-img class="mip-video-container" src="http://p1.bdstatic.com/7217528220198269875.jpg">
-            <div class="mip-video-icon"></div>
-        </mip-img>
-    </mip-video>
-
-    <style type="text/css">
-    body {
-        margin: 0;
-        padding: 0;
-    }
-    .wa-bdplayer {
-        height: 210px;
-        position: relative;
-        margin-bottom: 10px;
-    }
-    .wa-bdplayer img {
-        width: 100%;
-        height: 100%;
-    }
-    .wa-play-icon {
-         
-    }
-    .wa-video-box {
-        width: 100%;
-        height: 210px;
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 99;
-    } 
-    video {
-        background: #000;
-    }
-</style>
-
-<!-- <p>默认样式</p> -->
-<!-- <div class="wa-bdplayer wa-bdplayer-inline">
-    <img src="http://p1.bdstatic.com/7217528220198269875.jpg">
-    <video height="20" width="90%" src="http://v1.bdstatic.com/7e313590bc0d1eb605c376b326538356/mp4/7e313590bc0d1eb605c376b326538356.mp4" controls></video>
-    <div class="wa-play-icon"></div>
-    <div class="wa-video-box"></div>
-</div> -->
+  <script src="/dist/mipmain.js"></script>
 </body>
-    <script src="/dist/mipmain.js"></script>
+
 </html>
