@@ -16,7 +16,7 @@ define(function(){
         if(domain && token) {
 
             var script = document.createElement('script');
-            script.src = domain + token + '.js';
+            script.src = document.location.protocol + domain + token + '.js';
             document.body.appendChild(script);
 
         } else {
