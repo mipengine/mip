@@ -5,21 +5,27 @@
         <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
         <title>form提交</title>
         <style type="text/css">
-            body {
-                background-color: #eee;
+            h3 {
+                margin-top: 50px;
+                text-align: center;
+            }
+            h5 {
+                margin: 0 10%;
+                margin-top: 20px;
+            }
+            form {
+                width: 80%;
+                margin: auto;
             }
             input {
-                    padding: 6px 12px;
-                    font-size: 14px;
-                    line-height: 1.42857143;
-                    color: #555;
-                    background-color: #fff;
-                    background-image: none;
-                    border: 1px solid #ccc;
-                    border-radius: 4px;
-                    display: block;
-                    margin: 10px 0;
-                    width: 90%;
+                font-size: 14px;
+                line-height: 1.42857143;
+                color: #555;
+                background-color: #fff;
+                background-image: none;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                display: block;
             }
             input[type="submit"] {
                 box-sizing: content-box;
@@ -29,10 +35,28 @@
                 color: #ec1f5c;
                 font-size: 12px;
             }
+            h4 {
+                margin: 0 10%;
+                margin-top: 30px;
+                line-height: 30px;
+                color: #666;
+            }
+            ul {
+                margin: 0 10%;
+                font-size: 13px;
+                line-height: 20px;
+                color: #999;
+            }
+            li {
+                font-size: 16px;
+                line-height: 22px;
+            }
         </style>    
     </head>
     <body>
-         <mip-form method="post" url="www.baidu.com">
+        <h3>mip-form 组件示例</h3>
+        <h5>打开清空按钮配置</h5>
+         <mip-form method="post" url="m.baidu.com" clear="true">
              <input type="input" name="username" validatetarget="username" validatetype="must" placeholder="姓名">
              <div target="username">姓名不能为空</div>
              <input type="input" name="email" validatetarget="email" validatetype="email" placeholder="邮件">
@@ -43,7 +67,25 @@
              <div target="custom">请输入正确的数字</div>
              <input type="submit" value="提交">
          </mip-form>
+         <h5>关闭清空按钮配置</h5>
+         <mip-form method="post" url="http://172.20.176.152:8056/examples/form-mip-get.html">
+             <input type="input" name="username" validatetarget="username" validatetype="must" placeholder="姓名">
+             <div target="username">姓名不能为空</div>
+             <input type="input" name="email" validatetarget="email" validatetype="email" placeholder="邮件">
+             <div target="email">填写正确的email</div>
+             <input type="submit" value="提交">
+         </mip-form>
+            <h4>新增功能说明</h4>
+            <ul>
+            <li>新增功能</li>
+                <p>
+                 新增清空按钮功能，该功能可通过配置打开或关闭，若打开此功能，则在输入框中输入文字的时候，输入框右侧显示清空按钮，点击清空按钮，当前输入框中的文案被清空
+                </p>
+            <li>time: 16.10.13</li>
+            </ul>
+            
          <script src="/dist/mipmain.js"></script>
-         <script src="/dist/extensions/mip-form/0.2/mip-form.js"></script>
+         <script src="/dist/extensions/mip-form/1.2/mip-form.js"></script>
+
     </body>
 </html>

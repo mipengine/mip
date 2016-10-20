@@ -5,7 +5,6 @@
  * @version 1.1
  * @copyright 2016 Baidu.com, Inc. All Rights Reserved
  */
-
 __inline('mip-ad-comm')
 __inline('mip-ad-baidu')
 __inline('mip-ad-qwang')
