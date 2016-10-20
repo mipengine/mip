@@ -95,6 +95,10 @@ define(function() {
         //提交前验证
         function domHandle() {
             $(this).find('form').on("submit",function(event) {
+               
+               var cross = $(this).find('#mip-form-cross');
+               cross.css('display','none');
+
                var _parent = this;
                var allinput = $(this).find('input');
                var len = 0;
