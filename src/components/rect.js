@@ -62,6 +62,8 @@ define(['./platform'], function (platform) {
             if (ele = Rect.setterElement) {
                 ele.style.top = top + 'px';
                 ele.scrollIntoView(true);
+            } else {
+                Rect.scrollingElement.scrollTop = top;
             }
         },
         getScrollHeight: function () {
