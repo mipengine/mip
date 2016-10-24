@@ -46,6 +46,13 @@ define(function (){
     customElement.prototype.init = function() {
         this.build = render;
     };
+    customElement.prototype.prerenderAllowed = function () {
+        var type = this.element.getAttribute('type');
+        if(type == 'ad-baidu') {
+            return true;
+        }
+        return false;
+    };
     return customElement;
 });
 
