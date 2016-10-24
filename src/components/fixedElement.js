@@ -244,26 +244,24 @@ define(['platform', 'layout', 'css'], function(platform, layout, css){
     }
   };
 
+
   /**
    * show fixed layer
    */
-  fixedElement.prototype.showFixedElements = function(ele) {
-    var index = 0;
-    for(index = 0; index < ele.length; index++) {
-      css(ele[index].element, {
+  fixedElement.prototype.showFixedLayer = function(layer) {
+    if(layer) {
+      css(layer, {
         display: 'block'
       });
     }
-    
   };
 
   /**
    * hide fixed layer
    */
-  fixedElement.prototype.hideFixedElements = function(ele) {
-    var index = 0;
-    for(index = 0; index < ele.length; index++) {
-      css(ele[index].element, {
+  fixedElement.prototype.hideFixedLayer = function(layer) {
+    if(layer) {
+      css(layer, {
         display: 'none'
       });
     }

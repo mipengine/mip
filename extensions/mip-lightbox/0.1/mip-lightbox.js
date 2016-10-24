@@ -97,8 +97,9 @@ define(['components/fixedElement'],function (fixedElement){
         if(_this.open) {
             return;
         }
-
-        fixedElement.hideFixedElements(fixedElement._fixedElements);
+        
+        fixedElement.hideFixedLayer(fixedElement._fixedLayer);
+        // fixedElement.hideFixedElements(fixedElement._fixedElements);
         event.preventDefault();
 
         new Gesture(_this.element, {
@@ -123,7 +124,8 @@ define(['components/fixedElement'],function (fixedElement){
         if(!_this.open) {
             return;
         }
-        fixedElement.showFixedElements(fixedElement._fixedElements);
+        fixedElement.showFixedLayer(fixedElement._fixedLayer);
+        // fixedElement.showFixedElements(fixedElement._fixedElements);
         event.preventDefault();
 
         _this.open = false;
