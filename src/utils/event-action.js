@@ -26,17 +26,18 @@ define(function (require) {
      * @inner
      * @type {Array}
      */
-    var OPTION_KEYS = ['get', 'executeEventAction', 'parse', 'checkTarget', 'attr'];
+    var OPTION_KEYS = ['executeEventAction', 'parse', 'checkTarget', 'getTarget', 'attr'];
 
 
     /**
      * MIP does not support external JavaScript, so we provide EventAction to trigger events between elements.
+     * TODO: refactor
      * @class
      * @param {?Object} opt Options
      */
     function EventAction(opt) {
         opt && fn.extend(this, fn.pick(opt, OPTION_KEYS));
-    };
+    }
 
     EventAction.prototype = {
         /**
@@ -83,7 +84,7 @@ define(function (require) {
          * @param {string} id
          * @return {HTMLElement}
          */
-        get: function (id) {
+        getTarget: function (id) {
             return document.getElementById(id);
         },
 
@@ -104,7 +105,7 @@ define(function (require) {
         _execute: function (actions) {
             for (var i = 0; i < actions.length; i++) {
                 var action = actions[i];
-                var target = this.get(action.id);
+                var target = this.getTarget(action.id);
                 if (this.checkTarget(target)) {
                     this.executeEventAction(action, target);
                 }

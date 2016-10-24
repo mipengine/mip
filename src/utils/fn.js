@@ -27,7 +27,7 @@ define(function (require) {
                 timerId = setTimeout(exec, delay - delta);
             }
         }
-    };
+    }
 
     /**
      * Get all values of an object.
@@ -37,12 +37,12 @@ define(function (require) {
     function values(obj) {
         var keys = Object.keys(obj);
         var length = keys.length;
-        var ret = Array(length);
+        var ret = [];
         for (var i = 0; i < length; i++) {
-            ret[i] = obj[keys[i]];
+            ret.push(obj[keys[i]]);
         }
         return ret;
-    };
+    }
 
     /**
      * Return an object is a plain object or not.
@@ -50,8 +50,8 @@ define(function (require) {
      * @return {boolean}
      */
     function isPlainObject(obj) {
-        return obj && Object.getPrototypeOf(obj) == Object.prototype;
-    };
+        return !!obj && Object.getPrototypeOf(obj) == Object.prototype;
+    }
 
     /**
      * Extend an object to another object.
@@ -76,7 +76,7 @@ define(function (require) {
                 target[key] = source[key];
             }
         }
-    };
+    }
 
     /**
      * Extend some objects to an object.
@@ -94,7 +94,7 @@ define(function (require) {
             _extend(target, arguments[i], deep);
         }
         return target;
-    };
+    }
 
     /**
      * Pick some attributes from an object.
@@ -114,7 +114,7 @@ define(function (require) {
             }
         }
         return result;
-    };
+    }
 
     return {
         throttle: throttle,

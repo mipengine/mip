@@ -59,7 +59,7 @@ define(function (require) {
          */
         this._viewport = viewport;
         this._bindEvent();
-    };
+    }
 
     Resources.prototype = {
         /**

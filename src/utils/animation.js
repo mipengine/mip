@@ -42,7 +42,7 @@ define(function (require) {
             }
         }
         return args;
-    };
+    }
 
     /**
      * Register built-in naboo methods.
@@ -63,9 +63,9 @@ define(function (require) {
             };
             spark.css3.apply(spark, args);
         });
-    };
+    }
 
     return {
         register: register
-    };
+    }
 });

@@ -19,7 +19,7 @@ define(function (require) {
         var data = dataProcessor.process(event, opt.preventX, opt.preventY);
         this._recognize(data);
         this.trigger(event.type, event, data);
-    };
+    }
 
     /**
      * Add or remove listeners from an element.
@@ -38,7 +38,7 @@ define(function (require) {
                 element.addEventListener(list[i], handler, false);
             }
         }
-    };
+    }
 
     /**
      * Gesture
@@ -71,7 +71,7 @@ define(function (require) {
          * @type {Object}
          */
         this._recognizers = {};
-    };
+    }
 
     var proto = EventEmitter.mixin(Gesture.prototype);
 

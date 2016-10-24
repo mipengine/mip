@@ -102,7 +102,7 @@ define(function (require) {
             .addEventListener('scroll', scrollEvent.bind(this), false);
         win.addEventListener('resize', resizeEvent.bind(this), false);
         return this;
-    };
+    }
     
     /**
      * Whether the changed event is firing.
@@ -150,7 +150,7 @@ define(function (require) {
             lastEvent = event;
         }
         this.trigger('scroll', event);
-    };
+    }
     
     /**
      * The resize event handler.
@@ -158,7 +158,7 @@ define(function (require) {
      */
     function resizeEvent(event) {
         this.trigger('resize', event);
-    };
+    }
 
     /**
      * Timer for changed event.
@@ -180,7 +180,7 @@ define(function (require) {
         } else {
             changedTimer = setTimeout(boundChangeEvent, delay >= 20 ? 20 : 20 - delay);
         }
-    };
+    }
 
     // Mix the methods and attributes of Event into the viewport.
     EventEmitter.mixin(viewport);

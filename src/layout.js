@@ -26,7 +26,6 @@ define(function () {
     var NATURAL_DIMENSIONS = {
         'mip-pix': {width: '1px', height: '1px'},
         'mip-stats': {width: '1px', height: '1px'},
-        // TODO: audio should have width:auto.
         'mip-audio': null,
         'mip-share': {width: '60px', height: '44px'}        
     };

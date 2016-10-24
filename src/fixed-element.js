@@ -11,13 +11,6 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
      * @class
      */
     function FixedElement() {
-
-        /**
-         * @private
-         * @type {number}
-         */
-        this._paddingTop = 0;
-
         /**
          * @private
          * @type {HTMLElement}
@@ -128,27 +121,27 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
         var height = (this._isAndroidUc) ? '100%': 0;
         var width = (this._isAndroidUc) ? '100%': 0;
         css(this._fixedLayer, {
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            height: height,
-            width: width,
+            'position': 'absolute',
+            'top': 0,
+            'left': 0,
+            'height': height,
+            'width': width,
             'pointer-events': 'none',
-            overflow: 'hidden',
-            animation: 'none',
+            'overflow': 'hidden',
+            'animation': 'none',
             '-webkit-animation': 'none',
-            border: 'none',
+            'border': 'none',
             'box-sizing': 'border-box',
             'box-shadow': 'none',
-            display: 'block',
-            float: 'none',
-            margin: 0,
-            opacity: 1,
-            outline: 'none',
-            transform: 'none',
-            transition: 'none',
-            visibility: 'visible',
-            background: 'none'
+            'display': 'block',
+            'float': 'none',
+            'margin': 0,
+            'opacity': 1,
+            'outline': 'none',
+            'transform': 'none',
+            'transition': 'none',
+            'visibility': 'visible',
+            'background': 'none'
         });
         var html = document.getElementsByTagName('html')[0];
         html.appendChild(this._fixedLayer);

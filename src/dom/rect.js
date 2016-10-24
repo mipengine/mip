@@ -25,7 +25,7 @@ define(function (require) {
             return element;
         }
         return null;
-    };
+    }
 
     /**
      * Element for getting scroll values.

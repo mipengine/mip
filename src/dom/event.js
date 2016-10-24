@@ -25,7 +25,7 @@ define(function (require) {
             element.removeEventListener(event, eventHandler);
             eventHandler = element = handler = null;
         };
-    };
+    }
 
     /**
      * Object for getting event's type.
@@ -46,7 +46,8 @@ define(function (require) {
         event.initEvent(type, true, true);
         data && (event.data = data);
         return event;
-    };
+    }
+
     return {
         delegate: delegate,
         create: createEvent

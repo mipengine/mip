@@ -162,7 +162,7 @@ define(function (require) {
             this.customElement.executeEventAction(action);
         };
         return baseElementProto = proto;
-    };
+    }
 
     /**
      * Create a mip element prototype by name
@@ -173,7 +173,7 @@ define(function (require) {
         var proto = Object.create(createBaseElementProto());
         proto.name = name;
         return proto;
-    };
+    }
 
     /**
      * Add a style tag to head by csstext
@@ -183,7 +183,7 @@ define(function (require) {
         if (css) {
             cssLoader.insertStyleElement(document, document.head, css, name, false);
         }
-    };
+    }
 
     /**
      * Register MIPElement. 
@@ -205,7 +205,7 @@ define(function (require) {
         document.registerElement(name, {
             prototype: createMipElementProto(name)
         });
-    };
+    }
     
     return registerElement;
 });

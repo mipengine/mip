@@ -30,7 +30,7 @@ define(function (require) {
             return true;
         }
         return false;
-    };
+    }
 
 
     /**
@@ -44,7 +44,8 @@ define(function (require) {
             opt.createEventCallback && (this._createEventCallback = opt.createEventCallback);
             opt.removeEventCallback && (this._removeEventCallback = opt.removeEventCallback);
         }
-    };
+    }
+
     var proto = EventEmitter.prototype = {
         /**
          * Add handler to events

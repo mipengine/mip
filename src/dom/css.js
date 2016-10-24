@@ -40,7 +40,7 @@ define(function (require) {
             }
         }
         return prefixCache[property] = prop || property;
-    };
+    }
 
     /**
      * Regular expression of checking a string whether has a unit.
@@ -73,7 +73,7 @@ define(function (require) {
             return value + (unitCache[property] = match[1]);
         }
         return value;
-    };
+    }
 
     /**
      * Set or get the value of the style properties of an element or any elements.
@@ -128,7 +128,7 @@ define(function (require) {
             property = prefixProperty(property);
             return element.style[property] || document.defaultView.getComputedStyle(element)[property];
         }
-    };
+    }
 
     return css;
 });

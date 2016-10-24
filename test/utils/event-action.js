@@ -13,7 +13,7 @@ define(function (require) {
     describe('event-action', function () {
         it('normal', function () {
             var action = new EventAction({
-                get: function () {
+                getTarget: function () {
                     return mockElement;
                 }
             });

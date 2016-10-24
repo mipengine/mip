@@ -100,7 +100,7 @@ define(function (require) {
          * @type {Object}
          */
         this.conflictList = {};
-    };
+    }
 
     fn.extend(Recognizer.prototype, /** @lends Recognizer.prototype **/{
         /**
@@ -327,7 +327,7 @@ define(function (require) {
     function holdTimeFn() {
         this._state = STATE_END;
         this.emit();
-    };
+    }
 
     /**
      * Tap
@@ -336,7 +336,7 @@ define(function (require) {
     function TapRecognizer() {
         Recognizer.apply(this, arguments);
         this.boundHoldTimeFn = holdTimeFn.bind(this);
-    };
+    }
 
     TapRecognizer.prototype = fn.extend(create(Recognizer.prototype), /** @lends TapRecognizer.prototype **/{
         /**
@@ -453,7 +453,7 @@ define(function (require) {
      */   
     function DoubleTapRecognizer() { 
         TapRecognizer.apply(this, arguments);
-    };
+    }
 
     DoubleTapRecognizer.prototype = fn.extend(create(TapRecognizer.prototype), /** @lends DoubleRecognizer.prototype **/{
         /**
@@ -481,7 +481,7 @@ define(function (require) {
      */
     function SwipeRecognizer() {
         Recognizer.apply(this, arguments);
-    };
+    }
 
     SwipeRecognizer.prototype = fn.extend(create(Recognizer.prototype), /** @lends SwipeRecognizer.prototype **/{
         /**
