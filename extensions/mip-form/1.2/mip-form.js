@@ -31,7 +31,7 @@ define(function() {
 
           for(index = 0; index < INPUTS.length; index ++) {
               INPUTS[index].onfocus = function() {
-                var self = this;
+                var self = this; 
                 cross.setAttribute("name", self.getAttribute('name'));
                 cross.style.top = self.offsetTop + 'px';
                 self.parentNode.appendChild(cross);
