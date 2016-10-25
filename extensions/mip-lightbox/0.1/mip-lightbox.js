@@ -27,8 +27,6 @@ define(['components/fixedElement'],function (fixedElement){
 
         setStyles(_this.element, {
             'position': 'fixed',
-            // 'position': '-webkit-sticky',
-            // 'position': 'sticky',
             'z-index': 10001,
             'top': 0,
             'right': 0,
@@ -43,12 +41,6 @@ define(['components/fixedElement'],function (fixedElement){
         /* 事件注册 */
         _this.addEventAction('close', function() {close_.call(_this, event)});
         _this.addEventAction('open', function() {open_.call(_this, event)});
-
-        // var btn = document.getElementById('btn-open');
-        // btn,addEventListener('click', function() {
-        //     open_.call(_this, event);
-        // });
-
 
     }
 
@@ -99,7 +91,6 @@ define(['components/fixedElement'],function (fixedElement){
         }
         
         fixedElement.hideFixedLayer(fixedElement._fixedLayer);
-        // fixedElement.hideFixedElements(fixedElement._fixedElements);
         event.preventDefault();
 
         new Gesture(_this.element, {
@@ -125,7 +116,6 @@ define(['components/fixedElement'],function (fixedElement){
             return;
         }
         fixedElement.showFixedLayer(fixedElement._fixedLayer);
-        // fixedElement.showFixedElements(fixedElement._fixedElements);
         event.preventDefault();
 
         _this.open = false;
