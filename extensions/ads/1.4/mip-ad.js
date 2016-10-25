@@ -9,7 +9,7 @@
 __inline('mip-ad-comm')
 __inline('mip-ad-baidu')
 __inline('mip-ad-qwang')
-
+__inline('mip-baidu-wm-ext')
 
 define(function (){
     var customElement = require('customElement').create();

@@ -387,7 +387,8 @@ define(function () {
                 "event": "loadiframe",
                 "data": {
                     "url": href,
-                    "title": headTitle || head
+                    "title": headTitle || head,
+                    "click": $el.data('click')
                 }
             };
 
