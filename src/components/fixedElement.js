@@ -244,5 +244,28 @@ define(['platform', 'layout', 'css'], function(platform, layout, css){
     }
   };
 
+
+  /**
+   * show fixed layer
+   */
+  fixedElement.prototype.showFixedLayer = function(layer) {
+    if(layer) {
+      css(layer, {
+        display: 'block'
+      });
+    }
+  };
+
+  /**
+   * hide fixed layer
+   */
+  fixedElement.prototype.hideFixedLayer = function(layer) {
+    if(layer) {
+      css(layer, {
+        display: 'none'
+      });
+    }
+  };
+
   return new fixedElement();
 });
