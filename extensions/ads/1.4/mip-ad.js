@@ -30,7 +30,7 @@ define(function (){
         _element.isRender = true;
 
         var type = _element.getAttribute('type');
-        var adFile = 'extensions/ads/1.3/mip-' + type;
+        var adFile = 'extensions/ads/1.4/mip-' + type;
 
         require([adFile], function(mipAd) {
             mipAd.render(_this, me);
