@@ -3,6 +3,7 @@
  * @author www.39.net技术部
  */
 // 定义广告的全局变量
+
 var MIP39GlobNode = {};
 // 定义了广告的通用模块
 define(['require', 'zepto', 'customElement'], function (require) {
@@ -805,30 +806,39 @@ define(['require', 'zepto', 'customElement'], function (require) {
         }
         )();
     };
+
     // build 方法，元素插入到文档时执行，仅会执行一次
     customElem.prototype.build = function () {
-        // this.element 可取到当前实例对应的 dom 元素
         var element2 = this.element;
-        var id = element2.getAttribute('asid');
         var hideLayerId = element2.getAttribute('hide-layer-id');
-        var n = require('zepto');
-        var i = n(element2);
-        var script = [
+        var adid = element2.getAttribute('adid'); 
+        MIP39GlobNode.callbackfunction = function (data) {
+            var id = data;
+            var n = require('zepto');
+            var i = n(element2);            
+            var script = [
                 '<script type="text/javascript" id="ads_' + id + '">',
                 'MIP39GlobNode.acAsId = ' + id + ';MIP39GlobNode.acFormat = 0;MIP39GlobNode.acMode = 1;MIP39GlobNode.acGroupId = 1;MIP39GlobNode.acServerBaseUrl = "d-mip.39.net/";',
                 '</script>'];
-        i.append(script.join(''));
-        ks(id);
-        setTimeout(function () {
+            i.append(script.join(''));
+            ks(id);
+            setTimeout(function () {
              if (hideLayerId) {
             i.find(".close").click(function () {window.document.getElementById(hideLayerId).style.display = "none";});
            }
-        }, 3000);         
+        }, 3000);
+        };
+        // this.element 可取到当前实例对应的 dom 元素               
+        var url = 'https://app-g-mip.39.net/rel/k14.php?id=' + adid + '&jsonpcallback=MIP39GlobNode.callbackfunction';
+        var script = document.createElement('script');
+        script.setAttribute('src', url);
+        document.getElementsByTagName('head')[0].appendChild(script);
     };
     return customElem;
 });
 // 注册mip业务标签组件
-require(["mip-39ad"], function(mip39Ad) {
-    MIP.registerMipElement("mip-39ad", mip39Ad)
+require(['mip-39appgad'], function (appgad) {
+    MIP.registerMipElement('mip-39appgad', appgad);
 });
+
 
