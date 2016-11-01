@@ -57,8 +57,8 @@ define(function (require) {
             // set the style to be `height: 100%; overflow: auto` for solving this problem.
             if (platform.needSpecialScroll) {
                 css([document.documentElement, document.body], {
-                    height: '100%',
-                    overflow: 'auto',
+                    'height': '100%',
+                    'overflow-y': 'auto',
                     '-webkit-overflow-scrolling': 'touch'
                 });
                 css(document.body, 'position', 'relative');
@@ -73,7 +73,9 @@ define(function (require) {
                 'opacity': 1,
                 'animation': 'none'
             });
-            this.trigger('load', Date.now());
+            this.isShow = true;
+            this._showTiming = Date.now();
+            this.trigger('show', this._showTiming);
         },
 
         /**
@@ -98,6 +100,18 @@ define(function (require) {
             this._gesture.on('tap', function (event) {
                 eventAction.execute('tap', event.target, event);
             });
+        },
+
+        /**
+         * Event binding callback.
+         * For overridding _bindEventCallback of EventEmitter.
+         * @param {string} name
+         * @param {Function} handler
+         */
+        _bindEventCallback: function (name, handler) {
+            if (name === 'show' && this.isShow && typeof handler === 'function') {
+                handler.call(this, this._showTiming);
+            }
         }
     };
 

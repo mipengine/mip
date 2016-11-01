@@ -67,8 +67,11 @@ define(function (require) {
          */
         _bindEvent: function () {
             var self = this;
-            this._viewport.on('changed', function () {
+            var timer;
+            this._viewport.on('changed resize', function () {
                 self.updateState();
+                clearTimeout(timer);
+                timer = setTimeout(self.updateState, 1000);
             });
             this.updateState();
         },

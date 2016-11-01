@@ -31,6 +31,7 @@ define(function (require) {
     require('./util');
     var resources = require('./resources');
     var viewer = require('./viewer');
+    var performance = require('./performance');
 
     /* builtin components */
     require('./components/mip-img');
@@ -59,6 +60,14 @@ define(function (require) {
 
     // Register builtin extensions
     components.register();
+
+    performance.start(window._mipStartTiming);
+
+    performance.on('update', function (timing) {
+        viewer.sendMessage('performance_update', timing);
+    });
+
+    viewport.fixScrollLocation();
 
     // Show page
     viewer.show();
