@@ -119,7 +119,7 @@ var pathMapper = {
     name: 'PathMapper',
     files: ['**/*'],
     processFile: function (file) {
-        if (file.outputPath) {
+        if (file.outputPath && !/jquery.js/.test(file.outputPath)) {
             file.outputPath = file.outputPath.slice(file.outputPath.lastIndexOf('/') + 1);
         }
     }
