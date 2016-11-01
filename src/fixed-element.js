@@ -277,7 +277,7 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
      * Show fixed layer
      * @param {HTMLElement} layer
      */
-    fixedElement.prototype.showFixedLayer = function(layer) {
+    FixedElement.prototype.showFixedLayer = function(layer) {
         if(layer) {
             css(layer, {
                 display: 'block'
@@ -289,7 +289,7 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
      * Hide fixed layer
      * @param {HTMLElement} layer
      */
-    fixedElement.prototype.hideFixedLayer = function(layer) {
+    FixedElement.prototype.hideFixedLayer = function(layer) {
         if(layer) {
             css(layer, {
                 display: 'none'
