@@ -69,6 +69,13 @@ define(function (require) {
     customElement.prototype.prerenderAllowed = function () {return false;}
 
     /**
+     * Return the current component containing resources.
+     * If it returns true, complete should be called.
+     * @return {Boolean}
+     */
+    customElement.prototype.hasResources = function () {return false;}
+
+    /**
      * Called when the MIPElement is first inserted into the document.
      */
     customElement.prototype.build = function () {};
@@ -116,6 +123,13 @@ define(function (require) {
         if (action && eventObj) {
             eventObj.trigger(action.handler, action.event, action.arg);
         }
+    };
+
+    /**
+     * Notice that resources are loaded.
+     */
+    customElement.prototype.resourcesComplete = function () {
+        this.element.resourcesComplete();
     };
 
     return {

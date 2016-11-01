@@ -3,6 +3,7 @@ define(function (require) {
 
     var cssLoader = require('./dom/css-loader');
     var layout = require('./layout');
+    var performance = require('./performance');
 
     /**
      * Storage of custom elements.
@@ -70,9 +71,14 @@ define(function (require) {
              * @type {Object}
              * @public
              */
-            this.customElement = new CustomEle(this);
+            var customElement = this.customElement = new CustomEle(this);
 
-            this.customElement.createdCallback();
+            customElement.createdCallback();
+
+            // Add first-screen element to performance.
+            if (customElement.hasResources()) {
+                performance.addFsElement(this);
+            }
         };
 
         /**
@@ -92,6 +98,7 @@ define(function (require) {
         proto.detachedCallback = function() {
             this.customElement.detachedCallback();
             this._resources.remove(this);
+            performance.fsElementLoaded(this);
         };
 
         /**
@@ -161,6 +168,14 @@ define(function (require) {
         proto.executeEventAction = function (action) {
             this.customElement.executeEventAction(action);
         };
+
+        /**
+         * Called by customElement. And tell the performance that element is loaded.
+         */
+        proto.resourcesComplete = function () {
+            performance.fsElementLoaded(this);
+        };
+
         return baseElementProto = proto;
     }
 

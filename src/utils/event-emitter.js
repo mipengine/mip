@@ -40,9 +40,11 @@ define(function (require) {
      */
     function EventEmitter(opt) {
         if (opt) {
-            this.setEventContext(opt.context);
+            opt.context && this.setEventContext(opt.context);
+
             opt.createEventCallback && (this._createEventCallback = opt.createEventCallback);
             opt.removeEventCallback && (this._removeEventCallback = opt.removeEventCallback);
+            opt.bindEventCallback && (this._bindEventCallback = opt.bindEventCallback);
         }
     }
 
@@ -58,6 +60,7 @@ define(function (require) {
                 return this;
             }
             this._getEvent(name).push(handler);
+            this._bindEventCallback(name, handler);
             return this;
         },
 
@@ -168,6 +171,15 @@ define(function (require) {
          */
         _removeEventCallback: function (name) {
 
+        },
+
+        /**
+         * Called when an event is binding.
+         * @param {string} name Event name
+         * @param {Function} handler Event handler
+         */
+        _bindEventCallback: function (name, handler) {
+
         }
     };
 
@@ -197,7 +209,9 @@ define(function (require) {
      */
     EventEmitter.mixin = function (obj) {
         for (var i = 0; i < keys.length; i++) {
-            obj[keys[i]] = proto[keys[i]];
+            if (!(keys[i] in obj)) {
+                obj[keys[i]] = proto[keys[i]];
+            }
         }
         return obj;
     };

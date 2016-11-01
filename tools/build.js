@@ -79,6 +79,7 @@ var mainCombiner = new Combiner({
     sep: '\n\n',
     files: {
         'src/mip.js': [
+            'src/prefix.js',
             'deps/promise.js',
             'deps/fetch.js',
             'deps/document-register-element.max.js',
