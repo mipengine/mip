@@ -1,36 +1,59 @@
-define(['./components/platform', './components/event', './components/css', './components/event-action',
-    './components/gesture'], function (platform, Event, css, EventAction, Gesture) {
+define(function (require) {
     'use strict';
+
+    var util = require('./util');
+    var Gesture = util.Gesture;
+    var css = util.css;
+    var platform = util.platform;
+    var EventAction = require('./utils/event-action');
+    var EventEmitter = require('./utils/event-emitter');
+
+    /**
+     * Save window.
+     * @inner
+     * @type {Object}
+     */
     var win = window;
+
     /**
      * The mip viewer.Complement native viewer, and solve the page-level problems.
      */
-    var Viewer = {
+    var viewer = {
         /**
          * The initialise method of viewer
          */
         init: function () {
             this.patchForIframe();
+
             /**
              * The gesture of document.Used by the event-action of Viewer.
-             * @type {Gesture}
              * @private
+             * @type {Gesture}
              */
             this._gesture = new Gesture(document, {
                 preventX: false
             });
+
+            // Tell parent page the current page is loaded.
             this.sendMessage('mippageload', {
                 time: Date.now(),
                 title: encodeURIComponent(document.title)
             });
             this.setupEventAction();
         },
+
+        /**
+         * The iframed state.
+         * @type {Boolean}
+         * @public
+         */
         isIframed: win !== top,
+
         /** 
          * Patch for iframe
          */
         patchForIframe: function () {
-            // When the page in an iframe and the browser is IOS, the page can not be scrollable. So we need
+            // When page in an iframe and browser is IOS, page can not be scrollable. So we need
             // set the style to be `height: 100%; overflow: auto` for solving this problem.
             if (platform.needSpecialScroll) {
                 css([document.documentElement, document.body], {
@@ -41,8 +64,9 @@ define(['./components/platform', './components/event', './components/css', './co
                 css(document.body, 'position', 'relative');
             }
         },
+
         /**
-         * Show the contents of the page. They are not displayed until the extensions are registered.
+         * Show contents of page. The contents will not be displayed until the components are registered.
          */
         show: function () {
             css(document.body, {
@@ -51,8 +75,9 @@ define(['./components/platform', './components/event', './components/css', './co
             });
             this.trigger('load', Date.now());
         },
+
         /**
-         * Send the message to the parent frame
+         * Send message to parent page.
          * @param {string} eventName
          * @param {Object} data Message body
          */
@@ -64,19 +89,20 @@ define(['./components/platform', './components/event', './components/css', './co
                 }, '*');
             }
         },
+
         /**
-         * Setup the event-action of viewer. To handle `on="tap:xxx"`.
+         * Setup event-action of viewer. To handle `on="tap:xxx"`.
          */
         setupEventAction: function () {
             var eventAction = this.eventAction = new EventAction();
             this._gesture.on('tap', function (event) {
-                eventAction.excute('tap', event.target, event);
+                eventAction.execute('tap', event.target, event);
             });
         }
     };
 
-    Event.mixin(Viewer);
+    EventEmitter.mixin(viewer);
 
-    return Viewer;
+    return viewer;
 });
 

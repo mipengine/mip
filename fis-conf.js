@@ -10,18 +10,20 @@ if (option === 'debug') {
 
 var fileList = {
     css: [
-        '/less/mipmain.less'
+        '/src/less/mip.less'
     ],
     extensions: [
         '/extensions/**'
     ],
-    mipmain: [
-        '/src/mipmain.js',
-        '/src/builtins/video/**'
+    mip: [
+        '/src/mip.js',
+        '/src/builtins/video/**',
+        '/deps/**'
     ],
     test: [
         '/src/**',
-        '/test/**'
+        '/test/**',
+        '/deps/**'
     ]
 };
 if (option && fileList[option]) {
@@ -44,7 +46,7 @@ fis.hook('amd');
 
 
 /* css 配置 */
-fis.match('/less/(**).less', {
+fis.match('/src/less/(**).less', {
     parser: fis.plugin('less'),
     optimizer: fis.plugin('clean-css',{
         keepBreaks : false
@@ -71,18 +73,19 @@ fis.match('extensions/*/**.{svg,eot,woff,woff2,ttf,otf,jpg,png}', {
 });
 
 
-/* mipmain */
+/* mip */
 fis.match('/src/(**).js', {
     optimizer: fis.plugin('uglify-js'),
     moduleId: '$1'
 });
-fis.match('/src/deps/(*).js', {
+fis.match('/deps/(*).js', {
+    optimizer: fis.plugin('uglify-js'),
     moduleId: '$1'
 });
-fis.match('src/(mipmain.js)', {
+fis.match('src/(mip.js)', {
     release: '$1'
 });
-fis.match('src/({builtins/video/**,deps/jquery.js})', {
+fis.match('{src/(components/video/**),(deps/jquery.js)}', {
     release: '$1',
     useHash: true,
     domain: domain
@@ -90,7 +93,7 @@ fis.match('src/({builtins/video/**,deps/jquery.js})', {
 
 
 
-fis.media('mipmain');
+fis.media('mip');
 fis.media('css');
 fis.media('extensions');
 
@@ -101,12 +104,7 @@ fis.media('debug').match('*.{js,css,less}', {
 
 
 /* test */
-fis.media('test').match('src/(**).js', {
-    moduleId: '$1',
-    optimizer: null,
-    release: '$0'
-});
-fis.media('test').match('(test/**).js', {
+fis.media('test').match('{src/(**).js,(test/**).js,deps/(**).js}', {
     moduleId: '$1',
     optimizer: null,
     release: '$0'

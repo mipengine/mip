@@ -1,34 +1,83 @@
-define(['./components/css-loader', './components/layout', './resources'], function (cssLoader, layout, Resources) {
+define(function (require) {
     'use strict';
 
-    // To save custom Classes
+    var cssLoader = require('./dom/css-loader');
+    var layout = require('./layout');
+
+    /**
+     * Storage of custom elements.
+     * @inner
+     * @type {Object}
+     */
     var customElements = {};
 
+    /**
+     * Save resources.
+     * @inner
+     * @type {Resources}
+     */
     var resources;
 
-    // Save the base element prototype to avoid duplicate initialization.
+    /**
+     * Save the base element prototype to avoid duplicate initialization.
+     * @inner
+     * @type {Object}
+     */
     var baseElementProto;
 
     /**
      * Create a basic prototype of mip elements classes
      * @return {Object}
      */
-    var createBaseElementProto = function () {
+    function createBaseElementProto() {
         if (baseElementProto) {
             return baseElementProto;
         }
 
         // Base element inherits from HTMLElement
         var proto = Object.create(HTMLElement.prototype);
+
+        /**
+         * Created callback of MIPElement. It will initialize the element.
+         */
         proto.createdCallback = function() {
             var CustomEle = customElements[this.name];
             this.classList.add('mip-element');
+
+            /**
+             * Viewport state
+             * @private
+             * @type {boolean}
+             */
             this._inViewport = false;
+
+            /**
+             * Whether the element is into the viewport.
+             * @private
+             * @type {boolean}
+             */
             this._firstInViewport = false;
+
+            /**
+             * The resources object.
+             * @private
+             * @type {Object}
+             */
             this._resources = resources;
+
+            /**
+             * Instantiated the custom element.
+             * @type {Object}
+             * @public
+             */
             this.customElement = new CustomEle(this);
+
             this.customElement.createdCallback();
         };
+
+        /**
+         * When the element is inserted into the DOM, initialize the layout and add the element to the '_resources'.
+         */
         proto.attachedCallback = function() {
             // Apply layout for this.
             this._layout = layout.applyLayout(this);
@@ -36,16 +85,34 @@ define(['./components/css-loader', './components/layout', './resources'], functi
             // Add to resource manager.
             this._resources.add(this);
         };
+
+        /**
+         * When the element is removed from the DOM, remove it from '_resources'.
+         */
         proto.detachedCallback = function() {
             this.customElement.detachedCallback();
             this._resources.remove(this);
         };
+
+        /**
+         * Call the attributeChanged of custom element.
+         */
         proto.attributeChangedCallback = function(){
             this.customElement.attributeChangedCallback();
         };
+
+        /**
+         * Check whether the element is in the viewport.
+         * @return {boolean}
+         */
         proto.inViewport = function () {
             return this._inViewport;
         };
+
+        /**
+         * Called when the element enter or exit the viewport.
+         * And it will call the firstInviewCallback and viewportCallback of the custom element.
+         */
         proto.viewportCallback = function (inViewport) {
             this._inViewport = inViewport;
             if (!this._firstInViewport) {
@@ -54,15 +121,27 @@ define(['./components/css-loader', './components/layout', './resources'], functi
             }
             this.customElement.viewportCallback(inViewport);
         };
+
+        /**
+         * Check whether the building callback has been executed.
+         * @return {boolean}
+         */
         proto.isBuilt = function () {
             return this._built;
         };
+
+        /**
+         * Check whether the element need to be rendered in advance.
+         * @reutrn {boolean}
+         */
         proto.prerenderAllowed = function () {
             return this.customElement.prerenderAllowed();
         };
 
-        // Build of lifecycle.
-        // This will be runned only once.
+        /**
+         * Build the element and the custom element.
+         * This will be executed only once.
+         */
         proto.build = function () {
             if (this.isBuilt()) {
                 return;
@@ -76,48 +155,57 @@ define(['./components/css-loader', './components/layout', './resources'], functi
             }
         };
 
-        // Method of executing event actions of the custom Element 
-        proto.excuteEventAction = function (action) {
-            this.customElement.excuteEventAction(action);
+        /**
+         * Method of executing event actions of the custom Element 
+         */
+        proto.executeEventAction = function (action) {
+            this.customElement.executeEventAction(action);
         };
         return baseElementProto = proto;
-    };
+    }
 
     /**
      * Create a mip element prototype by name
      * @param {string} name The mip element's name
      * @return {Object}
      */
-    var createMipElementProto = function (name) {
+    function createMipElementProto(name) {
         var proto = Object.create(createBaseElementProto());
         proto.name = name;
         return proto;
-    };
+    }
 
     /**
      * Add a style tag to head by csstext
      * @param {string} css Css code
      */
-    var loadCss = function (css) {
+    function loadCss(css, name) {
         if (css) {
             cssLoader.insertStyleElement(document, document.head, css, name, false);
         }
-    };
+    }
 
-    var registerElement = function (name, elementClass, css) {
+    /**
+     * Register MIPElement. 
+     * @param {string} name Name of a MIPElement.
+     * @param {Class} elementClass
+     * @param {string} css The csstext of the MIPElement.
+     */     
+    function registerElement(name, elementClass, css) {
         if (customElements[name]) {
             return;
         }
 
         if (!resources) {
+            var Resources = require('./resources');
             resources = new Resources();
         }
         customElements[name] = elementClass;
-        loadCss(css);
+        loadCss(css, name);
         document.registerElement(name, {
             prototype: createMipElementProto(name)
         });
-    };
+    }
     
     return registerElement;
 });

@@ -12,15 +12,6 @@ debug: build
 	 fis3 server start --root=./ --port=8056
 build: 
 	 fis3 release debug -d ./dist
-doc:
-	node renderDoc.js
-mipmain:
-	fis3 release -d ./dist mipmain
-css:
-	fis3 release -d ./dist css
-ext:
-	fis3 release -d ./dist extensions
-
 test: test-build
 	$(TEST) start --reporters mocha
 
