@@ -273,6 +273,30 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
         }
     };
 
+    /**
+     * Show fixed layer
+     * @param {HTMLElement} layer
+     */
+    fixedElement.prototype.showFixedLayer = function(layer) {
+        if(layer) {
+            css(layer, {
+                display: 'block'
+            });
+        }
+    };
+
+    /**
+     * Hide fixed layer
+     * @param {HTMLElement} layer
+     */
+    fixedElement.prototype.hideFixedLayer = function(layer) {
+        if(layer) {
+            css(layer, {
+                display: 'none'
+            });
+        }
+    };
+
     return new FixedElement();
 });
 
