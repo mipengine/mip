@@ -13,12 +13,12 @@ define(function (require) {
      * @inner
      * @type {Function}
      */
-    var nativeMatches = docElem.matches ||
-                docElem.webkitMatchesSelector ||
-                docElem.mozMatchesSelector ||
-                docElem.oMatchesSelector ||
-                docElem.msMatchesSelector ||
-                docElem.matchesSelector;
+    var nativeMatches = docElem.matches
+            || docElem.webkitMatchesSelector
+            || docElem.mozMatchesSelector
+            || docElem.oMatchesSelector
+            || docElem.msMatchesSelector
+            || docElem.matchesSelector;
 
     /**
      * Support for matches. Check whether a element matches a selector.
@@ -39,19 +39,19 @@ define(function (require) {
      * @param {string} selector
      * @return {?HTMLElement}
      */
-    var closest = docElem.closest ? 
-        function (element, selector) {
-            return element.closest(selector);
-        } :
-        function (element, selector) {
-            while (element) {
-                if (matches(element, selector)) {
-                    return element;
-                }
-                element = element.parentNode;
+    var closest = docElem.closest
+            ? function (element, selector) {
+                return element.closest(selector);
+            }
+            : function (element, selector) {
+                while (element) {
+                    if (matches(element, selector)) {
+                        return element;
+                    }
+                    element = element.parentNode;
+                };
+                return null;
             };
-            return null;
-        };
 
     /**
      * Support for contains.
@@ -59,19 +59,19 @@ define(function (require) {
      * @param {HTMLElement} child
      * @return {boolean}
      */
-    var contains = docElem.contains ?
-        function (element, child) {
-            return element && element.contains(child);
-        } :
-        function (element, child) {
-            while (child) {
-                if (element === child) {
-                    return true;
-                }
-                child = child.parentElement;
+    var contains = docElem.contains
+            ? function (element, child) {
+                return element && element.contains(child);
+            }
+            : function (element, child) {
+                while (child) {
+                    if (element === child) {
+                        return true;
+                    }
+                    child = child.parentElement;
+                };
+                return false;
             };
-            return false;
-        };
 
     /**
      * Find the nearest element that matches the selector from current element to target element.
