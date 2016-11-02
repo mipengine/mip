@@ -67,8 +67,6 @@ define(function (require) {
         viewer.sendMessage('performance_update', timing);
     });
 
-    viewport.fixScrollLocation();
-
     // Show page
     viewer.show();
 
