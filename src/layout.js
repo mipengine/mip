@@ -179,6 +179,10 @@ define(function () {
      * @return {string}
      */
     Layout.prototype.applyLayout = function (element) {
+        if (element._layoutInited) {
+            return;
+        }
+        element._layoutInited = true;
         var layoutAttr = element.getAttribute('layout');
         var widthAttr = element.getAttribute('width');
         var heightAttr = element.getAttribute('height');
@@ -260,6 +264,9 @@ define(function () {
           if (height) {
             element.style.height = height;
           }
+        }
+        if (element.classList.contains('mip-hidden')) {
+            element.classList.remove('mip-hidden');
         }
         return layout;
     };

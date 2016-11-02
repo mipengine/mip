@@ -79,68 +79,71 @@ mip-i-space {
 
 
 .mip-layout-fixed {
-  display: inline-block;
-  position: relative;
+    display: inline-block;
+    position: relative;
 }
 
 .mip-layout-responsive {
-  display: block;
-  position: relative;
+    display: block;
+    position: relative;
 }
 
 .mip-layout-fixed-height {
-  display: block;
-  position: relative;
+    display: block;
+    position: relative;
 }
 
 .mip-layout-container {
-  display: block;
-  position: relative;
+    display: block;
+    position: relative;
 }
 
 .mip-layout-fill {
-  display: block;
-  overflow: hidden !important;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
+    display: block;
+    overflow: hidden !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
 }
 
 .mip-layout-flex-item {
-  display: block;
-  position: relative;
-  flex: 1 1 auto;
+    display: block;
+    position: relative;
+    flex: 1 1 auto;
 }
 
 .mip-layout-size-defined {
-  overflow: hidden !important;
+    overflow: hidden !important;
 }
 
 imip-sizer {
-  display: block !important;
+    display: block !important;
 }
 
 .mip-fill-content {
-  display: block;
-  min-width: 100%;     /* These lines are a work around to this issue in iOS: */
-  max-width: 100%;     /* https://bugs.webkit.org/show_bug.cgi?id=155198         */
-  height: 100%;
-  margin: auto;
+    display: block;
+    min-width: 100%;
+    max-width: 100%; 
+    height: 100%;
+    margin: auto;
 }
 
 .mip-layout-size-defined .mip-fill-content {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
 }
 
 .mip-replaced-content {
-  padding: 0 !important;
-  border: none !important;
-  /* TODO(dvoytenko): explore adding here object-fit. */
+    padding: 0 !important;
+    border: none !important;
 }
 
+.mip-hidden {
+    visibility: hidden;
+    overflow: hidden;    
+}

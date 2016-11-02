@@ -23,7 +23,7 @@ define(function (require) {
 
 
     /* mip frame */
-    require('./layout');
+    var layout = require('./layout');
     require('./fixed-element');
     var viewport = require('./viewport');
     require('./customElement');
@@ -57,6 +57,17 @@ define(function (require) {
 
     // Initialize viewer
     viewer.init();
+
+    // Find the default-hidden elements.
+    var hiddenElements = Array.prototype.slice.call(document.getElementsByClassName('mip-hidden'));
+    // Regular for checking mip elements.
+    var mipTagReg = /mip-/i;
+    // Apply layout for default-hidden elements.
+    hiddenElements.forEach(function (element) {
+        if (element.tagName.search(mipTagReg) > -1) {
+            layout.applyLayout(element);
+        }
+    });
 
     // Register builtin extensions
     components.register();
