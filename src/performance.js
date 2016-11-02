@@ -12,6 +12,12 @@ define(function (require) {
     var fsElements = [];
 
     /**
+     * Locked flag of fsElements.
+     * @inner
+     */
+    var fsElementsLocked = false;
+
+    /**
      * Start flag. This will be runned only once.
      * @inner
      */
@@ -34,7 +40,9 @@ define(function (require) {
      * @param {HTMLElement} element
      */
     function addFsElement(element) {
-        fsElements.push(element);
+        if (!fsElementsLocked) {
+            fsElements.push(element);
+        }
     }
 
     /**
@@ -79,7 +87,7 @@ define(function (require) {
      * Try recording first-screen loaded.
      */
     function tryRecordFirstScreen() {
-        if (recorder.firstScreen) {
+        if (recorder.MIPFirstScreen) {
             return;
         }
         if (fsElements.length === 0) {
@@ -96,6 +104,8 @@ define(function (require) {
             fsElements = fsElements.filter(function (ele) {
                 return ele.inViewport();
             });
+            // Lock the fsElements. No longer add fsElements.
+            fsElementsLocked = true;
             tryRecordFirstScreen();
         }, 10);
     }
@@ -135,9 +145,6 @@ define(function (require) {
         addFsElement: addFsElement,
         fsElementLoaded: fsElementLoaded,
         getTiming: getTiming,
-        /**
-         * @example performance.on('update', cb);
-         */
         on: function () {
             performanceEvent.on.apply(performanceEvent, arguments);
         }
