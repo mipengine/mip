@@ -9,6 +9,22 @@ var AMDPacker = amdProcessor.Packer;
 var LessProcessor = require('mip-processor-less');
 var JSCompressor = require('mip-processor-jscompress');
 
+
+var runType = process.argv[2];
+// build, dev, test
+if (!runType || (runType !== 'build' && runType !== 'dev' && runType !== 'test')) {
+    runType = 'build';
+}
+
+
+var packageMessage = require('../package.json');
+
+function addVersion(filePath) {
+    return filePath.replace(/(mip)(\.)(js|css)$/, function (match, name, dot, ext) {
+        return name + '-' + packageMessage.version + dot + ext;
+    });
+}
+
 var requireConfig = {
     baseUrl: path.resolve(__dirname, '..', 'src'),
     paths: {
@@ -111,6 +127,8 @@ var outputFilter = {
             && file.outputPath !== 'src/less/mip.css'
         ) {
             file.outputPath = null;
+        } else if (runType === 'build') {
+            file.outputPath = addVersion(file.outputPath);
         }
     }
 };
@@ -159,13 +177,6 @@ var processors = {
         // pathMapper
     ]
 };
-
-var args = process.argv.slice(2);
-// build, dev, test
-var runType = args && args[0];
-if (!runType || !(runType in processors)) {
-    runType = 'build';
-}
 
 var builder = new Builder({
     dir: path.resolve(__dirname, '..'),

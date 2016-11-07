@@ -81,20 +81,6 @@ define(function (require) {
                 this.getScrollTop(),
                 this.getWidth(),
                 this.getHeight());
-        },
-        fixScrollLocation: function () {
-            if (!window.sessionStorage || top === win) {
-                return;
-            }
-            var self = this;
-            var key = 'browseProgress-' + location.href.toString();
-            if (sessionStorage[key]) {
-                var sTop = sessionStorage.getItem(key);
-                this.setScrollTop(sTop);
-            }
-            this.on('changed resize', function () {
-                sessionStorage.setItem(key, self.getScrollTop());
-            });
         }
     };
 
