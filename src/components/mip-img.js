@@ -21,6 +21,11 @@ define(function (require) {
         }
     };
 
+    var getImgOffset = function (img) {
+        var imgOffset = rect.getElementOffset(img);
+        return imgOffset;
+    };
+
     // 创建弹层 dom
     function createPopup(element, img) {
         var popup = document.createElement('div');
@@ -46,6 +51,12 @@ define(function (require) {
             if (img.width + img.naturalWidth === 0) {
                 return;
             }
+            var onResize = function () {
+                imgOffset = getImgOffset(img);
+                css(popupImg, imgOffset);
+                naboo.css(popupImg, getPopupImgPos(imgOffset.width, imgOffset.height)).start();
+            };
+            window.addEventListener('resize', onResize);
             if (!popup) {
                 popup = createPopup(element, img);
                 popupBg = popup.querySelector('.mip-img-popUp-bg');
@@ -53,22 +64,28 @@ define(function (require) {
 
                 popup.addEventListener('click', function () {
                     naboo.css(popupBg, {opacity: 0}).start();
-                    naboo.css(popupImg, rect.getElementOffset(img)).start(function () {
-                        css(img, 'opacity', '1');
+                    naboo.css(popupImg, getImgOffset(img)).start(function () {
+                        css(img, 'visibility', 'visible');
                         css(popup, 'display', 'none');
                     });
                 }, false);
             }
 
-            var imgOffset = rect.getElementOffset(img);
+            var imgOffset = getImgOffset(img);
 
             css(popupImg, imgOffset);
             css(popupBg, 'opacity', 1);
             css(popup, 'display', 'block');
 
             naboo.css(popupImg, getPopupImgPos(imgOffset.width, imgOffset.height)).start();
-            css(img, 'opacity', 0);
+            css(img, 'visibility', 'hidden');
         }, false);
+    };
+
+    var bindLoad = function (element, img) {
+        img.addEventListener('load', function () {
+            element.classList.add('mip-img-loaded');
+        });
     };
 
     function firstInviewCallback() {
@@ -86,6 +103,7 @@ define(function (require) {
         if (ele.hasAttribute('popup')) {
             bindPopup(ele, _img);
         }
+        bindLoad(ele, _img);
     };
     customElem.prototype.firstInviewCallback = firstInviewCallback;
 
