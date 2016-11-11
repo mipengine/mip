@@ -40,6 +40,7 @@ define(function (require) {
                 title: encodeURIComponent(document.title)
             });
             this.setupEventAction();
+            this.aClick();
         },
 
         /**
@@ -111,6 +112,25 @@ define(function (require) {
         _bindEventCallback: function (name, handler) {
             if (name === 'show' && this.isShow && typeof handler === 'function') {
                 handler.call(this, this._showTiming);
+            }
+        },
+
+        /**
+         * handle tag a
+         */
+        aClick: function() {
+            if(this.isIframed) {
+                var tagA = document.getElementsByTagName('a');
+                var index = 0;
+                var self = this;
+                for(index = 0; index < tagA.length; index ++) {
+                    tagA[index].addEventListener('click', function(event) {
+                        event.preventDefault();
+                        self.sendMessage('mibm-jumplink', {
+                            'url': this.href
+                        });
+                    });
+                }
             }
         }
     };

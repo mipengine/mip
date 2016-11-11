@@ -1,4 +1,40 @@
 .mip-img {
+    background: #fff;
+    @-webkit-keyframes mip-img-loading {
+         from {
+            transform: rotate3d(0, 0, 1, 0deg);
+            -webkit-transform: rotate3d(0, 0, 1, 0deg);
+        }
+        to {
+            transform: rotate3d(0, 0, 1, 360deg);
+             -webkit-transform: rotate3d(0, 0, 1, 360deg);
+        }
+    }
+    &::before {
+        content: '';
+        position: absolute;
+        display: block;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iNTRweCIgaGVpZ2h0PSI1NHB4IiB2aWV3Qm94PSIwIDAgMTA2OCAxMDY4IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAxMDY4IDEwNjgiIHhtbDpzcGFjZT0icHJlc2VydmUiPjxnPjxwYXRoIGZpbGw9IiNmM2YzZjMiIGQ9Ik04ODcuNTQ3LDkzNC4yMTZsLTIyLjYyMS0yMi42MjFsLTI0LjE2Ni0yNC4xNjZMNTEwLjY2NSw1NTcuMzM0Yy0xMi44ODctMTIuODg3LTEyLjg4Ny0zMy43ODIsMC00Ni42NjkNCmMxMi44ODctMTIuODg3LDMzLjc4Mi0xMi44ODcsNDYuNjY5LDBMODg3LjQyOSw4NDAuNzZjMTU5Ljg5OS0xODMuODQ5LDE1Mi40MTQtNDYyLjc2OS0yMi41MDMtNjM3LjY4NiBjLTE4Mi43NjUtMTgyLjc2NS00NzkuMDg3LTE4Mi43NjUtNjYxLjg1Miwwcy0xODIuNzY1LDQ3OS4wODcsMCw2NjEuODUyQzMyMi4xMjgsOTgzLjk4LDQ4OS4zNiwxMDI1LjQ1Miw2NDIuMDA4LDk4OS40MDIgYzExLjMyNC0zLjUxLDI0LjE2My0wLjc4OSwzMy4xMyw4LjE3N2MxMi44ODcsMTIuODg3LDEyLjg4NywzMy43ODIsMCw0Ni42NjljLTQuNzMsNC43My0xMC41NDIsNy43MTctMTYuNjM3LDguOTc1bDAuMDI5LDAuMTIxIGMtMTc0LjUyLDQxLjY3Mi0zNjUuOTQ4LTUuNTcyLTUwMi4xMjUtMTQxLjc0OWMtMjA4LjU0LTIwOC41NC0yMDguNTQtNTQ2LjY1LDAtNzU1LjE5czU0Ni42NS0yMDguNTQsNzU1LjE5LDAgczIwOC41NCw1NDYuNjUsMCw3NTUuMTlDOTAzLjc1OCw5MTkuNDMyLDg5NS43MzUsOTI2Ljk2OCw4ODcuNTQ3LDkzNC4yMTZMODg3LjU0Nyw5MzQuMjE2eiIvPjwvZz48L3N2Zz4=') center center no-repeat;
+         -webkit-animation: linear .5s infinite mip-img-loading;
+    }
+    img.mip-fill-content {
+        opacity: 0;
+        transition: opacity linear 300ms;
+    }
+    &.mip-img-loaded {
+        background: transparent;
+        &::before {
+            content: none;
+            display: none;
+        }
+        img.mip-fill-content {
+            opacity: 1;
+        }
+    }
     &-container {
         margin: 16px auto;
         font-size: 0;
