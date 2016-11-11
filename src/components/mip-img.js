@@ -85,6 +85,7 @@ define(function (require) {
     var bindLoad = function (element, img) {
         img.addEventListener('load', function () {
             element.classList.add('mip-img-loaded');
+            element.customElement.resourcesComplete();
         });
     };
 
@@ -106,7 +107,9 @@ define(function (require) {
         bindLoad(ele, _img);
     };
     customElem.prototype.firstInviewCallback = firstInviewCallback;
-
+    customElem.prototype.hasResources = function () {
+        return true;
+    };
 
     return customElem;
 
