@@ -78,7 +78,7 @@ define(function (require) {
                 var delay = Math.round(data.velocity * 600);
                 delay < 100 && (delay = 100);
                 delay > 600 && (delay = 600);
-                clearInterval(timer);
+                clearTimeout(timer);
                 timer = setTimeout(self.updateState, delay);
             });
             this.updateState();
