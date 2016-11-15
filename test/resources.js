@@ -74,7 +74,7 @@ define(function () {
 
         it('changed', function (done) {
             setTimeout(function () {
-                if (mockElement1.testCount !== 2) {
+                if (mockElement1.testCount < 2) {
                     done('changed error');
                     return;
                 }

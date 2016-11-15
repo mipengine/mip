@@ -67,12 +67,8 @@ define(function (require) {
          */
         _bindEvent: function () {
             var self = this;
-            var timer;
-            this._viewport.on('changed resize', function () {
-                self.updateState();
-                clearTimeout(timer);
-                timer = setTimeout(self.updateState, 1000);
-            });
+            this._viewport.on('changed resize', this.updateState);
+            document.addEventListener('touchend', this.updateState, false);
             this.updateState();
         },
 
