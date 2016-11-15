@@ -4,6 +4,7 @@ define(function (require) {
     var fn = require('./utils/fn');
     var viewport = require('./viewport');
     var rect = require('./dom/rect');
+    var Gesture = require('./utils/gesture');
 
     /**
      * Store the resources.
@@ -58,6 +59,10 @@ define(function (require) {
          * @type {Object}
          */
         this._viewport = viewport;
+
+        this._gesture = new Gesture(document.body, {
+            preventX: false
+        });
         this._bindEvent();
     }
 
@@ -68,10 +73,13 @@ define(function (require) {
         _bindEvent: function () {
             var self = this;
             var timer;
-            this._viewport.on('changed resize', function () {
-                self.updateState();
+            this._viewport.on('changed resize', this.updateState);
+            this._gesture.on('swipe', function (e, data) {
+                var delay = Math.round(data.velocity * 600);
+                delay < 100 && (delay = 100);
+                delay > 600 && (delay = 600);
                 clearTimeout(timer);
-                timer = setTimeout(self.updateState, 1000);
+                timer = setTimeout(self.updateState, delay);
             });
             this.updateState();
         },
