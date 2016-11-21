@@ -63,6 +63,9 @@ define(function (require) {
                     '-webkit-overflow-scrolling': 'touch'
                 });
                 css(document.body, 'position', 'relative');
+                if (platform.isUc()) {
+                    css(document.body, 'transform', 'translate3d(0,0,0)');
+                }
             }
         },
 
