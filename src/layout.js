@@ -26,8 +26,7 @@ define(function () {
     var NATURAL_DIMENSIONS = {
         'mip-pix': {width: '1px', height: '1px'},
         'mip-stats': {width: '1px', height: '1px'},
-        'mip-audio': null,
-        'mip-share': {width: '60px', height: '44px'}        
+        'mip-audio': null
     };
 
     /**
