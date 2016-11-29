@@ -23,9 +23,6 @@ define(function (require) {
          * The initialise method of viewer
          */
         init: function () {
-            this.patchForIframe();
-            this.patchForUC();
-
             /**
              * The gesture of document.Used by the event-action of Viewer.
              * @private
@@ -38,13 +35,17 @@ define(function (require) {
             this.setupEventAction();
 
             if (this.isIframed) {
+                this.patchForIframe();
                 // proxy links
                 this._proxyLink();
                 // Tell parent page the current page is loaded.
                 this.sendMessage('mippageload', {
                     time: Date.now(),
+                    version: 'v1',
                     title: encodeURIComponent(document.title)
                 });
+                // Set page top.
+                css(document.body, 'border-top', '44px solid transparent');
             }
         },
 
@@ -69,23 +70,18 @@ define(function (require) {
                 });
                 css(document.body, 'position', 'relative');
             }
-        },
 
-        /**
-         * A sad fact is that UC has too many bugs, so we have to use a patch function to ensure
-         * the normal operation of the page.
-         */
-        patchForUC: function () {
-            // Fix iphone 5s UC bug. While the back button is clicked, the cached page has some problems.
-            // So we are forced to load the page in iphone 5s UC.
-            if (this.isIframed && platform.isUc() && screen.width === 320
-                && navigator.userAgent.search(/iphone os 8/i) > -1) {
-
+            // Fix iphone 5s UC and ios 9 safari bug. While the back button is clicked, the cached page has some problems.
+            // So we are forced to load the page in iphone 5s UC and ios 9 safari.
+            var iosVersion = platform.getIosVersion();
+            var needBackReload = (iosVersion == '8' && platform.isUc() && screen.width === 320)
+                || (iosVersion == '9' && platform.isSafari());
+            if (needBackReload) {
                 window.addEventListener('pageshow', function (e) {
                     if (e.persisted) {
                         document.body.style.display = 'none';
                         location.reload();
-                    } 
+                    }
                 });
             }
         },
