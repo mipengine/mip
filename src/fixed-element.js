@@ -236,7 +236,9 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
         switch (type) {
             case "top":
                 fixedEle.style.maxHeight = '88px';
-                fixedEle.style.top = '44px';
+                if (window !== top) {
+                    fixedEle.style.top = '44px';
+                }
                 break;
             case "bottom":
                 fixedEle.style.maxHeight = '88px';
