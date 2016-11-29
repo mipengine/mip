@@ -251,18 +251,8 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
                 fixedEle.style.maxWidth = '10%';
                 break;
             case 'gototop':
-
-                var bottom = fixedEle.getAttribute('bottom') || '88';
-                var right = fixedEle.getAttribute('right') || '10';
-                var width = window.innerWidth ? window.innerWidth
-                                : document.body ? document.body.clientWidth : 0;
-
-                bottom = Math.max(parseInt(bottom.match(/\d+/g)[0]), 85);
-                right = Math.max(parseInt(right.match(/\d+/g)[0], 10) / width * 100, 10);
-
-                fixedEle.style.bottom = bottom + 'px';
-                fixedEle.style.right = right + '%';
-
+                fixedEle.style.bottom = '88px';
+                fixedEle.style.right = '10%';
                 break;
             default:
                 fixedEle.style.display = 'none';
