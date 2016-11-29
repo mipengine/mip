@@ -235,7 +235,8 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
     FixedElement.prototype.setFixedElementRule = function (fixedEle, type) {
         switch (type) {
             case "top":
-                fixedEle.style.maxHeight = '88px';
+                fixedEle.style.maxHeight = '44px';
+                fixedEle.style.top = '44px';
                 break;
             case "bottom":
                 fixedEle.style.maxHeight = '88px';
