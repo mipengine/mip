@@ -30,6 +30,7 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
         this._fixedTypes = {
             'top': 1,
             'bottom': 1,
+            'gototop': 1,
             'other': 1
         };
 
@@ -88,6 +89,9 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
             }
             var fType = ele.getAttribute('type');
             var transfType = (fType == 'right' || fType == 'left') ? 'other': fType;
+            if (transfType === 'gototop' && ele.firstElementChild.tagName.toLowerCase() !== 'mip-gototop') {
+                continue;
+            }
             if (this._fixedTypes[transfType] && this._fixedTypes[transfType] < 2) {
                 this._fixedTypes[transfType] += 1;
                 this.setFixedElementRule(ele, fType);
@@ -245,6 +249,20 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
                 this.setStyle(fixedEle);
                 fixedEle.style.maxHeight = '25%';
                 fixedEle.style.maxWidth = '10%';
+                break;
+            case 'gototop':
+
+                var bottom = fixedEle.getAttribute('bottom') || '88';
+                var right = fixedEle.getAttribute('right') || '10';
+                var width = window.innerWidth ? window.innerWidth
+                                : document.body ? document.body.clientWidth : 0;
+
+                bottom = Math.max(parseInt(bottom.match(/\d+/g)[0]), 85);
+                right = Math.max(parseInt(right.match(/\d+/g)[0], 10) / width * 100, 10);
+
+                fixedEle.style.bottom = bottom + 'px';
+                fixedEle.style.right = right + '%';
+
                 break;
             default:
                 fixedEle.style.display = 'none';
