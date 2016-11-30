@@ -1,3 +1,9 @@
+/**
+ * @file mip-carousel 轮播组件
+ *
+ * @author xx
+ * @modify wangpei07 2016-11-30
+ */
 define(function (require) {
     var customElem = require('customElement').create();
     var Gesture = require('utils/gesture');
@@ -7,46 +13,43 @@ define(function (require) {
     var eventHelper = util.event;
 
     customElem.prototype.build = function () {
-        var element = this.element;
+        var self = this;
+        var element = self.element;
 
+        // 元素高度判断
         var height = element.getAttribute('height');
         if (!height) {
             return;
         }
 
+        // 获取图片子节点
         var children = Array.prototype.slice.call(element.children);
+
         children = children.filter(function (element) {
-            return element.tagName.toLowerCase() !== 'mip-i-space';
+            return element.tagName.toLowerCase() !== 'mip-i-space'
+            && element.tagName.toLowerCase() !== 'div';
         });
 
-        if (children.length < 2) {
+        // 子节点个数
+        var len = children.length;
+
+        // 子节点个数判断
+        if (len < 2) {
+            console.error('mip-img 元素的个数必须大于 1 个');
             return;
         }
+
+        // 被隐藏的图片的left属性值
+        const HIDE_LEFT = -9999;
+
+        // 轮播动画时长
+        const DURATION = 300;
 
         // 当前展示的图片序号
         var currentIndex = 0;
 
-        // 被隐藏的图片的left属性值
-        var HIDE_LEFT = -9999;
-
-        // 轮播动画时长
-        var DURATION = 300;
-
-        // 轮播思路：轮播只涉及2张图片，分别是当前图片和下一张要出现的图片，把下一张图片放到当前图片的前面或者后面，
-        //         然后移动到当前图片的位置，其余不涉及的图片全部设置left:-9999px，具体可以看效果
-        css(children, {
-            'position': 'absolute',
-            'left': HIDE_LEFT,
-            'top': 0,
-            'height':"100%",
-            'width':"100%"
-        });
-
-        var mipImgList = element.querySelectorAll('mip-img');
-        for (var i = 0; i < mipImgList; i++) {
-            this.applyFillContent(mipImgList[i], true);
-        }
-        css(children[currentIndex], 'left', 0);
+        // 指示器容器
+        var indicators;
 
         // 如果mip-carousel里子节点是mip-img，并且mip-img弹出了浮层
         var isMipImgPop = false;
@@ -54,21 +57,144 @@ define(function (require) {
         // 当前是否处于轮播动画中
         var isAnimating = false;
 
+        // 自动轮播时间间隔
+        var defer = 2000;
+
+        // 是否需要自动轮播
+        var autoTimer;
+
+        // 自动播放控制开关
+        var isAutoPlay = false;
+
+        // 自控播放属性
+        var autoAttr = element.getAttribute('autoplay');
+
+        // 图片列表
+        var mipImgList = element.querySelectorAll('mip-img');
+
+        // 指示器
+        var hasIndicator = element.hasAttribute('indicator');
+
+        // 指示器节点
+        var indicatorNode;
+
+        var prenode;
+        var nextnode;
+
+        var indicatorWrap;
+
+        var subtitle;
+
+        /**
+         * 轮播思路：轮播只涉及2张图片，分别是当前图片和下一张要出现的图片，把下一张图片放到当前图片的前面或者后面
+         * 然后移动到当前图片的位置，其余不涉及的图片全部设置left:-9999px，当前图片设置left:0，具体可以看效果
+         */
+        css(children, {
+            position: 'absolute',
+            left: HIDE_LEFT,
+            top: 0,
+            height: '100%',
+            width: '100%'
+        });
+        css(children[currentIndex], 'left', 0);
+
+        // 图片布局设置
+        mipImgList.forEach(function (item, key) {
+            self.applyFillContent(item, true);
+            
+            // 指示器和翻页按钮 与 图片 popup 属性冲突，赞设置 popup 为高优先级
+            if (item.hasAttribute('popup')) {
+                hasIndicator = false;
+                element.removeAttribute('indicator');
+                element.removeAttribute('buttonController');
+            }
+        });
+
+        /**
+         * [change 翻页操作]
+         *
+         * @param  {boolean} flag [向前翻页还是向后]
+         */
+        function change(flag) {
+            if (!isAnimating) {
+                autoTimer && clearTimeout(autoTimer);
+                switchItem(flag).then(function () {
+                    if (isAutoPlay) {
+                        autoPlay(defer);
+                    }
+                });
+            }
+        }
+
+        // 如果需要翻页按钮，则创建
+        if (element.hasAttribute('buttonController')) {
+            prenode = document.createElement('div');
+            nextnode = document.createElement('div');
+
+            prenode.classList.add('preBtn');
+            nextnode.classList.add('nextBtn');
+            element.appendChild(prenode);
+            element.appendChild(nextnode);
+
+            prenode.addEventListener('touchend', function (event) {
+                change(false);
+            });
+
+            nextnode.addEventListener('touchend', function (event) {
+                change(true);
+            });
+        }
+
+        // 如果需要指示器，则创建
+        if (hasIndicator) {
+            var cnt = len;
+            var html = [];
+            while (cnt--) {
+                html.push('<span></span>');
+            }
+
+            indicatorNode = document.createElement('div');
+            indicatorNode.classList.add('mip-carousel-indicator');
+            indicatorNode.innerHTML = html.join('');
+            element.appendChild(indicatorNode);
+            indicators = indicatorNode.querySelectorAll('span');
+            indicators[currentIndex].classList.add('mip-carousel-current-indicator');
+
+            // 浮层背景色设置
+            indicatorWrap = element.querySelector('.mip-carousel-indicator');
+            subtitle = mipImgList[currentIndex].querySelector('.mip-carousle-subtitle');
+            css(indicatorWrap, {'background-color': subtitle ? '' : 'rgba(0, 0, 0, 0.3)'});
+            css(subtitle, {'background-color': subtitle ? 'rgba(0, 0, 0, 0.3)' : ''});
+        }
+
         /**
          * 切换图片函数
          *
-         * @param  {Boolean} forward 前进(true)或者后退(false)
+         * @param  {boolean} forward 前进(true)或者后退(false)
          *
          * @return {Object}         Deferred/Promise对象
          */
         function switchItem(forward) {
             var index = forward ? (currentIndex + 1) : (currentIndex - 1);
             if (index < 0) {
-                index = children.length - 1;
+                index = len - 1;
             }
-            else if (index >= children.length) {
+            else if (index >= len) {
                 index = 0;
             }
+
+            // 指示器效果
+            if (hasIndicator) {
+                indicators[currentIndex].classList.remove('mip-carousel-current-indicator');
+                indicators[index].classList.add('mip-carousel-current-indicator');
+            }
+
+            var child = children[index];
+            subtitle = child.querySelector('.mip-carousle-subtitle');
+
+            css(indicatorWrap, {'background-color': subtitle ? '' : 'rgba(0, 0, 0, 0.3)'});
+            css(subtitle, {'background-color': subtitle ? 'rgba(0, 0, 0, 0.3)' : ''});
+
             // 图片占据的一屏宽度
             var perWid = element.offsetWidth || window.innerWidth;
             var left = (forward ? 1 : -1) * perWid;
@@ -83,27 +209,26 @@ define(function (require) {
                 zIndex: 1
             });
 
-            var child = children[index];
-
             css(child, {
                 left: left,
                 zIndex: 2
             });
 
-            //手动触发不可见区域的mip-img
-            if(child.tagName.toLocaleLowerCase()== "mip-img") {
+            // 手动触发不可见区域的mip-img
+            if (child.tagName.toLocaleLowerCase() === 'mip-img') {
                 MIP.prerenderElement(child);
-            }else {
+            }
+            else {
                 var imgList = child.querySelectorAll('mip-img');
                 for (var i = 0; i < imgList.length; i++) {
-                     MIP.prerenderElement(imgList[i]);
+                    MIP.prerenderElement(imgList[i]);
                 }
             }
             isAnimating = true;
 
-            _promise = new Promise(function(resolve, reject){
+            _promise = new Promise(function (resolve, reject) {
                 naboo.css(child, {
-                    left: 0,
+                    left: 0
                 }, DURATION, function () {
                     currentIndex = index;
                     resolve();
@@ -116,16 +241,13 @@ define(function (require) {
                 opacity: 0
             }, DURATION).start(function () {
                 css(currChild, {
-                    'opacity': 1,
-                    'display': 'none'
+                    opacity: 1,
+                    display: 'none'
                 });
             });
 
             return _promise;
-        };
-
-        // 是否需要自动轮播
-        var autoTimer;
+        }
 
         function autoPlay(time) {
             autoTimer = setTimeout(function () {
@@ -135,43 +257,34 @@ define(function (require) {
             }, time);
         }
 
-        var defer;
-        var isAutoPlay = false;
-        var autoAttr = element.getAttribute('autoplay');
         if (autoAttr === 'autoplay' || autoAttr === '') {
             var deferAttr = element.getAttribute('defer');
-            if (typeof +deferAttr === 'number') {
-                defer = +deferAttr;
-            }
-            else {
-                defer = 2000;
-            }
+            defer = deferAttr && (typeof +deferAttr === 'number') ? +deferAttr : defer;
             isAutoPlay = true;
             autoPlay(defer);
+        }
+        else {
+            element.removeAttribute('autoplay');
         }
 
         var gesture = new Gesture(element);
         gesture.on('swipeleft swiperight', function (event, data) {
-            if (!isAnimating) {
-                autoTimer && clearTimeout(autoTimer);
-                switchItem(data.type !== 'swiperight').then(function () {
-                    if (isAutoPlay) {
-                        autoPlay(defer);
-                    }
-                })
-            }
+            change(data.type !== 'swiperight');
         });
 
         if (isAutoPlay) {
+            var nodes = [prenode, nextnode, indicatorNode]
             eventHelper.delegate(element, 'mip-img', 'click', function () {
                 if (this.hasAttribute('popup')) {
                     autoTimer && clearTimeout(autoTimer);
                     isMipImgPop = true;
+                    css(nodes, {display: 'none'});
                 }
             });
             eventHelper.delegate(element, '.mip-img-popUp-wrapper', 'click', function () {
                 autoPlay(defer);
                 isMipImgPop = false;
+                css(nodes, {display: 'block'});
                 return false;
             });
         }
