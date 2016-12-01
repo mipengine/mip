@@ -41,11 +41,8 @@ define(function (require) {
                 // Tell parent page the current page is loaded.
                 this.sendMessage('mippageload', {
                     time: Date.now(),
-                    version: 'v1',
                     title: encodeURIComponent(document.title)
                 });
-                // Set page top.
-                css(document.body, 'border-top', '44px solid transparent');
             }
         },
 
