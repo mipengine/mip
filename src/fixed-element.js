@@ -30,6 +30,7 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
         this._fixedTypes = {
             'top': 1,
             'bottom': 1,
+            'gototop': 1,
             'other': 1
         };
 
@@ -88,6 +89,9 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
             }
             var fType = ele.getAttribute('type');
             var transfType = (fType == 'right' || fType == 'left') ? 'other': fType;
+            if (transfType === 'gototop' && ele.firstElementChild.tagName.toLowerCase() !== 'mip-gototop') {
+                continue;
+            }
             if (this._fixedTypes[transfType] && this._fixedTypes[transfType] < 2) {
                 this._fixedTypes[transfType] += 1;
                 this.setFixedElementRule(ele, fType);
@@ -231,20 +235,18 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
     FixedElement.prototype.setFixedElementRule = function (fixedEle, type) {
         switch (type) {
             case "top":
-                fixedEle.style.maxHeight = '88px';
-                break;
             case "bottom":
                 fixedEle.style.maxHeight = '88px';
                 break;
             case "right":
-                this.setStyle(fixedEle);
-                fixedEle.style.maxHeight = '25%';
-                fixedEle.style.maxWidth = '10%';
-                break;
             case "left":
                 this.setStyle(fixedEle);
                 fixedEle.style.maxHeight = '25%';
                 fixedEle.style.maxWidth = '10%';
+                break;
+            case 'gototop':
+                fixedEle.style.bottom = '88px';
+                fixedEle.style.right = '10%';
                 break;
             default:
                 fixedEle.style.display = 'none';

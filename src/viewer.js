@@ -23,8 +23,6 @@ define(function (require) {
          * The initialise method of viewer
          */
         init: function () {
-            this.patchForIframe();
-
             /**
              * The gesture of document.Used by the event-action of Viewer.
              * @private
@@ -34,13 +32,18 @@ define(function (require) {
                 preventX: false
             });
 
-            // Tell parent page the current page is loaded.
-            this.sendMessage('mippageload', {
-                time: Date.now(),
-                title: encodeURIComponent(document.title)
-            });
             this.setupEventAction();
-            this.aClick();
+
+            if (this.isIframed) {
+                this.patchForIframe();
+                // proxy links
+                this._proxyLink();
+                // Tell parent page the current page is loaded.
+                this.sendMessage('mippageload', {
+                    time: Date.now(),
+                    title: encodeURIComponent(document.title)
+                });
+            }
         },
 
         /**
@@ -63,6 +66,20 @@ define(function (require) {
                     '-webkit-overflow-scrolling': 'touch'
                 });
                 css(document.body, 'position', 'relative');
+            }
+
+            // Fix iphone 5s UC and ios 9 safari bug. While the back button is clicked, the cached page has some problems.
+            // So we are forced to load the page in iphone 5s UC and ios 9 safari.
+            var iosVersion = platform.getIosVersion();
+            var needBackReload = (iosVersion == '8' && platform.isUc() && screen.width === 320)
+                || (iosVersion == '9' && platform.isSafari());
+            if (needBackReload) {
+                window.addEventListener('pageshow', function (e) {
+                    if (e.persisted) {
+                        document.body.style.display = 'none';
+                        location.reload();
+                    }
+                });
             }
         },
 
@@ -106,6 +123,8 @@ define(function (require) {
         /**
          * Event binding callback.
          * For overridding _bindEventCallback of EventEmitter.
+         *
+         * @private
          * @param {string} name
          * @param {Function} handler
          */
@@ -116,22 +135,27 @@ define(function (require) {
         },
 
         /**
-         * handle tag a
-         */
-        aClick: function() {
-            if(this.isIframed) {
-                var tagA = document.getElementsByTagName('a');
-                var index = 0;
-                var self = this;
-                for(index = 0; index < tagA.length; index ++) {
-                    tagA[index].addEventListener('click', function(event) {
-                        event.preventDefault();
-                        self.sendMessage('mibm-jumplink', {
-                            'url': this.href
-                        });
-                    });
+         * Agent all the links in iframe.
+         * @private
+         */ 
+         _proxyLink: function () {
+            var self = this;
+            var regexp = /^http/;
+            util.event.delegate(document.body, 'a', 'click', function (e) {
+                if (!this.href) {
+                    return;
                 }
-            }
+                // For mail、phone、market、app ...
+                // Safari failed when iframed. So add the `target="_top"` to fix it.
+                if (!regexp.test(this.href)) {
+                    this.setAttribute('target', '_top');
+                    return;
+                }
+                e.preventDefault();
+                self.sendMessage('mibm-jumplink', {
+                    'url': this.href
+                });
+            }, false); 
         }
     };
 

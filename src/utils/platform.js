@@ -48,12 +48,31 @@ define(function () {
         return /WebKit/i.test(ua);
     }
 
+    /**
+     * QQBrowser
+     * @return {boolean}
+     */
+    function isQQ() {
+        return /QQBrowser/i.test(ua);
+    }
+
+    /**
+     * Get ios version
+     * @return {string}
+     */
+    function getIosVersion() {
+        return /iphone os (\d)/i.test(ua) ? RegExp.$1 : 0;
+    }
+
+
     return {
         isIos:isIos,
         isSafari:isSafari,
         isChrome:isChrome,
         isUc: isUc,
         isWebkit: isWebkit,
+        isQQ: isQQ,
+        getIosVersion: getIosVersion,
         needSpecialScroll: isIos() && window != top
     }
 });
