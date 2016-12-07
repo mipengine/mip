@@ -69,7 +69,7 @@ define(function (require) {
 
     // Render the `<a>` element with poster and play btn, and append to `this.element`
     customElem.prototype.renderBaiduTranscoderArea = function () {
-        var videoEl = document.createElement('div');
+        var videoEl = document.createElement('a');
         videoEl.setAttribute('class', 'mip-video-poster');
         if (this.attributes.poster) {
             videoEl.style.backgroundImage = 'url(' + this.attributes.poster + ')';
@@ -85,21 +85,7 @@ define(function (require) {
         videoEl.dataset.videoSrc = this.attributes.src;
         videoEl.dataset.videoPoster = this.attributes.poster;
 
-        videoEl.addEventListener('click', jumpToTranscoder, false);
-
-        function jumpToTranscoder() {
-            var PROXYURL = alignment();
-
-            if (windowInIframe) {
-                // mibm-jumplink 为写在结果页card-act_sf_mip模板中定义的方法
-                viewer.sendMessage('mibm-jumplink', {
-                    url: PROXYURL
-                });
-            }
-            else {
-                window.location = PROXYURL;
-            }
-        }
+        videoEl.setAttribute('href', alignment());
 
         /**
          * 数据组装函数
