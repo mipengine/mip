@@ -1,7 +1,7 @@
 /**
  * @file mip-carousel 轮播组件
  *
- * @author xx
+ * @author fengchuantao
  * @modify wangpei07 2016-11-30
  */
 define(function (require) {
@@ -99,16 +99,14 @@ define(function (require) {
         css(children[currentIndex], 'left', 0);
 
         // 图片布局设置
-        mipImgList.forEach(function (item, key) {
-            self.applyFillContent(item, true);
+        for (var i = 0; i < len; i++) {
+            self.applyFillContent(mipImgList[i], true);
             
-            // 指示器和翻页按钮 与 图片 popup 属性冲突，赞设置 popup 为高优先级
-            if (item.hasAttribute('popup')) {
-                hasIndicator = false;
-                element.removeAttribute('indicator');
-                element.removeAttribute('buttonController');
+            // 屏蔽popup 事件
+            if (mipImgList[i].hasAttribute('popup')) {
+                mipImgList[i].removeAttribute('popup')
             }
-        });
+        }
 
         /**
          * [change 翻页操作]
@@ -128,8 +126,8 @@ define(function (require) {
 
         // 如果需要翻页按钮，则创建
         if (element.hasAttribute('buttonController')) {
-            prenode = document.createElement('div');
-            nextnode = document.createElement('div');
+            prenode = document.createElement('a');
+            nextnode = document.createElement('a');
 
             prenode.classList.add('preBtn');
             nextnode.classList.add('nextBtn');
@@ -137,10 +135,12 @@ define(function (require) {
             element.appendChild(nextnode);
 
             prenode.addEventListener('touchend', function (event) {
+                event.preventDefault(); 
                 change(false);
             });
 
             nextnode.addEventListener('touchend', function (event) {
+                event.preventDefault(); 
                 change(true);
             });
         }
