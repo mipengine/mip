@@ -40,10 +40,10 @@ define(function (require) {
         }
 
         // 被隐藏的图片的left属性值
-        const HIDE_LEFT = -9999;
+        var HIDE_LEFT = -9999;
 
         // 轮播动画时长
-        const DURATION = 300;
+        var DURATION = 300;
 
         // 当前展示的图片序号
         var currentIndex = 0;
