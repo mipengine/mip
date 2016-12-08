@@ -36,7 +36,7 @@ define(function (require) {
         // 页面https(其它)   + 视频http    = 当前页播放（非mip相关页）
         // 页面http          + 视频任意    = 当前页播放
         if (windowProHttps && (windowIsCached || windowInIframe) && !videoProHttps) {
-            this.videoElement = this.renderBaiduTranscoderArea();
+            this.videoElement = this.renderPlayElsewhere();
         }
         else {
             this.videoElement = this.renderInView();
@@ -68,8 +68,8 @@ define(function (require) {
     };
 
     // Render the `<a>` element with poster and play btn, and append to `this.element`
-    customElem.prototype.renderBaiduTranscoderArea = function () {
-        var videoEl = document.createElement('a');
+    customElem.prototype.renderPlayElsewhere = function () {
+        var videoEl = document.createElement('div');
         videoEl.setAttribute('class', 'mip-video-poster');
         if (this.attributes.poster) {
             videoEl.style.backgroundImage = 'url(' + this.attributes.poster + ')';
@@ -84,40 +84,16 @@ define(function (require) {
         videoEl.appendChild(playBtn);
         videoEl.dataset.videoSrc = this.attributes.src;
         videoEl.dataset.videoPoster = this.attributes.poster;
+        videoEl.addEventListener('click', sendVideoMessage, false);
 
-        videoEl.setAttribute('href', alignment());
-
-        /**
-         * 数据组装函数
-         *
-         * @return {Object} formated object
-         */
-        function alignment() {
-            var ext = {
-                poster: videoEl.dataset.videoPoster,
-                src: videoEl.dataset.videoSrc
-            };
-            var data = {
-                pd: 'mms_mipvideo',
-                // 使用数据接口，不能改成驼峰式
-                dev_tpl: 'act_mip_video',
-                title: '%E8%A7%86%E9%A2%91',
-                actname: 'act_mip_video',
-                ext: encodeURIComponent(JSON.stringify(ext))
-            };
-
-            return getUrl(data);
-        }
-
-        function getUrl(params) {
-            var url = 'http://transcoder.baidu.com/sf?';
-            for (var key in params) {
-                if (params.hasOwnProperty(key)) {
-                    url += key + '=' + params[key] + '&';
-                }
-
+        function sendVideoMessage() {
+            if (windowInIframe) {
+                // mip_video_jump 为写在外层的承接方法
+                viewer.sendMessage('mip_video_jump', {
+                    poster: videoEl.dataset.videoPoster,
+                    src: videoEl.dataset.videoSrc
+                });
             }
-            return url;
         }
         this.element.appendChild(videoEl);
         return videoEl;
