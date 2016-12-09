@@ -25,21 +25,20 @@ define(function (require) {
     ];
     var windowInIframe = window.parent !== window;
 
-    customElem.prototype.build = function () {
+    customElem.prototype.firstInviewCallback = function () {
         this.attributes = getAttributeSet(this.element.attributes);
 
         var windowProHttps = !!window.location.protocol.match(/^https:/);
-        var windowIsCached = !!window.location.hostname.match('^mipcache');
         var videoProHttps = !!this.attributes.src.match(/^https:/);
         // 页面https         + 视频https  = 当前页播放
-        // 页面https(mipcache或在sf里) + 视频http    = 跳出播放
+        // 页面https(在iframe里) + 视频http    = 跳出播放
         // 页面https(其它)   + 视频http    = 当前页播放（非mip相关页）
         // 页面http          + 视频任意    = 当前页播放
-        if (windowProHttps && (windowIsCached || windowInIframe) && !videoProHttps) {
-            this.videoElement = this.renderPlayElsewhere();
+        if (videoProHttps || (windowInIframe && !videoProHttps && !windowProHttps)) {
+            this.videoElement = this.renderInView();
         }
         else {
-            this.videoElement = this.renderInView();
+            this.videoElement = this.renderPlayElsewhere();
         }
         this.applyFillContent(this.videoElement, true);
     };
@@ -53,14 +52,12 @@ define(function (require) {
                 videoEl.setAttribute('playsinline', 'playsinline');
                 videoEl.setAttribute('webkit-playsinline', 'webkit-playsinline');
             }
-
         }
         Array.prototype.slice.apply(this.element.childNodes).forEach(function (node) {
             // FIXME: mip layout related, remove this!
             if (node.nodeName.toLowerCase() === 'mip-i-space') {
                 return;
             }
-
             videoEl.appendChild(node);
         });
         this.element.appendChild(videoEl);
