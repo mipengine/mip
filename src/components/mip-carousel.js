@@ -26,8 +26,7 @@ define(function (require) {
         var children = Array.prototype.slice.call(element.children);
 
         children = children.filter(function (element) {
-            return element.tagName.toLowerCase() !== 'mip-i-space'
-            && element.tagName.toLowerCase() !== 'div';
+            return element.tagName.toLowerCase() !== 'mip-i-space';
         });
 
         // 子节点个数
@@ -35,7 +34,7 @@ define(function (require) {
 
         // 子节点个数判断
         if (len < 2) {
-            console.error('mip-img 元素的个数必须大于 1 个');
+            console.error('子节点元素的个数必须大于 1 个');
             return;
         }
 
@@ -99,14 +98,12 @@ define(function (require) {
         css(children[currentIndex], 'left', 0);
 
         // 图片布局设置
-        for (var i = 0; i < len; i++) {
-            self.applyFillContent(mipImgList[i], true);
-            
-            // 屏蔽popup 事件
-            if (mipImgList[i].hasAttribute('popup')) {
-                mipImgList[i].removeAttribute('popup')
+        mipImgList.forEach(function (item, key) {
+            self.applyFillContent(item, true);
+            if (item.hasAttribute('popup')) {
+                item.removeAttribute('popup')
             }
-        }
+        });
 
         /**
          * [change 翻页操作]
