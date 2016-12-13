@@ -100,9 +100,9 @@ define(function (require) {
         // 图片布局设置
         mipImgList.forEach(function (item, key) {
             self.applyFillContent(item, true);
-            if (item.hasAttribute('popup')) {
-                item.removeAttribute('popup')
-            }
+            // if (item.hasAttribute('popup')) {
+            //     item.removeAttribute('popup')
+            // }
         });
 
         /**
@@ -266,7 +266,14 @@ define(function (require) {
 
         var gesture = new Gesture(element);
         gesture.on('swipeleft swiperight', function (event, data) {
-            change(data.type !== 'swiperight');
+            var targetClassName = event.target.className;
+
+            // 禁止的蒙层上滑动
+            if(targetClassName=="mip-img-popUp-bg"||targetClassName=="mip-img-popUp-innerimg"){
+                 return;
+            }else {
+                 change(data.type !== 'swiperight');
+            }
         });
 
         if (isAutoPlay) {
