@@ -36,7 +36,7 @@ define(function (require) {
         popup.className = 'mip-img-popUp-wrapper';
         popup.innerHTML = [
             '<div class="mip-img-popUp-bg"></div>',
-            '<img src="' + img.src + '" />'
+            '<img class="mip-img-popUp-innerimg" src="' + img.src + '" />'
         ].join('');
 
         element.appendChild(popup);
@@ -46,7 +46,8 @@ define(function (require) {
     function bindPopup(element, img) {
         var popup, popupBg, popupImg;
         // 图片点击时展现图片
-        img.addEventListener('click', function () {
+        img.addEventListener('click', function (event) {
+            event.stopPropagation();
             // 图片未加载则不弹层
             if (img.width + img.naturalWidth === 0) {
                 return;
@@ -79,6 +80,7 @@ define(function (require) {
 
             naboo.css(popupImg, getPopupImgPos(imgOffset.width, imgOffset.height)).start();
             css(img, 'visibility', 'hidden');
+            css(img.parentNode,"zIndex","inherit")
         }, false);
     };
 
