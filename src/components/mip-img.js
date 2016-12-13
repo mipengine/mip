@@ -36,7 +36,7 @@ define(function (require) {
         popup.className = 'mip-img-popUp-wrapper';
         popup.innerHTML = [
             '<div class="mip-img-popUp-bg"></div>',
-            '<img src="' + img.src + '" />'
+            '<img class="mip-img-popUp-innerimg" src="' + img.src + '" />'
         ].join('');
 
         element.appendChild(popup);
