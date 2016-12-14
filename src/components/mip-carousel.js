@@ -96,14 +96,14 @@ define(function (require) {
             width: '100%'
         });
         css(children[currentIndex], 'left', 0);
-
+        
         // 图片布局设置
-        mipImgList.forEach(function (item, key) {
-            self.applyFillContent(item, true);
-            if (item.hasAttribute('popup')) {
-                item.removeAttribute('popup')
+        for(var index = 0; index < mipImgList.length; index ++) {
+            self.applyFillContent(mipImgList[index], true);
+            if (mipImgList[index].hasAttribute('popup')) {
+                mipImgList[index].removeAttribute('popup')
             }
-        });
+        }
 
         /**
          * [change 翻页操作]
