@@ -97,10 +97,10 @@ define(function (require) {
         });
         css(children[currentIndex], 'left', 0);
 
-    
+
         // 图片布局设置
-        for(var i=0; i< mipImgList.length; i++ ){
-            self.applyFillContent(mipImgList[i], true)
+        for (var i = 0; i < mipImgList.length; i++) {
+            self.applyFillContent(mipImgList[i], true);
         }
 
 
@@ -116,6 +116,7 @@ define(function (require) {
                     if (isAutoPlay) {
                         autoPlay(defer);
                     }
+
                 });
             }
         }
@@ -131,12 +132,12 @@ define(function (require) {
             element.appendChild(nextnode);
 
             prenode.addEventListener('touchend', function (event) {
-                event.preventDefault(); 
+                event.preventDefault();
                 change(false);
             });
 
             nextnode.addEventListener('touchend', function (event) {
-                event.preventDefault(); 
+                event.preventDefault();
                 change(true);
             });
         }
@@ -159,8 +160,12 @@ define(function (require) {
             // 浮层背景色设置
             indicatorWrap = element.querySelector('.mip-carousel-indicator');
             subtitle = mipImgList[currentIndex].querySelector('.mip-carousle-subtitle');
-            css(indicatorWrap, {'background-color': subtitle ? '' : 'rgba(0, 0, 0, 0.3)'});
-            css(subtitle, {'background-color': subtitle ? 'rgba(0, 0, 0, 0.3)' : ''});
+            css(indicatorWrap, {
+                'background-color': subtitle ? '' : 'rgba(0, 0, 0, 0.3)'
+            });
+            css(subtitle, {
+                'background-color': subtitle ? 'rgba(0, 0, 0, 0.3)' : ''
+            });
         }
 
         /**
@@ -188,8 +193,12 @@ define(function (require) {
             var child = children[index];
             subtitle = child.querySelector('.mip-carousle-subtitle');
 
-            css(indicatorWrap, {'background-color': subtitle ? '' : 'rgba(0, 0, 0, 0.3)'});
-            css(subtitle, {'background-color': subtitle ? 'rgba(0, 0, 0, 0.3)' : ''});
+            css(indicatorWrap, {
+                'background-color': subtitle ? '' : 'rgba(0, 0, 0, 0.3)'
+            });
+            css(subtitle, {
+                'background-color': subtitle ? 'rgba(0, 0, 0, 0.3)' : ''
+            });
 
             // 图片占据的一屏宽度
             var perWid = element.offsetWidth || window.innerWidth;
@@ -268,26 +277,36 @@ define(function (require) {
             var targetClassName = event.target.className;
 
             // 禁止的蒙层上滑动
-            if(targetClassName=="mip-img-popUp-bg"||targetClassName=="mip-img-popUp-innerimg"){
-                 return;
-            }else {
-                 change(data.type !== 'swiperight');
+            if (targetClassName === 'mip-img-popUp-bg' || targetClassName === 'mip-img-popUp-innerimg') {
+                return;
             }
+
+            change(data.type !== 'swiperight');
+
         });
 
         if (isAutoPlay) {
-            var nodes = [prenode, nextnode, indicatorNode]
+            var nodes = [
+                prenode,
+                nextnode,
+                indicatorNode
+            ];
             eventHelper.delegate(element, 'mip-img', 'click', function () {
                 if (this.hasAttribute('popup')) {
                     autoTimer && clearTimeout(autoTimer);
                     isMipImgPop = true;
-                    css(nodes, {display: 'none'});
+                    css(nodes, {
+                        display: 'none'
+                    });
                 }
+
             });
             eventHelper.delegate(element, '.mip-img-popUp-wrapper', 'click', function () {
                 autoPlay(defer);
                 isMipImgPop = false;
-                css(nodes, {display: 'block'});
+                css(nodes, {
+                    display: 'block'
+                });
                 return false;
             });
         }
