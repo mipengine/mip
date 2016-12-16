@@ -39,12 +39,22 @@ define(function (require) {
             preventY: true
         });
         popup.className = 'mip-img-popUp-wrapper';
-        popup.innerHTML = [
-            '<div class="mip-img-popUp-bg"></div>',
-            '<img class="mip-img-popUp-innerimg" src="' + img.src + '" />'
-        ].join('');
 
-        element.appendChild(popup);
+        /*
+        * 创建图片预览图层
+        */
+       
+       var popUpBg = document.createElement('div');
+       var innerImg = new Image();
+       
+       popUpBg.className = "mip-img-popUp-bg";
+       innerImg.className = "mip-img-popUp-innerimg";
+       innerImg.src = img.src;
+
+       popup.appendChild(popUpBg);
+       popup.appendChild(innerImg);
+       element.appendChild(popup);
+
         return popup;
     }
 
