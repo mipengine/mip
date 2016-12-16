@@ -96,14 +96,13 @@ define(function (require) {
             width: '100%'
         });
         css(children[currentIndex], 'left', 0);
-        
+
+    
         // 图片布局设置
-        for(var index = 0; index < mipImgList.length; index ++) {
-            self.applyFillContent(mipImgList[index], true);
-            if (mipImgList[index].hasAttribute('popup')) {
-                mipImgList[index].removeAttribute('popup')
-            }
+        for(var i=0; i< mipImgList.length; i++ ){
+            self.applyFillContent(mipImgList[i], true)
         }
+
 
         /**
          * [change 翻页操作]
@@ -266,7 +265,14 @@ define(function (require) {
 
         var gesture = new Gesture(element);
         gesture.on('swipeleft swiperight', function (event, data) {
-            change(data.type !== 'swiperight');
+            var targetClassName = event.target.className;
+
+            // 禁止的蒙层上滑动
+            if(targetClassName=="mip-img-popUp-bg"||targetClassName=="mip-img-popUp-innerimg"){
+                 return;
+            }else {
+                 change(data.type !== 'swiperight');
+            }
         });
 
         if (isAutoPlay) {
