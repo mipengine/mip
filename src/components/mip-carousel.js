@@ -162,7 +162,7 @@ define(function (require) {
             subtitle = mipImgList[currentIndex].querySelector('.mip-carousle-subtitle');
             css(indicatorWrap, {
                 'background-color': subtitle ? '' : 'rgba(0, 0, 0, 0.3)'
-            });
+            }); 
             css(subtitle, {
                 'background-color': subtitle ? 'rgba(0, 0, 0, 0.3)' : ''
             });
