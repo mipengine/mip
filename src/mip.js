@@ -4,7 +4,6 @@ define(function (require) {
     require('spark');
     require('fetch-jsonp');
 
-
     require('./utils/fn');
     require('./utils/gesture/gesture-recognizer');
     require('./utils/gesture/data-processor');
