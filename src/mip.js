@@ -27,11 +27,12 @@ define(function (require) {
     require('./fixed-element');
     var viewport = require('./viewport');
     require('./customElement');
-    var registerMipElement = require('./element');
+    var registerElement = require('./element');
     require('./util');
     var resources = require('./resources');
     var viewer = require('./viewer');
     var performance = require('./performance');
+    var templates = require('./templates');
 
     /* builtin components */
     require('./components/mip-img');
@@ -50,10 +51,16 @@ define(function (require) {
     }
 
     Mip.css = {};
-    Mip.registerMipElement = registerMipElement;
     Mip.viewer = viewer;
     Mip.viewport = viewport;
     Mip.prerenderElement = resources.prerenderElement;
+    Mip.registerMipElement = function (name, customClass, css) {
+        if (templates.isTemplateClass(customClass)) {
+            templates.register(name, customClass);
+        } else {
+            registerElement(name, customClass, css);
+        }
+    };
 
     // Initialize viewer
     viewer.init();
