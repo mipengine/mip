@@ -236,7 +236,7 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
         switch (type) {
             case "top":
             case "bottom":
-                fixedEle.style.maxHeight = '88px';
+                fixedEle.style.maxHeight = '90px';
                 break;
             case "right":
             case "left":
@@ -245,7 +245,7 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
                 fixedEle.style.maxWidth = '10%';
                 break;
             case 'gototop':
-                fixedEle.style.bottom = '88px';
+                fixedEle.style.bottom = '90px';
                 fixedEle.style.right = '10%';
                 break;
             default:
