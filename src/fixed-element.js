@@ -56,7 +56,7 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
         this.setFixedElement(mipFixedElements);
         var fixedLen = this._fixedElements.length;
         var hasParentPage = window.parent !== window;
-        if ((platform.isIos()) && fixedLen > 0 && hasParentPage) {
+        if ((platform.isIos()) && hasParentPage) {
             var fixedLayer = this.getFixedLayer();
 
             for (var i = 0; i < fixedLen; i++) {
