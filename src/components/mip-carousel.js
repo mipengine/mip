@@ -101,6 +101,11 @@ define(function (require) {
         // 图片布局设置
         for (var i = 0; i < mipImgList.length; i++) {
             self.applyFillContent(mipImgList[i], true);
+            if(element.hasAttribute("autoplay")) {
+                if (mipImgList[i].hasAttribute('popup')) {
+                    mipImgList[i].removeAttribute('popup');
+                }
+            }
         }
 
 
