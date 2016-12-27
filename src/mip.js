@@ -52,7 +52,7 @@ define(function (require) {
     Mip.css = {};
     Mip.viewer = viewer;
     Mip.viewport = viewport;
-    Mip.prerenderElement = resources.prerenderElement;
+    Mip.prerenderElement = resources.prerenderElement;    
     Mip.registerMipElement = function (name, customClass, css) {
         if (templates.isTemplateClass(customClass)) {
             templates.register(name, customClass);
