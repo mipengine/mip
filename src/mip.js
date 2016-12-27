@@ -8,7 +8,7 @@ define(function (require) {
     require('./utils/gesture/gesture-recognizer');
     require('./utils/gesture/data-processor');
     require('./utils/gesture');
-    require('./utils/platform');
+    var platform = require('./utils/platform');
     require('./utils/event-emitter');
     var animation = require('./utils/animation');
     require('./utils/event-action');
@@ -53,6 +53,7 @@ define(function (require) {
     Mip.viewer = viewer;
     Mip.viewport = viewport;
     Mip.prerenderElement = resources.prerenderElement;
+    Mip.platform = platform;
     Mip.registerMipElement = function (name, customClass, css) {
         if (templates.isTemplateClass(customClass)) {
             templates.register(name, customClass);

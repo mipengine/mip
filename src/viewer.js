@@ -70,7 +70,8 @@ define(function (require) {
 
             // Fix iphone 5s UC and ios 9 safari bug. While the back button is clicked, the cached page has some problems.
             // So we are forced to load the page in iphone 5s UC and ios 9 safari.
-            var iosVersion = platform.getIosVersion();
+            var iosVersion = platform.getOsVersion();
+            iosVersion = iosVersion.split('.')[0];
             var needBackReload = (iosVersion == '8' && platform.isUc() && screen.width === 320)
                 || (iosVersion == '9' && platform.isSafari());
             if (needBackReload) {
