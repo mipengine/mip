@@ -135,11 +135,10 @@ define(function () {
     };
     for (var i = 0; i < result.length; i++) {
         for (var key in result[i]) {
-            data[key] = (function (key) {
-                return function () {
-                    return key;
-                }
-            })(result[i][key])
+            var handle = function(key) {                
+                return key;                
+            }.bind(null, result[i][key]);            
+            data[key] = handle;
         }
     }
 
