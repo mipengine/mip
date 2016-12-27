@@ -44,7 +44,6 @@ define(function () {
         isAdr: false,
         isSafari: false,
         isQQ: false,
-        isSamsung: false,
         isFireFox: false,
         isBaidu: false,
         isBaiduApp: false        
@@ -88,8 +87,8 @@ define(function () {
         browser.isAdr = true;
     } else if (/\bversion\/([0-9.]+(?: beta)?)(?: mobile(?:\/[a-z0-9]+)?)? safari\//i.test(ua)) {
         browser.isSafari = true;
-    } else if (/samsung/i.test(ua) || /android.+((sch-i[89]0\d|shw-m380s|gt-p\d{4}|gt-n\d+|sgh-t8[56]9|nexus 10))/i.test(ua) || /((SM-T\w+))/i.test(ua)) {
-        browser.isSamsung = true;
+    } else if (/android/i.test(ua) && (/samsung/i.test(ua) || /android.+((sch-i[89]0\d|shw-m380s|gt-p\d{4}|gt-n\d+|sgh-t8[56]9|nexus 10))/i.test(ua) || /((SM-T\w+))/i.test(ua))) {
+        browser.isAdr = true;
     } else if (/ (?:chrome|crios|crmo)\/([0-9.]+)/i.test(ua)) {
         browser.isChrome = true;
     } else if (/\bfirefox\/([0-9.ab]+)/i.test(ua) || /FxiOS+\/([0-9.ab]+)/i.test(ua)) {
