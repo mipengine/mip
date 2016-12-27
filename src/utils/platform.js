@@ -115,53 +115,33 @@ define(function () {
      */
     function getOsVersion() {
         var osVersion;        
-        if (system.isAndroid()) {
+        if (this.isAndroid()) {
             osVersion = /Android ([\.\_\d]+)/.exec(ua)[1];      
-        } else if (system.isIos()) {
+        } else if (this.isIos()) {
             osVersion = /OS (\d+)_(\d+)_?(\d+)?/.exec(nver);            
             osVersion = osVersion[1] + '.' + osVersion[2] + '.' + (osVersion[3] | 0);        
         }        
         return osVersion;
     }
 
-    for (var key in system) {        
-        system[key] = (function (key) {
-            return function () {
-                return key;
-            }
-        })(system[key])
-    }
-    for (var key in engine) {
-        engine[key] = (function (key) {
-            return function () {
-                return key;
-            }
-        })(engine[key])
-    }
-    for (var key in browser) {
-        browser[key] = (function (key) {
-            return function () {
-                return key;
-            }
-        })(browser[key])
+    /**
+     * Package result
+     *        
+     */
+    var result = [system, engine, browser];
+    var data = {
+        'getOsVersion': getOsVersion,
+        'needSpecialScroll':system.isIos && window != top
+    };
+    for (var i = 0; i < result.length; i++) {
+        for (var key in result[i]) {
+            data[key] = (function (key) {
+                return function () {
+                    return key;
+                }
+            })(result[i][key])
+        }
     }
 
-    return {
-        isIos: system.isIos,
-        isAndroid: system.isAndroid,
-        isUc: browser.isUc,
-        isBaidu: browser.isBaidu,
-        isBaiduApp: browser.isBaiduApp,
-        isChrome: browser.isChrome,
-        isAdr: browser.isAdr,
-        isSafari: browser.isSafari,
-        isQQ: browser.isQQ,
-        isSamsung: browser.isSamsung,
-        isFireFox: browser.isFireFox,
-        isTrident: engine.isTrident,
-        isGecko: engine.isGecko,
-        isWebkit: engine.isWebkit,
-        getOsVersion: getOsVersion,
-        needSpecialScroll: system.isIos && window != top
-    }
+    return data;
 });
