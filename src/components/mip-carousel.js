@@ -101,6 +101,11 @@ define(function (require) {
         // 图片布局设置
         for (var i = 0; i < mipImgList.length; i++) {
             self.applyFillContent(mipImgList[i], true);
+            if(element.hasAttribute("autoplay")) {
+                if (mipImgList[i].hasAttribute('popup')) {
+                    mipImgList[i].removeAttribute('popup');
+                }
+            }
         }
 
 
@@ -162,7 +167,7 @@ define(function (require) {
             subtitle = mipImgList[currentIndex].querySelector('.mip-carousle-subtitle');
             css(indicatorWrap, {
                 'background-color': subtitle ? '' : 'rgba(0, 0, 0, 0.3)'
-            });
+            }); 
             css(subtitle, {
                 'background-color': subtitle ? 'rgba(0, 0, 0, 0.3)' : ''
             });
