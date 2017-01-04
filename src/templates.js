@@ -61,31 +61,22 @@ define(function () {
                     template[CACHED_ATTR] = true;
                     impl.cache(templateHTML);
                 }
-                return impl.render(templateHTML, data);
-            });
-        },
-        renderTemplateArray: function(element, array) {
-            if (array.length == 0) {
-                return Promise.resolve([]);
-            }
 
-            var template = this.find(element);
-            if (!template) {
-                return;
-            }
-            var type = template.getAttribute('type');
-            var templateHTML = template.innerHTML;
-            return this._getTemplate(type).then(function (impl) {
-                if (!template[CACHED_ATTR]) {
-                    template[CACHED_ATTR] = true;
-                    impl.cache(templateHTML);
+                // 如果是数组
+                if (Array.isArray(data)) {
+                    if (data.length == 0) {
+                        return Promise.resolve([]);
+                    }
+
+                    return data.map(function(item) {
+                        var node = document.createElement("div");
+        　　             node.innerHTML = impl.render(templateHTML, item);
+                        return node.childNodes[1];
+                    });
                 }
 
-                return array.map(function(item) {
-                    var node = document.createElement("div");
-    　　             node.innerHTML = impl.render(templateHTML, item);
-                    return node.childNodes[1];
-                });
+                // 非数组
+                return impl.render(templateHTML, data);
             });
         },
         find: function (element) {
