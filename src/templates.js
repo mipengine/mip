@@ -62,18 +62,18 @@ define(function () {
                     impl.cache(templateHTML);
                 }
 
-                // 如果是数组
+                // array
                 if (Array.isArray(data)) {
-                    if (data.length == 0) {
+                    if (data.length === 0) {
                         return Promise.resolve([]);
                     }
 
-                    return data.map(function(item) {
+                    return data.map(function (item) {
                         return impl.render(templateHTML, item);
                     });
                 }
 
-                // 非数组
+                // html
                 return impl.render(templateHTML, data);
             });
         },
