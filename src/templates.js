@@ -64,6 +64,30 @@ define(function () {
                 return impl.render(templateHTML, data);
             });
         },
+        renderTemplateArray: function(element, array) {
+            if (array.length == 0) {
+                return Promise.resolve([]);
+            }
+
+            var template = this.find(element);
+            if (!template) {
+                return;
+            }
+            var type = template.getAttribute('type');
+            var templateHTML = template.innerHTML;
+            return this._getTemplate(type).then(function (impl) {
+                if (!template[CACHED_ATTR]) {
+                    template[CACHED_ATTR] = true;
+                    impl.cache(templateHTML);
+                }
+
+                return array.map(function(item) {
+                    var node = document.createElement("div");
+    　　             node.innerHTML = impl.render(templateHTML, item);
+                    return node.childNodes[1];
+                });
+            });
+        },
         find: function (element) {
             if (!element || element.nodeType !== 1) {
                 console.error('Template parent element must be a node element');
