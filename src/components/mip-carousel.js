@@ -384,11 +384,9 @@ define(function (require) {
 
             if (Duration) {
                 translateFn(endPosition, '0ms');
-                wrapBox.style.transitionDuration = '0ms';
             }
             else {
                 translateFn(endPosition, '300ms');
-                wrapBox.style.transitionDuration = '300ms';
             }
 
             if (imgIndex === childImgNum - 1) {

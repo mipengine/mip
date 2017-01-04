@@ -12,7 +12,7 @@ define(function (require) {
     var css = util.css;
     var rect = util.rect;
     var naboo = require('naboo');
-    var viewport = require('viewport');
+    var viewport = require('viewport'); 
 
     function getPopupImgPos(imgWidth, imgHeight) {
         var width = viewport.getWidth();
