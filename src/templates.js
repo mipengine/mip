@@ -69,9 +69,7 @@ define(function () {
                     }
 
                     return data.map(function(item) {
-                        var node = document.createElement("div");
-        　　             node.innerHTML = impl.render(templateHTML, item);
-                        return node.childNodes[1];
+                        return impl.render(templateHTML, item);
                     });
                 }
 
