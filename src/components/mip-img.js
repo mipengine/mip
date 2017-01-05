@@ -1,3 +1,8 @@
+/**
+ * @file mip-img 图片组件
+ * @author wangpei07
+ */
+
 define(function (require) {
     'use strict';
 
@@ -18,8 +23,8 @@ define(function (require) {
             height: height,
             left: 0,
             top: top
-        }
-    };
+        };
+    }
 
     var getImgOffset = function (img) {
         var imgOffset = rect.getElementOffset(img);
@@ -34,23 +39,37 @@ define(function (require) {
             preventY: true
         });
         popup.className = 'mip-img-popUp-wrapper';
-        popup.innerHTML = [
-            '<div class="mip-img-popUp-bg"></div>',
-            '<img src="' + img.src + '" />'
-        ].join('');
 
-        element.appendChild(popup);
+        /*
+        * 创建图片预览图层
+        */
+       
+       var popUpBg = document.createElement('div');
+       var innerImg = new Image();
+       
+       popUpBg.className = "mip-img-popUp-bg";
+       innerImg.className = "mip-img-popUp-innerimg";
+       innerImg.src = img.src;
+
+       popup.appendChild(popUpBg);
+       popup.appendChild(innerImg);
+       element.appendChild(popup);
+
         return popup;
-    };
+    }
 
     function bindPopup(element, img) {
-        var popup, popupBg, popupImg;
+        var popup;
+        var popupBg;
+        var popupImg;
         // 图片点击时展现图片
-        img.addEventListener('click', function () {
+        img.addEventListener('click', function (event) {
+            event.stopPropagation();
             // 图片未加载则不弹层
             if (img.width + img.naturalWidth === 0) {
                 return;
             }
+
             var onResize = function () {
                 imgOffset = getImgOffset(img);
                 css(popupImg, imgOffset);
@@ -63,7 +82,9 @@ define(function (require) {
                 popupImg = popup.querySelector('img');
 
                 popup.addEventListener('click', function () {
-                    naboo.css(popupBg, {opacity: 0}).start();
+                    naboo.css(popupBg, {
+                        opacity: 0
+                    }).start();
                     naboo.css(popupImg, getImgOffset(img)).start(function () {
                         css(img, 'visibility', 'visible');
                         css(popup, 'display', 'none');
@@ -79,8 +100,9 @@ define(function (require) {
 
             naboo.css(popupImg, getPopupImgPos(imgOffset.width, imgOffset.height)).start();
             css(img, 'visibility', 'hidden');
+            css(img.parentNode, 'zIndex', 'inherit');
         }, false);
-    };
+    }
 
     var bindLoad = function (element, img) {
         img.addEventListener('load', function () {
@@ -93,19 +115,21 @@ define(function (require) {
         var _img = new Image();
         this.applyFillContent(_img, true);
         var ele = this.element;
-        
+
         var src = util.makeCacheUrl(ele.getAttribute('src'), 'img');
         _img.src = src;
 
-        if(ele.getAttribute('alt')) {
+        if (ele.getAttribute('alt')) {
             _img.setAttribute('alt', ele.getAttribute('alt'));
         }
+
         ele.appendChild(_img);
         if (ele.hasAttribute('popup')) {
             bindPopup(ele, _img);
         }
+
         bindLoad(ele, _img);
-    };
+    }
     customElem.prototype.firstInviewCallback = firstInviewCallback;
     customElem.prototype.hasResources = function () {
         return true;

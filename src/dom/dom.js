@@ -31,7 +31,7 @@ define(function (require) {
             return false;
         }
         return nativeMatches.call(element, selector);
-    };
+    }
 
     /**
      * Support for closest. Find the closest parent node that matches the selector.
@@ -83,7 +83,7 @@ define(function (require) {
     function closestTo(element, selector, target) {
         var closestElement = closest(element, selector);
         return contains(target, closestElement) ? closestElement : null;
-    };
+    }
 
     /**
      * Temp element for creating element by string.
@@ -105,7 +105,7 @@ define(function (require) {
         var children = Array.prototype.slice.call(createTmpElement.children);
         createTmpElement.innerHTML = '';
         return children.length > 1 ? children : children[0]; 
-    };
+    }
 
 
     return {
