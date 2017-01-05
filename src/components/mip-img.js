@@ -76,7 +76,7 @@ define(function (require) {
                 naboo.css(popupImg, getPopupImgPos(imgOffset.width, imgOffset.height)).start();
             };
             window.addEventListener('resize', onResize);
-            if (!popup) {
+            if (!popupa) {
                 popup = createPopup(element, img);
                 popupBg = popup.querySelector('.mip-img-popUp-bg');
                 popupImg = popup.querySelector('img');
