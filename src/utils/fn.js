@@ -116,11 +116,43 @@ define(function (require) {
         return result;
     }
 
+    /**
+     * If varible is string type
+     *
+     * @param {string} string params string
+     * @return {boolean} whehter varible is string
+     */
+    function isString(string) {
+        if (!string) {
+            return false;
+        }
+        return Object.prototype.toString.call(string) === '[object String]';
+    }
+
+    /**
+     * Empty a property
+     *
+     * @param {Object} obj object
+     * @param {string} key key of object
+     */
+    function del(obj, key) {
+        if (!obj[key]) {
+            return;
+        }
+        try {
+            delete obj[key];
+        } catch (e) {
+            obj[key] = undefined;
+        }
+    }
+
     return {
         throttle: throttle,
         values: values,
         extend: extend,
         pick: pick,
-        isPlainObject: isPlainObject
+        isPlainObject: isPlainObject,
+        isString: isString,
+        del: del
     }
 });
