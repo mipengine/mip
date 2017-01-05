@@ -34,7 +34,7 @@ define(function (require) {
     // 创建弹层 dom
     function createPopup(element, img) {
         var mipPopWrap = document.querySelector('.mip-img-popUp-wrapper');
-        if (!!mipPopWrap) {
+        if (!!mipPopWrap&&mipPopWrap.getAttribute('name')=='mip-img-popUp-wrapper_name'&&mipPopWrap.parentNode.tagName.toLowerCase()=='body') {
             mipPopWrap.querySelector('img').setAttribute('src', img.src);
             return mipPopWrap;
         }
@@ -45,6 +45,7 @@ define(function (require) {
             preventY: true
         });
         popup.className = 'mip-img-popUp-wrapper';
+        popup.setAttribute('name','mip-img-popUp-wrapper_name');
 
         /*
         * 创建图片预览图层
