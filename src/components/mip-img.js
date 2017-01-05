@@ -49,16 +49,17 @@ define(function (require) {
         /*
         * 创建图片预览图层
         */
-        var popUpBg = document.createElement('div');
-        var innerImg = new Image();
+       
+       var popUpBg = document.createElement('div');
+       var innerImg = new Image();
+       
+       popUpBg.className = "mip-img-popUp-bg";
+       innerImg.className = "mip-img-popUp-innerimg";
+       innerImg.src = img.src;
 
-        popUpBg.className = 'mip-img-popUp-bg';
-        innerImg.className = 'mip-img-popUp-innerimg';
-        innerImg.src = img.src;
-
-        popup.appendChild(popUpBg);
-        popup.appendChild(innerImg);
-        document.body.appendChild(popup);
+       popup.appendChild(popUpBg);
+       popup.appendChild(innerImg);
+       document.body.appendChild(popup);
 
         return popup;
     }
@@ -81,12 +82,14 @@ define(function (require) {
                 naboo.css(popupImg, getPopupImgPos(imgOffset.width, imgOffset.height)).start();
             };
             window.addEventListener('resize', onResize);
+            
             popup = createPopup(element, img);
             popupBg = popup.querySelector('.mip-img-popUp-bg');
             popupImg = popup.querySelector('img');
 
-            popup.removeEventListener('touchend'); 
-            popup.addEventListener('touchend', function () {
+            popup.addEventListener('click', alerImage, false);
+
+            function alerImage() {
                 naboo.css(popupBg, {
                     opacity: 0
                 }).start();
@@ -94,7 +97,8 @@ define(function (require) {
                     css(img, 'visibility', 'visible');
                     css(popup, 'display', 'none');
                 });
-            }, false);
+                popup.removeEventListener('click', alerImage, false);
+            }
 
             var imgOffset = getImgOffset(img);
 
@@ -134,7 +138,6 @@ define(function (require) {
 
         bindLoad(ele, _img);
     }
-
     customElem.prototype.firstInviewCallback = firstInviewCallback;
     customElem.prototype.hasResources = function () {
         return true;
