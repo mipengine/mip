@@ -34,7 +34,7 @@ define(function (require) {
     // 创建弹层 dom
     function createPopup(element, img) {
         var mipPopWrap = document.querySelector('.mip-img-popUp-wrapper');
-        if (mipPopWrap) {
+        if (!!mipPopWrap) {
             mipPopWrap.querySelector('img').setAttribute('src', img.src);
             return mipPopWrap;
         }
