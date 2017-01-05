@@ -6,7 +6,7 @@
  */
 define(function (require) {
     var customElem = require('customElement').create();
-    customElem.prototype.build = function () {
+    customElem.prototype.firstInviewCallback = function () {
         var constElementObj = this.element;
         var constSelf = this;
         var constEleWidth = constElementObj.clientWidth;
