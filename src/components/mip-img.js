@@ -87,9 +87,9 @@ define(function (require) {
             popupBg = popup.querySelector('.mip-img-popUp-bg');
             popupImg = popup.querySelector('img');
 
-            popup.addEventListener('click', alerImage, false);
+            popup.addEventListener('click', imagePop, false);
 
-            function alerImage() {
+            function imagePop() {
                 naboo.css(popupBg, {
                     opacity: 0
                 }).start();
@@ -97,7 +97,7 @@ define(function (require) {
                     css(img, 'visibility', 'visible');
                     css(popup, 'display', 'none');
                 });
-                popup.removeEventListener('click', alerImage, false);
+                popup.removeEventListener('click', imagePop, false);
             }
 
             var imgOffset = getImgOffset(img);
