@@ -34,6 +34,7 @@ define(function (require) {
         css: require('./dom/css'),
         Gesture: require('./utils/gesture'),
         EventEmitter: require('./utils/event-emitter'),
-        platform: require('./utils/platform')
+        platform: require('./utils/platform'),
+        naboo: require('naboo')
     }
 });
