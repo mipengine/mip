@@ -305,7 +305,7 @@ define(function (require) {
     LocalStorage.prototype.rmExpires = function () {
         var hasExpires = false;
         if (isCachePage) {
-            var ls = localStorage;
+            var ls = supportLs() ? localStorage : lsCache;
             for (var k in ls) {
                 if (typeof ls[k] === 'string' && JSON.parse(ls[k]).e) {
                     var expire = parseInt(JSON.parse(ls[k]).e, 10);
