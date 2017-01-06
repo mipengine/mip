@@ -19,6 +19,17 @@ define(function (require) {
     };
 
     /**
+     * Error code
+     *
+     * @type {object}
+     * @public
+     */
+    var eCode = {
+        siteExceed: 0,
+        lsExceed: 1
+    };
+
+    /**
      * When no support local storage, store data temporary
      *
      * @type {object}
@@ -27,12 +38,12 @@ define(function (require) {
     var lsCache = {};
 
     /**
-     * Url regex
+     * Whether page in cache
      *
-     * @type {RegExp}
+     * @type {object}
      * @public
      */
-    var urlReg = /[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+\.?/g;
+    var isCachePage = window.location.href.match('mipcache.bdstatic.com');
 
     /**
      * Domain of website
@@ -40,7 +51,7 @@ define(function (require) {
      * @type {object}
      * @public
      */
-    var HOST = window.location.toString().match(urlReg)[1];
+    var HOST = window.location.href.match(/[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+\.?/g)[1];
 
     /**
      * Current domain storage size, max is 4k
@@ -49,14 +60,6 @@ define(function (require) {
      * @public
      */
     var STORAGESIZE = 4 * 1024;
-
-    /**
-     * Storage exceed
-     *
-     * @type {string}
-     * @public
-     */
-    var EXCEEDTEXT = 'storage space need less than 4k';
 
     /**
      * Update local storage operation time
@@ -71,17 +74,45 @@ define(function (require) {
     }
 
     /**
+     * Get error message with error code
+     *
+     * @param {string} code error code
+     * @param {string} name error name
+     * @return {string} error message
+     */
+    function getErrorMess(code, name) {
+        var mess;
+        switch (code) {
+            case eCode.siteExceed:
+                mess = 'storage space need less than 4k';
+            case eCode.lsExceed:
+                mess = 'Uncaught DOMException: Failed to execute setItem on Storage: Setting the value of '
+                        + name + ' exceeded the quota at ' + window.location.href;
+        }
+        return mess;
+    }
+
+    /**
+     * Generate error object
+     *
+     * @param {string} code error code
+     * @param {string} name error name
+     * @return {string} error object
+     */
+    function getError(code, mess) {
+        return {
+            eCode: code,
+            eMess: mess
+        }
+    }
+
+    /**
      * Get local storage
      *
      * @return {Object} value of local storage
      */
     function getLocalStorage() {
-        var ls;
-        if (supportLs()) {
-            ls = localStorage.getItem(HOST);
-        } else {
-            ls = lsCache[HOST];
-        }
+        var ls = supportLs() ? localStorage.getItem(HOST) : lsCache[HOST];
         ls = ls ? JSON.parse(ls) : {};
         updateTime(ls);
         return ls;
@@ -96,11 +127,7 @@ define(function (require) {
         if (!key) {
             key = HOST;
         }
-        if (supportLs()) {
-            localStorage.removeItem(key);
-        } else {
-            fn.del(lsCache, key);
-        }
+        supportLs() ? localStorage.removeItem(key) : fn.del(lsCache, key);
     }
 
     /**
@@ -156,21 +183,25 @@ define(function (require) {
         if (!name || !value) {
             return;
         }
-
-        var ls = getLocalStorage();
-        ls[name] = value;
-        expire = parseInt(expire, 10);
-        if (!isNaN(expire) && expire > 0) {
-            ls.e = new Date().getTime() + expire * 1000;
+        callback = typeof expire === 'function' ? expire : callback;
+        if (isCachePage) {
+            var ls = getLocalStorage();
+            ls[name] = value;
+            expire = parseInt(expire, 10);
+            if (!isNaN(expire) && expire > 0) {
+                ls.e = new Date().getTime() + expire * 1000;
+            } else {
+                fn.del(ls, 'e');
+            }
+            ls = JSON.stringify(ls);
+            if (ls.length > STORAGESIZE) {
+                callback && callback(getError(eCode.siteExceed, getErrorMess(eCode.siteExceed)));
+                throw getErrorMess(eCode.siteExceed);
+            }
+            this._setLocalStorage(HOST, ls, expire, callback);
         } else {
-            fn.del(ls, 'e');
+            this._setLocalStorage(name, value, expire, callback);
         }
-        ls = JSON.stringify(ls);
-        if (ls.length > STORAGESIZE) {
-            callback && callback(EXCEEDTEXT);
-            throw EXCEEDTEXT;
-        }
-        this._setLocalStorage(HOST, ls, expire, callback);
     };
 
     /**
@@ -182,12 +213,17 @@ define(function (require) {
      * @param {string} callback if error callback to publisher
      */
     LocalStorage.prototype._setLocalStorage = function (key, value, expire, callback) {
+        var mess = getErrorMess(eCode.lsExceed, key);
+        callback = typeof expire === 'function' ? expire : callback;
         if (supportLs()) {
             try {
                 localStorage.setItem(key, value);
             } catch (e) {
-                if (this._isExceed(e)) {
+                if (this._isExceed(e) && isCachePage) {
                     this._exceedHandler(key, value, expire);
+                } else if (this._isExceed(e) && !isCachePage) {
+                    callback && callback(getError(eCode.lsExceed, mess));
+                    throw mess;
                 }
             }
         } else {
@@ -198,9 +234,7 @@ define(function (require) {
                 }
             }
             if (size > 5.0) {
-                var mess = 'Uncaught DOMException: Failed to execute setItem on Storage: Setting the value of '
-                + key + 'exceeded the quota at ' + window.location.href;
-                callback && callback(mess);
+                callback && callback(eCode.lsExceed, mess);
                 throw mess;
             }
             lsCache[key] = value;
@@ -219,9 +253,13 @@ define(function (require) {
         }
 
         var result;
-        var ls = getLocalStorage();
-        if (ls && ls[name]) {
-            result = ls[name];
+        if (isCachePage) {
+            var ls = getLocalStorage();
+            if (ls && ls[name]) {
+                result = ls[name];
+            }
+        } else {
+            result = supportLs() ? localStorage.getItem(name) : lsCache[name];
         }
         return result;
     };
@@ -236,10 +274,14 @@ define(function (require) {
             return;
         }
 
-        var ls = getLocalStorage();
-        if (ls && ls[name]) {
-            fn.del(ls, name);
-            this._setLocalStorage(HOST, JSON.stringify(ls));
+        if (isCachePage) {
+            var ls = getLocalStorage();
+            if (ls && ls[name]) {
+                fn.del(ls, name);
+                this._setLocalStorage(HOST, JSON.stringify(ls));
+            }
+        } else {
+            supportLs() ? localStorage.removeItem(name) : fn.del(lsCache, name);
         }
     };
 
@@ -248,7 +290,11 @@ define(function (require) {
      *
      */
     LocalStorage.prototype.clear = function () {
-        rmLocalStorage();
+        if (isCachePage) {
+            rmLocalStorage();
+        } else {
+            supportLs() ? localStorage.clear() : lsCache = {};
+        }
     };
 
     /**
@@ -257,14 +303,16 @@ define(function (require) {
      * @return {boolean} whether storage has expired
      */
     LocalStorage.prototype.rmExpires = function () {
-        var ls = localStorage;
         var hasExpires = false;
-        for (var k in ls) {
-            if (ls[k]) {
-                var expire = parseInt(JSON.parse(ls[k]).e, 10);
-                if (expire && new Date().getTime() >= expire) {
-                    hasExpires = true;
-                    rmLocalStorage(k);
+        if (isCachePage) {
+            var ls = localStorage;
+            for (var k in ls) {
+                if (typeof ls[k] === 'string' && JSON.parse(ls[k]).e) {
+                    var expire = parseInt(JSON.parse(ls[k]).e, 10);
+                    if (expire && new Date().getTime() >= expire) {
+                        hasExpires = true;
+                        rmLocalStorage(k);
+                    }
                 }
             }
         }
