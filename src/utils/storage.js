@@ -14,8 +14,8 @@ define(function (require) {
      * @public
      */
     var storageType = {
-        ASYNCSTORAGE: 0,
-        LOCALSTORAGE: 1
+        LOCALSTORAGE: 0,
+        ASYNCSTORAGE: 1
     };
 
     /**
@@ -73,6 +73,16 @@ define(function (require) {
         storage.u = new Date().getTime();
     }
 
+    function parseJson(str) {
+        try {
+            str = JSON.parse(str);
+        } catch(e) {
+            str = JSON.stringify(str);
+            str = JSON.parse(str);
+        }
+        return str;
+    }
+
     /**
      * Get error message with error code
      *
@@ -113,7 +123,7 @@ define(function (require) {
      */
     function getLocalStorage() {
         var ls = supportLs() ? localStorage.getItem(HOST) : lsCache[HOST];
-        ls = ls ? JSON.parse(ls) : {};
+        ls = ls ? parseJson(ls) : {};
         updateTime(ls);
         return ls;
     }
@@ -138,7 +148,13 @@ define(function (require) {
     function supportLs() {
         var support = false;
         if (window.localStorage && window.localStorage.setItem) {
-            support = true;
+            try {
+                storage.setItem("lsExisted", "1");
+                storage.removeItem("lsExisted");
+                support = true;
+            } catch(e){
+                support = false;
+            }
         }
         return support;
     }
@@ -152,9 +168,7 @@ define(function (require) {
     function Storage(type) {
         switch (type) {
             case storageType.ASYNCSTORAGE:
-                var mipAccess = document.querySelector('script[mip-access-config]');
-                var storageback = JSON.parse(mipAccess.textContent).storageback;
-                this.storage = new AsyncStorage(storageback);
+                this.storage = new AsyncStorage();
                 break;
             case storageType.LOCALSTORAGE:
                 this.storage = new LocalStorage();
@@ -227,7 +241,7 @@ define(function (require) {
                 }
             }
         } else {
-            var size = 0;
+            var size = value.length / 1024.0 / 1024.0;
             for (var k in lsCache) {
                 if (lsCache[k]) {
                     size += lsCache[k].length / 1024.0 / 1024.0;
@@ -305,10 +319,14 @@ define(function (require) {
     LocalStorage.prototype.rmExpires = function () {
         var hasExpires = false;
         if (isCachePage) {
-            var ls = localStorage;
+            var ls = supportLs() ? localStorage : lsCache;
             for (var k in ls) {
-                if (typeof ls[k] === 'string' && JSON.parse(ls[k]).e) {
-                    var expire = parseInt(JSON.parse(ls[k]).e, 10);
+                var val;
+                if (typeof ls[k] === 'string') {
+                    val = parseJson(ls[k]);
+                }
+                if (val && val.e) {
+                    var expire = parseInt(parseJson(ls[k]).e, 10);
                     if (expire && new Date().getTime() >= expire) {
                         hasExpires = true;
                         rmLocalStorage(k);
@@ -362,7 +380,7 @@ define(function (require) {
             var ls = localStorage;
             for (var k in ls) {
                 if (ls[k]) {
-                    var item = JSON.parse(ls[k]).u;
+                    var item = parseJson(ls[k]).u;
                     if (!key || parseInt(item, 10) < minTimeStamp) {
                         key = k;
                         minTimeStamp = item ? parseInt(item, 10) : 0;
@@ -377,54 +395,24 @@ define(function (require) {
     /**
      * Publisher manage storage, via request
      *
-     * @param {string} storageback it's a url for manage storage
      * @class
      */
-    function AsyncStorage(storageback) {
-        this.eventQueue = {};
-        this.eventId = 0;
-        this.storageback = storageback;
+    function AsyncStorage() {
     }
-
-    /**
-     * Get event callback id
-     *
-     * @return {string} id event id
-     */
-    AsyncStorage.prototype._getEventId = function () {
-        var time = new Date().getTime();
-        return time.toString().concat(this.eventId++);
-    };
 
     /**
      * Send request to server with params
      *
-     * @param {Object} params request params
-     * @param {Object} headers http headers
-     * @param {Function} callback request callback
+     * @param {Object} opt request params
      */
-    AsyncStorage.prototype.request = function (params, headers, callback) {
-        var eventId = this._getEventId();
-        if (callback) {
-            this.eventQueue[eventId] = callback;
+    AsyncStorage.prototype.request = function (opt) {
+        if (!opt) {
+            return;
         }
-        params = params ? params : {};
-        params.eventId = eventId;
-        headers = headers ? headers : {};
-
-        fetch(this.storageback, {
-            method: 'POST',
-            headers: headers,
-            body: JSON.stringify(params)
-        }).then(function (res) {
-            return res.text();
-        }).then(function (text) {
-            var id = JSON.parse(text).eventId;
-            if (this.eventQueue[id]) {
-                this.eventQueue[id]();
-                fn.del(this.eventQueue, id);
-            }
-        }.bind(this));
+        var lc = window.location;
+        opt.headers = opt.headers ? opt.headers : {};
+        opt.type = 'POST';
+        $.ajax(opt);
     };
 
     return Storage;
