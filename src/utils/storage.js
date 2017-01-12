@@ -76,7 +76,7 @@ define(function (require) {
     function parseJson(str) {
         try {
             str = JSON.parse(str);
-        } catch(e) {
+        } catch (e) {
             str = JSON.stringify(str);
             str = JSON.parse(str);
         }
@@ -106,14 +106,14 @@ define(function (require) {
      * Generate error object
      *
      * @param {string} code error code
-     * @param {string} name error name
+     * @param {string} mess error name
      * @return {string} error object
      */
     function getError(code, mess) {
         return {
             eCode: code,
             eMess: mess
-        }
+        };
     }
 
     /**
@@ -149,10 +149,10 @@ define(function (require) {
         var support = false;
         if (window.localStorage && window.localStorage.setItem) {
             try {
-                storage.setItem("lsExisted", "1");
-                storage.removeItem("lsExisted");
+                window.localStorage.setItem('lsExisted', '1');
+                window.localStorage.removeItem('lsExisted');
                 support = true;
-            } catch(e){
+            } catch (e) {
                 support = false;
             }
         }
@@ -411,6 +411,5 @@ define(function (require) {
         }
         $.ajax(opt);
     };
-
     return Storage;
 });
