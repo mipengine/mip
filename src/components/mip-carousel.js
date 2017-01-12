@@ -6,314 +6,429 @@
  */
 define(function (require) {
     var customElem = require('customElement').create();
-    var Gesture = require('utils/gesture');
-    var util = require('util');
-    var css = util.css;
-    var naboo = require('naboo');
-    var eventHelper = util.event;
-
     customElem.prototype.build = function () {
-        var self = this;
-        var element = self.element;
+        var constElementObj = this.element;
+        var constSelf = this;
+        var constEleWidth = constElementObj.clientWidth;
 
-        // 元素高度判断
-        var height = element.getAttribute('height');
-        if (!height) {
-            return;
+        // 获取用户填写属性
+ 
+        // 是否自动播放
+        var constAutoPlayCard = constElementObj.hasAttribute('autoplay');
+
+        // 图片间隔时长默认为4000
+        var constDefer = constElementObj.getAttribute('defer');
+        var constDeferNum = !!constDefer ? constDefer : 4000;
+
+        // 分页显示器
+        var constIndicatorShow = constElementObj.hasAttribute('indicator');
+
+        // 翻页按钮
+        var constButtonController = constElementObj.hasAttribute('buttonController');
+
+        // Gesture锁
+        var LockGesture = {
+            'stop': 1
+        };
+
+        // btn按钮手势锁
+        var btnLock = {
+            'stop': 1
+        };
+
+        // 缓存上一次手势位置
+        var prvGestureClientx = 0;
+
+        // 缓存当前值轮播位置
+        var NowGestureClientx = -constEleWidth;
+
+        // 当前图片显示索引
+        var imgIndex = 1;
+
+        // 图片显示个数
+        // 其实图片个数应该为实际个数+2.copy了头和尾的两部分
+        var childImgNum = 0;
+
+        // 定时器时间hold
+        var setTimeHold;
+
+        // 获取carousel下的所有节点
+        var domHtmlArray = getChildNode(constElementObj);
+
+        // 拼接html
+        pieceDom(domHtmlArray);
+
+        // 禁止左右滑动配置
+        var startPos = {};
+        var endPos = {};
+        var isScrolling = 0;
+
+        // 绑定手势事件
+        bindGesture();
+
+
+        // 自动轮播
+        if (!!constAutoPlayCard) {
+            autoPlay();
         }
-
-        // 获取图片子节点
-        var children = Array.prototype.slice.call(element.children);
-
-        children = children.filter(function (element) {
-            return element.tagName.toLowerCase() !== 'mip-i-space';
-        });
-
-        // 子节点个数
-        var len = children.length;
-
-        // 子节点个数判断
-        if (len < 2) {
-            console.error('子节点元素的个数必须大于 1 个');
-            return;
-        }
-
-        // 被隐藏的图片的left属性值
-        var HIDE_LEFT = -9999;
-
-        // 轮播动画时长
-        var DURATION = 300;
-
-        // 当前展示的图片序号
-        var currentIndex = 0;
-
-        // 指示器容器
-        var indicators;
-
-        // 如果mip-carousel里子节点是mip-img，并且mip-img弹出了浮层
-        var isMipImgPop = false;
-
-        // 当前是否处于轮播动画中
-        var isAnimating = false;
-
-        // 自动轮播时间间隔
-        var defer = 2000;
-
-        // 是否需要自动轮播
-        var autoTimer;
-
-        // 自动播放控制开关
-        var isAutoPlay = false;
-
-        // 自控播放属性
-        var autoAttr = element.getAttribute('autoplay');
-
-        // 图片列表
-        var mipImgList = element.querySelectorAll('mip-img');
 
         // 指示器
-        var hasIndicator = element.hasAttribute('indicator');
-
-        // 指示器节点
-        var indicatorNode;
-
-        var prenode;
-        var nextnode;
-
-        var indicatorWrap;
-
-        var subtitle;
-
-        /**
-         * 轮播思路：轮播只涉及2张图片，分别是当前图片和下一张要出现的图片，把下一张图片放到当前图片的前面或者后面
-         * 然后移动到当前图片的位置，其余不涉及的图片全部设置left:-9999px，当前图片设置left:0，具体可以看效果
-         */
-        css(children, {
-            position: 'absolute',
-            left: HIDE_LEFT,
-            top: 0,
-            height: '100%',
-            width: '100%'
-        });
-        css(children[currentIndex], 'left', 0);
-
-
-        // 图片布局设置
-        for (var i = 0; i < mipImgList.length; i++) {
-            self.applyFillContent(mipImgList[i], true);
-            if(element.hasAttribute("autoplay")) {
-                if (mipImgList[i].hasAttribute('popup')) {
-                    mipImgList[i].removeAttribute('popup');
-                }
-            }
+        if (!!constIndicatorShow) {
+            indicator();
         }
 
+        // 控制按钮
+        if (!!constButtonController) {
+            cratebutton();
+        }
 
-        /**
-         * [change 翻页操作]
-         *
-         * @param  {boolean} flag [向前翻页还是向后]
-         */
-        function change(flag) {
-            if (!isAnimating) {
-                autoTimer && clearTimeout(autoTimer);
-                switchItem(flag).then(function () {
-                    if (isAutoPlay) {
-                        autoPlay(defer);
+        // 获取carouse标签下所有非mip-i-space元素
+        function getChildNode(element) {
+            var allChild = element.children;
+            var arrNode = Array.prototype.slice.call(allChild);
+            var domHtmlArray = [];
+
+            arrNode.map(function (ele, i) {
+                if (ele.tagName.toLowerCase() !== 'mip-i-space') {
+                    if (element.hasAttribute('autoplay')) {
+                        if (ele.hasAttribute('popup')) {
+                            ele.removeAttribute('popup');
+                        }
                     }
 
-                });
-            }
-        }
-
-        // 如果需要翻页按钮，则创建
-        if (element.hasAttribute('buttonController')) {
-            prenode = document.createElement('a');
-            nextnode = document.createElement('a');
-
-            prenode.classList.add('preBtn');
-            nextnode.classList.add('nextBtn');
-            element.appendChild(prenode);
-            element.appendChild(nextnode);
-
-            prenode.addEventListener('touchend', function (event) {
-                event.preventDefault();
-                change(false);
-            });
-
-            nextnode.addEventListener('touchend', function (event) {
-                event.preventDefault();
-                change(true);
-            });
-        }
-
-        // 如果需要指示器，则创建
-        if (hasIndicator) {
-            var cnt = len;
-            var html = [];
-            while (cnt--) {
-                html.push('<span></span>');
-            }
-
-            indicatorNode = document.createElement('div');
-            indicatorNode.classList.add('mip-carousel-indicator');
-            indicatorNode.innerHTML = html.join('');
-            element.appendChild(indicatorNode);
-            indicators = indicatorNode.querySelectorAll('span');
-            indicators[currentIndex].classList.add('mip-carousel-current-indicator');
-
-            // 浮层背景色设置
-            indicatorWrap = element.querySelector('.mip-carousel-indicator');
-            subtitle = mipImgList[currentIndex].querySelector('.mip-carousle-subtitle');
-            css(indicatorWrap, {
-                'background-color': subtitle ? '' : 'rgba(0, 0, 0, 0.3)'
-            }); 
-            css(subtitle, {
-                'background-color': subtitle ? 'rgba(0, 0, 0, 0.3)' : ''
-            });
-        }
-
-        /**
-         * 切换图片函数
-         *
-         * @param  {boolean} forward 前进(true)或者后退(false)
-         *
-         * @return {Object}         Deferred/Promise对象
-         */
-        function switchItem(forward) {
-            var index = forward ? (currentIndex + 1) : (currentIndex - 1);
-            if (index < 0) {
-                index = len - 1;
-            }
-            else if (index >= len) {
-                index = 0;
-            }
-
-            // 指示器效果
-            if (hasIndicator) {
-                indicators[currentIndex].classList.remove('mip-carousel-current-indicator');
-                indicators[index].classList.add('mip-carousel-current-indicator');
-            }
-
-            var child = children[index];
-            subtitle = child.querySelector('.mip-carousle-subtitle');
-
-            css(indicatorWrap, {
-                'background-color': subtitle ? '' : 'rgba(0, 0, 0, 0.3)'
-            });
-            css(subtitle, {
-                'background-color': subtitle ? 'rgba(0, 0, 0, 0.3)' : ''
-            });
-
-            // 图片占据的一屏宽度
-            var perWid = element.offsetWidth || window.innerWidth;
-            var left = (forward ? 1 : -1) * perWid;
-            var _promise;
-            var filterElements = children.filter(function (element, i) {
-                return (i !== currentIndex && i !== index);
-            });
-            css(filterElements, 'left', HIDE_LEFT);
-            css(children, {
-                display: 'block',
-                opacity: 1,
-                zIndex: 1
-            });
-
-            css(child, {
-                left: left,
-                zIndex: 2
-            });
-
-            // 手动触发不可见区域的mip-img
-            if (child.tagName.toLocaleLowerCase() === 'mip-img') {
-                MIP.prerenderElement(child);
-            }
-            else {
-                var imgList = child.querySelectorAll('mip-img');
-                for (var i = 0; i < imgList.length; i++) {
-                    MIP.prerenderElement(imgList[i]);
+                    domHtmlArray.push(ele);
+                    element.removeChild(ele);
                 }
-            }
-            isAnimating = true;
 
-            _promise = new Promise(function (resolve, reject) {
-                naboo.css(child, {
-                    left: 0
-                }, DURATION, function () {
-                    currentIndex = index;
-                    resolve();
-                    isAnimating = false;
-                }).start();
-            });
-            var currChild = children[currentIndex];
-            css(currChild, 'opacity', 1);
-            naboo.css(currChild, {
-                opacity: 0
-            }, DURATION).start(function () {
-                css(currChild, {
-                    opacity: 1,
-                    display: 'none'
-                });
             });
 
-            return _promise;
+            // 拷贝第一个和最后一个节点拼接dom
+            var firstCard = domHtmlArray[0].cloneNode(true);
+            var endCard = domHtmlArray[domHtmlArray.length - 1].cloneNode(true);
+            domHtmlArray.unshift(endCard);
+            domHtmlArray.push(firstCard);
+            return domHtmlArray;
         }
 
-        function autoPlay(time) {
-            autoTimer = setTimeout(function () {
-                switchItem(true).then(function () {
-                    autoPlay(time);
-                });
-            }, time);
-        }
-
-        if (autoAttr === 'autoplay' || autoAttr === '') {
-            var deferAttr = element.getAttribute('defer');
-            defer = deferAttr && (typeof +deferAttr === 'number') ? +deferAttr : defer;
-            isAutoPlay = true;
-            autoPlay(defer);
-        }
-        else {
-            element.removeAttribute('autoplay');
-        }
-
-        var gesture = new Gesture(element);
-        gesture.on('swipeleft swiperight', function (event, data) {
-            var targetClassName = event.target.className;
-
-            // 禁止的蒙层上滑动
-            if (targetClassName === 'mip-img-popUp-bg' || targetClassName === 'mip-img-popUp-innerimg') {
+        // 将getChildNode获取的元素拼装轮播dom节点输出到文档
+        function pieceDom(domArray) {
+            // 如何dom数组长度为0,则返回,否则拼接dom元素输出到页面
+            if (domHtmlArray.length === 0) {
                 return;
             }
 
-            change(data.type !== 'swiperight');
+            childImgNum = domHtmlArray.length;
 
-        });
+            var carouselBox = document.createElement('div');
+            carouselBox.className = 'mip-carousel-container';
 
-        if (isAutoPlay) {
-            var nodes = [
-                prenode,
-                nextnode,
-                indicatorNode
-            ];
-            eventHelper.delegate(element, 'mip-img', 'click', function () {
-                if (this.hasAttribute('popup')) {
-                    autoTimer && clearTimeout(autoTimer);
-                    isMipImgPop = true;
-                    css(nodes, {
-                        display: 'none'
-                    });
+            var wrapBox = document.createElement('div');
+            wrapBox.className = 'mip-carousel-wrapper';
+
+            domArray.map(function (ele, i) {
+                var slideBox = document.createElement('div');
+                slideBox.className = 'mip-carousel-slideBox';
+                slideBox.appendChild(ele);
+                slideBox.style.width = (100 / childImgNum) + '%';
+                wrapBox.appendChild(slideBox);
+            });
+
+            wrapBox.style.width = childImgNum * 100 + '%';
+
+            carouselBox.appendChild(wrapBox);
+            constElementObj.appendChild(carouselBox);
+
+
+            // 初始渲染时应该改变位置到第一张图
+            var initPostion = -constEleWidth;
+            wrapBox.style.webkitTransform = 'translate3d(' + initPostion + 'px, 0, 0)';
+
+
+            // 遍历mip-img计算布局
+            domArray.map(function (ele, i) {
+                if (ele.tagName.toLowerCase() === 'mip-img') {
+                    constSelf.applyFillContent(ele, true);
+                    MIP.prerenderElement(ele);
+                }
+                else {
+                    var allImg = ele.querySelectorAll('mip-img');
+                    for (var index = 0; index < allImg.length; index++) {
+                        constSelf.applyFillContent(allImg[index], true);
+                        MIP.prerenderElement(allImg[index]);
+                    }
+                }
+            });
+        }
+
+        // 监听轮播手势滚动
+        function bindGesture() {
+            // 手势移动的距离
+            var diffNum = 0;
+
+            // 获取到轮播节点与图片父节点
+            var wrapBox = constElementObj.querySelector('.mip-carousel-wrapper');
+
+            // 绑定手势点击事件
+            wrapBox.addEventListener('touchstart', function (event) {
+                // 以下兼容横屏时禁止左右滑动
+                var touch = event.targetTouches[0];
+                startPos = {
+                    x: touch.pageX,
+                    y: touch.pageY,
+                    time: (+new Date)
+                };
+                isScrolling = 0; // 这个参数判断是垂直滚动还是水平滚动
+
+                // 获取手势点击位置
+                prvGestureClientx = touch.pageX;
+                clearInterval(setTimeHold);
+            }, false);
+
+            wrapBox.addEventListener('touchmove', function (event) {
+                
+                // 阻止触摸事件的默认行为，即阻止滚屏
+                var touch = event.targetTouches[0];
+                endPos = {
+                    x: touch.pageX - startPos.x,
+                    y: touch.pageY - startPos.y
+                };
+                isScrolling = Math.abs(endPos.x) < Math.abs(endPos.y) ? 1 : 0; // isScrolling为1时，表示纵向滑动，0为横向滑动
+                if (isScrolling === 0) {
+                    event.preventDefault();
                 }
 
-            });
-            eventHelper.delegate(element, '.mip-img-popUp-wrapper', 'click', function () {
-                autoPlay(defer);
-                isMipImgPop = false;
-                css(nodes, {
-                    display: 'block'
-                });
-                return false;
-            });
+                // 获取手指移动的距离
+                diffNum = event.targetTouches[0].pageX - prvGestureClientx + NowGestureClientx;
+
+                // 外框同步运动
+                translateFn(diffNum, '0ms');
+
+                // 滚动手势锁 正在滑动
+                LockGesture.stop = 0;
+
+            }, false);
+
+            wrapBox.addEventListener('touchend', function (event) {
+                // 如果不是图片的时候应该阻止事件
+                if (event.target.tagName.toLocaleLowerCase() !== 'img') {
+                    event.preventDefault();
+                }
+
+                var endPosition = 0;
+
+                //  只有滑动之后才会触发
+                if (!LockGesture.stop) {
+                    // 判断滑动方向
+                    // 右滑
+                    if (diffNum > NowGestureClientx) {
+                        endPosition = thresholdRight(diffNum);
+                    }
+                    else {
+                        endPosition = thresholdLeft(diffNum);
+                    }
+
+                    imgSlide(endPosition);
+                    LockGesture.stop = 1;
+                }
+
+                // 如果存在自动则调用自动轮播
+                if (constAutoPlayCard) {
+                    autoPlay();
+                }
+
+            }, false);
+        }
+
+        // 左滑阀值判断，如果超过阀值应该自动滑动
+        function thresholdLeft(diffNum) {
+            var everyWidtj = constEleWidth;
+            var thresholdNum = -(imgIndex * everyWidtj + (everyWidtj * 0.2));
+            var endPosition = 0;
+
+            if (thresholdNum > diffNum) {
+                endPosition = -everyWidtj * (imgIndex + 1);
+                imgIndex = imgIndex + 1;
+            }
+            else {
+                endPosition = -everyWidtj * (imgIndex);
+            }
+
+            return endPosition;
+        }
+
+        // 右滑阀值判断，如果超过阀值应该自动滑动
+        function thresholdRight(diffNum) {
+            var everyWidtj = constEleWidth;
+            var thresholdNum = -((imgIndex - 1) * everyWidtj + (everyWidtj * 0.8));
+            var endPosition = 0;
+
+            if (thresholdNum > diffNum) {
+                endPosition = -everyWidtj * (imgIndex);
+            }
+            else {
+                endPosition = -everyWidtj * (imgIndex - 1);
+                imgIndex = imgIndex - 1;
+            }
+
+            return endPosition;
+        }
+
+        // 自动轮播
+        function autoPlay() {
+            setTimeHold = setInterval(function () {
+                var everyWidtj = constEleWidth;
+                var endPosition = -everyWidtj * (imgIndex + 1);
+                imgIndex = imgIndex + 1;
+                imgSlide(endPosition);
+            }, constDeferNum);
+        }
+
+        // 创建指示器
+        function indicator() {
+            var indicatorBox = document.createElement('div');
+            var indicatorBoxWrap = document.createElement('p');
+            var indicatorNow = document.createElement('span');
+            var indicatorAllNum = document.createElement('span');
+
+            indicatorBox.className = 'mip-carousel-indicatorbox';
+            indicatorBoxWrap.className = 'mip-carousel-indicatorBoxwrap';
+            indicatorNow.className = 'mip-carousel-indicatornow';
+
+            indicatorAllNum.innerHTML = '/' + (childImgNum - 2);
+
+            indicatorNow.innerHTML = imgIndex;
+
+            indicatorBoxWrap.appendChild(indicatorNow);
+            indicatorBoxWrap.appendChild(indicatorAllNum);
+
+            indicatorBox.appendChild(indicatorBoxWrap);
+
+            constElementObj.appendChild(indicatorBox);
+        }
+
+        // 指示器数字变化
+        function indicatorChange() {
+            if (!constIndicatorShow) {
+                return;
+            }
+
+            var nowIndex = imgIndex;
+            if (nowIndex <= 0) {
+                nowIndex = childImgNum - 2;
+            }
+            else if (nowIndex > childImgNum - 2) {
+                nowIndex = 1;
+            }
+
+            var indicatorNow = constElementObj.querySelector('.mip-carousel-indicatornow');
+            indicatorNow.innerHTML = nowIndex;
+        }
+
+
+        // 创建左右轮播切换btn
+        function cratebutton() {
+            var preBtn = document.createElement('p');
+            preBtn.className = 'mip-carousel-preBtn';
+            var nextBtn = document.createElement('p');
+            nextBtn.className = 'mip-carousel-nextBtn';
+
+            constElementObj.appendChild(preBtn);
+            constElementObj.appendChild(nextBtn);
+            bindBtn();
+        }
+
+
+        // 绑定按钮切换事件
+        function bindBtn() {
+            constElementObj.querySelector('.mip-carousel-preBtn').addEventListener('touchend', function (event) {
+                var everyWidtj = constEleWidth;
+                if (!btnLock.stop) {
+                    return;
+                }
+
+                btnLock.stop = 0;
+
+                var endPosition = -everyWidtj * (imgIndex - 1);
+                imgIndex = imgIndex - 1;
+
+                clearInterval(setTimeHold);
+                imgSlide(endPosition);
+                if (constAutoPlayCard) {
+                    autoPlay();
+                }
+
+            }, false);
+
+            constElementObj.querySelector('.mip-carousel-nextBtn').addEventListener('touchend', function (event) {
+                var everyWidtj = constEleWidth;
+                if (!btnLock.stop) {
+                    return;
+                }
+
+                btnLock.stop = 0;
+
+                var endPosition = -everyWidtj * (imgIndex + 1);
+                imgIndex = imgIndex + 1;
+                clearInterval(setTimeHold);
+                imgSlide(endPosition);
+                if (constAutoPlayCard) {
+                    autoPlay();
+                }
+
+            }, false);
+        }
+
+        // 图片滑动处理与手势滑动函数endPosition为最终距离,Duration变换时间
+        function imgSlide(endPosition, Duration) {
+            var wrapBox = constElementObj.querySelector('.mip-carousel-wrapper');
+
+            if (Duration) {
+                translateFn(endPosition, '0ms');
+                wrapBox.style.transitionDuration = '0ms';
+            }
+            else {
+                translateFn(endPosition, '300ms');
+                wrapBox.style.transitionDuration = '300ms';
+            }
+
+            if (imgIndex === childImgNum - 1) {
+                NowGestureClientx = -constEleWidth;
+                imgIndex = 1;
+                setTimeout(function () {
+                    translateFn(NowGestureClientx, '0ms');
+                    btnLock.stop = 1;
+                }, 300);
+            }
+            else if (imgIndex === 0) {
+                // 如果是最后一个图
+                NowGestureClientx = -(childImgNum - 2) * constEleWidth;
+                imgIndex = childImgNum - 2;
+                setTimeout(function () {
+                    translateFn(NowGestureClientx, '0ms');
+                    btnLock.stop = 1;
+
+                }, 300);
+            }
+            else {
+                NowGestureClientx = endPosition;
+                btnLock.stop = 1;
+            }
+            indicatorChange();
+        }
+
+
+        // 横竖屏兼容处理
+        window.addEventListener('resize', function () {
+            constEleWidth = constElementObj.clientWidth;
+            var endPosition = -constEleWidth * (imgIndex);
+            imgSlide(endPosition, '0ms');
+        }, false);
+
+        // 移动函数
+        function translateFn(value, time) {
+            var wrapBox = constElementObj.querySelector('.mip-carousel-wrapper');
+            wrapBox.style.webkitTransform = 'translate3d(' + value + 'px, 0px, 0px)';
+            wrapBox.style.transitionDuration = time;
         }
 
     };
