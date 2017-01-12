@@ -409,9 +409,6 @@ define(function (require) {
         if (!opt) {
             return;
         }
-        var lc = window.location;
-        opt.headers = opt.headers ? opt.headers : {};
-        opt.type = 'POST';
         $.ajax(opt);
     };
 
