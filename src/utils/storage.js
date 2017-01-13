@@ -25,8 +25,8 @@ define(function (require) {
      * @public
      */
     var eCode = {
-        siteExceed: 0,
-        lsExceed: 1
+        siteExceed: 21,
+        lsExceed: 22
     };
 
     /**
