@@ -111,8 +111,8 @@ define(function (require) {
      */
     function getError(code, mess) {
         return {
-            eCode: code,
-            eMess: mess
+            errCode: code,
+            errMess: mess
         };
     }
 
