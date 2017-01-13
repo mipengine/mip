@@ -146,16 +146,11 @@ define(function (require) {
 
             // 遍历mip-img计算布局
             domArray.map(function (ele, i) {
-                if (ele.tagName.toLowerCase() === 'mip-img') {
-                    constSelf.applyFillContent(ele, true);
-                    MIP.prerenderElement(ele);
-                }
-                else {
-                    var allImg = ele.querySelectorAll('mip-img');
-                    for (var index = 0; index < allImg.length; index++) {
-                        constSelf.applyFillContent(allImg[index], true);
-                        MIP.prerenderElement(allImg[index]);
-                    }
+                constSelf.applyFillContent(ele, true);
+                var allImg = ele.querySelectorAll('mip-img');
+                for (var index = 0; index < allImg.length; index++) {
+                    constSelf.applyFillContent(allImg[index], true);
+                    MIP.prerenderElement(allImg[index]);
                 }
             });
         }
