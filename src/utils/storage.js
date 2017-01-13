@@ -417,8 +417,8 @@ define(function (require) {
         if (opt.headers) {
             myInit.headers = opt.headers;
         }
-        if (myInit.body) {
-            myInit.body = opt.body;
+        if (opt.body) {
+            myInit.body = JSON.stringify(opt.body);
         }
         fetch(opt.url, myInit).then(function (res) {
             if (res.ok) {
