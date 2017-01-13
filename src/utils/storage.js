@@ -406,10 +406,31 @@ define(function (require) {
      * @param {Object} opt request params
      */
     AsyncStorage.prototype.request = function (opt) {
-        if (!opt) {
+        if (!opt || !opt.url) {
             return;
         }
-        $.ajax(opt);
+        var myInit = {};
+        myInit.mode = opt.mode ? opt.mode : null;
+        myInit.method = opt.method ? opt.method : 'GET';
+        myInit.credentials = opt.credentials ? opt.credentials : 'omit';
+        myInit.cache = opt.cache ? opt.cache : 'default';
+        if (opt.headers) {
+            myInit.headers = opt.headers;
+        }
+        if (myInit.body) {
+            myInit.body = opt.body;
+        }
+        fetch(opt.url, myInit).then(function (res) {
+            if (res.ok) {
+                res.text().then(function (data) {
+                    opt.success && opt.success(JSON.parse(data));
+                });
+            } else {
+                opt.error && opt.error(res);
+            }
+        }).catch(function (err) {
+            opt.error && opt.error(err);
+        });
     };
     return Storage;
 });
