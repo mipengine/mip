@@ -73,6 +73,12 @@ define(function (require) {
         storage.u = new Date().getTime();
     }
 
+    /**
+     * Parse json link JSON.parse
+     *
+     * @param {string} str parse string
+     * @return {string} parsed string
+     */
     function parseJson(str) {
         try {
             str = JSON.parse(str);
