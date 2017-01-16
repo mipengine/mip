@@ -35,6 +35,6 @@ define(function (require) {
         Gesture: require('./utils/gesture'),
         EventEmitter: require('./utils/event-emitter'),
         platform: require('./utils/platform'),
-        customStorage: require('./utils/storage')
+        customStorage: require('./utils/customStorage')
     }
 });

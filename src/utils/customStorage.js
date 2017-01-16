@@ -1,5 +1,5 @@
 /**
- * @file Storage Function. Support publiser management and localstorage
+ * @file customStorage Function. Support publiser management and localstorage
  * @author wupeng10@baidu.com
  */
 define(function (require) {
@@ -171,7 +171,7 @@ define(function (require) {
      * @param {number} type type of storage
      * @class
      */
-    function Storage(type) {
+    function customStorage(type) {
         switch (type) {
             case storageType.ASYNCSTORAGE:
                 this.storage = new AsyncStorage();
@@ -438,5 +438,5 @@ define(function (require) {
             opt.error && opt.error(err);
         });
     };
-    return Storage;
+    return customStorage;
 });
