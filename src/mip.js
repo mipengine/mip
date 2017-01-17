@@ -1,7 +1,6 @@
 define(function (require) {
     require('zepto');
     require('naboo');
-    require('spark');
     require('fetch-jsonp');
 
     require('./utils/fn');
@@ -10,7 +9,6 @@ define(function (require) {
     require('./utils/gesture');
     require('./utils/platform');
     require('./utils/event-emitter');
-    var animation = require('./utils/animation');
     require('./utils/event-action');
 
     /* dom */
@@ -39,9 +37,6 @@ define(function (require) {
     require('./components/mip-carousel');
     require('./components/mip-iframe');
     var components = require('./components/index');
-
-    // Register builtin animaters
-    animation.register();
 
     // The global variable of MIP
     var Mip = {};
