@@ -30,7 +30,6 @@ var requireConfig = {
     paths: {
         'zepto' : '../deps/zepto',
         'naboo' : '../deps/naboo',
-        'spark' : '../deps/spark',
         'fetch-jsonp' : '../deps/fetch-jsonp'
     }
     
@@ -51,7 +50,6 @@ var amdCompiler = new AMDCompiler({
         'src/**/*.js',
         'deps/naboo.js',
         'deps/zepto.js',
-        'deps/spark.js',
         'deps/fetch-jsonp.js'
     ]
 });
@@ -63,7 +61,6 @@ var testAmdCompiler = new AMDCompiler({
             'test': '../test',
             'zepto' : '../deps/zepto',
             'naboo' : '../deps/naboo',
-            'spark' : '../deps/spark',
             'fetch-jsonp' : '../deps/fetch-jsonp'
         }
     },
@@ -71,7 +68,6 @@ var testAmdCompiler = new AMDCompiler({
         'src/**/*.js',
         'deps/naboo.js',
         'deps/zepto.js',
-        'deps/spark.js',
         'deps/fetch-jsonp.js',
         'test/**/*.js'
     ]

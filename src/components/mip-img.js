@@ -33,27 +33,33 @@ define(function (require) {
 
     // 创建弹层 dom
     function createPopup(element, img) {
+        var mipPopWrap = document.querySelector('.mip-img-popUp-wrapper');
+        if (!!mipPopWrap && mipPopWrap.getAttribute('data-name') === 'mip-img-popUp-name' && mipPopWrap.parentNode.tagName.toLowerCase() === 'body') {
+            mipPopWrap.querySelector('img').setAttribute('src', img.src);
+            return mipPopWrap;
+        }
+
         var popup = document.createElement('div');
         // 阻止纵向滑动
         new Gesture(popup, {
             preventY: true
         });
         popup.className = 'mip-img-popUp-wrapper';
+        popup.setAttribute('data-name', 'mip-img-popUp-name');
 
         /*
         * 创建图片预览图层
         */
-       
-       var popUpBg = document.createElement('div');
-       var innerImg = new Image();
-       
-       popUpBg.className = "mip-img-popUp-bg";
-       innerImg.className = "mip-img-popUp-innerimg";
-       innerImg.src = img.src;
+        var popUpBg = document.createElement('div');
+        var innerImg = new Image();
 
-       popup.appendChild(popUpBg);
-       popup.appendChild(innerImg);
-       element.appendChild(popup);
+        popUpBg.className = 'mip-img-popUp-bg';
+        innerImg.className = 'mip-img-popUp-innerimg';
+        innerImg.src = img.src;
+
+        popup.appendChild(popUpBg);
+        popup.appendChild(innerImg);
+        document.body.appendChild(popup);
 
         return popup;
     }
@@ -73,23 +79,25 @@ define(function (require) {
             var onResize = function () {
                 imgOffset = getImgOffset(img);
                 css(popupImg, imgOffset);
-                naboo.css(popupImg, getPopupImgPos(imgOffset.width, imgOffset.height)).start();
+                naboo.animate(popupImg, getPopupImgPos(imgOffset.width, imgOffset.height)).start();
             };
             window.addEventListener('resize', onResize);
-            if (!popup) {
-                popup = createPopup(element, img);
-                popupBg = popup.querySelector('.mip-img-popUp-bg');
-                popupImg = popup.querySelector('img');
 
-                popup.addEventListener('click', function () {
-                    naboo.css(popupBg, {
-                        opacity: 0
-                    }).start();
-                    naboo.css(popupImg, getImgOffset(img)).start(function () {
-                        css(img, 'visibility', 'visible');
-                        css(popup, 'display', 'none');
-                    });
-                }, false);
+            popup = createPopup(element, img);
+            popupBg = popup.querySelector('.mip-img-popUp-bg');
+            popupImg = popup.querySelector('img');
+
+            popup.addEventListener('click', imagePop, false);
+
+            function imagePop() {
+                naboo.animate(popupBg, {
+                    opacity: 0
+                }).start();
+                naboo.animate(popupImg, getImgOffset(img)).start(function () {
+                    css(img, 'visibility', 'visible');
+                    css(popup, 'display', 'none');
+                });
+                popup.removeEventListener('click', imagePop, false);
             }
 
             var imgOffset = getImgOffset(img);
@@ -98,7 +106,7 @@ define(function (require) {
             css(popupBg, 'opacity', 1);
             css(popup, 'display', 'block');
 
-            naboo.css(popupImg, getPopupImgPos(imgOffset.width, imgOffset.height)).start();
+            naboo.animate(popupImg, getPopupImgPos(imgOffset.width, imgOffset.height)).start();
             css(img, 'visibility', 'hidden');
             css(img.parentNode, 'zIndex', 'inherit');
         }, false);
