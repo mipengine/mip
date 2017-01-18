@@ -79,7 +79,7 @@ define(function (require) {
             var onResize = function () {
                 imgOffset = getImgOffset(img);
                 css(popupImg, imgOffset);
-                naboo.css(popupImg, getPopupImgPos(imgOffset.width, imgOffset.height)).start();
+                naboo.animate(popupImg, getPopupImgPos(imgOffset.width, imgOffset.height)).start();
             };
             window.addEventListener('resize', onResize);
 
@@ -90,10 +90,10 @@ define(function (require) {
             popup.addEventListener('click', imagePop, false);
 
             function imagePop() {
-                naboo.css(popupBg, {
+                naboo.animate(popupBg, {
                     opacity: 0
                 }).start();
-                naboo.css(popupImg, getImgOffset(img)).start(function () {
+                naboo.animate(popupImg, getImgOffset(img)).start(function () {
                     css(img, 'visibility', 'visible');
                     css(popup, 'display', 'none');
                 });
@@ -106,7 +106,7 @@ define(function (require) {
             css(popupBg, 'opacity', 1);
             css(popup, 'display', 'block');
 
-            naboo.css(popupImg, getPopupImgPos(imgOffset.width, imgOffset.height)).start();
+            naboo.animate(popupImg, getPopupImgPos(imgOffset.width, imgOffset.height)).start();
             css(img, 'visibility', 'hidden');
             css(img.parentNode, 'zIndex', 'inherit');
         }, false);
