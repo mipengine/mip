@@ -149,6 +149,8 @@ define(function (require) {
                     return;
                 }
 
+                
+                
                 if (this.parentElement.tagName.toLowerCase() === 'mip-link') {
                     e.preventDefault();
                     var message = {
@@ -161,7 +163,7 @@ define(function (require) {
                         }
                     };
                     window.parent.postMessage(message, '*');
-                }else {
+                } else {
                     // For mail、phone、market、app ...
                     // Safari failed when iframed. So add the `target="_top"` to fix it.
                     if (!regexp.test(this.href)) {
