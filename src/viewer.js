@@ -37,7 +37,7 @@ define(function (require) {
 
         if (window.parent !== window) {
 
-            var elem = $(that);
+            var elem = that;
             var message = {
                 'event': 'loadiframe',
                 'data': {
