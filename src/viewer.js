@@ -159,7 +159,7 @@ define(function (require) {
                     var message = {
                         'event': 'loadiframe',
                         'data': {
-                            'url': href,
+                            'url': this.href,
                             'title': (this.getAttribute('data-title') || this.innerText.replace(/(^\s*)|(\s*$)/g, "").split('\n')[0]),
                             'click': this.getAttribute('data-click'),
                             'pageType': pageType
