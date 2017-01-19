@@ -1,60 +1,12 @@
 define(function (require) {
     'use strict';
 
-
-
     var util = require('./util');
     var Gesture = util.Gesture;
     var css = util.css;
     var platform = util.platform;
     var EventAction = require('./utils/event-action');
     var EventEmitter = require('./utils/event-emitter');
-
-     /**
-     * [is_noCache 判断是否禁止缓存]
-     * 
-     * @return {Boolean} 
-     */
-    function is_noCache() {
-        var cache_meta = document.querySelector('meta[property="mip:use_cache"]');
-
-        if(cache_meta && cache_meta.getAttribute('content') === 'no') {
-            return true;
-        }
-        return false
-    }
-
-     /**
-     * for mip-link event
-     * @param  {Event} e event
-     */
-    function onClick (that) {
-
-        var href = that.getAttribute('href');
-        var pageType = is_noCache() ? 2 : 1;
-
-        if (!href) { return; }
-
-        if (window.parent !== window) {
-
-            var elem = that;
-            var message = {
-                'event': 'loadiframe',
-                'data': {
-                    'url': href,
-                    'title': (elem.getAttribute('data-title') || elem.innerText.replace(/(^\s*)|(\s*$)/g, "").split('\n')[0]),
-                    'click': elem.getAttribute('data-click'),
-                    'pageType': pageType
-                }
-            };
-
-            window.parent.postMessage(message, '*');
-        }
-        else {
-            location.href = href;
-        }
-    }
-
 
     /**
      * Save window.
@@ -199,7 +151,22 @@ define(function (require) {
 
                 if (this.parentElement.tagName.toLowerCase() === 'mip-link') {
                     e.preventDefault();
-                    onClick(this)
+                    var pageType = 1;
+                    var cache_meta = document.querySelector('meta[property="mip:use_cache"]');
+                    if(cache_meta && cache_meta.getAttribute('content') === 'no') {
+                        pageType = 2;
+                    }
+                    var message = {
+                        'event': 'loadiframe',
+                        'data': {
+                            'url': href,
+                            'title': (this.getAttribute('data-title') || this.innerText.replace(/(^\s*)|(\s*$)/g, "").split('\n')[0]),
+                            'click': this.getAttribute('data-click'),
+                            'pageType': pageType
+                        }
+                    };
+                    window.parent.postMessage(message, '*');
+
                 }else {
                     // For mail、phone、market、app ...
                     // Safari failed when iframed. So add the `target="_top"` to fix it.
