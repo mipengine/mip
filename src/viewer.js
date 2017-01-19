@@ -42,9 +42,9 @@ define(function (require) {
                 'event': 'loadiframe',
                 'data': {
                     'url': href,
-                    'title': (elem.attr('data-title') || elem.text().trim().split('\n')[0]),
-                    'click': elem.data('click'),
-                    'pageType': pageType 
+                    'title': (elem.getAttribute('data-title') || elem.innerText.replace(/(^\s*)|(\s*$)/g, "").split('\n')[0]),
+                    'click': elem.getAttribute('data-click'),
+                    'pageType': pageType
                 }
             };
 
