@@ -144,39 +144,22 @@ define(function (require) {
             var self = this;
             var regexp = /^http/;
             util.event.delegate(document.body, 'a', 'click', function (e) {
-
                 if (!this.href) {
                     return;
                 }
-
-                
-                
-                if (this.parentElement.tagName.toLowerCase() === 'mip-link') {
-                    e.preventDefault();
-                    var message = {
-                        'event': 'loadiframe',
-                        'data': {
-                            'url': this.href,
-                            'title': (this.getAttribute('data-title') || this.innerText.replace(/(^\s*)|(\s*$)/g, "").split('\n')[0]),
-                            'click': this.getAttribute('data-click'),
-                            'pageType': this.getAttribute('data-pageType')
-                        }
-                    };
-                    window.parent.postMessage(message, '*');
+                if (!regexp.test(this.href)) {
+                    this.setAttribute('target', '_top');
+                    return;
+                }
+                e.preventDefault();
+                var dataMipLink = this.getAttribute('data-mipLink');
+                if (dataMipLink) {
+                    self.sendMessage('loadiframe', JSON.parse(dataMipLink));
                 } else {
-                    // For mail、phone、market、app ...
-                    // Safari failed when iframed. So add the `target="_top"` to fix it.
-                    if (!regexp.test(this.href)) {
-                        this.setAttribute('target', '_top');
-                        return;
-                    }
-
-                    e.preventDefault();
                     self.sendMessage('mibm-jumplink', {
-                        'url': this.href
+                        'url': this.href 
                     });
                 }
-               
             }, false); 
         }
     };
