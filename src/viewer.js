@@ -151,22 +151,16 @@ define(function (require) {
 
                 if (this.parentElement.tagName.toLowerCase() === 'mip-link') {
                     e.preventDefault();
-                    var pageType = 1;
-                    var cache_meta = document.querySelector('meta[property="mip:use_cache"]');
-                    if(cache_meta && cache_meta.getAttribute('content') === 'no') {
-                        pageType = 2;
-                    }
                     var message = {
                         'event': 'loadiframe',
                         'data': {
                             'url': this.href,
                             'title': (this.getAttribute('data-title') || this.innerText.replace(/(^\s*)|(\s*$)/g, "").split('\n')[0]),
                             'click': this.getAttribute('data-click'),
-                            'pageType': pageType
+                            'pageType': this.getAttribute('data-pageType')
                         }
                     };
                     window.parent.postMessage(message, '*');
-
                 }else {
                     // For mail、phone、market、app ...
                     // Safari failed when iframed. So add the `target="_top"` to fix it.
