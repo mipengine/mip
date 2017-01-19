@@ -30,9 +30,10 @@ var requireConfig = {
     paths: {
         'zepto' : '../deps/zepto',
         'naboo' : '../deps/naboo',
-        'fetch-jsonp' : '../deps/fetch-jsonp'
+        'fetch-jsonp' : '../deps/fetch-jsonp',
+        'fetch' : '../deps/fetch',
     }
-    
+
     // ,
     // packages: [
     //     {
@@ -50,7 +51,8 @@ var amdCompiler = new AMDCompiler({
         'src/**/*.js',
         'deps/naboo.js',
         'deps/zepto.js',
-        'deps/fetch-jsonp.js'
+        'deps/fetch-jsonp.js',
+        'deps/fetch.js'
     ]
 });
 
@@ -61,7 +63,8 @@ var testAmdCompiler = new AMDCompiler({
             'test': '../test',
             'zepto' : '../deps/zepto',
             'naboo' : '../deps/naboo',
-            'fetch-jsonp' : '../deps/fetch-jsonp'
+            'fetch-jsonp' : '../deps/fetch-jsonp',
+            'fetch' : '../deps/fetch',
         }
     },
     files: [
@@ -69,6 +72,7 @@ var testAmdCompiler = new AMDCompiler({
         'deps/naboo.js',
         'deps/zepto.js',
         'deps/fetch-jsonp.js',
+        'deps/fetch.js',
         'test/**/*.js'
     ]
 });
@@ -93,7 +97,6 @@ var mainCombiner = new Combiner({
         'src/mip.js': [
             'src/prefix.js',
             'deps/promise.js',
-            'deps/fetch.js',
             'deps/document-register-element.max.js',
             'deps/esl.js',
             'src/mip.js'
