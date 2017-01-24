@@ -153,18 +153,17 @@ define(function (require) {
                 }
                 e.preventDefault();
                 var dataMipLink = this.getAttribute('data-mipLink');
-                if (dataMipLink) {
-                    if(this.parentElement.tagName.toLowerCase() === 'mip-link') {
-                        var messageData;
-                        try {
-                            messageData = JSON.parse(dataMipLink);
-                        } catch (e) {
-                            messageData = JSON.stringify(dataMipLink);
-                            messageData = JSON.parse(messageData);
-                        }
-                        self.sendMessage('loadiframe', messageData);
+                if (dataMipLink && this.parentElement.tagName.toLowerCase() === 'mip-link') {
+                    var messageData;
+                    try {
+                        messageData = JSON.parse(dataMipLink);
+                    } catch (e) {
+                        messageData = JSON.stringify(dataMipLink);
+                        messageData = JSON.parse(messageData);
                     }
-                } else {
+                    self.sendMessage('loadiframe', messageData);
+                }
+                else {
                     self.sendMessage('mibm-jumplink', {
                         'url': this.href 
                     });
