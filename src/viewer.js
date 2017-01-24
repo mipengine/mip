@@ -35,6 +35,7 @@ define(function (require) {
             this.setupEventAction();
 
             if (this.isIframed) {
+
                 this.patchForIframe();
                 // proxy links
                 this._proxyLink();
@@ -146,16 +147,27 @@ define(function (require) {
                 if (!this.href) {
                     return;
                 }
-                // For mail、phone、market、app ...
-                // Safari failed when iframed. So add the `target="_top"` to fix it.
                 if (!regexp.test(this.href)) {
                     this.setAttribute('target', '_top');
                     return;
                 }
                 e.preventDefault();
-                self.sendMessage('mibm-jumplink', {
-                    'url': this.href
-                });
+                var dataMipLink = this.getAttribute('data-mipLink');
+                if (dataMipLink && this.parentElement.tagName.toLowerCase() === 'mip-link') {
+                    var messageData;
+                    try {
+                        messageData = JSON.parse(dataMipLink);
+                    } catch (e) {
+                        messageData = JSON.stringify(dataMipLink);
+                        messageData = JSON.parse(messageData);
+                    }
+                    self.sendMessage('loadiframe', messageData);
+                }
+                else {
+                    self.sendMessage('mibm-jumplink', {
+                        'url': this.href 
+                    });
+                }
             }, false); 
         }
     };
