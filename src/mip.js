@@ -2,6 +2,7 @@ define(function (require) {
     require('zepto');
     require('naboo');
     require('fetch-jsonp');
+    require('fetch');
 
     require('./utils/fn');
     require('./utils/gesture/gesture-recognizer');
