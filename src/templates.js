@@ -61,6 +61,19 @@ define(function () {
                     template[CACHED_ATTR] = true;
                     impl.cache(templateHTML);
                 }
+
+                // array
+                if (Array.isArray(data)) {
+                    if (data.length === 0) {
+                        return Promise.resolve([]);
+                    }
+
+                    return data.map(function (item) {
+                        return impl.render(templateHTML, item);
+                    });
+                }
+
+                // html
                 return impl.render(templateHTML, data);
             });
         },
