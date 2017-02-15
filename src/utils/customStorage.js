@@ -7,57 +7,57 @@ define(function (require) {
 
     var fn = require('./fn');
 
-    /**
+    /*
      * Type of storage
-     *
-     * @type {object}
-     * @public
+     * @const
+     * @inner
+     * @type {Object}
      */
     var storageType = {
         LOCALSTORAGE: 0,
         ASYNCSTORAGE: 1
     };
 
-    /**
+    /*
      * Error code
-     *
-     * @type {object}
-     * @public
+     * @const
+     * @inner
+     * @type {Object}
      */
     var eCode = {
         siteExceed: 21,
         lsExceed: 22
     };
 
-    /**
+    /*
      * When no support local storage, store data temporary
-     *
-     * @type {object}
-     * @public
+     * @const
+     * @inner
+     * @type {Object}
      */
     var lsCache = {};
 
-    /**
+    /*
      * Whether page in cache
-     *
-     * @type {object}
-     * @public
+     * @const
+     * @inner
+     * @type {boolean}
      */
     var isCachePage = window.location.href.match('mipcache.bdstatic.com');
 
-    /**
+    /*
      * Domain of website
-     *
-     * @type {object}
-     * @public
+     * @const
+     * @inner
+     * @type {string}
      */
     var HOST = window.location.href.match(/[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+\.?/g)[1];
 
-    /**
+    /*
      * Current domain storage size, max is 4k
-     *
-     * @type {object}
-     * @public
+     * @const
+     * @inner
+     * @type {number}
      */
     var STORAGESIZE = 4 * 1024;
 
