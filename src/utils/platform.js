@@ -116,7 +116,7 @@ define(function () {
         var osVersion;
         var result;
         if (this.isAndroid()) {
-            var result = /Android ([\.\_\d]+)/.exec(ua) || /Android\/([\d.]+)/.exec(ua);
+            result = /Android ([\.\_\d]+)/.exec(ua) || /Android\/([\d.]+)/.exec(ua);
             if (result && result.length > 1) {
                 osVersion = result[1];
             }
