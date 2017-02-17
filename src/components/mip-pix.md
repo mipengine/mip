@@ -15,23 +15,21 @@
 ```html
     <mip-pix src="https://www.mipengine.org/a.gif?t={TIME}&title={TITLE}&host={HOST}"></mip-pix>
 ```
-最终请求为：
+mip-pix会自动匹配参数，生成请求地址，最终请求为：
 > https://www.mipengine.org/tj.gif?t=1487307586286&title=random_title&host=http%3A%2F%2Fwww.mipengine.org%2Findex.html   
-MIP会自动匹配参数，生成请求地址，例如：https://www.mipengine.org/a.gif?t=1459415529464&title=MIP_PIX_DEMO&host=mip.bdstatic.com&from=baidu
 
 ### 参数缺省写法
 ```html
     <mip-pix src="https://www.mipengine.org/a.gif"></mip-pix>
 ```
-最终请求为：
+mip-pix会自动添加t, title, host参数，最终请求为：
 > https://www.mipengine.org/tj.gif?t=1487307586286&title=random_title&host=http%3A%2F%2Fwww.mipengine.org%2Findex.html   
-目前支持自动添加 t=当前时间，title=页面title，host=当前页面地址
 
 ### 添加自定义参数
 ```html
     <mip-pix src="https://www.mipengine.org/a.gif?t={TIME}&title={TITLE}&host={HOST}&area=A"></mip-pix>
 ```
-最终请求为：
+自定义参数可拼接在src末尾，最终请求为：
 > https://www.mipengine.org/a.gif?t=1487307670913&title=random_title&host=http%3A%2F%2Fwww.mipengine.org%2Fmip-pix-test.html&area=A   
 
 ### 添加referrer
