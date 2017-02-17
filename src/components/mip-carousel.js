@@ -148,6 +148,7 @@ define(function (require) {
             domArray.map(function (ele, i) {
                 constSelf.applyFillContent(ele, true);
                 var allImg = ele.querySelectorAll('mip-img');
+                 MIP.prerenderElement(ele);
                 for (var index = 0; index < allImg.length; index++) {
                     constSelf.applyFillContent(allImg[index], true);
                     MIP.prerenderElement(allImg[index]);
