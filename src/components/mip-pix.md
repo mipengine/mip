@@ -45,9 +45,9 @@ MIP会自动匹配参数，生成请求地址，例如：https://www.mipengine.o
 
 ## 参数说明
 
-|参数名|意义|示例|是否默认添加|
-|--|--|--|--|
-|t|当前时间|1487307670913|是|
-|title|页面title|random_title|是|
-|host|当前页面地址|http%3A%2F%2Fwww.mipengine.org%2Fmip-pix-test.html|是|
+参数名|意义|示例|是否默认添加
+----|----|----|----
+t|当前时间|1487307670913|是
+title|页面title|random_title|是
+host|当前页面地址|http%3A%2F%2Fwww.mipengine.org%2Fmip-pix-test.html|是
 
