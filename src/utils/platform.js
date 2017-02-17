@@ -81,13 +81,13 @@ define(function () {
         browser.isBaidu = true;
     } else if (/baiduboxapp/i.test(ua)) {      
         browser.isBaiduApp = true;
-    } else if (/qqbrowser\/([0-9.]+)/i.test(ua)) {
+    } else if (/qqbrowser\/([0-9.]+)/i.test(ua) && !/HTC/i.test(ua)) { // filter htc phone
         browser.isQQ = true;
     } else if (/android/i.test(ua) && /\bversion\/([0-9.]+(?: beta)?)/i.test(ua)) { // Need to put before chrome
         browser.isAdr = true;
     } else if (/\bversion\/([0-9.]+(?: beta)?)(?: mobile(?:\/[a-z0-9]+)?)? safari\//i.test(ua)) {
         browser.isSafari = true;
-    } else if (/android/i.test(ua) && (/samsung/i.test(ua) || /android.+((sch-i[89]0\d|shw-m380s|gt-p\d{4}|gt-n\d+|sgh-t8[56]9|nexus 10))/i.test(ua) || /((SM-T\w+))/i.test(ua))) {
+    } else if (/android/i.test(ua) || (/samsung/i.test(ua) || /android.+((sch-i[89]0\d|shw-m380s|gt-p\d{4}|gt-n\d+|sgh-t8[56]9|nexus 10))/i.test(ua) || /((SM-T\w+))/i.test(ua))) {
         browser.isAdr = true;
     } else if (/ (?:chrome|crios|crmo)\/([0-9.]+)/i.test(ua)) {
         browser.isChrome = true;
