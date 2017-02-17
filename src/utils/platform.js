@@ -113,13 +113,19 @@ define(function () {
      * @return {string}     
      */
     function getOsVersion() {
-        var osVersion;        
+        var osVersion;
+        var result;
         if (this.isAndroid()) {
-            osVersion = /Android ([\.\_\d]+)/.exec(ua)[1];      
+            result = /Android ([\.\_\d]+)/.exec(ua) || /Android\/([\d.]+)/.exec(ua);
+            if (result && result.length > 1) {
+                osVersion = result[1];
+            }
         } else if (this.isIos()) {
-            osVersion = /OS (\d+)_(\d+)_?(\d+)?/.exec(nver);            
-            osVersion = osVersion[1] + '.' + osVersion[2] + '.' + (osVersion[3] | 0);        
-        }        
+            result = /OS (\d+)_(\d+)_?(\d+)?/.exec(nver);
+            if (result && result.length > 3) {
+                osVersion = result[1] + '.' + result[2] + '.' + (result[3] | 0);
+            }
+        }
         return osVersion;
     }
 
