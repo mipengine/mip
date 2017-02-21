@@ -156,15 +156,14 @@ define(function (require) {
      *
      * @return {Object} self object
      */
-    Platform.prototype.start = function () {
+    Platform.prototype._start = function () {
         this._matchOs();
         this._matchBrowser();
         this._matchEngine();
         this._wrapFun();
-        return this;
     };
 
     var platform = new Platform();
-    platform.start();
+    platform._start();
     return platform;
 });
