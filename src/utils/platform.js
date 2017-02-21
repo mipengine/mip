@@ -3,149 +3,168 @@
  * @author wupeng10
  */
 
-define(function () {
+define(function (require) {
     'use strict';
-    /**
-     * Browser user agent
-     *
-     * @type {Obejct}
-     * @public
-     */
-    var ua = navigator.userAgent;
-    
-    /**
-     * Browser app version
-     *
-     * @type {string}
-     * @public
-     */
-    var nver = navigator.appVersion;
 
     /**
-     * OS type
+     * Platform class
      *
-     * @type {Object}
-     * @public
+     * @class
      */
-    var system = {
-        isIos: false,
-        isAndroid: false
-    };
-    
-    /**
-     * Browser type
-     *
-     * @type {Object}
-     * @public
-     */
-    var browser = {
-        isUc: false,
-        isChrome: false,
-        isAdr: false,
-        isSafari: false,
-        isQQ: false,
-        isFireFox: false,
-        isBaidu: false,
-        isBaiduApp: false        
-    };
-
-    /**
-     * Browser engine type
-     *
-     * @type {Object}
-     * @public
-     */
-    var engine = {
-        isTrident: false,
-        isGecko: false,
-        isWebkit: false
-    };
+    function Platform() {
+        // system
+        this.isIos = false;
+        this.isAndroid = false;
+        // browser
+        this.isWechatApp = false;
+        this.isBaiduApp = false;
+        this.isWeiboApp = false;
+        this.isQQApp = false;
+        this.isUc = false;
+        this.isBaidu = false;
+        this.isQQ = false;
+        this.isAdr = false;
+        this.isSafari = false;
+        this.isChrome = false;
+        this.isFireFox = false;
+        // engine
+        this.isTrident = false;
+        this.isGecko = false;
+        this.isWebkit = false;
+    }
 
     /**
      * Judge system, iOS, android
      *
      */
-    if (/iPhone|iPad|iPod/i.test(ua)) {
-        system.isIos = true;
-    } else if (/Android/i.test(ua)) {
-        system.isAndroid = true;
-    }
+    Platform.prototype._matchOs = function () {
+        if (/iPhone|iPad|iPod/i.test(this._ua())) {
+            this.isIos = true;
+        } else if (/Android/i.test(this._ua())) {
+            this.isAndroid = true;
+        }
+    };
 
     /**
      * Judge browser type
      *
      */
-    if (/UCBrowser/i.test(ua)) {        
-        browser.isUc = true;
-    } else if (/baidubrowser/i.test(ua)) {        
-        browser.isBaidu = true;
-    } else if (/baiduboxapp/i.test(ua)) {      
-        browser.isBaiduApp = true;
-    } else if (/qqbrowser\/([0-9.]+)/i.test(ua)) {
-        browser.isQQ = true;
-    } else if (/android/i.test(ua) && /\bversion\/([0-9.]+(?: beta)?)/i.test(ua)) { // Need to put before chrome
-        browser.isAdr = true;
-    } else if (/\bversion\/([0-9.]+(?: beta)?)(?: mobile(?:\/[a-z0-9]+)?)? safari\//i.test(ua)) {
-        browser.isSafari = true;
-    } else if (/android/i.test(ua) && (/samsung/i.test(ua) || /android.+((sch-i[89]0\d|shw-m380s|gt-p\d{4}|gt-n\d+|sgh-t8[56]9|nexus 10))/i.test(ua) || /((SM-T\w+))/i.test(ua))) {
-        browser.isAdr = true;
-    } else if (/ (?:chrome|crios|crmo)\/([0-9.]+)/i.test(ua)) {
-        browser.isChrome = true;
-    } else if (/\bfirefox\/([0-9.ab]+)/i.test(ua) || /FxiOS+\/([0-9.ab]+)/i.test(ua)) {
-        browser.isFireFox = true;
-    }
+    Platform.prototype._matchBrowser = function () {
+        var uaArray = this._ua().split('Mobile');
+        var apps = uaArray && uaArray.length > 1 ? uaArray[1] : null;
+
+        if (/\bmicromessenger\/([\d.]+)/i.test(apps)) {
+            this.isWechatApp = true;
+        } else if (/baiduboxapp/i.test(apps)) {
+            this.isBaiduApp = true;
+        } else if (/weibo/i.test(apps)) {
+            this.isWeiboApp = true;
+        } else if (/\sQQ/i.test(apps)) {
+            this.isQQApp = true;
+        } else if (/UCBrowser/i.test(this._ua())) {
+            this.isUc = true;
+        } else if (/baidubrowser/i.test(this._ua())) {
+            this.isBaidu = true;
+        } else if (/qqbrowser\/([0-9.]+)/i.test(this._ua())) {
+            this.isQQ = true;
+        } else if (/\bversion\/([0-9.]+(?: beta)?)(?: mobile(?:\/[a-z0-9]+)?)? safari\//i.test(this._ua())) {
+            this.isSafari = true;
+        } else if (/(?:Chrome|CrMo|CriOS)\/([0-9]{1,2}\.[0-9]\.[0-9]{3,4}\.[0-9]+)/i.test(this._ua())
+            && !/samsung/i.test(this._ua())) {
+            this.isChrome = true;
+        } else if (/(firefox|FxiOS+)\/([0-9.ab]+)/i.test(this._ua())) {
+            this.isFireFox = true;
+        } else if (/android/i.test(this._ua())
+            && /Android[\s\_\-\/i686]?[\s\_\-\/](\d+[\.\-\_]\d+[\.\-\_]?\d*)/i.test(this._ua())) {
+            this.isAdr = true;
+        }
+    };
 
     /**
      * Judge browser engine type
      *
      */
-    if (/\b(?:msie |ie |trident\/[0-9].*rv[ :])([0-9.]+)/i.test(ua)) {
-        engine.isTrident = true;
-    } else if (/\brv:([\d\w.]+).*\bgecko\/(\d+)/i.test(ua)) {
-        engine.isGecko = true;
-    } else if (/\bapplewebkit[\/]?([0-9.+]+)/i.test(ua)) {
-        engine.isWebkit = true;
-    }
+    Platform.prototype._matchEngine = function () {
+        if (/\b(?:msie |ie |trident\/[0-9].*rv[ :])([0-9.]+)/i.test(this._ua())) {
+            this.isTrident = true;
+        } else if (/\brv:([\d\w.]+).*\bgecko\/(\d+)/i.test(this._ua())) {
+            this.isGecko = true;
+        } else if (/\bapplewebkit[\/]?([0-9.+]+)/i.test(this._ua())) {
+            this.isWebkit = true;
+        }
+    };
 
     /**
      * OS Version
      *
-     * @return {string}     
+     * @return {string}
      */
-    function getOsVersion() {
+    Platform.prototype.getOsVersion = function () {
         var osVersion;
         var result;
         if (this.isAndroid()) {
-            result = /Android ([\.\_\d]+)/.exec(ua) || /Android\/([\d.]+)/.exec(ua);
+            result = /Android ([\.\_\d]+)/.exec(this._ua()) || /Android\/([\d.]+)/.exec(this._ua());
             if (result && result.length > 1) {
                 osVersion = result[1];
             }
         } else if (this.isIos()) {
-            result = /OS (\d+)_(\d+)_?(\d+)?/.exec(nver);
+            result = /OS (\d+)_(\d+)_?(\d+)?/.exec(this._appVersion());
             if (result && result.length > 3) {
                 osVersion = result[1] + '.' + result[2] + '.' + (result[3] | 0);
             }
         }
         return osVersion;
-    }
+    };
 
     /**
-     * Package result
-     *        
+     * Wrap engine, browser, engine varible to function
+     *
      */
-    var result = [system, engine, browser];
-    var data = {
-        'getOsVersion': getOsVersion,
-        'needSpecialScroll':system.isIos && window != top
-    };
-    for (var i = 0; i < result.length; i++) {
-        for (var key in result[i]) {
-            var handle = function(key) {                
-                return key;                
-            }.bind(null, result[i][key]);            
-            data[key] = handle;
+    Platform.prototype._wrapFun = function () {
+        var self = this;
+        for (var key in self) {
+            if (self.hasOwnProperty(key)) {
+                var handle = function (key) {
+                    return key;
+                }.bind(null, self[key]);
+                self[key] = handle;
+            }
         }
-    }
+        self.needSpecialScroll = self.isIos() && window !== top;
+    };
 
-    return data;
+    /**
+     * Get user agent
+     *
+     * @return {string} user agent
+     */
+    Platform.prototype._ua = function () {
+        return navigator.userAgent;
+    };
+
+    /**
+     * Get app version
+     *
+     * @return {string} app version
+     */
+    Platform.prototype._appVersion = function () {
+        return navigator.appVersion;
+    };
+
+    /**
+     * Start match user agent
+     *
+     * @return {Object} self object
+     */
+    Platform.prototype.start = function () {
+        this._matchOs();
+        this._matchBrowser();
+        this._matchEngine();
+        this._wrapFun();
+        return this;
+    };
+
+    var platform = new Platform();
+    platform.start();
+    return platform;
 });
