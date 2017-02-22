@@ -123,7 +123,7 @@ define(function (require) {
     Platform.prototype._wrapFun = function () {
         var self = this;
         for (var key in self) {
-            if (self.hasOwnProperty(key)) {
+            if (self.hasOwnProperty(key) && typeof self[key] !== 'function') {
                 var handle = function (key) {
                     return key;
                 }.bind(null, self[key]);
@@ -156,14 +156,13 @@ define(function (require) {
      *
      * @return {Object} self object
      */
-    Platform.prototype._start = function () {
+    Platform.prototype.start = function () {
         this._matchOs();
         this._matchBrowser();
         this._matchEngine();
         this._wrapFun();
+        return this;
     };
 
-    var platform = new Platform();
-    platform._start();
-    return platform;
+    return new Platform();
 });
