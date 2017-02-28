@@ -1,6 +1,6 @@
 {
     "name": "mip",
-    "version": "1.0.27",
+    "version": "1.0.28",
     "description": "mobile instant page",
     "main": "dist/mip.js",
     "dependencies": {},
@@ -32,7 +32,8 @@
     "scripts": {
         "build": "node tools/build.js",
         "dev": "node tools/build.js dev",
-        "test": "node tools/build.js test;./node_modules/karma/bin/karma --port 9877 start --reporters mocha,html,coverage"
+        "test": "node tools/build.js test;./node_modules/karma/bin/karma --port 9877 start --reporters mocha,html,coverage",
+        "testcompont": "node tools/build.js test;./node_modules/karma/bin/karma --port 9877 start --reporters mocha,html,coverage"
     },
 
     "repository": {
