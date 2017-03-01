@@ -40,8 +40,8 @@ define(function (require) {
             }
         }
 
-        var windowProHttps = !!window.location.protocol.match(/^https:/);
-        var videoProHttps = !!this.videoSrc.match(/^https:/);
+        var windowProHttps = !!window.location.protocol.test(/^https:/);
+        var videoProHttps = !!this.videoSrc.test(/^https:/);
         // 页面https         + 视频https  = 当前页播放
         // 页面https(在iframe里) + 视频http    = 跳出播放
         // 页面https(其它)   + 视频http    = 当前页播放（非mip相关页）
