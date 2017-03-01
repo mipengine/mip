@@ -25,15 +25,14 @@ define(function (require) {
     var windowInIframe = window.parent !== window;
 
     // cache video src
-    var videoSrc;
 
     customElem.prototype.firstInviewCallback = function () {
         this.attributes = getAttributeSet(this.element.attributes);
-        videoSrc = this.attributes.src;
-        if (!videoSrc) {
+        this.videoSrc = this.attributes.src;
+        if (!this.videoSrc) {
             var sourceArray = getSourceSrc.call(this);
             if (sourceArray.length > 0) {
-                videoSrc = sourceArray[0].src;
+                this.videoSrc = sourceArray[0].src;
             }
             else {
                 console.warn('视频url不能为空');
@@ -42,7 +41,7 @@ define(function (require) {
         }
 
         var windowProHttps = !!window.location.protocol.match(/^https:/);
-        var videoProHttps = !!videoSrc.match(/^https:/);
+        var videoProHttps = !!this.videoSrc.match(/^https:/);
         // 页面https         + 视频https  = 当前页播放
         // 页面https(在iframe里) + 视频http    = 跳出播放
         // 页面https(其它)   + 视频http    = 当前页播放（非mip相关页）
@@ -101,7 +100,7 @@ define(function (require) {
         playBtn.setAttribute('class', 'mip-video-playbtn');
         videoEl.appendChild(playBtn);
 
-        videoEl.dataset.videoSrc =  videoSrc;
+        videoEl.dataset.videoSrc =  this.videoSrc;
         videoEl.dataset.videoPoster = this.attributes.poster || '';
         videoEl.addEventListener('click', sendVideoMessage.bind(this), false);
 
