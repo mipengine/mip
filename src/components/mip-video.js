@@ -80,7 +80,7 @@ define(function (require) {
         this.element.appendChild(playBtn);
         this.element.appendChild(videoEl);
         // add play event
-        this.commandEvent(playBtn, videoEl);
+        this.registeredClikBtn(playBtn, videoEl);
 
         return videoEl;
     };
@@ -122,14 +122,19 @@ define(function (require) {
 
 
     // Press the button to control the pause or play of the video
-    customElem.prototype.commandEvent = function (playBtn, videoEl) {
-        var ele = this.element;
-        var showtype = ele.getAttribute('showtype');
-        if (showtype === 'every') { // The button is displayed every time
-            commandVideoEvery(playBtn, videoEl);
+    customElem.prototype.registeredClikBtn = function (playBtn, videoEl) {
+        if (!playBtn || !videoEl) {
+            return;
         }
-        else if (showtype === 'once') { // The button is displayed only once
-            commandVideoOnce(playBtn, videoEl);
+        var ele = this.element;
+        var prompBtn = ele.hasAttribute('prompbtn');
+        if (prompBtn) { // If the configuration exists
+            videoEl.removeAttribute('controls');
+            playBtn.addEventListener('click', function () {
+                videoEl.play();
+                this.style.display = 'none';
+                videoEl.setAttribute('controls', true);
+            }, false);
         }
         else { // Backwards compatible with previous versions, no buttons are always displayed
             playBtn.style.display = 'none';
@@ -169,36 +174,6 @@ define(function (require) {
             }
         });
         return sourceSrcArr;
-    }
-
-    // Whether the control button is displayed
-    function commandVideoEvery(playBtn, videoEl) {
-        playBtn.addEventListener('click', function () {
-            videoEl.play();
-            this.style.display = 'none';
-            videoEl.removeAttribute('controls');
-        }, false);
-
-        videoEl.addEventListener('pause', function () {
-            playBtn.style.display = 'inline-block';
-            videoEl.removeAttribute('controls');
-        }, false);
-
-        videoEl.addEventListener('play', function () {
-            playBtn.style.display = 'none';
-            videoEl.setAttribute('controls', true);
-        }, false);
-    }
-
-    // Whether the control button is displayed only once
-    // If you set showtye then need to remove controls
-    function commandVideoOnce(playBtn, videoEl) {
-        videoEl.removeAttribute('controls');
-        playBtn.addEventListener('click', function () {
-            videoEl.play();
-            this.style.display = 'none';
-            videoEl.setAttribute('controls', true);
-        }, false);
     }
 
     return customElem;
