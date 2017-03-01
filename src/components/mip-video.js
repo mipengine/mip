@@ -80,7 +80,7 @@ define(function (require) {
         this.element.appendChild(playBtn);
         this.element.appendChild(videoEl);
         // add play event
-        this.registeredClikBtn(playBtn, videoEl);
+        this.registeredClickBtn(playBtn, videoEl);
 
         return videoEl;
     };
@@ -122,7 +122,7 @@ define(function (require) {
 
 
     // Press the button to control the pause or play of the video
-    customElem.prototype.registeredClikBtn = function (playBtn, videoEl) {
+    customElem.prototype.registeredClickBtn = function (playBtn, videoEl) {
         if (!playBtn || !videoEl) {
             return;
         }
