@@ -462,7 +462,7 @@ define(function (require) {
      *
      * @param {Object} opt request params
      */
-    CookieStorage.prototype.dealExceedCookie = function () {
+    CookieStorage.prototype.delExceedCookie = function () {
         var cks = document.cookie;
         var cksLen = cks.length;
         var MINSIZE = 3 * 1024;

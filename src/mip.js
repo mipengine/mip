@@ -86,7 +86,7 @@ define(function (require) {
 
     // clear cookie
     var storage = new CustomStorage(2);
-    storage.dealExceedCookie();
+    storage.delExceedCookie();
 
     return Mip;
 });
