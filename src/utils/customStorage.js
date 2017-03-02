@@ -1,6 +1,8 @@
 /**
  * @file customStorage Function. Support publiser management and localstorage
  * @author wupeng10@baidu.com
+ * @modify wupeng10@baidu.com 2017-03-02 Add cookieStorage module, In order to reduce http header
+ * size, otherwise page will be a bad request with 40*,Need to be deleted after long-term solution
  */
 define(function (require) {
     'use strict';
