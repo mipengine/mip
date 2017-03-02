@@ -7,7 +7,7 @@ define(function (require) {
 
     var fn = require('./fn');
 
-    /*
+    /**
      * Type of storage
      * @const
      * @inner
@@ -15,10 +15,11 @@ define(function (require) {
      */
     var storageType = {
         LOCALSTORAGE: 0,
-        ASYNCSTORAGE: 1
+        ASYNCSTORAGE: 1,
+        COOKIESTORAGE: 2
     };
 
-    /*
+    /**
      * Error code
      * @const
      * @inner
@@ -29,7 +30,7 @@ define(function (require) {
         lsExceed: 22
     };
 
-    /*
+    /**
      * When no support local storage, store data temporary
      * @const
      * @inner
@@ -37,23 +38,27 @@ define(function (require) {
      */
     var lsCache = {};
 
-    /*
+    /**
      * Whether page in cache
      * @const
      * @inner
      * @type {boolean}
      */
-    var isCachePage = window.location.href.match('mipcache.bdstatic.com');
+    var href = window.location.href;
+    var isCachePage = /mipcache.bdstatic.com/.test(href)
+                     || /c.mipcdn.com/.test(href);
 
-    /*
+    /**
      * Domain of website
      * @const
      * @inner
      * @type {string}
      */
-    var HOST = window.location.href.match(/[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+\.?/g)[1];
+    var reg = /[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+\.?/g;
+    var matchArr = href.match(reg);
+    var HOST = matchArr && matchArr.length > 1 ? matchArr[1] : '';
 
-    /*
+    /**
      * Current domain storage size, max is 4k
      * @const
      * @inner
@@ -178,6 +183,9 @@ define(function (require) {
                 break;
             case storageType.LOCALSTORAGE:
                 this.storage = new LocalStorage();
+                break;
+            case storageType.COOKIESTORAGE:
+                this.storage = new CookieStorage();
                 break;
         }
         return this.storage;
@@ -438,5 +446,41 @@ define(function (require) {
             opt.error && opt.error(err);
         });
     };
+
+    /**
+     * Cookie storage
+     *
+     * @class
+     */
+    function CookieStorage() {
+    }
+
+    /**
+     * Delete exceed cookie storage
+     *
+     * @param {Object} opt request params
+     */
+    CookieStorage.prototype.dealExceedCookie = function () {
+        var cks = document.cookie;
+        var cksLen = cks.length;
+        var MINSIZE = 3 * 1024;
+        var MAXSIZE = 5 * 1024;
+        if (cksLen >= MAXSIZE) {
+            var items = cks.split(';');
+            for (var i = 0; i < items.length; i++) {
+                var item = items[i].split('=');
+                if (item && item.length > 1) {
+                    cksLen -= items[i].length;
+                    var exp = new Date();
+                    exp.setTime(exp.getTime() - 1);
+                    document.cookie = item[0] + '=' + item[1] + ';expires=' + exp.toGMTString();
+                }
+                if (cksLen <= MINSIZE) {
+                    break;
+                }
+            }
+        }
+    };
+
     return customStorage;
 });

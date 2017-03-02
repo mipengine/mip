@@ -11,6 +11,7 @@ define(function (require) {
     require('./utils/platform');
     require('./utils/event-emitter');
     require('./utils/event-action');
+    var CustomStorage = require('./utils/customStorage');
 
     /* dom */
     require('./dom/css-loader');
@@ -82,6 +83,10 @@ define(function (require) {
 
     // Show page
     viewer.show();
+
+    // clear cookie
+    var storage = new CustomStorage(2);
+    storage.dealExceedCookie();
 
     return Mip;
 });
