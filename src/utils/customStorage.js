@@ -474,7 +474,7 @@ define(function (require) {
                 if (item && item.length > 1) {
                     cksLen -= items[i].length;
                     var exp = new Date();
-                    exp.setTime(exp.getTime() - 1);
+                    exp.setTime(exp.getTime() - 1000);
                     document.cookie = item[0] + '=' + item[1] + ';expires=' + exp.toGMTString();
                 }
                 if (cksLen <= MINSIZE) {
