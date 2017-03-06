@@ -67,7 +67,8 @@ define(function (require) {
             this.isBaidu = true;
         } else if (/qqbrowser\/([0-9.]+)/i.test(this._ua())) {
             this.isQQ = true;
-        } else if (!/android/i.test(this._ua()) && /\bversion\/([0-9.]+(?: beta)?)(?: mobile(?:\/[a-z0-9]+)?)? safari\//i.test(this._ua())) {
+        } else if (!/android/i.test(this._ua())
+            && /\bversion\/([0-9.]+(?: beta)?)(?: mobile(?:\/[a-z0-9]+)?)? safari\//i.test(this._ua())) {
             this.isSafari = true;
         } else if (/(?:Chrome|CrMo|CriOS)\/([0-9]{1,2}\.[0-9]\.[0-9]{3,4}\.[0-9]+)/i.test(this._ua())
             && !/samsung/i.test(this._ua())) {
