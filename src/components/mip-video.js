@@ -14,7 +14,6 @@ define(function (require) {
         'controls',
         'loop',
         'autoplay',
-        'autoplay',
         'autobuffer',
         'crossorigin',
         'height',
@@ -25,11 +24,24 @@ define(function (require) {
     ];
     var windowInIframe = window.parent !== window;
 
+    // cache video src
+
     customElem.prototype.firstInviewCallback = function () {
         this.attributes = getAttributeSet(this.element.attributes);
+        this.videoSrc = this.attributes.src;
+        if (!this.videoSrc) {
+            var sourceArray = getSourceSrc.call(this);
+            if (sourceArray.length > 0) {
+                this.videoSrc = sourceArray[0].src;
+            }
+            else {
+                console.warn('视频url不能为空');
+                return;
+            }
+        }
 
-        var windowProHttps = !!window.location.protocol.match(/^https:/);
-        var videoProHttps = !!this.attributes.src.match(/^https:/);
+        var windowProHttps = !!window.location.protocol.test(/^https:/);
+        var videoProHttps = !!this.videoSrc.test(/^https:/);
         // 页面https         + 视频https  = 当前页播放
         // 页面https(在iframe里) + 视频http    = 跳出播放
         // 页面https(其它)   + 视频http    = 当前页播放（非mip相关页）
@@ -60,7 +72,15 @@ define(function (require) {
             }
             videoEl.appendChild(node);
         });
+        // add playbtn
+        var playBtn = document.createElement('span');
+        playBtn.setAttribute('class', 'mip-video-playbtn');
+
+        this.element.appendChild(playBtn);
         this.element.appendChild(videoEl);
+        // add play event
+        this.registeredClickBtn(playBtn, videoEl);
+
         return videoEl;
     };
 
@@ -79,21 +99,46 @@ define(function (require) {
         var playBtn = document.createElement('span');
         playBtn.setAttribute('class', 'mip-video-playbtn');
         videoEl.appendChild(playBtn);
-        videoEl.dataset.videoSrc = this.attributes.src;
-        videoEl.dataset.videoPoster = this.attributes.poster;
-        videoEl.addEventListener('click', sendVideoMessage, false);
+
+        videoEl.dataset.videoSrc =  this.videoSrc;
+        videoEl.dataset.videoPoster = this.attributes.poster || '';
+        videoEl.addEventListener('click', sendVideoMessage.bind(this), false);
 
         function sendVideoMessage() {
+            var sourceList = JSON.stringify(getSourceSrc.call(this));
             if (windowInIframe) {
                 // mip_video_jump 为写在外层的承接方法
                 viewer.sendMessage('mip_video_jump', {
                     poster: videoEl.dataset.videoPoster,
-                    src: videoEl.dataset.videoSrc
+                    src: videoEl.dataset.videoSrc,
+                    source: encodeURIComponent(sourceList)
                 });
             }
         }
         this.element.appendChild(videoEl);
         return videoEl;
+    };
+
+
+    // Press the button to control the pause or play of the video
+    customElem.prototype.registeredClickBtn = function (playBtn, videoEl) {
+        if (!playBtn || !videoEl) {
+            return;
+        }
+        var ele = this.element;
+        var prompBtn = ele.hasAttribute('prompbtn');
+        if (prompBtn) { // If the configuration exists
+            videoEl.removeAttribute('controls');
+            playBtn.addEventListener('click', function () {
+                videoEl.play();
+                this.style.display = 'none';
+                videoEl.setAttribute('controls', true);
+            }, false);
+        }
+        else { // Backwards compatible with previous versions, no buttons are always displayed
+            playBtn.style.display = 'none';
+            return;
+        }
     };
 
     /**
@@ -114,6 +159,20 @@ define(function (require) {
             attrs[attr.name] = attr.value;
         });
         return attrs;
+    }
+
+    // Get mip-viode children source src
+    function getSourceSrc() {
+        var sourceSrcArr = [];
+        Array.prototype.slice.apply(this.element.childNodes).forEach(function (node) {
+            if (node.nodeName.toLowerCase() === 'source') {
+                sourceSrcArr.push({
+                    src: node.getAttribute('src') || '',
+                    type: node.getAttribute('type') || ''
+                });
+            }
+        });
+        return sourceSrcArr;
     }
 
     return customElem;
