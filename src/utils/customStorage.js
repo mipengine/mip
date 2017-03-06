@@ -150,6 +150,9 @@ define(function (require) {
                 this.storage = new LocalStorage();
                 this.storage._isCachePage(href);
                 break;
+            case storageType.COOKIESTORAGE:
+                this.storage = new CookieStorage();
+                break;
         }
         return this.storage;
     }
@@ -367,23 +370,19 @@ define(function (require) {
      */
     LocalStorage.prototype._isExceed = function (e) {
         var quotaExceeded = false;
-        if (e) {
-            if (e.code) {
-                switch (e.code) {
-                    case 22: {
-                        quotaExceeded = true;
-                        break;
-                    }
-                    case 1014: { // Firefox
-                        if (e.name === 'NS_ERROR_DOM_QUOTA_REACHED') {
-                            quotaExceeded = true;
-                        }
-                        break;
-                    }
+        if (e && e.code) {
+            switch (e.code) {
+                case 22: {
+                    quotaExceeded = true;
+                    break;
                 }
-            } else if (e.number === -2147024882) { // Internet Explorer 8
-                quotaExceeded = true;
+                case 1014: { // Firefox
+                    quotaExceeded = e.name === 'NS_ERROR_DOM_QUOTA_REACHED';
+                    break;
+                }
             }
+        } else if (e && e.number === -2147024882) { // Internet Explorer 8
+            quotaExceeded = true;
         }
         return quotaExceeded;
     };
@@ -405,7 +404,7 @@ define(function (require) {
                     var item = parseJson(ls[k]).u;
                     if (!key || parseInt(item, 10) < minTimeStamp) {
                         key = k;
-                        minTimeStamp = item ? parseInt(item, 10) : 0;
+                        minTimeStamp = parseInt(item, 10);
                     }
                 }
             }

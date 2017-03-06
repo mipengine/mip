@@ -5,6 +5,7 @@ define(function (require) {
     var CustomStorage = require('utils/customStorage');
     var LocalStorage = new CustomStorage(0);
     var AsyncStorage = new CustomStorage(1);
+    var CookieStorage = new CustomStorage(2);
     var name = 'name';
     var nameValue = 'testName';
     var expireName = 'expireName';
@@ -63,6 +64,8 @@ define(function (require) {
 
             it('exceed', function () {
                 try {
+                    localStorage.setItem(name, nameValue, 20000);
+                    localStorage.setItem(age, ageValue, 20000);
                     localStorage.setItem('test', 'test');
                     LocalStorage._setLocalStorage(exceedName, exceedNameValue, function (data) {});
                     expect(!!LocalStorage.get(exceedName)).to.be.false;
@@ -124,6 +127,9 @@ define(function (require) {
                     number: -2147024882
                 });
                 stub.restore();
+
+                window.localStorage.removeItem = null;
+                LocalStorage._supportLs();
             });
         });
 
@@ -201,6 +207,19 @@ define(function (require) {
                 setTimeout(function () {
                     done();
                 }, 1000);
+            });
+        });
+
+        describe('asyncstorage', function () {
+            it('delExceedCookie', function () {
+                var exceedNameValue;
+                for (var i = 0; i < 1024 * 3; i++) {
+                    exceedNameValue += 'a';
+                };
+                document.cookie = 'test1=' + exceedNameValue + ';';
+                document.cookie = 'test2=' + exceedNameValue + ';';
+                CookieStorage.delExceedCookie();
+                expect(document.cookie.length / 1024).to.be.below(3);
             });
         });
     });
