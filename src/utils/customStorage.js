@@ -43,7 +43,8 @@ define(function (require) {
      * @inner
      * @type {boolean}
      */
-    var isCachePage = window.location.href.match('mipcache.bdstatic.com');
+    var href = window.location.href;
+    var isCachePage = false;
 
     /*
      * Domain of website
@@ -51,7 +52,9 @@ define(function (require) {
      * @inner
      * @type {string}
      */
-    var HOST = window.location.href.match(/[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+\.?/g)[1];
+    var reg = /[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+\.?/g;
+    var matchArr = href.match(reg);
+    var HOST = matchArr && matchArr.length > 1 ? matchArr[1] : '';
 
     /*
      * Current domain storage size, max is 4k
@@ -123,27 +126,30 @@ define(function (require) {
     }
 
     /**
-     * Get local storage
+     * Storage Class
      *
-     * @return {Object} value of local storage
+     * @param {number} type type of storage
+     * @class
      */
-    function getLocalStorage() {
-        var ls = supportLs() ? localStorage.getItem(HOST) : lsCache[HOST];
-        ls = ls ? parseJson(ls) : {};
-        updateTime(ls);
-        return ls;
+    function customStorage(type) {
+        switch (type) {
+            case storageType.ASYNCSTORAGE:
+                this.storage = new AsyncStorage();
+                break;
+            case storageType.LOCALSTORAGE:
+                this.storage = new LocalStorage();
+                this.storage._isCachePage(href);
+                break;
+        }
+        return this.storage;
     }
 
     /**
-     * Delete local storage
+     * Local Storage class
      *
-     * @param {string} key the key of local storage
+     * @class
      */
-    function rmLocalStorage(key) {
-        if (!key) {
-            key = HOST;
-        }
-        supportLs() ? localStorage.removeItem(key) : fn.del(lsCache, key);
+    function LocalStorage() {
     }
 
     /**
@@ -151,7 +157,7 @@ define(function (require) {
      *
      * @return {boolean} Whether support ls
      */
-    function supportLs() {
+    LocalStorage.prototype._supportLs = function () {
         var support = false;
         if (window.localStorage && window.localStorage.setItem) {
             try {
@@ -166,29 +172,27 @@ define(function (require) {
     }
 
     /**
-     * Storage Class
+     * Get local storage
      *
-     * @param {number} type type of storage
-     * @class
+     * @return {Object} value of local storage
      */
-    function customStorage(type) {
-        switch (type) {
-            case storageType.ASYNCSTORAGE:
-                this.storage = new AsyncStorage();
-                break;
-            case storageType.LOCALSTORAGE:
-                this.storage = new LocalStorage();
-                break;
-        }
-        return this.storage;
+    LocalStorage.prototype._getLocalStorage = function () {
+        var ls = this._supportLs() ? localStorage.getItem(HOST) : lsCache[HOST];
+        ls = ls ? parseJson(ls) : {};
+        updateTime(ls);
+        return ls;
     }
 
     /**
-     * Local Storage class
+     * Delete local storage
      *
-     * @class
+     * @param {string} key the key of local storage
      */
-    function LocalStorage() {
+    LocalStorage.prototype._rmLocalStorage = function (key) {
+        if (!key) {
+            key = HOST;
+        }
+        this._supportLs() ? localStorage.removeItem(key) : fn.del(lsCache, key);
     }
 
     /**
@@ -205,11 +209,11 @@ define(function (require) {
         }
         callback = typeof expire === 'function' ? expire : callback;
         if (isCachePage) {
-            var ls = getLocalStorage();
+            var ls = this._getLocalStorage();
             ls[name] = value;
             expire = parseInt(expire, 10);
             if (!isNaN(expire) && expire > 0) {
-                ls.e = new Date().getTime() + expire * 1000;
+                ls.e = new Date().getTime() + expire;
             } else {
                 fn.del(ls, 'e');
             }
@@ -235,7 +239,7 @@ define(function (require) {
     LocalStorage.prototype._setLocalStorage = function (key, value, expire, callback) {
         var mess = getErrorMess(eCode.lsExceed, key);
         callback = typeof expire === 'function' ? expire : callback;
-        if (supportLs()) {
+        if (this._supportLs()) {
             try {
                 localStorage.setItem(key, value);
             } catch (e) {
@@ -274,12 +278,12 @@ define(function (require) {
 
         var result;
         if (isCachePage) {
-            var ls = getLocalStorage();
+            var ls = this._getLocalStorage();
             if (ls && ls[name]) {
                 result = ls[name];
             }
         } else {
-            result = supportLs() ? localStorage.getItem(name) : lsCache[name];
+            result = this._supportLs() ? localStorage.getItem(name) : lsCache[name];
         }
         return result;
     };
@@ -295,13 +299,13 @@ define(function (require) {
         }
 
         if (isCachePage) {
-            var ls = getLocalStorage();
+            var ls = this._getLocalStorage();
             if (ls && ls[name]) {
                 fn.del(ls, name);
                 this._setLocalStorage(HOST, JSON.stringify(ls));
             }
         } else {
-            supportLs() ? localStorage.removeItem(name) : fn.del(lsCache, name);
+            this._supportLs() ? localStorage.removeItem(name) : fn.del(lsCache, name);
         }
     };
 
@@ -311,9 +315,9 @@ define(function (require) {
      */
     LocalStorage.prototype.clear = function () {
         if (isCachePage) {
-            rmLocalStorage();
+            this._rmLocalStorage();
         } else {
-            supportLs() ? localStorage.clear() : lsCache = {};
+            this._supportLs() ? localStorage.clear() : lsCache = {};
         }
     };
 
@@ -325,7 +329,7 @@ define(function (require) {
     LocalStorage.prototype.rmExpires = function () {
         var hasExpires = false;
         if (isCachePage) {
-            var ls = supportLs() ? localStorage : lsCache;
+            var ls = this._supportLs() ? localStorage : lsCache;
             for (var k in ls) {
                 var val;
                 if (typeof ls[k] === 'string') {
@@ -335,7 +339,7 @@ define(function (require) {
                     var expire = parseInt(parseJson(ls[k]).e, 10);
                     if (expire && new Date().getTime() >= expire) {
                         hasExpires = true;
-                        rmLocalStorage(k);
+                        this._rmLocalStorage(k);
                     }
                 }
             }
@@ -393,10 +397,20 @@ define(function (require) {
                     }
                 }
             }
-            rmLocalStorage(key);
+            this._rmLocalStorage(key);
         }
         this.set(name, value, expire);
     };
+
+    /**
+     * If page is cache page
+     *
+     * @param {string} href page href
+     */
+    LocalStorage.prototype._isCachePage = function (href) {
+        isCachePage = /mipcache.bdstatic.com/.test(href) ||
+                    /c.mipcdn.com/.test(href);
+    }
 
     /**
      * Publisher manage storage, via request

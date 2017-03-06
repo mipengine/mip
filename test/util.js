@@ -3,17 +3,21 @@
  * @file 测试util.js
  */
 
-// 引入被测模块
-define(['util'], function(util) {
-    // 被测模块名
+define(function(util) {
+
+	var util = require('util');
+
     describe('util', function() {
-
         it('makeCacheUrl', function() {
-            var url = 'http://example.com';
-            expect(util.makeCacheUrl(url, 'img')).to.equal(url);
-            location.href += '#mipcache.bdstatic.com';
-            
-        });
+            expect(util.makeCacheUrl('example', 'img')).to.equal('example');
 
+            var url = '//example.com';
+            location.href += "#https://mipcache.bdstatic.com/";
+            expect(util.makeCacheUrl(url, '')).to.equal('/c/s/example.com');
+            expect(util.makeCacheUrl(url, 'img')).to.equal('/i/s/example.com');
+
+            var url = 'https://example.com';
+            expect(util.makeCacheUrl(url, 'img')).to.equal('/i/s/example.com');
+        });
     });
 });
