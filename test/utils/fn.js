@@ -41,7 +41,6 @@ define(function (require) {
             var interval = setInterval(throttledExec, 1);
             setTimeout(function () {
                 clearInterval(interval);
-                console.log(count);
                 done(count > 5 ? 'throttle error' : null);
             }, 100);
         });
@@ -67,6 +66,24 @@ define(function (require) {
                 b: '2',
                 d: '4'
             });
+        });
+
+        it('isString', function () {
+            expect(fn.isString()).to.be.false;
+            expect(fn.isString('test')).to.be.true;
+        });
+
+        it('del', function () {
+            expect(fn.del(null, 'key')).to.be.equal(undefined);
+            var obj = {
+                a: 1,
+                b: 2
+            };
+            fn.del(obj, 'a');
+            expect(obj.a).to.be.equal(undefined);
+            try {
+                fn.del(Object, 'prototype');
+            } catch(e) {}
         });
     });
 });
