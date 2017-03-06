@@ -41,12 +41,19 @@ define(function (require) {
     var lsCache = {};
 
     /**
+     * Location href
+     * @const
+     * @inner
+     * @type {string}
+     */
+    var href = window.location.href;
+
+    /**
      * Whether page in cache
      * @const
      * @inner
      * @type {boolean}
      */
-    var href = window.location.href;
     var isCachePage = /mipcache.bdstatic.com/.test(href)
                      || /c.mipcdn.com/.test(href);
 
@@ -337,15 +344,17 @@ define(function (require) {
         if (isCachePage) {
             var ls = supportLs() ? localStorage : lsCache;
             for (var k in ls) {
-                var val;
-                if (typeof ls[k] === 'string') {
-                    val = parseJson(ls[k]);
-                }
-                if (val && val.e) {
-                    var expire = parseInt(parseJson(ls[k]).e, 10);
-                    if (expire && new Date().getTime() >= expire) {
-                        hasExpires = true;
-                        rmLocalStorage(k);
+                if (ls[k]) {
+                    var val;
+                    if (typeof ls[k] === 'string') {
+                        val = parseJson(ls[k]);
+                    }
+                    if (val && val.e) {
+                        var expire = parseInt(parseJson(ls[k]).e, 10);
+                        if (expire && new Date().getTime() >= expire) {
+                            hasExpires = true;
+                            rmLocalStorage(k);
+                        }
                     }
                 }
             }
