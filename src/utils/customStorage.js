@@ -1,13 +1,15 @@
 /**
  * @file customStorage Function. Support publiser management and localstorage
  * @author wupeng10@baidu.com
+ * @modify wupeng10@baidu.com 2017-03-02 Add cookieStorage module, In order to reduce http header
+ * size, otherwise page will be a bad request with 40*,Need to be deleted after long-term solution
  */
 define(function (require) {
     'use strict';
 
     var fn = require('./fn');
 
-    /*
+    /**
      * Type of storage
      * @const
      * @inner
@@ -15,10 +17,11 @@ define(function (require) {
      */
     var storageType = {
         LOCALSTORAGE: 0,
-        ASYNCSTORAGE: 1
+        ASYNCSTORAGE: 1,
+        COOKIESTORAGE: 2
     };
 
-    /*
+    /**
      * Error code
      * @const
      * @inner
@@ -29,7 +32,7 @@ define(function (require) {
         lsExceed: 22
     };
 
-    /*
+    /**
      * When no support local storage, store data temporary
      * @const
      * @inner
@@ -37,16 +40,23 @@ define(function (require) {
      */
     var lsCache = {};
 
-    /*
+    /**
+     * Location href
+     * @const
+     * @inner
+     * @type {string}
+     */
+    var href = window.location.href;
+
+    /**
      * Whether page in cache
      * @const
      * @inner
      * @type {boolean}
      */
-    var href = window.location.href;
     var isCachePage = false;
 
-    /*
+    /**
      * Domain of website
      * @const
      * @inner
@@ -56,7 +66,7 @@ define(function (require) {
     var matchArr = href.match(reg);
     var HOST = matchArr && matchArr.length > 1 ? matchArr[1] : '';
 
-    /*
+    /**
      * Current domain storage size, max is 4k
      * @const
      * @inner
@@ -331,15 +341,17 @@ define(function (require) {
         if (isCachePage) {
             var ls = this._supportLs() ? localStorage : lsCache;
             for (var k in ls) {
-                var val;
-                if (typeof ls[k] === 'string') {
-                    val = parseJson(ls[k]);
-                }
-                if (val && val.e) {
-                    var expire = parseInt(parseJson(ls[k]).e, 10);
-                    if (expire && new Date().getTime() >= expire) {
-                        hasExpires = true;
-                        this._rmLocalStorage(k);
+                if (ls[k]) {
+                    var val;
+                    if (typeof ls[k] === 'string') {
+                        val = parseJson(ls[k]);
+                    }
+                    if (val && val.e) {
+                        var expire = parseInt(parseJson(ls[k]).e, 10);
+                        if (expire && new Date().getTime() >= expire) {
+                            hasExpires = true;
+                            this._rmLocalStorage(k);
+                        }
                     }
                 }
             }
@@ -452,5 +464,41 @@ define(function (require) {
             opt.error && opt.error(err);
         });
     };
+
+    /**
+     * Cookie storage
+     *
+     * @class
+     */
+    function CookieStorage() {
+    }
+
+    /**
+     * Delete exceed cookie storage
+     *
+     * @param {Object} opt request params
+     */
+    CookieStorage.prototype.delExceedCookie = function () {
+        var cks = document.cookie;
+        var cksLen = cks.length;
+        var MINSIZE = 3 * 1024;
+        var MAXSIZE = 5 * 1024;
+        if (cksLen >= MAXSIZE) {
+            var items = cks.split(';');
+            for (var i = 0; i < items.length; i++) {
+                var item = items[i].split('=');
+                if (item && item.length > 1) {
+                    cksLen -= items[i].length;
+                    var exp = new Date();
+                    exp.setTime(exp.getTime() - 1000);
+                    document.cookie = item[0] + '=' + item[1] + ';expires=' + exp.toGMTString();
+                }
+                if (cksLen <= MINSIZE) {
+                    break;
+                }
+            }
+        }
+    };
+
     return customStorage;
 });
