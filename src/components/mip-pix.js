@@ -1,6 +1,6 @@
 /**
  * @file mip-pix 统计组件
- * @author baidu-authors<>, liangjiaying<liangjiaying@baidu.com>
+ * @author baidu-authors<>, liangjiaying<jiaojiaomao220@163.com>
  */
 define(function (require) {
     var customElem = require('customElement').create();
