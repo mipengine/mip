@@ -22,16 +22,39 @@ define(function (require) {
         return src + paraName + '=' + paraVal;
     }
 
-    customElem.prototype.build = function () {
-        var image = new Image();
+    /**
+     * 从body获取mip-expeirment实验分组
+     * @param  {string} attr 实验名
+     * @return {string}      实验分组
+     */
+    function getBodyAttr(attr) {
+        var body = document.getElementsByTagName('body')[0];
+        return body.getAttribute(attr) || 'default'
+    }
+
+    customElem.prototype.firstInviewCallback = function () {
+        // 获取统计所需参数
         var ele = this.element;
         var src = ele.getAttribute('src');
         var host = window.location.href;
         var title = (document.querySelector('title') || {}).innerHTML || '';
         var time = Date.now();
+
+        // 替换通用参数
         src = addParas(src, 't', time);
         src = addParas(src, 'title', encodeURIComponent(title));
         src = addParas(src, 'host', encodeURIComponent(host));
+
+        // 增加对<mip-experiment>支持，获取实验分组
+        var expReg = /mip-x-((\w|-|\d|_)+)/g;
+        var matchExpArr = src.match(expReg);
+        for (i in matchExpArr) {
+            var matchExp = matchExpArr[i];
+            src = addParas(src, matchExp, getBodyAttr(matchExp));
+        }
+
+        // 创建请求img
+        var image = new Image();
         image.src = src;
         image.setAttribute('width', 0);
         image.setAttribute('height', 0);
