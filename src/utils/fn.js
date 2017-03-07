@@ -136,7 +136,7 @@ define(function (require) {
      * @param {string} key key of object
      */
     function del(obj, key) {
-        if (!obj[key]) {
+        if (!obj || !obj[key]) {
             return;
         }
         try {
