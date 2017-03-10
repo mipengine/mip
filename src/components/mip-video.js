@@ -23,21 +23,32 @@ define(function (require) {
         'poster',
         'width'
     ];
+
+    // 是否在iframe下
     var windowInIframe = window.parent !== window;
 
     customElem.prototype.firstInviewCallback = function () {
         this.attributes = getAttributeSet(this.element.attributes);
 
+        // 窗口是否是https
         var windowProHttps = !!window.location.protocol.match(/^https:/);
+        // 判断src是否https
         var videoProHttps = !!this.attributes.src.match(/^https:/);
         // 页面https         + 视频https  = 当前页播放
         // 页面https(在iframe里) + 视频http    = 跳出播放
         // 页面https(其它)   + 视频http    = 当前页播放（非mip相关页）
         // 页面http          + 视频任意    = 当前页播放
-        if (videoProHttps || (windowInIframe && !videoProHttps && !windowProHttps)) {
+        
+        // 如果非iframe嵌套时，应该与协议无关
+        if(!windowInIframe) {
+          this.videoElement = this.renderInView();
+        }
+        // 如果src为https 或者 窗口内 + video http + 窗口http
+        else if (videoProHttps || (windowInIframe && !videoProHttps && !windowProHttps)) {
             this.videoElement = this.renderInView();
         }
         else {
+            // 处理在窗口内，视频或者窗口非https的情况
             this.videoElement = this.renderPlayElsewhere();
         }
         this.applyFillContent(this.videoElement, true);
