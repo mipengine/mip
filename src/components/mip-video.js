@@ -43,12 +43,12 @@ define(function (require) {
         if(!windowInIframe) {
           this.videoElement = this.renderInView();
         }
-        // 如果src为https 或者 窗口内+video https+ 窗口https
+        // 如果src为https 或者 窗口内 + video http + 窗口http
         else if (videoProHttps || (windowInIframe && !videoProHttps && !windowProHttps)) {
             this.videoElement = this.renderInView();
         }
         else {
-            // 处理在窗口内，视频获取 窗口非https的情况
+            // 处理在窗口内，视频或者窗口非https的情况
             this.videoElement = this.renderPlayElsewhere();
         }
         this.applyFillContent(this.videoElement, true);
