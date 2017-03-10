@@ -174,12 +174,9 @@ define(function (require) {
                         'Access-Control-Request-Headers': 'X-PINGOTHER',
                     },
                     success: function (data) {
-                        console.log(1111111);
-                        console.log(JSON.parse(data));
                         done(data);
                     },
                     error: function (err) {
-                        console.log(JSON.parse(err));
                         done(err);
                     }
                 });
