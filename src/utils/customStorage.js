@@ -182,7 +182,7 @@ define(function (require) {
             }
         }
         return support;
-    }
+    };
 
     /**
      * Get local storage
@@ -194,7 +194,7 @@ define(function (require) {
         ls = ls ? parseJson(ls) : {};
         updateTime(ls);
         return ls;
-    }
+    };
 
     /**
      * Delete local storage
@@ -206,7 +206,7 @@ define(function (require) {
             key = HOST;
         }
         this._supportLs() ? localStorage.removeItem(key) : fn.del(lsCache, key);
-    }
+    };
 
     /**
      * Set current site data in local storage
@@ -419,9 +419,9 @@ define(function (require) {
      * @param {string} href page href
      */
     LocalStorage.prototype._isCachePage = function (href) {
-        isCachePage = /mipcache.bdstatic.com/.test(href) ||
-                    /c.mipcdn.com/.test(href);
-    }
+        isCachePage = /mipcache.bdstatic.com/.test(href)
+                    || /c.mipcdn.com/.test(href);
+    };
 
     /**
      * Publisher manage storage, via request
