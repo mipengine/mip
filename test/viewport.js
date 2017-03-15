@@ -17,9 +17,8 @@ define(function (require) {
     describe('viewport', function () {
         // Getter and setter of scrollTop.
         it('scrollTop', function () {
-            var element = document.createElement('div');
-            element.style.cssText= 'height: 10000px;';
-            document.body.appendChild(element);
+            var height = document.body.style.height;
+            document.body.style.height = '10000px';
             viewport.setScrollTop(1000);
             expect(viewport.getScrollTop()).to.equal(1000);
         });
