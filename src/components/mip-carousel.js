@@ -12,7 +12,7 @@ define(function (require) {
         var constEleWidth = constElementObj.clientWidth;
 
         // 获取用户填写属性
- 
+
         // 是否自动播放
         var constAutoPlayCard = constElementObj.hasAttribute('autoplay');
 
@@ -22,6 +22,8 @@ define(function (require) {
 
         // 分页显示器
         var constIndicatorShow = constElementObj.hasAttribute('indicator');
+        // 显示器样式类型
+        var indicatorType = 'number';
 
         // 翻页按钮
         var constButtonController = constElementObj.hasAttribute('buttonController');
@@ -74,7 +76,14 @@ define(function (require) {
 
         // 指示器
         if (!!constIndicatorShow) {
-            indicator();
+            var type = constElementObj.getAttribute('indicator');
+            if (type === 'dot') {
+                indicatorType = 'dot';
+                indicatorDot();
+            }
+            else {
+                indicator();
+            }
         }
 
         // 控制按钮
@@ -181,7 +190,6 @@ define(function (require) {
             }, false);
 
             wrapBox.addEventListener('touchmove', function (event) {
-                
                 // 阻止触摸事件的默认行为，即阻止滚屏
                 var touch = event.targetTouches[0];
                 endPos = {
@@ -302,6 +310,19 @@ define(function (require) {
             constElementObj.appendChild(indicatorBox);
         }
 
+        // 创建圆点型指示器
+        function indicatorDot() {
+            var dotItem = '<p class=\'mip-carousel-indicatorDot-item activeitem\'></p>';
+            var allImg = childImgNum - 2;
+            for (var i = 0; i < allImg - 1; i++) {
+                dotItem += '<p class=\'mip-carousel-indicatorDot-item\'></p>';
+            }
+            var indicatorBoxDot = document.createElement('div');
+            indicatorBoxDot.innerHTML = dotItem;
+            indicatorBoxDot.className = 'mip-carousel-indicatorDot';
+            constElementObj.appendChild(indicatorBoxDot);
+        }
+
         // 指示器数字变化
         function indicatorChange() {
             if (!constIndicatorShow) {
@@ -316,8 +337,16 @@ define(function (require) {
                 nowIndex = 1;
             }
 
-            var indicatorNow = constElementObj.querySelector('.mip-carousel-indicatornow');
-            indicatorNow.innerHTML = nowIndex;
+            if (indicatorType === 'number') {
+                var indicatorNow = constElementObj.querySelector('.mip-carousel-indicatornow');
+                indicatorNow.innerHTML = nowIndex;
+            }
+            else if (indicatorType === 'dot') {
+                var prvActiveItem = constElementObj.querySelector('.activeitem');
+                prvActiveItem.classList.remove('activeitem');
+                var nowActiveItem = constElementObj.querySelectorAll('.mip-carousel-indicatorDot-item')[nowIndex - 1];
+                nowActiveItem.classList.add('activeitem');
+            }
         }
 
 
