@@ -27,6 +27,12 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
          * @private
          * @type {number}
          */
+        this._currentFixedCount = 0;
+
+        /**
+         * @private
+         * @type {number}
+         */
         this._count = 0;
 
         /**
@@ -72,9 +78,14 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
         var fixedTypeCount = {};
         for (var i = 0; i < fixedElements.length; i++) {
             var ele = fixedElements[i];
-            if (i >= this._maxFixedCount) {
+            var fType = ele.getAttribute('type');
+
+            // check invalid element and delete from document
+            if (this._currentFixedCount >= this._maxFixedCount
+                || fType === 'gototop'
+                && ele.firstElementChild.tagName.toLowerCase() !== 'mip-gototop') {
                 ele.parentElement.removeChild(ele);
-                break;
+                continue;
             }
 
             // Calculate z-index based on the declared z-index and DOM position.
@@ -87,12 +98,7 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
                     position: 'absolute'
                 });
             }
-            var fType = ele.getAttribute('type');
-            var transfType = (fType == 'right' || fType == 'left') ? 'other': fType;
-            if (transfType === 'gototop' && ele.firstElementChild.tagName.toLowerCase() !== 'mip-gototop') {
-                continue;
-            }
-
+            this._currentFixedCount++;
             this.setFixedElementRule(ele, fType);
             var eleId = 'Fixed' + (this._count++);
             fixedEle = {
@@ -262,6 +268,8 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
         }
         if (!top && !bottom) {
             fixedEle.parentElement.removeChild(fixedEle);
+            // It will not be counted if the elements's type is non-standard.
+            this._currentFixedCount--;
         }
     };
 
