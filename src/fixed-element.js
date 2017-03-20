@@ -21,18 +21,13 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
          * @private
          * @type {number}
          */
-        this._count = 0;
+        this._maxFixedCount = 10;
 
         /**
          * @private
-         * @type {Object}
+         * @type {number}
          */
-        this._fixedTypes = {
-            'top': 1,
-            'bottom': 1,
-            'gototop': 1,
-            'other': 1
-        };
+        this._count = 0;
 
         /**
          * Whether the platform is android and uc browser.
@@ -77,6 +72,11 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
         var fixedTypeCount = {};
         for (var i = 0; i < fixedElements.length; i++) {
             var ele = fixedElements[i];
+            if (i >= this._maxFixedCount) {
+                ele.parentElement.removeChild(ele);
+                break;
+            }
+
             // Calculate z-index based on the declared z-index and DOM position.
             css(ele, {
                 'z-index': 10000 - i
@@ -92,23 +92,15 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
             if (transfType === 'gototop' && ele.firstElementChild.tagName.toLowerCase() !== 'mip-gototop') {
                 continue;
             }
-            if (this._fixedTypes[transfType] && this._fixedTypes[transfType] < 2) {
-                this._fixedTypes[transfType] += 1;
-                this.setFixedElementRule(ele, fType);
-                if (this._fixedTypes[transfType] < 2) {
-                    this._count--;
-                    continue;
-                }
-                var eleId = 'Fixed' + (this._count++);
-                fixedEle = {
-                    id: eleId,
-                    element: fixedElements[i]
-                };
-                fixedEle.element.setAttribute('mipdata-fixedIdx', eleId);
-                this._fixedElements.push(fixedEle);
-            } else {
-                ele.parentElement.removeChild(ele);
-            }
+
+            this.setFixedElementRule(ele, fType);
+            var eleId = 'Fixed' + (this._count++);
+            fixedEle = {
+                id: eleId,
+                element: fixedElements[i]
+            };
+            fixedEle.element.setAttribute('mipdata-fixedIdx', eleId);
+            this._fixedElements.push(fixedEle);
         }
     };
 
@@ -270,8 +262,6 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
         }
         if (!top && !bottom) {
             fixedEle.parentElement.removeChild(fixedEle);
-            // It will not be counted if the elements's type is non-standard.
-            this._fixedTypes.other -= 1;
         }
     };
 
