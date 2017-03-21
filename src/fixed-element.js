@@ -79,15 +79,16 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
         for (var i = 0; i < fixedElements.length; i++) {
             var ele = fixedElements[i];
             var fType = ele.getAttribute('type');
-
             // check invalid element and delete from document
-            if (this._currentFixedCount >= this._maxFixedCount
+            var bottom = layout.parseLength(ele.getAttribute('bottom'));
+            var top = layout.parseLength(ele.getAttribute('top'));
+            if (fType === 'left' && !top && !bottom
+                || this._currentFixedCount >= this._maxFixedCount
                 || fType === 'gototop'
                 && ele.firstElementChild.tagName.toLowerCase() !== 'mip-gototop') {
                 ele.parentElement.removeChild(ele);
                 continue;
             }
-
             // Calculate z-index based on the declared z-index and DOM position.
             css(ele, {
                 'z-index': 10000 - i
@@ -265,11 +266,6 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
         if (top) {
             fixedEle.style.top = top;
             return;
-        }
-        if (!top && !bottom) {
-            fixedEle.parentElement.removeChild(fixedEle);
-            // It will not be counted if the elements's type is non-standard.
-            this._currentFixedCount--;
         }
     };
 
