@@ -39,7 +39,7 @@ define(function (require) {
             fixedElement.init();
 
             expect(element.style.position).to.equal('absolute');
-            expect(fixedElement._count).to.equal(0);
+            expect(fixedElement._count).to.equal(1);
         });
 
         it('normal', function () {
