@@ -1,4 +1,10 @@
-define('fixed-element', ['require', 'util', 'layout'], function(require) {
+/**
+ *
+ * @file fixed element
+ * @author xx
+ * @modify wupeng10@baidu.com 2017-03-27 upgrade mip fixed, The only limitation is ten fixed elements.
+ */
+define('fixed-element', ['require', 'util', 'layout'], function (require) {
     'use strict';
 
     var util = require('util');
@@ -8,6 +14,7 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
 
     /**
      * The fixed element processor.
+     *
      * @class
      */
     function FixedElement() {
@@ -71,7 +78,8 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
 
     /**
      * Process some fixed elements.
-     * @param {Array.<MIPElement>} fixedElements
+     *
+     * @param {Array.<MIPElement>} fixedElements fixed elements
      */
     FixedElement.prototype.setFixedElement = function (fixedElements) {
         var fixedEle = {};
@@ -113,6 +121,7 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
 
     /**
      * Create the fixed layer of current object if it does not exsit and return it.
+     *
      * @return {Element}
      */
     FixedElement.prototype.getFixedLayer = function () {
@@ -153,8 +162,9 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
 
     /**
      * Move a fixed element to the fixed layer.
-     * @param {MIPElement} fixedEle
-     * @param {string} idx
+     *
+     * @param {MIPElement} fixedEle fixedEle
+     * @param {string} idx idx
      */
     FixedElement.prototype.moveToFixedLayer = function (fixedEle, idx) {
         var element = fixedEle.element;
@@ -187,7 +197,9 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
         var fixedSelectors = [];
         for (var i = 0; i < stylesheets.length; i++) {
             var stylesheet = stylesheets[i];
-            if (stylesheet.disabled || !stylesheet.ownerNode || stylesheet.ownerNode.tagName != 'STYLE' || stylesheet.ownerNode.hasAttribute('mip-extension')) {
+            if (stylesheet.disabled || !stylesheet.ownerNode
+                || stylesheet.ownerNode.tagName != 'STYLE'
+                || stylesheet.ownerNode.hasAttribute('mip-extension')) {
                 continue;
             }
             this._findFixedSelectors(stylesheet.cssRules);
@@ -203,7 +215,7 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
             var cssRule = cssRules[i];
             var rType = cssRule.type;
             if (rType == 1) {
-                /* CSSStyleRule */
+                // CSSStyleRule
                 if (cssRule.selectorText != '*' && cssRule.style.position == 'fixed') {
                     try {
                         var fixedSelector = cssRule.selectorText;
@@ -217,10 +229,10 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
                     }
                 }
             } else if (rType == 4) {
-                /* CSSMediaRule */
+                // CSSMediaRule
                 this._findFixedSelectors(cssRule.cssRules);
             } else if (rType == 12) {
-                /* CSSSupportsRule */
+                // CSSSupportsRule
                 this._findFixedSelectors(cssRule.cssRules);
             }
         }
@@ -228,17 +240,18 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
 
     /**
      * Set styles of a fixed element with type.
-     * @param {MIPElement} fixedEle
+     *
+     * @param {MIPElement} fixedEle fixedEle
      * @param {string} type Layout type of the fixedEle.
      */
     FixedElement.prototype.setFixedElementRule = function (fixedEle, type) {
         switch (type) {
-            case "top":
-            case "bottom":
+            case 'top':
+            case 'bottom':
                 fixedEle.style.maxHeight = '90px';
                 break;
-            case "right":
-            case "left":
+            case 'right':
+            case 'left':
                 this.setStyle(fixedEle);
                 fixedEle.style.maxHeight = '25%';
                 fixedEle.style.maxWidth = '10%';
@@ -254,7 +267,8 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
 
     /**
      * Set styles of a fixed element.
-     * @param {MIPElement} fixedEle
+     *
+     * @param {MIPElement} fixedEle fixedEle
      */
     FixedElement.prototype.setStyle = function (fixedEle) {
         var bottom = layout.parseLength(fixedEle.getAttribute('bottom'));
@@ -271,10 +285,11 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
 
     /**
      * Show fixed layer
-     * @param {HTMLElement} layer
+     *
+     * @param {HTMLElement} layer layer
      */
-    FixedElement.prototype.showFixedLayer = function(layer) {
-        if(layer) {
+    FixedElement.prototype.showFixedLayer = function (layer) {
+        if (layer) {
             css(layer, {
                 display: 'block'
             });
@@ -283,10 +298,11 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
 
     /**
      * Hide fixed layer
-     * @param {HTMLElement} layer
+     *
+     * @param {HTMLElement} layer layer
      */
-    FixedElement.prototype.hideFixedLayer = function(layer) {
-        if(layer) {
+    FixedElement.prototype.hideFixedLayer = function (layer) {
+        if (layer) {
             css(layer, {
                 display: 'none'
             });
@@ -295,4 +311,3 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
 
     return new FixedElement();
 });
-
