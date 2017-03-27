@@ -274,9 +274,9 @@ define(function (require) {
                 var endIdx = startIdx;
                 // 如果大于设定阈值
                 if (Math.abs(diffNum) > eleWidth*carouselParas.threshold) {
-                    endIndex = (diffNum > 0)?imgIndex - 1:imgIndex + 1;
+                    endIdx = (diffNum > 0)?imgIndex - 1:imgIndex + 1;
                 }
-                move(wrapBox, startIdx, endIndex);
+                move(wrapBox, startIdx, endIdx);
                 slideLock.stop = 1;
             }
 
@@ -306,40 +306,6 @@ define(function (require) {
         // 是否关联indicator
         if (!!indicatorId) {
             indicatorDot(indicatorId);
-        }
-
-        // 左滑阀值判断，如果超过阀值应该自动滑动
-        function thresholdLeft(diffNum) {
-            var everyWidtj = eleWidth;
-            var thresholdNum = -(imgIndex * everyWidtj + (everyWidtj * 0.2));
-            var endPosition = 0;
-
-            if (thresholdNum > diffNum) {
-                endPosition = -everyWidtj * (imgIndex + 1);
-                imgIndex = imgIndex + 1;
-            }
-            else {
-                endPosition = -everyWidtj * (imgIndex);
-            }
-
-            return endPosition;
-        }
-
-        // 右滑阀值判断，如果超过阀值应该自动滑动
-        function thresholdRight(diffNum) {
-            var everyWidtj = eleWidth;
-            var thresholdNum = -((imgIndex - 1) * everyWidtj + (everyWidtj * 0.8));
-            var endPosition = 0;
-
-            if (thresholdNum > diffNum) {
-                endPosition = -everyWidtj * (imgIndex);
-            }
-            else {
-                endPosition = -everyWidtj * (imgIndex - 1);
-                imgIndex = imgIndex - 1;
-            }
-
-            return endPosition;
         }
 
         // 自动轮播
@@ -432,6 +398,10 @@ define(function (require) {
             if (!wrapBox) {
                 return;
             }
+            // 双保险，确认位移的是 ele 的 width
+            if (eleWidth !== ele.clientWidth) {
+                eleWidth = ele.clientWidth;
+            }
             imgIndex = endIdx;
             var endPosition = -eleWidth * endIdx;
             if (Duration) {
@@ -468,6 +438,9 @@ define(function (require) {
         // 处理圆点型指示器
         function indicatorDot(domId) {
             var indicDom = document.getElementById(domId);
+            if (!indicDom) {
+                return;
+            }
             dotItems = indicDom.children;
             var dotLen = dotItems.length;
 
@@ -491,15 +464,11 @@ define(function (require) {
                 dotItems = [];
             }
         }
-
-
         // 横竖屏兼容处理
         window.addEventListener('resize', function () {
             eleWidth = ele.clientWidth;
             move(wrapBox, imgIndex, imgIndex, '0ms');
         }, false);
-
-        
 
     };
 
