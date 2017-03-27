@@ -15,10 +15,15 @@ define(function (require) {
         }
         fixedElement = new FixedElement();
     };
+    var style = document.createElement('style');
+    style.textContent = "@media screen and (max-width:240px){ body {} }";
+    var supportStyle = document.createElement('style');
+    supportStyle.textContent = "@supports not (border-color: red) {}";
+    document.head.appendChild(supportStyle);
+    document.head.appendChild(style);
 
     describe('fixed-element', function () {
         it('uc', function () {
-
             util.platform.isIos = function () {
                 return false;
             };
@@ -34,7 +39,7 @@ define(function (require) {
             fixedElement.init();
 
             expect(element.style.position).to.equal('absolute');
-            expect(fixedElement._count).to.equal(0);
+            expect(fixedElement._count).to.equal(1);
         });
 
         it('normal', function () {
@@ -51,6 +56,10 @@ define(function (require) {
             document.body.appendChild(elementBottom);
             var elementRight = create('<mip-fixed type="right" bottom="20"></mip-fixed>');
             document.body.appendChild(elementRight);
+            var elementGoto = create('<mip-fixed type="gototop"><mip-gototop></mip-gototop></mip-fixed>');
+            document.body.appendChild(elementGoto);
+            var elementGotoInvalid = create('<mip-fixed type="gototop"><div></div></mip-fixed>');
+            document.body.appendChild(elementGotoInvalid);
             var elementNone = create('<mip-fixed></mip-fixed>');
             fixedElement.setFixedElementRule(elementNone);
             document.body.appendChild(elementNone);
@@ -64,6 +73,13 @@ define(function (require) {
         });
 
         it('ios', function () {
+            util.platform.isIos = function () {
+                return true;
+            };
+            util.platform.isUc = function () {
+                return false;
+            };
+            fixedElement._isAndroidUc = false;
             reset();
             var elementTop = create('<mip-fixed type="top"></mip-fixed>');
             document.body.appendChild(elementTop);
@@ -86,7 +102,12 @@ define(function (require) {
             document.head.removeChild(style);
         });
 
-     
+        it('showFixedLayer', function () {
+            fixedElement.showFixedLayer(document.body);
+        });
 
+        it('hideFixedLayer', function () {
+            fixedElement.hideFixedLayer(document.body);
+        });
     });
 });
