@@ -6,14 +6,13 @@
  */
 define(function (require) {
     var customElem = require('customElement').create();
-    var util = require('util');
     var carouselParas = {
-        'boxClass': 'mip-carousel-container',
-        'wrapBoxClass': 'mip-carousel-wrapper',
-        'slideBox': 'mip-carousel-slideBox',
-        'activeitem': 'mip-carousel-activeitem',
-        'threshold': 0.2,
-        'isDeferNum': 4000
+        boxClass: 'mip-carousel-container',
+        wrapBoxClass: 'mip-carousel-wrapper',
+        slideBox: 'mip-carousel-slideBox',
+        activeitem: 'mip-carousel-activeitem',
+        threshold: 0.2,
+        isDeferNum: 4000
     };
     // 按tagName创建一个固定class的tag
     function createTagWithClass(className, tagName) {
@@ -63,7 +62,7 @@ define(function (require) {
             return;
         }
         var curClassName = dom.className;
-        dom.className = curClassName.replace(className, '').replace(/(^\s*)|(\s*$)/g, "");
+        dom.className = curClassName.replace(className, '').replace(/(^\s*)|(\s*$)/g, '');
     }
 
     // 追加class
@@ -88,12 +87,12 @@ define(function (require) {
      * @param {int} endPosition
      * @return {Object}
      */
+
     function resetPosAndIdx(curIndex, totalNum, deviceWidth, endPos) {
         var endInfo = {
-            'endPos': 0,
-            'endIndex': curIndex
+            endPos: 0,
+            endIndex: curIndex
         };
-        // 
         if (curIndex === totalNum - 1) {
             endInfo.endPos = -deviceWidth;
             endInfo.endIndex = 1;
@@ -114,8 +113,6 @@ define(function (require) {
         removeClass(startDot, className);
         addClass(endDot, className);
     }
-    
-                        
     customElem.prototype.build = function () {
         var ele = this.element;
         var self = this;
@@ -124,7 +121,6 @@ define(function (require) {
         var dotItems = [];
 
         // 获取用户填写属性
- 
         // 是否自动播放
         var isAutoPlay = ele.hasAttribute('autoplay');
 
@@ -145,12 +141,12 @@ define(function (require) {
 
         // Gesture锁
         var slideLock = {
-            'stop': 1
+            stop: 1
         };
 
         // btn按钮手势锁
         var btnLock = {
-            'stop': 1
+            stop: 1
         };
 
         // 缓存上一次手势位置
@@ -181,7 +177,7 @@ define(function (require) {
         if (childNum === 0) {
             return;
         }
-        //将getChildNodes获取的元素拼装轮播dom
+        // 将getChildNodes获取的元素拼装轮播dom
         var carouselBox = createTagWithClass(carouselParas.boxClass);
 
         var wrapBox = createTagWithClass(carouselParas.wrapBoxClass);
@@ -194,7 +190,8 @@ define(function (require) {
 
             // 遍历mip-img计算布局
             self.applyFillContent(ele, true);
-            //inview callback  bug, TODO
+            // inview callback  bug, TODO
+            var MIP = window.MIP || {};
             MIP.prerenderElement(ele);
             var allImgs = ele.querySelectorAll('mip-img');
             var len = allImgs.length;
@@ -214,8 +211,6 @@ define(function (require) {
         var initPostion = -eleWidth;
         wrapBox.style.webkitTransform = 'translate3d(' + initPostion + 'px, 0, 0)';
 
-        var wrapper = ele.querySelector('.mip-carousel-wrapper');
-        
         // 绑定wrapBox的手势事件
         // 手势移动的距离
         var diffNum = 0;
@@ -237,7 +232,6 @@ define(function (require) {
         }, false);
 
         wrapBox.addEventListener('touchmove', function (event) {
-            
             // 阻止触摸事件的默认行为，即阻止滚屏
             var touch = event.targetTouches[0];
             endPos = {
@@ -266,15 +260,13 @@ define(function (require) {
                 event.preventDefault();
             }
 
-            var endPosition = 0;
-
             //  只有滑动之后才会触发
             if (!slideLock.stop) {
                 var startIdx = imgIndex;
                 var endIdx = startIdx;
                 // 如果大于设定阈值
-                if (Math.abs(diffNum) > eleWidth*carouselParas.threshold) {
-                    endIdx = (diffNum > 0)?imgIndex - 1:imgIndex + 1;
+                if (Math.abs(diffNum) > eleWidth * carouselParas.threshold) {
+                    endIdx = (diffNum > 0) ? imgIndex - 1 : imgIndex + 1;
                 }
                 move(wrapBox, startIdx, endIdx);
                 slideLock.stop = 1;
@@ -311,7 +303,6 @@ define(function (require) {
         // 自动轮播
         function autoPlay() {
             moveInterval = setInterval(function () {
-                var everyWidtj = eleWidth;
                 move(wrapBox, imgIndex, imgIndex + 1);
             }, carouselParas.isDeferNum);
         }
@@ -356,14 +347,12 @@ define(function (require) {
         // 绑定按钮切换事件
         function bindBtn() {
             ele.querySelector('.mip-carousel-preBtn').addEventListener('touchend', function (event) {
-                var everyWidtj = eleWidth;
                 if (!btnLock.stop) {
                     return;
                 }
 
                 btnLock.stop = 0;
 
-                var endPosition = -everyWidtj * (imgIndex - 1);
                 imgIndex = imgIndex - 1;
 
                 clearInterval(moveInterval);
@@ -375,14 +364,12 @@ define(function (require) {
             }, false);
 
             ele.querySelector('.mip-carousel-nextBtn').addEventListener('touchend', function (event) {
-                var everyWidtj = eleWidth;
                 if (!btnLock.stop) {
                     return;
                 }
 
                 btnLock.stop = 0;
 
-                var endPosition = -everyWidtj * (imgIndex + 1);
                 imgIndex = imgIndex + 1;
                 clearInterval(moveInterval);
                 move(wrapBox, imgIndex - 1, imgIndex);
@@ -433,7 +420,6 @@ define(function (require) {
             indicatorChange(imgIndex);
         }
 
-        
 
         // 处理圆点型指示器
         function indicatorDot(domId) {
@@ -445,9 +431,8 @@ define(function (require) {
             var dotLen = dotItems.length;
 
             if (dotLen === childNum - 2) {
-                var everyWidth = eleWidth;
                 for (var i = 0; i < dotLen; i++) {
-                    dotItems[i].count = i;  
+                    dotItems[i].count = i;
                     dotItems[i].addEventListener('click', function (event) {
                         var count = this.count;
                         clearInterval(moveInterval);
