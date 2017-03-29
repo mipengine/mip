@@ -11,8 +11,7 @@ define(function (require) {
         wrapBoxClass: 'mip-carousel-wrapper',
         slideBox: 'mip-carousel-slideBox',
         activeitem: 'mip-carousel-activeitem',
-        threshold: 0.2,
-        isDeferNum: 4000
+        threshold: 0.2
     };
     // 按tagName创建一个固定class的tag
     function createTagWithClass(className, tagName) {
@@ -126,9 +125,8 @@ define(function (require) {
 
         // 图片间隔时长默认为4000
         var isDefer = ele.getAttribute('defer');
-        if (!!isDefer) {
-            carouselParas.isDeferNum = isDefer;
-        }
+
+        var isDeferNum = (!!isDefer) ? isDefer : 4000;
 
         // 分页显示器
         var showPageNum = ele.hasAttribute('indicator');
@@ -259,7 +257,6 @@ define(function (require) {
             if (event.target.tagName.toLocaleLowerCase() !== 'img') {
                 event.preventDefault();
             }
-
             //  只有滑动之后才会触发
             if (!slideLock.stop) {
                 var startIdx = imgIndex;
@@ -274,6 +271,7 @@ define(function (require) {
 
             // 如果存在自动则调用自动轮播
             if (isAutoPlay) {
+                clearInterval(moveInterval);
                 autoPlay();
             }
 
@@ -304,7 +302,7 @@ define(function (require) {
         function autoPlay() {
             moveInterval = setInterval(function () {
                 move(wrapBox, imgIndex, imgIndex + 1);
-            }, carouselParas.isDeferNum);
+            }, isDeferNum);
         }
 
         // 创建指示器
