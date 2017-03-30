@@ -1,3 +1,7 @@
+/**
+ * @file Hash Function. Support hash get function
+ * @author Jenny_L
+ */
 define(function (require) {
     'use strict';
 
@@ -7,9 +11,15 @@ define(function (require) {
      * @class
      */
     function Hash() {
-        this._hashRaw = window.location.hash;
-        this._hashObj = this._getHashObj();
     }
+
+    /**
+     * get window hash
+     * @return {string} window hash
+     */
+    Hash.prototype._getHashRaw = function () {
+    	return window.location.hash;
+    };
 
     /**
      * get hash object from hash
@@ -18,7 +28,7 @@ define(function (require) {
      */
     Hash.prototype._getHashObj = function () {
         var hashObj = {};
-        var hashRaw = this._hashRaw;
+        var hashRaw = this._getHashRaw();
         if (hashRaw) {
             var hashArr = hashRaw.slice(1).split('&');
             for (var i = 0; i < hashArr.length; i++) {
@@ -49,7 +59,8 @@ define(function (require) {
      * @return {value}     [description]
      */
     Hash.prototype.getHash = function (key) {
-        return this._hashObj ? this._hashObj[key] || '' : '';
+    	var hashObj = this._getHashObj();
+        return hashObj ? hashObj[key] || '' : '';
     };
 
     return new Hash();
