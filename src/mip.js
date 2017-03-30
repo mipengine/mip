@@ -12,8 +12,6 @@ define(function (require) {
     require('./utils/event-emitter');
     require('./utils/event-action');
     var CustomStorage = require('./utils/customStorage');
-    
-    require('./hash');
 
     /* dom */
     require('./dom/css-loader');
@@ -21,7 +19,6 @@ define(function (require) {
     require('./dom/event');
     require('./dom/css');
     require('./dom/dom');
-
 
     /* mip frame */
     var layout = require('./layout');
@@ -34,6 +31,9 @@ define(function (require) {
     var viewer = require('./viewer');
     var performance = require('./performance');
     var templates = require('./templates');
+
+    /* mip hash */
+    var hash = require('./hash');
 
     /* builtin components */
     require('./components/mip-img');
@@ -59,6 +59,7 @@ define(function (require) {
             registerElement(name, customClass, css);
         }
     };
+    MIP.hash = hash;
 
     // Initialize viewer
     viewer.init();

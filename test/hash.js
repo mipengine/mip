@@ -19,6 +19,22 @@ define(function (require) {
     		stub.restore();
     	});
 
+		it('case: no key input', function(){
+    		var stub = sinon.stub(hash, '_getHashRaw', function() {
+    			return "#word=123&eqid=321";
+    		});
+    		expect(hash.getHash()).to.be.equal('');
+    		stub.restore();
+    	});
+
+    	it('case: no such key', function(){
+    		var stub = sinon.stub(hash, '_getHashRaw', function() {
+    			return "#word=123&eqid=321";
+    		});
+    		expect(hash.getHash('aaaaa')).to.be.equal('');
+    		stub.restore();
+    	});
+
     	it('case: multi =', function() {
     		var stub = sinon.stub(hash, '_getHashRaw', function() {
 				return "#word==123";
