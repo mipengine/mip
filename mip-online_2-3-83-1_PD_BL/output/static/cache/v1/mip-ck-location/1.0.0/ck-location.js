@@ -1,0 +1,1 @@
+define("mip-ck-location/ck-location",["require","zepto"],function(t){var e={},i=t("zepto"),n="https://m.cnkang.com/video/areaname?"+ +new Date;return e.get=function(t){t=t||function(){},i.post(n,function(e){var i=+e.errno;if(0===i)t(e.default)})},e});

@@ -1,0 +1,1 @@
+define("mip-ck-browser/ck-browser",[],function(){var t=navigator.userAgent,i={};return i.UC=function(){return/UCBrowser/i.test(t)}(),i.QQ=function(){return/MQQBrowser/i.test(t)}(),i.Safari=function(){return/Safari/i.test(t)}(),i.browser=function(t){var i;switch(!0){case t.UC:i="UC";break;case t.QQ:i="QQ";break;case t.Safari:i="Safari";break;default:i=""}return i}(i),i});

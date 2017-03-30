@@ -1,0 +1,1 @@
+define("mip-ck-course-detail/js/util",["require"],function(t){var e={domain:"//m.chuanke.com"};return e});

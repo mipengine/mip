@@ -1,0 +1,1044 @@
+body {
+    background-color: #f8f8f8;
+}
+
+body.no-scroll {
+    position: fixed;
+    overflow-y: hidden;
+}
+
+.details {
+    min-height: 100%;
+    padding-bottom: 80px;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+footer {
+    margin-top: -48px;
+}
+
+/*固定顶部活动图*/
+.fixed-down.fixed-pic {
+    bottom: auto;
+    top: 0;
+    z-index: 300;
+}
+
+/*视频播放*/
+.video {
+    position: relative;
+    z-index: 1;
+    height: 2.3rem;
+    overflow: hidden;
+}
+
+.video .fixed-down {
+    position: absolute;
+    bottom: 0;
+}
+
+.fixed-down {
+    bottom: .48rem;
+}
+
+.video-wx .btn-app,
+.video-wx h3 {
+    padding: 0;
+}
+
+.video .link {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    background-color: rgba(0, 0, 0, .4);
+    object-fit: contain !important; /*重置其他页面带的样式*/
+}
+
+.video .link img {
+    display: block;
+    margin: 0 auto;
+    height: 100%;
+    vertical-align: top;
+}
+
+.video .pic {
+    width: 100%;
+    height: 100%;
+    vertical-align: top;
+}
+
+.video .ico-video {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -.3rem 0 0 -.3rem;
+    width: .5rem;
+    height: .5rem;
+    background-size: contain;
+}
+
+/*直播提示框*/
+.video-tips {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 103;
+    width: 100%;
+    height: inherit;
+    text-align: center;
+    background-color: rgba(0, 0, 0, .8);
+}
+
+.video-tips a {
+    height: 100%;
+    color: #fff;
+    font-size: .18rem;
+}
+
+.video-tips .text {
+    padding: .1rem 0;
+    font-size: .12rem;
+}
+
+.video-tips .btn {
+    display: block;
+    margin: 0 auto;
+    height: .36rem;
+    line-height: .36rem;
+    text-align: center;
+    font-size: .16rem;
+    color: #fff;
+    border-radius: 3px;
+    background-color: #3bc0b6;
+}
+
+.details-title {
+    padding: .1rem .15rem 0;
+    max-height: .5rem;
+    font-size: .17rem;
+    line-height: 24px;
+    overflow: hidden;
+    border-top: 1px solid #e9e9ea;
+    background-color: #fff;
+    word-wrap: break-word;
+}
+
+.d-satisfaction {
+    padding: .08rem .15rem .1rem;
+    font-size: .14rem;
+    color: #999;
+    background-color: #fff;
+}
+
+/*优惠*/
+.d-benefit {
+    margin-bottom: -1px;
+    padding: 0 .1rem;
+    overflow: hidden;
+    border-top: 1px solid #e3e3e3;
+    background-color: #fff;
+}
+
+.d-benefit li {
+    padding: 0 .05rem;
+    height: .46rem;
+    line-height: .46rem;
+    font-size: .15rem;
+    color: #666;
+    border-bottom: 1px solid #e3e3e3;
+}
+
+.d-benefit li:last-child {
+    border-bottom: none;
+}
+
+.d-benefit .title {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    -moz-flex: 1;
+    flex: 1;
+}
+
+.d-benefit a {
+    color: #666;
+}
+
+.d-benefit .money {
+    margin: 0 2px;
+    font-size: .15rem;
+}
+
+/*课程列表*/
+
+.details-tab {
+    position: relative;
+    border-top: 1px solid #e6e6e6;
+    background-color: #f4f4f4;
+    overflow: hidden;
+}
+
+.details-tab.fixed {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+}
+
+.details-tab li {
+    float: left;
+    width: 33.333%;
+}
+
+.details-tab li:last-child {
+    width: 33.334%;
+}
+
+.details-tab .a-span {
+    display: block;
+    height: .36rem;
+    line-height: .38rem;
+    font-size: .16rem;
+    color: #666;
+    text-align: center;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.details-tab .cur .a-span {
+    position: relative;
+    color: #43c0b5;
+    border-color: #43c0b5;
+}
+
+
+
+.details-list .item {
+    margin: 0 .1rem;
+    border-bottom: 1px solid #e3e3e3;
+    overflow: hidden;
+}
+
+.details-list .item:last-child {
+    border-bottom: none;
+}
+
+.d-list-title {
+    padding: .12rem .05rem 0.05rem;
+    font-size: .15rem;
+    color: #666;
+}
+
+.d-list-directory {
+    font-size: .14rem;
+    color: #999;
+}
+
+.d-list-directory li {
+    position: relative;
+    padding: 0 .05rem .1rem .13rem;
+    height: 100%;
+    color: #999;
+    overflow: hidden;
+}
+
+.d-list-directory li .preview {
+    color: #999;
+}
+
+.d-list-directory .title {
+    padding-left: 23px;
+    box-sizing: border-box;
+}
+
+.d-list-directory .title h5 {
+    max-width: 75%;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.d-list-directory .text,
+.d-list-directory .cur .text {
+    display: block;
+    margin-left: 23px;
+    box-sizing: border-box;
+    max-width: 75%;
+    font-size: .12rem;
+    color: #999;
+}
+
+.d-list-directory .ico-play {
+    display: none;
+    vertical-align: middle;
+}
+
+.d-list-directory .time {
+    width: 80px;
+    line-height: 24px;
+    font-size: .12rem;
+    text-align: right;
+    vertical-align: middle;
+}
+
+.d-list-directory .ring {
+    position: absolute;
+    top: 0;
+    left: 14px;
+    display: inline-block;
+    margin: 0 .1rem 0 .1rem;
+    width: 1px;
+    height: inherit;
+    vertical-align: middle;
+    color: #e0e0e0;
+    background-color: #e0e0e0;
+}
+
+.d-list-directory .ring:before {
+    position: absolute;
+    left: -4px;
+    top: 5px;
+    z-index: 2;
+    display: block;
+    width: .09rem;
+    height: .14rem;
+    content: "";
+    overflow: hidden;
+    background-size: contain;
+}
+
+.d-list-directory li:last-child .ring {
+    height: 15px;
+}
+
+.d-list-directory li:last-child .ring:before {
+    top: auto;
+    bottom: -4px;
+}
+
+.d-list-directory li:first-child .ring {
+    top: 5px;
+}
+
+.d-list-directory li:first-child .ring:before {
+    top: 0;
+}
+
+.d-list-directory .cur:first-child .ring {
+    top: 4px;
+}
+
+.d-list-directory .cur:first-child .ring:before {
+    margin-top: 0;
+}
+
+.d-list-directory .cur .preview {
+    color: #43c0b5;
+}
+
+.d-list-directory .cur .ring:before {
+    position: absolute;
+    left: -7px;
+    top: 3px;
+    z-index: 3;
+    width: .15rem;
+    height: .15rem;
+    background-size: contain;
+}
+
+.d-list-unfold {
+    display: block;
+    margin: .05rem auto .1rem;
+    background-color: #fff;
+}
+
+/*课程评价*/
+.d-evaluate,
+.d-course-details {
+    margin-top: .1rem;
+    overflow: hidden;
+    background-color: #fff;
+    border-bottom: 1px solid #e6e6e6;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+}
+
+.d-evaluate .more {
+    height: 100%;
+    line-height: .4rem;
+}
+
+.d-evaluate .g-title,
+.d-course-details .g-title {
+    border-bottom: none;
+}
+
+.d-evaluate .comment {
+    border-top: 1px solid #e6e6e6;
+    margin: 0 .15rem;
+}
+
+.d-evaluate .comment .item {
+    margin: 0;
+    padding: .15rem 0;
+}
+
+.d-course-details .details-crowd {
+    border-top: 1px solid #e6e6e6;
+    margin: 0 .15rem;
+    padding: .15rem 0 .05rem;
+    font-size: .14rem;
+}
+
+/*课程详情 卡片*/
+
+.d-course-details {
+    margin-bottom: .1rem;
+}
+
+.details-crowd {
+    padding: .15rem .15rem .05rem;
+    font-size: .14rem;
+}
+
+.details-crowd li {
+    padding-bottom: .05rem;
+    color: #999;
+}
+
+/*进入机构*/
+.d-agency {
+    padding: .15rem;
+    font-size: .14rem;
+    overflow: hidden;
+    background-color: #fff;
+}
+
+.d-agency .pic {
+    margin-right: .15rem;
+    width: .6rem;
+    height: .6rem;
+}
+
+.d-agency .con {
+    padding-right: 15px;
+}
+
+.d-agency .con .title {
+    padding: .02rem 0 .05rem;
+}
+
+.d-agency .con .num {
+    padding-right: 15px;
+}
+
+.d-agency .con .c-999 {
+    font-size: .12rem;
+}
+
+/*机构热门课程*/
+.d-popular {
+    margin-top: .1rem;
+    overflow: hidden;
+    background-color: #fff;
+}
+
+.d-popular .course-list {
+    border-bottom: 1px solid #e6e6e6;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+}
+
+/*课程列表 可以做通用*/
+.course-list {
+    padding: .1rem .15rem;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.course-list .item {
+    float: left;
+    width: 32%;
+    margin-right: 2%;
+    font-size: .12rem;
+}
+
+.course-list .item a {
+    display: block;
+}
+
+.course-list .item:nth-child(3n) {
+    margin-right: 0;
+}
+
+.course-list .title {
+    margin-top: 6px;
+    height: .36rem;
+    color: #666;
+    overflow: hidden;
+}
+
+/*详情*/
+.details-info {
+    padding: .2rem;
+    font-size: .14rem;
+    color: #666;
+    overflow: hidden;
+}
+
+.details-crowd.b-line {
+    margin: 0 .15rem;
+    padding: .15rem .05rem .05rem;
+    border-bottom: 1px solid #e3e3e3;
+}
+
+.details-info p {
+    padding-top: 10px;
+}
+
+.details-info img {
+    display: block;
+    margin: 0 auto 10px;
+}
+
+/*收藏动画*/
+
+.d-buynow li .cur .ico-collect {
+    transform-origin: 50% 50%;
+    transition: transform .5s ease-in-out 0s;
+    animation-name: bling;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-direction: alternate;
+    animation-timing-function: ease-in-out;
+
+    -webkit-transform-origin: 50% 50%;
+    -webkit-transition: transform .5s ease-in-out 0s;
+    -webkit-animation-name: bling;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-direction: alternate;
+    -webkit-animation-timing-function: ease-in-out;
+}
+
+@-webkit-keyframes bling {
+    0% {
+        opacity: .3;
+        transform: scale(1);
+    }
+    25% {
+        opacity: .5;
+        transform: scale(1.1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.5);
+    }
+    75% {
+        opacity: .5;
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@-moz-keyframes bling {
+    0% {
+        opacity: .3;
+        transform: scale(1);
+    }
+    25% {
+        opacity: .5;
+        transform: scale(1.1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.5);
+    }
+    75% {
+        opacity: .5;
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+
+.details-phone.d-buynow li {
+    width: 21%;
+}
+
+.details-fav.d-buynow .btn-collect,
+.details-phone.d-buynow .btn-collect {
+    width: 26%;
+}
+
+.details-phone.d-buynow .btn-buy,
+.details-phone.d-buynow .btn-appraise {
+    width: 37%;
+}
+
+.details-phone.d-buynow .btn-buy,
+.details-phone.d-buynow .btn-appraise {
+    width: 32%;
+}
+
+
+.d-data-list {
+    padding: .15rem .05rem 0;
+    overflow: hidden;
+    background-color: #fff;
+}
+
+.d-data-list li {
+    float: left;
+    padding: 0 10px;
+    width: 25%;
+    height: .95rem;
+    font-size: .12rem;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.d-data-list li a {
+    display: block;
+}
+
+.d-data-list .title {
+    color: #999;
+}
+
+.d-online {
+    margin-top: .1rem;
+    overflow: hidden;
+    background-color: #fff;
+    border-bottom: 1px solid #e6e6e6;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+}
+
+.d-online a {
+    float: left;
+    display: block;
+    width: 50%;
+    border-right: 1px solid #e2e2e2;
+    height: .45rem;
+    line-height: .45rem;
+    font-size: .16rem;
+    color: #666;
+    text-align: center;
+    background-color: #fff;
+    box-sizing: border-box;
+}
+
+.d-online a:last-child {
+    border-right: none;
+}
+
+/*-- 优惠券 -----------------------*/
+.coupons-wrap,
+.course-pack {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 102;
+    background: #fff;
+    transform: translateY(100%);
+    -webkit-transform: translateY(100%);
+}
+
+.dialog-bg.no-fixed {
+    position: static;
+    height: auto;
+}
+
+.coupons-wrap.state-show,
+.course-pack.state-show {
+    transition: transform .7s ease 0s;
+    -webkit-transition: -webkit-transform .7s ease 0s;
+    transform: translateY(0);
+    -webkit-transform: translateY(0);
+}
+
+.dialog-con-wrap .dialog-close {
+    display: block;
+    position: absolute;
+    z-index: 2;
+    right: 0;
+    top: 0;
+    width: .3rem;
+    height: .3rem;
+}
+
+.coupons-wrap .coupons-tit,
+.course-pack .pack-tit {
+    font-size: .16rem;
+    line-height: .4rem;
+    border-bottom: 1px solid #efefef;
+    color: #666666;
+    text-align: center;
+    background: #fff;
+}
+
+.coupons-wrap .coupons-list {
+    overflow-y: auto;
+    background: #fff;
+
+}
+
+.coupons-list li {
+    border-bottom: 1px solid #EFEFEF;
+    padding: .1rem .15rem;
+}
+
+.coupons-list .coupons-con {
+    font-size: .14rem;
+    color: #666;
+}
+
+.coupons-list .coupons-con i {
+    font-size: .2rem;
+}
+
+.coupons-list .c-r {
+    color: #ff7f00;
+}
+
+.coupons-list .coupons-time {
+    color: #999;
+    font-size: .12rem;
+}
+
+.coupons-list .btn-wrap {
+    width: .6rem;
+    font-size: .12rem;
+    color: #999;
+    text-align: center;
+    justify-content: center;
+    -webkit-justify-content: center;
+}
+
+.coupons-list .btn-get-coupons,
+.coupons-list .get-success {
+    display: inline-block;
+    width: .58rem;
+    line-height: .23rem;
+    font-size: .14rem;
+    text-align: center;
+    background: #fffaf6;
+    color: #ff7f00;
+    border: 1px solid #ff7f00;
+    border-radius: 2px;
+}
+
+.coupons-list .btn-get-coupons.state-done {
+    color: #BFBFBF;
+    border-color: #D9D9D9;
+    background: #F7F7F7;
+}
+
+.coupons-list .get-success {
+    display: none;
+    background: #e3e3e3;
+    border-color: #e3e3e3;
+    color: #a4a4a4;
+}
+
+.coupons-list .ylq {
+    display: none;
+}
+
+.course-pack {
+    font-size: 14px;
+    color: #666;
+}
+
+.course-wrap {
+    background: #f8f8f8;
+    overflow-y: auto;
+}
+
+.pack-list dd {
+    padding: 0 .15rem;
+    margin-bottom: .1rem;
+    background: #fff;
+}
+
+.course-pack .sub-tit {
+    padding: .07rem 0;
+    font-size: .14rem;
+}
+
+.course-pack .show-box {
+    overflow-x: auto;
+}
+
+.course-pack .d-course-list {
+    transform: translateZ(0px);
+    -webkit-transform: translateZ(0px);
+    width: 100%;
+    font-size: .12rem;
+}
+
+.d-course-list li {
+    float: left;
+    width: 1.05rem;
+    margin-right: .1rem;
+    border: 1px solid #e5e5e5;
+}
+
+.d-course-list img {
+    width: 1.05rem;
+    height: 0.79rem;
+}
+
+.d-course-list .course-name {
+    height: .36rem;
+    margin-bottom: .03rem;
+    padding: 0 .03rem;
+    font-size: .12rem;
+    color: #666;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.d-course-list .cost {
+    font-size: .14rem;
+    color: #333;
+}
+
+.pack-list .cost-btn {
+    padding: .1rem 0;
+}
+
+.pack-list .all-cost {
+    font-size: .14rem;
+    color: #999;
+}
+
+.pack-list .all-cost .c-r {
+    color: #ff7f00;
+}
+
+.pack-list .all-cost i {
+    font-size: .2rem;
+}
+
+.pack-list .all-cost em {
+    text-decoration: line-through;
+}
+
+.pack-list .btn-pay-now {
+    display: inline-block;
+    width: 1.1rem;
+    line-height: .35rem;
+    background: #ff7f00;
+    color: #fff;
+    text-align: center;
+}
+
+.pack-list .contain-box {
+    height: 0;
+    overflow: hidden;
+    transition: height .4s linear 0s;
+    -webkit-transition: height .4s linear 0s;
+}
+
+.pack-list .state-open .contain-box {
+    height: 1.96rem;
+}
+
+/*--  ico 图标 -------------------------*/
+.ico-saver,
+.ico-benefit {
+    display: inline-block;
+    width: .22rem;
+    height: .22rem;
+    vertical-align: -6px;
+    background-size: contain;
+}
+
+.ico-benefit {
+    background-size: contain;
+}
+
+.ico-play {
+    width: .14rem;
+    height: .14rem;
+}
+
+.ico-ios-android {
+    margin-right: 10px;
+    width: .36rem;
+    height: .18rem;
+}
+
+.ico-credit {
+    margin-right: 5px;
+    width: .14rem;
+    height: .14rem;
+}
+
+
+
+.ico-aims,
+.ico-crowd {
+    margin: .03rem .1rem 0 0;
+    width: .16rem;
+    height: .16rem;
+    vertical-align: -3px;
+}
+
+
+.ico-qa,
+.ico-notes {
+    width: .22rem;
+    height: .19rem;
+    vertical-align: -3px;
+}
+
+.ico-notes {
+    width: .16rem;
+}
+
+/*学习资料各种图标  储备*/
+.ico-data-txt,
+.ico-data-pic,
+.ico-data-ppt,
+.ico-data-doc,
+.ico-data-xls,
+.ico-data-video,
+.ico-data-rar,
+.ico-data-wps,
+.ico-data-dps,
+.ico-data-dpt,
+.ico-data-et,
+.ico-data-pdf,
+.ico-data-rtf,
+.ico-data-wpt,
+.ico-data-epub {
+    width: .3rem;
+    height: .45rem;
+}
+
+
+.p-tips-buy .title {
+    font-size: .16rem;
+    height: .8rem;
+    line-height: .8rem;
+    text-align: center;
+}
+
+.p-tips-buy .link {
+    display: block;
+    height: .6rem;
+    line-height: .6rem;
+    font-size: .15rem;
+    text-align: center;
+    border-top: 1px solid #e6e6e6;
+}
+
+.p-tips-buy .num {
+    padding-top: .1rem;
+    color: #999;
+}
+
+.p-tips-buy .buy {
+    line-height: 19px;
+}
+
+/*电话咨询*/
+.p-tips-refer .title,
+.p-tips-submit .title {
+    font-size: .16rem;
+    height: .5rem;
+    line-height: .5rem;
+    text-align: center;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.p-tips-refer .refer {
+    position: relative;
+    padding: 0 .15rem;
+    margin-bottom: .24rem;
+    font-size: .13rem;
+    color: #999;
+}
+
+.refer-info {
+    padding: .18rem 0;
+}
+
+.p-tips-refer input::-webkit-input-placeholder {
+    font-size: .12rem;
+    padding-top: .01rem;
+}
+
+.refer-btn {
+    border-top: 1px solid #e6e6e6;
+}
+
+.refer-btn .link {
+    float: left;
+    width: 49%;
+    height: .44rem;
+    line-height: .44rem;
+    text-align: center;
+    font-size: .16rem;
+}
+
+.refer-btn-a {
+    border-left: 1px solid #e6e6e6;
+    color: #43c0b5;
+}
+
+.active .refer-btn-a {
+    color: #cdcdcd;
+}
+
+.tel-info {
+    position: absolute;
+    left: .28rem;
+    line-height: .2rem;
+    font-size: .12rem;
+    color: #e10404;
+}
+
+/*提交成功*/
+
+.p-tips-submit .refer {
+    padding: .2rem .15rem;
+    text-align: center;
+    font-size: .13rem;
+    color: #999;
+}
+
+.p-tips-submit .link {
+    width: 100%;
+    color: #43c0b5;
+}
+
+/*抽奖机会浮层*/
+.dialog-prize-chance {
+    position: fixed;
+    top: 38%;
+    right: 0;
+    width: 1.8rem;
+    height: .48rem;
+    z-index: 100;
+}
+.prize-chance-bg {
+    display: block;
+    width: 1.8rem;
+    height: .48rem;
+    background-size: 100%;
+}

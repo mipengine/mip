@@ -1,0 +1,78 @@
+
+
+.head {
+    position: relative;
+    z-index: 100;
+    width: 100%;
+    padding-left: .1rem;
+    height: .5rem;
+    font-size: .16rem;
+    background-color: #3bc0b6;
+    box-sizing: border-box;
+}
+
+.header-2 {
+    padding: 0 .15rem;
+    line-height: .5rem;
+    font-size: .18rem;
+    color: #fff;
+    background: #3bc0b6;
+    text-align: center;
+}
+
+.header-2 .go-back,
+.header-2 .go-index {
+    display: inline-block;
+    width: .26rem;
+    height: .26rem;
+}
+
+.head-search {
+    margin: 0 .1rem;
+    overflow: hidden;
+}
+
+.ico-logo {
+    width: .8rem;
+    height: .24rem;
+}
+
+.head-features {
+    display: none;
+    position: relative;
+    z-index: 2;
+    margin-left: -.1rem;
+    padding: 0 .1rem;
+    height: inherit;
+}
+
+.head-features .ico-features {
+    margin-top: 0;
+}
+
+.head .input-text {
+    height: .3rem;
+    padding: .06rem .12rem .05rem .3rem;
+    border-color: #58c6ba;
+    border-radius: 100px;
+    background-size: 16px;
+}
+
+.head .input-text:focus {
+    padding: .06rem .12rem .05rem .12rem;
+    background-color: #fff;
+    color: #666;
+    border-radius: 100px;
+}
+
+.head input::-webkit-input-placeholder,
+.head input::-moz-placeholder,
+.head input:-ms-input-placeholder {
+    color: #58c6ba !important;
+}
+
+.head input:focus::-webkit-input-placeholder,
+.head input:focus::-moz-placeholder,
+.head input:focus:-ms-input-placeholder {
+    color: #999 !important;
+}
