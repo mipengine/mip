@@ -12,7 +12,8 @@ define(function (require) {
     require('./utils/event-emitter');
     require('./utils/event-action');
     var CustomStorage = require('./utils/customStorage');
-    var hash = require('./hash');
+    
+    require('./hash');
 
     /* dom */
     require('./dom/css-loader');
@@ -58,7 +59,6 @@ define(function (require) {
             registerElement(name, customClass, css);
         }
     };
-    Mip.hash = hash;
 
     // Initialize viewer
     viewer.init();
