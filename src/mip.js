@@ -20,7 +20,6 @@ define(function (require) {
     require('./dom/css');
     require('./dom/dom');
 
-
     /* mip frame */
     var layout = require('./layout');
     require('./fixed-element');
@@ -32,6 +31,9 @@ define(function (require) {
     var viewer = require('./viewer');
     var performance = require('./performance');
     var templates = require('./templates');
+
+    /* mip hash */
+    var hash = require('./hash');
 
     /* builtin components */
     require('./components/mip-img');
@@ -57,6 +59,7 @@ define(function (require) {
             registerElement(name, customClass, css);
         }
     };
+    MIP.hash = hash;
 
     // Initialize viewer
     viewer.init();
