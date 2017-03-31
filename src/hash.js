@@ -10,6 +10,7 @@ define(function (require) {
      *
      * @class
      */
+    
     function Hash() {
         /**
          * get hash value of specific key
@@ -17,11 +18,10 @@ define(function (require) {
          * @param  {string} key key
          * @return {value}     [description]
          */
+        this.hashTree = this._getHashObj(window.location.hash);
         this.getHash = function (key) {
-            var curHashObj = this._getHashObj();
-            return curHashObj[key] || '';
+            return this.hashTree[key] || '';
         };
-
     }
 
     /**
@@ -29,9 +29,18 @@ define(function (require) {
      *
      * @return {Object} object of each hash
      */
-    Hash.prototype._getHashObj = function () {
-        var hashObj = {};
+    Hash.prototype.refreshHashTree = function () {
         var originalHash = window.location.hash;
+        this.hashTree = this._getHashObj(originalHash);
+    };
+
+    /**
+     * get hash object from hash
+     *
+     * @return {Object} object of each hash
+     */
+    Hash.prototype._getHashObj = function (originalHash) {
+        var hashObj = {};
         console.log('hash ' + originalHash);
         if (originalHash) {
             var hashArr = originalHash.slice(1).split('&');
