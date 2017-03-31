@@ -11,15 +11,18 @@ define(function (require) {
      * @class
      */
     function Hash() {
-    }
+        /**
+         * get hash value of specific key
+         *
+         * @param  {string} key key
+         * @return {value}     [description]
+         */
+        this.getHash = function (key) {
+            var curHashObj = this._getHashObj() || {};
+            return curHashObj[key] || '';
+        };
 
-    /**
-     * get window hash
-     * @return {string} window hash
-     */
-    Hash.prototype._getHashRaw = function () {
-    	return window.location.hash;
-    };
+    }
 
     /**
      * get hash object from hash
@@ -28,9 +31,9 @@ define(function (require) {
      */
     Hash.prototype._getHashObj = function () {
         var hashObj = {};
-        var hashRaw = this._getHashRaw();
-        if (hashRaw) {
-            var hashArr = hashRaw.slice(1).split('&');
+        var originalHash = window.location.hash;
+        if (originalHash) {
+            var hashArr = originalHash.slice(1).split('&');
             for (var i = 0; i < hashArr.length; i++) {
                 var curOne = hashArr[i];
                 var eqIdx = curOne.indexOf('=');
@@ -51,17 +54,6 @@ define(function (require) {
         }
         return hashObj;
     };
-
-    /**
-     * get hash value of specific key
-     *
-     * @param  {string} key key
-     * @return {value}     [description]
-     */
-    Hash.prototype.getHash = function (key) {
-    	var hashObj = this._getHashObj();
-        return hashObj ? hashObj[key] || '' : '';
-    };
-
+    
     return new Hash();
 });
