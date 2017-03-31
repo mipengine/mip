@@ -18,7 +18,7 @@ define(function (require) {
          * @return {value}     [description]
          */
         this.getHash = function (key) {
-            var curHashObj = this._getHashObj() || {};
+            var curHashObj = this._getHashObj();
             return curHashObj[key] || '';
         };
 
