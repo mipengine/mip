@@ -31,6 +31,11 @@ define(function (require) {
             expect(hash.getHash('word')).to.be.equal('');
         });
 
+        it('case: no key', function(){
+            window.location.hash = '=123';
+            expect(hash.getHash('')).to.be.equal('');
+        });
+
         it('case: no equal', function(){
             window.location.hash = 'word123';
             expect(hash.getHash('word')).to.be.equal('');
@@ -38,6 +43,7 @@ define(function (require) {
         });
 
         it('case: no hash', function(){
+            window.location.hash = '';
             expect(hash.getHash('word')).to.be.equal('');
         });
 

@@ -32,6 +32,7 @@ define(function (require) {
     Hash.prototype._getHashObj = function () {
         var hashObj = {};
         var originalHash = window.location.hash;
+        console.log('hash ' + originalHash);
         if (originalHash) {
             var hashArr = originalHash.slice(1).split('&');
             for (var i = 0; i < hashArr.length; i++) {
