@@ -120,6 +120,7 @@ define(function (require) {
     };
 
     function firstInviewCallback() {
+        if (this.element.querySelector('img') || this.element.querySelector('mip-i-space')) return;
         var _img = new Image();
         this.applyFillContent(_img, true);
         var ele = this.element;
