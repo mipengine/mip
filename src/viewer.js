@@ -153,7 +153,7 @@ define(function (require) {
                     return;
                 }
                 e.preventDefault();
-                if (this.parentNode.tagName === 'MIP-LINK') {
+                if (this.hasAttribute('mip-link')) {
                     var parent = this.parentNode;
                     self.sendMessage('loadiframe', {
                         'url': this.href,
