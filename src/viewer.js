@@ -153,9 +153,20 @@ define(function (require) {
                     return;
                 }
                 e.preventDefault();
-                self.sendMessage('mibm-jumplink', {
-                    'url': this.href
-                });
+                if (this.hasAttribute('mip-link')) {
+                    var parent = this.parentNode;
+                    self.sendMessage('loadiframe', {
+                        'url': this.href,
+                        'title': parent.getAttribute('title') || parent.innerText.trim().split('\n')[0],
+                        'click': parent.getAttribute('data-click'),
+                        'pageType': parent.getAttribute('pageType')
+                    });
+                }
+                else {
+                    self.sendMessage('mibm-jumplink', {
+                        'url': this.href
+                    });
+                }
             }, false); 
         }
     };
