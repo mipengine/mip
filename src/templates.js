@@ -49,7 +49,7 @@ define(function () {
             }
             return Template.prototype.isPrototypeOf(obj.prototype);
         },
-        render: function (element, data) {
+        render: function (element, data, obj) {
             var template = this.find(element);
             if (!template) {
                 return;
@@ -62,6 +62,8 @@ define(function () {
                     impl.cache(templateHTML);
                 }
 
+                data = extendFun(data);
+
                 // array
                 if (Array.isArray(data)) {
                     if (data.length === 0) {
@@ -72,6 +74,9 @@ define(function () {
                         return impl.render(templateHTML, item);
                     });
                 }
+
+                // cb
+                return obj && {element: element, html: impl.render(templateHTML, data)};
 
                 // html
                 return impl.render(templateHTML, data);
@@ -95,6 +100,17 @@ define(function () {
             }
             return template;
         },
+        extendFun: function (data) {
+            data.unescape = function() {
+                return function (text, render) {
+                    return render(text).replace(/&lt;/g, '<')
+                                       .replace(/&gt;/g, '>')
+                                       .replace(/&#x2F;/g, '/');
+                };
+            };
+
+            return data;
+        }
         inheritTemplate: function () {
             function inheritor() {
                 Template.apply(this, arguments);
