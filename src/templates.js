@@ -50,19 +50,21 @@ define(function () {
             return Template.prototype.isPrototypeOf(obj.prototype);
         },
         render: function (element, data, obj) {
-            var template = this.find(element);
+            var self = this;
+
+            var template = self.find(element);
             if (!template) {
                 return;
             }
             var type = template.getAttribute('type');
             var templateHTML = template.innerHTML;
-            return this._getTemplate(type).then(function (impl) {
+            return self._getTemplate(type).then(function (impl) {
                 if (!template[CACHED_ATTR]) {
                     template[CACHED_ATTR] = true;
                     impl.cache(templateHTML);
                 }
 
-                data = extendFun(data);
+                data = self.extendFun(data);
 
                 // array
                 if (Array.isArray(data)) {
@@ -110,7 +112,7 @@ define(function () {
             };
 
             return data;
-        }
+        },
         inheritTemplate: function () {
             function inheritor() {
                 Template.apply(this, arguments);
