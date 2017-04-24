@@ -103,11 +103,15 @@ define(function () {
             return template;
         },
         extendFun: function (data) {
-            data.unescape = function() {
+            console.log(data);
+            data.escape2Html = function() {
                 return function (text, render) {
-                    return render(text).replace(/&lt;/g, '<')
-                                       .replace(/&gt;/g, '>')
-                                       .replace(/&#x2F;/g, '/');
+                    return render(text).replace(/&lt;/ig, '<')
+                                       .replace(/&#x3D;/ig, '=')
+                                       .replace(/&quot;/ig, '"')
+                                       .replace(/&gt;/ig, '>')
+                                       .replace(/&#x2F;/ig, '/');
+                                       
                 };
             };
 
