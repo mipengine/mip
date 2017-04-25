@@ -103,12 +103,11 @@ define(function () {
             return template;
         },
         extendFun: function (data) {
-            console.log(data);
             data.escape2Html = function() {
                 return function (text, render) {
                     return render(text).replace(/&lt;/ig, '<')
-                                       .replace(/&#x3D;/ig, '=')
-                                       .replace(/&quot;/ig, '"')
+                                       // .replace(/&#x3D;/ig, '=')
+                                       // .replace(/&quot;/ig, '"')
                                        .replace(/&gt;/ig, '>')
                                        .replace(/&#x2F;/ig, '/');
                                        
