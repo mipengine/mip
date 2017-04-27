@@ -1,30 +1,66 @@
+/**
+ * @file Hash Function. Support hash get function
+ * @author Jenny_L
+ */
 define(function (require) {
     'use strict';
-    var hashObj = {};
-    var hashRaw = window.location.hash;
-    if (hashRaw) {
-        var hashArr = hashRaw.slice(1).split('&');
-        for (var i = 0; i < hashArr.length; i++) {
-            // 特殊情况：=0，a=, a==, &&, key重复
-            var hashStr = hashArr[i].split('=');
-            var hash = {
-                len: hashStr.length,
-                key: hashStr[0],
-                val: hashStr[1] || ''
-            };
-            if (hash.len === 2 && hash.key) {
-                // except special case: a==, &&, =a
-                if (hash.key in hashObj) {
-                    // special case: key already exists. Overwrite
-                    // if in development, add console.warn to see overlaped key
+
+    /**
+     * Hash class
+     *
+     * @class
+     */
+    function Hash() {
+        /**
+         * get hash value of specific key
+         *
+         * @param  {string} key key
+         * @return {value}     [description]
+         */
+        this.hashTree = this._getHashObj(window.location.hash);
+        this.get = function (key) {
+            return this.hashTree[key] || '';
+        };
+    }
+
+    /**
+     * refresh hash object
+     */
+    Hash.prototype.refreshHashTree = function () {
+        var originalHash = window.location.hash;
+        this.hashTree = this._getHashObj(originalHash);
+    };
+
+    /**
+     * get hash object from hash
+     *
+     * @param  {string} originalHash hash
+     * @return {Object} object of each hash
+     */
+    Hash.prototype._getHashObj = function (originalHash) {
+        var hashObj = {};
+        if (originalHash) {
+            var hashArr = originalHash.slice(1).split('&');
+            for (var i = 0; i < hashArr.length; i++) {
+                var curOne = hashArr[i];
+                var eqIdx = curOne.indexOf('=');
+                var key;
+                var val;
+                if (eqIdx !== -1) {
+                    key = decodeURIComponent(curOne.substring(0, eqIdx)).trim();
+                    val = decodeURIComponent(curOne.substring(eqIdx + 1)).trim();
                 }
-                hashObj[hash.key] = hash.val;
-            }
-            else {
-            	// special case: a==, &&, =a
-                // if in development, add console.warn to see illegal key and value
+                else {
+                    key = decodeURIComponent(curOne).trim();
+                    val = '';
+                }
+                if (key) {
+                    hashObj[key] = val;
+                }
             }
         }
-    }
-    return hashObj;
+        return hashObj;
+    };
+
+    return new Hash();
 });
