@@ -78,7 +78,9 @@ define(function () {
                 }
 
                 // cb
-                return obj && {element: element, html: impl.render(templateHTML, data)};
+                if (obj) {
+                    return {element: element, html: impl.render(templateHTML, data)};
+                }
 
                 // html
                 return impl.render(templateHTML, data);
@@ -103,14 +105,10 @@ define(function () {
             return template;
         },
         extendFun: function (data) {
-            data.escape2Html = function() {
+            data.escape2Html = function () {
                 return function (text, render) {
                     return render(text).replace(/&lt;/ig, '<')
-                                       // .replace(/&#x3D;/ig, '=')
-                                       // .replace(/&quot;/ig, '"')
-                                       .replace(/&gt;/ig, '>')
-                                       .replace(/&#x2F;/ig, '/');
-                                       
+                        .replace(/&gt;/ig, '>').replace(/&#x2F;/ig, '/');
                 };
             };
 
