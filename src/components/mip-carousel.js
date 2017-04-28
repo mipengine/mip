@@ -253,10 +253,7 @@ define(function (require) {
         }, false);
 
         wrapBox.addEventListener('touchend', function (event) {
-            // 如果不是图片的时候应该阻止事件
-            if (event.target.tagName.toLocaleLowerCase() !== 'img') {
-                event.preventDefault();
-            }
+            
             //  只有滑动之后才会触发
             if (!slideLock.stop) {
                 var startIdx = imgIndex;
