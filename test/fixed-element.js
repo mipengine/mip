@@ -65,8 +65,7 @@ define(function (require) {
             document.body.appendChild(elementNone);
             fixedElement.init();
 
-            expect(elementTop.style.maxHeight).to.equal('90px');
-            expect(elementBottom.style.maxHeight).to.equal('90px');
+            
             expect(elementRight.style.bottom).to.equal('20px');
             expect(elementNone.style.display).to.equal('none');
             expect(elementNone.parentNode).to.not.equal(document.body);
@@ -94,7 +93,6 @@ define(function (require) {
 
             fixedElement.init();
 
-            expect(elementTop.style.maxHeight).to.equal('90px');
             // The elementCustom will be removed.
             expect(elementCustom.parentNode).to.not.equal(document.body);
 
