@@ -3,46 +3,41 @@ define(function (require) {
     'use strict';
 
     var sleepWakeModule = require('sleepWakeModule');
+    var util = require('util');
+    var create = util.dom.create;
 
     describe('sleepWakeModule', function () {
         describe('changeStatusTestCase', function () {
             it('sleepIsTrue', function () {
-                /*var script = document.createElement('script');
-                script.type = 'application/json';
-                script.id = 'mip-sleep-wake-module';
-                script.textContent = '{"mip-custom": ".qn3a1ec398ffcdff30db1c748dadb066bd05e3ce0f32ef30e51a226ad4a7e5||#test"}';
-                document.body.appendChild(script);
-                var div = document.createElement('div');
-                div.id = 'test';
-                document.body.appendChild(div);
-                function checkSleep() {
-                    return document.querySelector('#test') === null;
-                };
                 sleepWakeModule.init();
-                //expect(sleepWakeModule._domObj['mip-custom'].length).to.equal('1');
-                expect(checkSleep()).to.be.false;*/
+                var element = create('<div id="sleep-wake-test"></div>');
+                document.body.appendChild(element);
+                var script = create('<script id="mip-sleep-wake-module" type="application/json"></script>');
+                script.textContent = '{"mip-custom": ".qn3a1ec398ffcdff30db1c748dadb066bd05e3ce0f32ef30e51a226ad4a7e5||#test"}';
+                element.appendChild(script);
+                sleepWakeModule.init();
+                expect(sleepWakeModule._domObj['mip-custom'].length).to.equal(1);
+                sleepWakeModule._initConf('||', {"mip-custom-test": ".qn3a1ec398ffcdff30db1c748dadb066bd05e3ce0f32ef30e51a226ad4a7e5||#test||.test"});
+                expect(sleepWakeModule._domObj['mip-custom-test'].length).to.equal(1);
             });
-
-            /*it('needBackReload', function () {
-                var stub1 = sinon.stub(util.platform, 'getOsVersion', function () {
-                    return '9.1.1';
-                });
-                var stub2 = sinon.stub(util.platform, 'isSafari', function () {
-                    return true;
-                });
-                viewer.patchForIframe();
-                stub1.restore();
-                stub2.restore();
-
-                var eve = document.createEvent("HTMLEvents");
-                eve.initEvent("pageshow", true, true);
-                window.dispatchEvent(eve);
-            });*/
         });
 
-        /*it('wake', function () {
+        it('wake', function () {
+            sleepWakeModule.init();
             sleepWakeModule.wake('mytest');
             expect(sleepWakeModule._isAlreadyWake['mytest']).to.equal(1);
+        });
+
+        it('_stateChange', function () {
+            expect(sleepWakeModule._stateChange()).to.equal(undefined);
+            expect(sleepWakeModule._stateChange('mytest')).to.equal(undefined);
+            var element = create('<div id="test"></div>');
+            document.body.appendChild(element);
+            var script = create('<script id="mip-sleep-wake-module" type="application/json"></script>');
+            script.textContent = '{"mip-custom": ".qn3a1ec398ffcdff30db1c748dadb066bd05e3ce0f32ef30e51a226ad4a7e5||#test"}';
+            document.body.appendChild(script);
+            sleepWakeModule.init();
+            sleepWakeModule._stateChange('mip-custom');
         });
 
         it('close', function () {
@@ -53,6 +48,6 @@ define(function (require) {
         it('reset', function () {
             sleepWakeModule.reset('mytest');
             expect(sleepWakeModule._isAlreadyWake['mytest']).to.equal(0);
-        });*/
+        });
     });
 });

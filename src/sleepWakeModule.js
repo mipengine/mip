@@ -100,6 +100,9 @@ define(function (require) {
             return;
         }
         var domList = this._domObj[key];
+        if (!domList) {
+            return;
+        }
         var len = domList.length;
         if (len < 1) {
             return;
