@@ -139,32 +139,36 @@ define(function (require) {
                 AsyncStorage.request();
 
                 var server = sinon.fakeServer.create();
-                server.respondWith("POST", "/",
+                server.respondWith("POST", "/req1",
                 [200, {
                     "Content-Type": "application/json",
                     "Access-Control-Allow-origin": "*",
                     "Access-Control-Allow-Methods": "GET, POST, OPTIONS"
                 }, '{ok:1}']);
                 AsyncStorage.request({
-                    url: '/',
+                    url: '/req1',
                     method: 'POST',
                     body: 'content',
                     headers: {
                         'Access-Control-Request-Headers': 'X-PINGOTHER',
                     },
                     success: function (data) {
-                        done(data);
+                        done();
                     },
                     error: function (err) {
-                        done(err);
+                        done();
                     }
                 });
-                server.respond();
                 setTimeout(function () {
-                    done();
-                }, 1000);
+                    server.respond();
+                }, 100);
             });
             it('request2', function (done) {
+                var server = sinon.fakeServer.create();
+                server.respondWith("GET", "http://baidu.com",
+                [200, {
+                    "Content-Type": "application/json"
+                }, '{}']);
                 AsyncStorage.request({
                     url: 'http://baidu.com',
                     mode: 'cors',
@@ -174,24 +178,24 @@ define(function (require) {
                         'Access-Control-Request-Headers': 'X-PINGOTHER',
                     },
                     success: function (data) {
-                        done(data);
+                        done();
                     },
                     error: function (err) {
-                        done(err);
+                        done();
                     }
                 });
                 setTimeout(function () {
-                    done();
-                }, 1000);
+                    server.respond();
+                }, 200);
             });
             it('request3', function (done) {
                 var server = sinon.fakeServer.create();
-                server.respondWith("POST", "/",
+                server.respondWith("POST", "/req3",
                 [200, {
                     "Content-Type": "application/json"
                 }, '{}']);
                 AsyncStorage.request({
-                    url: '/a',
+                    url: '/req3',
                     method: 'POST',
                     success: function (data) {
                         done();
@@ -200,10 +204,9 @@ define(function (require) {
                         done();
                     }
                 });
-                server.respond();
                 setTimeout(function () {
-                    done();
-                }, 1000);
+                    server.respond();
+                }, 300);
             });
         });
 
