@@ -152,13 +152,16 @@ define(function (require) {
                 var scrollHeight = viewport.getScrollHeight();
                 if (scrollTop > 0 && scrollTop < scrollHeight) {
                     if (lastScrollTop < scrollTop) {
+                        // down
                         direct = 1;
                     } else if (lastScrollTop > scrollTop) {
+                        // up
                         direct = -1;
                     }
                     dist = lastScrollTop - scrollTop;
                     lastScrollTop = scrollTop;
                     if (dist > 100 || dist < -100) {
+                        // 转向判断，暂时没用到，后续升级需要
                         lastDirect = dist/Math.abs(dist);
                         self.sendMessage('mipscroll', { 'direct': direct, 'dist': dist});
                     }
