@@ -136,6 +136,36 @@ define(function (require) {
         },
 
         /**
+         * Listerning viewport scroll
+         * @private
+         */
+        _viewportScroll: function () {
+            var self = this;
+            var lastScrollTop = 0;
+            var lastDirect = 0;
+            viewport.on('scroll', function () {
+                var scrollTop = viewport.getScrollTop();
+                var direct = 0;
+                var dist = 0;
+                var scrollHeight = viewport.getScrollHeight();
+                if (scrollTop > 0 && scrollTop < scrollHeight) {
+                    if (lastScrollTop < scrollTop) {
+                        direct = 1;
+                    } else if (lastScrollTop > scrollTop) {
+                        direct = -1;
+                    }
+                    dist = lastScrollTop - scrollTop;
+                    lastScrollTop = scrollTop;
+                    if (dist > 100 || dist < -100) {
+                        lastDirect = dist/Math.abs(dist);
+                        self.sendMessage('mipscroll', { 'direct': direct, 'dist': dist});
+                    }
+                }
+                
+            });
+        },
+
+        /**
          * Agent all the links in iframe.
          * @private
          */ 
