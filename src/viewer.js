@@ -2,6 +2,7 @@ define(function (require) {
     'use strict';
 
     var util = require('./util');
+    var viewport = require('./viewport');
     var Gesture = util.Gesture;
     var css = util.css;
     var platform = util.platform;
@@ -38,6 +39,7 @@ define(function (require) {
                 this.patchForIframe();
                 // proxy links
                 this._proxyLink();
+                this._viewportScroll();
                 // Tell parent page the current page is loaded.
                 this.sendMessage('mippageload', {
                     time: Date.now(),
