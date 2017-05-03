@@ -120,7 +120,8 @@ define(function (require) {
     };
 
     function firstInviewCallback() {
-        if(this.element.querySelector('img') && this.element.querySelector('img').length > 0 ){
+        var ele = this.element.querySelector('img');
+        if(ele && ele.length > 0){
             return;
         }
         var _img = new Image();
