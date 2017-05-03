@@ -16,7 +16,7 @@ define(function (require) {
         var confCon = '';
         try {
             var moduleConf = document.querySelector('#mip-sleep-wake-module');
-            confCon = JSON.parse(moduleConf.textContent.toString());
+            confCon = JSON.parse(moduleConf.textContent);
         }
         catch (e) {
             console.warn('json is illegal'); // eslint-disable-line
@@ -49,12 +49,13 @@ define(function (require) {
             this._domObj[key] = [];
             for (var i = 0; i < len; i++) {
                 try {
+                    var idx = i;
                     var sleepDom = document.querySelector(valList[i]);
                     var domInfo = {
                         par: sleepDom.parentNode,
-                        self: sleepDom,
-                        cln: ''
+                        cln: 'mip-sleep-wake-textarea-' + key + '-' + idx
                     }
+                    sleepDom.setAttribute('data-cln', domInfo.cln);
                     this._domObj[key].push(domInfo);
                 }
                 catch (e) {
@@ -118,9 +119,7 @@ define(function (require) {
                     continue;
                 }
                 if (!self) {
-                    self = sleepDom.self;
-                    sleepDom.cln = 'mip-sleep-wake-textarea-' + key + '-' + idx;
-                    self && self.setAttribute('data-cln', sleepDom.cln);
+                    continue;
                 }
                 tmpTextArea.textContent = self.outerHTML;
                 tmpTextArea.style.display = 'none';

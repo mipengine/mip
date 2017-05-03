@@ -7,19 +7,17 @@ define(function (require) {
     var create = util.dom.create;
 
     describe('sleepWakeModule', function () {
-        describe('changeStatusTestCase', function () {
-            it('sleepIsTrue', function () {
-                sleepWakeModule.init();
-                var element = create('<div id="sleep-wake-test"></div>');
-                document.body.appendChild(element);
-                var script = create('<script id="mip-sleep-wake-module" type="application/json"></script>');
-                script.textContent = '{"mip-custom": ".qn3a1ec398ffcdff30db1c748dadb066bd05e3ce0f32ef30e51a226ad4a7e5||#test"}';
-                element.appendChild(script);
-                sleepWakeModule.init();
-                expect(sleepWakeModule._domObj['mip-custom'].length).to.equal(1);
-                sleepWakeModule._initConf('||', {"mip-custom-test": ".qn3a1ec398ffcdff30db1c748dadb066bd05e3ce0f32ef30e51a226ad4a7e5||#test||.test"});
-                expect(sleepWakeModule._domObj['mip-custom-test'].length).to.equal(1);
-            });
+        it('sleepIsTrue', function () {
+            sleepWakeModule.init();
+            var element = create('<div id="sleep-wake-test"></div>');
+            document.body.appendChild(element);
+            var script = create('<script id="mip-sleep-wake-module" type="application/json"></script>');
+            script.textContent = '{"mip-custom": ".qn3a1ec398ffcdff30db1c748dadb066bd05e3ce0f32ef30e51a226ad4a7e5||#test"}';
+            element.appendChild(script);
+            sleepWakeModule.init();
+            expect(sleepWakeModule._domObj['mip-custom'].length).to.equal(1);
+            sleepWakeModule._initConf('||', {"mip-custom-test": ".qn3a1ec398ffcdff30db1c748dadb066bd05e3ce0f32ef30e51a226ad4a7e5||#test||.test"});
+            expect(sleepWakeModule._domObj['mip-custom-test'].length).to.equal(1);
         });
 
         it('wake', function () {
