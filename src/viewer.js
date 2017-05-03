@@ -154,7 +154,8 @@ define(function (require) {
                     if (lastScrollTop < scrollTop) {
                         // down
                         direct = 1;
-                    } else if (lastScrollTop > scrollTop) {
+                    }
+                    else if (lastScrollTop > scrollTop) {
                         // up
                         direct = -1;
                     }
