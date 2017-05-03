@@ -120,6 +120,10 @@ define(function (require) {
     };
 
     function firstInviewCallback() {
+        var ele = this.element.querySelector('img');
+        if(ele && ele.length > 0){
+            return;
+        }
         var _img = new Image();
         this.applyFillContent(_img, true);
         var ele = this.element;
