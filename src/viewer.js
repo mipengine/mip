@@ -142,14 +142,24 @@ define(function (require) {
          * @private
          */
         _viewportScroll: function () {
+
             var self = this;
-            var lastScrollTop = 0;
+            var dist = 0;
+            var direct = 0;
+            var scrollTop = viewport.getScrollTop();
             var lastDirect = 0;
-            viewport.on('scroll', function () {
-                var scrollTop = viewport.getScrollTop();
-                var direct = 0;
-                var dist = 0;
-                var scrollHeight = viewport.getScrollHeight();
+            var scrollHeight = viewport.getScrollHeight();
+            var lastScrollTop = 0;
+            var wrapper = (util.platform.needSpecialScroll ? document.body : win);
+
+            wrapper.addEventListener('touchstart',function(event){
+                scrollTop = viewport.getScrollTop();
+                scrollHeight = viewport.getScrollHeight();
+            });
+
+            function pagemove () {
+                scrollTop = viewport.getScrollTop();
+                scrollHeight = viewport.getScrollHeight();
                 if (scrollTop > 0 && scrollTop < scrollHeight) {
                     if (lastScrollTop < scrollTop) {
                         // down
@@ -161,13 +171,18 @@ define(function (require) {
                     }
                     dist = lastScrollTop - scrollTop;
                     lastScrollTop = scrollTop;
-                    if (dist > 100 || dist < -100) {
+                    if (dist > 10 || dist < -10) {
                         // 转向判断，暂时没用到，后续升级需要
                         lastDirect = dist/Math.abs(dist);
                         self.sendMessage('mipscroll', { 'direct': direct, 'dist': dist});
                     }
                 }
-                
+            }
+            wrapper.addEventListener('touchmove',function(event){
+                pagemove();
+            });
+            wrapper.addEventListener('touchend',function(event){
+                pagemove();
             });
         },
 
