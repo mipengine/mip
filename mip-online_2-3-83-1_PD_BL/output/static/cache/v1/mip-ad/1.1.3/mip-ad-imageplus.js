@@ -1,1 +1,0 @@
-define("mip-ad/mip-ad-imageplus",["require"],function(e){function t(e,t){e.remove()}return{render:t}});

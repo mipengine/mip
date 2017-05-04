@@ -1,1 +1,0 @@
-mip-ad-video{height:200px;width:100%;position:relative}mip-ad-video video{width:100%;height:100%;display:block;background-color:#000}mip-ad-video span{position:absolute;display:block;top:50px;right:30px;color:#FF0;font-size:16px}mip-ad-video span:before{content:'离广告结束还有: '}mip-ad-video span:after{content:' 秒'}
