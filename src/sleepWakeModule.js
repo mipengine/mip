@@ -19,8 +19,6 @@ define(function (require) {
             confCon = JSON.parse(moduleConf.textContent);
         }
         catch (e) {
-            console.warn('json is illegal'); // eslint-disable-line
-            console.warn(e); // eslint-disable-line
             return;
         }
         if (!confCon) {
