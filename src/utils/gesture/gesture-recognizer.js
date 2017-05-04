@@ -398,7 +398,7 @@ define(function (require) {
             if (data.eventState === 'start') {
                 clearTimeout(this.holdTimer);
             }
-            if (data.eventState !== 'end') {
+            if (data.eventState !== 'end' && data.eventState !== 'click') {
                 return STATE_WAIT;
             }
             var holdTime = this.preTime && (data.timeStamp - this.preTime);

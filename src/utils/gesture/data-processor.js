@@ -36,6 +36,13 @@ define(function () {
          */
         process: function (event, preventX, preventY) {
             var data = {};
+            if (event.type == 'click') {
+                event.touches = [];
+                event.touches[0] = {
+                    clientX : event.clientX,
+                    clientY : event.clientY
+                };
+            }
             var now = Date.now();
             var touches = event.touches.length ? event.touches : event.changedTouches;
             if (event.type === 'touchstart') {
@@ -44,6 +51,11 @@ define(function () {
                 this.startData = data;
                 this.preData = null;
             }
+            else if (event.type === 'click') {
+                this.startCenter = this.getCenter(touches);
+                this.startTime = now - 1;
+                this.startData = data;
+                this.preData = null;
             var startCenter = this.startCenter;
             var center = this.getCenter(touches);
             var deltaTime = data.deltaTime = now - this.startTime;

@@ -5,7 +5,7 @@ define(function (require) {
     var Recognizer = require('./gesture/gesture-recognizer');
     var dataProcessor = require('./gesture/data-processor');
     var fn = require('./fn');
-
+    var platform = require('utils/platform');
 
     /**
      * Handle touch event.
@@ -64,6 +64,7 @@ define(function (require) {
         this._boundTouchEvent = touchHandler.bind(this);
 
         listenersHelp(element, 'touchstart touchmove touchend touchcancel', this._boundTouchEvent);
+        platform.isPc() ? listenersHelp(element, 'click', this._boundTouchEvent) : '';
 
         /**
          * For storing the recoginzers.
@@ -93,6 +94,7 @@ define(function (require) {
     proto.cleanup = function () {
         var element = this._element;
         listenersHelp(element, 'touchstart touchmove touchend touchcancel', this._boundTouchEvent, false);
+        platform.isPc() ? listenersHelp(element, 'click', this._boundTouchEvent) : '';
         this.off();
     };
 

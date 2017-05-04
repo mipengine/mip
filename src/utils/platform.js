@@ -15,6 +15,7 @@ define(function (require) {
         // system
         this.isIos = false;
         this.isAndroid = false;
+        this.isPc = false;
         // browser
         this.isWechatApp = false;
         this.isBaiduApp = false;
@@ -42,7 +43,8 @@ define(function (require) {
             this.isIos = true;
         } else if (/Android/i.test(this._ua())) {
             this.isAndroid = true;
-        }
+        } else if (!/Mobile/i.test(this._ua())) {
+            this.isPc = true;
     };
 
     /**
