@@ -36,7 +36,6 @@ define(function (require) {
     var viewer = require('./viewer');
     var performance = require('./performance');
     var templates = require('./templates');
-    var hash = require('./hash');
 
     /* mip hash */
     var hash = require('./hash');
