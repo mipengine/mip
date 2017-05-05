@@ -15,7 +15,7 @@ define(function (require) {
         // init sessionStorage status
         this.ssEnabled = ssEnabled();
 
-        this.pageId = createPageUrlId(window.location.href.split('#').shift());
+        this.pageId = window.location.href.split('#').shift();
 
         var hash = window.location.hash;
 
@@ -47,6 +47,14 @@ define(function (require) {
     }
 
     /**
+     * refresh hash object
+     */
+    Hash.prototype.refreshHashTree = function () {
+        var originalHash = window.location.hash;
+        this.hashTree = this._getHashObj(originalHash);
+    };
+
+    /**
      * get hash object from hash
      *
      * @param  {string} originalHash hash
@@ -58,9 +66,6 @@ define(function (require) {
             var hashVal;
             var tmpList = originalHash.split('#');
             hashVal = tmpList.join('&');
-            if (!hashVal) {
-                return;
-            }
             var hashArr = hashVal.split('&');
             var haLen = hashArr.length;
             for (var i = 0; i < haLen; i++) {
@@ -111,32 +116,6 @@ define(function (require) {
         } catch (e) {
             return false;
         }  
-    }
-
-    /**
-     * create the page id 
-     * Use GUID，Globally Unique Identifier  xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-     * @param  {string} url
-     * @return {value}  uuid  default:mip
-     */
-    function createPageUrlId(url) {
-        return url;
-        var s = [];
-        if (!url) {
-            return 'mip';
-        }
-        var hexDigits = encodeURIComponent(url);
-        for (var i = 0; i < 36; i++) {
-            s[i] = hexDigits.substr(i, 1);
-        }
-        // bits 12-15 of the time_hi_and_version field to 0010
-        s[14] = "4";
-        // bits 6-7 of the clock_seq_hi_and_reserved to 01
-        s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1);
-        s[8] = s[13] = s[18] = s[23] = "_";
-      
-        var uuid = s.join("");
-        return uuid;
     }
 
     return new Hash();
