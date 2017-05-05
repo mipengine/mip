@@ -391,6 +391,10 @@ define(function (require) {
          * @override
          */
         process: function (data) {
+            if (data && data.eventState === 'click') {
+                this._data = data;
+                return STATE_END;
+            }
             if (data.deltaTime > this.time || data.distance > this.moveRange || data.pointers.length > 1) {
                 this.reset();
                 return this.hold();
@@ -398,7 +402,7 @@ define(function (require) {
             if (data.eventState === 'start') {
                 clearTimeout(this.holdTimer);
             }
-            if (data.eventState !== 'end' && data.eventState !== 'click') {
+            if (data.eventState !== 'end') {
                 return STATE_WAIT;
             }
             var holdTime = this.preTime && (data.timeStamp - this.preTime);
@@ -512,6 +516,9 @@ define(function (require) {
          * @override
          */
         process: function (data) {
+            if (data.eventState === 'click') {
+                return;
+            }
             if (data.pointers.length > 1 || data.deltaTime > this.duration) {
                 return STATE_HOLD;
             }

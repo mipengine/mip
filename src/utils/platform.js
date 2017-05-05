@@ -43,8 +43,11 @@ define(function (require) {
             this.isIos = true;
         } else if (/Android/i.test(this._ua())) {
             this.isAndroid = true;
-        } else if (!/Mobile/i.test(this._ua())) {
+        }
+        // computer or mobile device
+        if (!/Mobile/i.test(this._ua())) {
             this.isPc = true;
+        }
     };
 
     /**

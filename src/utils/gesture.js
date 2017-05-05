@@ -41,6 +41,16 @@ define(function (require) {
     }
 
     /**
+     * Define event according platform.
+     * In PC, tap Event are tirggered by click, and in mobile phone use touch event
+     * 
+     * @return {string} event names
+     */
+    function getPlatformEvent() {
+        return platform.isPc() ? 'click' : 'touchstart touchmove touchend touchcancel';
+    }
+
+    /**
      * Gesture
      * @class
      * @param {HTMLElement} element Element that need gestures
@@ -63,8 +73,8 @@ define(function (require) {
          */
         this._boundTouchEvent = touchHandler.bind(this);
 
-        listenersHelp(element, 'touchstart touchmove touchend touchcancel', this._boundTouchEvent);
-        platform.isPc() ? listenersHelp(element, 'click', this._boundTouchEvent) : '';
+
+        listenersHelp(element, getPlatformEvent(), this._boundTouchEvent);
 
         /**
          * For storing the recoginzers.
@@ -93,8 +103,7 @@ define(function (require) {
      */
     proto.cleanup = function () {
         var element = this._element;
-        listenersHelp(element, 'touchstart touchmove touchend touchcancel', this._boundTouchEvent, false);
-        platform.isPc() ? listenersHelp(element, 'click', this._boundTouchEvent) : '';
+        listenersHelp(element, getPlatformEvent(), this._boundTouchEvent, false);
         this.off();
     };
 
