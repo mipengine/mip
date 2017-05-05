@@ -6,6 +6,7 @@
  */
 define(function (require) {
     var customElem = require('customElement').create();
+    var util = require('util');
     var carouselParas = {
         boxClass: 'mip-carousel-container',
         wrapBoxClass: 'mip-carousel-wrapper',
@@ -126,8 +127,6 @@ define(function (require) {
         // 图片间隔时长默认为4000
         var isDefer = ele.getAttribute('defer');
 
-        var isDeferNum = (!!isDefer) ? isDefer : 4000;
-
         // 分页显示器
         var showPageNum = ele.hasAttribute('indicator');
 
@@ -206,8 +205,7 @@ define(function (require) {
 
 
         // 初始渲染时应该改变位置到第一张图
-        var initPostion = -eleWidth;
-        wrapBox.style.webkitTransform = 'translate3d(' + initPostion + 'px, 0, 0)';
+        wrapBox.style.webkitTransform = 'translate3d(' + (-eleWidth) + 'px, 0, 0)';
 
         // 绑定wrapBox的手势事件
         // 手势移动的距离
@@ -219,8 +217,7 @@ define(function (require) {
             var touch = event.targetTouches[0];
             startPos = {
                 x: touch.pageX,
-                y: touch.pageY,
-                time: (+new Date)
+                y: touch.pageY
             };
             isScrolling = 0; // 这个参数判断是垂直滚动还是水平滚动
 
@@ -279,27 +276,28 @@ define(function (require) {
 
 
         // 自动轮播
-        if (!!isAutoPlay) {
+        if (isAutoPlay) {
             autoPlay();
         }
 
         // 指示器
-        if (!!showPageNum) {
+        if (showPageNum) {
             indicator();
         }
 
         // 控制按钮
-        if (!!showBtn) {
+        if (showBtn) {
             cratebutton();
         }
 
         // 是否关联indicator
-        if (!!indicatorId) {
+        if (indicatorId) {
             indicatorDot(indicatorId);
         }
 
         // 自动轮播
         function autoPlay() {
+            var isDeferNum = isDefer ? isDefer : 4000;
             moveInterval = setInterval(function () {
                 move(wrapBox, imgIndex, imgIndex + 1);
             }, isDeferNum);
@@ -431,22 +429,30 @@ define(function (require) {
             if (dotLen === childNum - 2) {
                 for (var i = 0; i < dotLen; i++) {
                     dotItems[i].count = i;
-                    dotItems[i].addEventListener('click', function (event) {
-                        var count = this.count;
-                        clearInterval(moveInterval);
-                        move(wrapBox, imgIndex, count + 1);
-                        if (isAutoPlay) {
-                            autoPlay();
-                        }
-                    });
+                    addEvent(dotItems[i]);
                 }
             }
             else {
                 // 若个数不匹配，则隐藏掉indicator
-                indicDom.style.display = 'none';
+                util.css(indicDom, {
+                    display: 'none'
+                });
                 dotItems = [];
             }
         }
+
+        // 添加事件监听
+        function addEvent(ele) {
+            ele.addEventListener('click', function (event) {
+                var count = this.count;
+                clearInterval(moveInterval);
+                move(wrapBox, imgIndex, count + 1);
+                if (isAutoPlay) {
+                    autoPlay();
+                }
+            });
+        }
+
         // 横竖屏兼容处理
         window.addEventListener('resize', function () {
             eleWidth = ele.clientWidth;
