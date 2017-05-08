@@ -42,8 +42,6 @@ define(function (require) {
             var element = create('<mip-fixed type="left" top="20"></mip-fixed>');
             document.body.appendChild(element);
             fixedElement.init();
-            console.log(element.style.position);
-            console.log(fixedElement._count);
 
             expect(element.style.position).to.equal('absolute');
             expect(fixedElement._count).to.equal(1);
