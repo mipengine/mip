@@ -1,8 +1,10 @@
 
 define(function (require) {
     'use strict';
-
+    window.location.hash = 'word=1123';
     var hash = require('hash');
+
+    window.location.hash = '';
 
     describe('hash', function () {
         it('case: normal', function(){
