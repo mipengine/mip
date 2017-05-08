@@ -1,8 +1,9 @@
 define(function (require) {
     'use strict';
 
-    var Gesture = require('utils/gesture');
     var platform = require('utils/platform');
+
+    var Gesture = require('utils/gesture');
     var domEvent = require('dom/event');
     var docBody = document.body;
 
@@ -14,20 +15,16 @@ define(function (require) {
         }];
         return evt;
     }
-    var gesture = new Gesture(docBody);
-    var data = {};
+    
     function dispatch(name, clientX, clientY) {
         docBody.dispatchEvent(mockTouchEvent(name, clientX, clientY));
     }
-    function changeUa(ua) {
-        var uaStub = sinon.stub(platform, '_ua');
-            uaStub.returns(ua);
-        platform.start();
-        uaStub.restore();
-    }
-
+    
+    
+    var data = {};
     describe('gesture', function () {
         it('on & off', function () {
+            var gesture = new Gesture(docBody);
             data.touchstart = 0;
             gesture.on('touchstart', function () {
                 data.touchstart ++;
@@ -44,6 +41,7 @@ define(function (require) {
         });
 
         it('tap', function () {
+            var gesture = new Gesture(docBody);
             var tapCheck = false;
             gesture.on('tap', function () {
                 tapCheck = true;
@@ -57,7 +55,7 @@ define(function (require) {
 
         it('tap & doubletap', function (done) {
             data.tap = data.doubletap = 0;
-            var gesture = new Gesture(document.body);
+            var gesture = new Gesture(docBody);
             gesture.on('tap', function () {
                 data.tap ++;
             });
@@ -78,6 +76,7 @@ define(function (require) {
         });
 
         it('swipe', function () {
+            var gesture = new Gesture(docBody);
             data.swipe = data.swipeother = data.swipeleft = 0;
             gesture.on('swipe', function () {
                 data.swipe ++;
@@ -116,6 +115,7 @@ define(function (require) {
         });
 
         it('cleanup', function () {
+            var gesture = new Gesture(docBody);
             data.cleanup = 0;
 
             gesture.on('touchstart', function () {
@@ -146,17 +146,44 @@ define(function (require) {
 
             expect(data.preventDefault).to.equal(1);
         });
+
+        describe('function: getPlatformEvent',function () {
+            before(function (){
+                var stub1 = sinon.stub(platform, '_ua');
+                stub1.returns('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36');
+                platform.start();
+                stub1.restore();
+            });
+            after(function (){
+                var stub1 = sinon.stub(platform, '_ua');
+                stub1.returns('Mozilla/5.0 (Linux; Android 5.0.2; vivo X5M Build/LRX22G) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/38.0.0.0 Mobile Safari/537.36');
+                platform.start();
+                stub1.restore();
+            });
+            it('tapInPc', function () {
+                var gesture = new Gesture(docBody);
+                var tapCheck = false;
+                gesture.on('tap', function () {
+                    tapCheck = true;
+                });
+
+                dispatch('touchstart');
+                dispatch('touchend');
+
+                expect(tapCheck).to.be.false;
+            });
+            it('clickInPc', function () {
+                var gesture = new Gesture(docBody);
+                var clickCheck = false;
+                gesture.on('click', function () {
+                    clickCheck = true;
+                });
+
+                dispatch('click');
+
+                expect(clickCheck).to.be.true;
+            });
+        });
     });
-    describe('function: getPlatformEvent',function () {
-        // it('ua: pc', function(){
-        //     // change ua into a PC ua
-        //     changeUA('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36');
-        //     expect(getPlatformEvent()).to.equal('click');
-        // });
-        // it('ua: mobile', function(){
-        //     // change ua into a mobile ua
-        //     changeUA('Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1');
-        //     expect(getPlatformEvent()).to.equal('touchstart touchmove touchend touchcancel');
-        // });
-    });
+
 });

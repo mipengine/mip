@@ -120,7 +120,7 @@ define(function (require) {
                     eventState: 'click'
                 };
                 var processResult = tap.process(data);
-                expect(processResult).to.be.equal(undefined);
+                expect(processResult).to.be.undefined;
             });
 
         });

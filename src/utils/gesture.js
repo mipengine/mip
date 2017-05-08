@@ -41,7 +41,7 @@ define(function (require) {
     }
 
     /**
-     * Define event according platform.
+     * Define event according platform event, return curresponding event names.
      * In PC, tap Event are tirggered by click, and in mobile phone use touch event
      * 
      * @return {string} event names
@@ -72,7 +72,6 @@ define(function (require) {
          * @type {Function}
          */
         this._boundTouchEvent = touchHandler.bind(this);
-
 
         listenersHelp(element, getPlatformEvent(), this._boundTouchEvent);
 

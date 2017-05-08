@@ -20,7 +20,10 @@ define(function (require) {
     }
     function resetPlatformAfter() {
     	resetPlatform();
+    	var stub1 = sinon.stub(platform, '_ua');
+    	stub1.returns('Mozilla/5.0 (Linux; Android 5.0.2; vivo X5M Build/LRX22G) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/38.0.0.0 Mobile Safari/537.36');
     	platform.start();
+    	stub1.restore();
     }
 
     describe('platform', function () {
