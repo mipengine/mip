@@ -60,7 +60,23 @@ define('fixed-element', ['require', 'util', 'layout'], function (require) {
      * Initializition of current fixed element processor.
      */
     FixedElement.prototype.init = function () {
-        var mipFixedElements = document.querySelectorAll('mip-fixed');
+
+        var semiFiexdElements = document.querySelectorAll('mip-semi-fixed');
+        for (var index = 0; index < semiFiexdElements.length; index++) {
+            var semiFixedDom = semiFiexdElements[index].querySelector('div[mip-semi-fixed-container]');
+            if(semiFixedDom.hasAttribute('id')) {
+                var semiFixedDomId = semiFixedDom.id;
+            } else {
+                var semiFixedDomId = 'mip-semi-fixed-' + Math.random().toString(36).slice(2);
+                semiFixedDom.id = semiFixedDomId;
+            }
+            var node = semiFixedDom.cloneNode(true);
+            node.setAttribute('mip-semi-fixed-fixedSatus', '');
+            node.id = semiFixedDomId;
+            semiFiexdElements[index].appendChild(node);
+        }
+
+        var mipFixedElements = document.querySelectorAll('mip-fixed,div[mip-semi-fixed-fixedSatus]');
         this.setFixedElement(mipFixedElements);
         var fixedLen = this._fixedElements.length;
         var hasParentPage = window.parent !== window;
@@ -90,10 +106,9 @@ define('fixed-element', ['require', 'util', 'layout'], function (require) {
             // check invalid element and delete from document
             var bottom = layout.parseLength(ele.getAttribute('bottom'));
             var top = layout.parseLength(ele.getAttribute('top'));
-            if (fType === 'left' && !top && !bottom
-                || this._currentFixedCount >= this._maxFixedCount
-                || fType === 'gototop'
-                && ele.firstElementChild.tagName.toLowerCase() !== 'mip-gototop') {
+            if (fType === 'left' && !top && !bottom || this._currentFixedCount >= this._maxFixedCount
+                || fType === 'gototop' && ele.firstElementChild.tagName.toLowerCase() !== 'mip-gototop'
+                || ele.tagName.toLowerCase() === 'div' && !ele.hasAttribute('mip-semi-fixed-container')) {
                 ele.parentElement.removeChild(ele);
                 continue;
             }

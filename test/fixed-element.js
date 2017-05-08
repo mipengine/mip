@@ -9,7 +9,7 @@ define(function (require) {
     var FixedElement = require('fixed-element').constructor;
     var fixedElement;
     var reset = function () {
-        var elements = document.querySelectorAll('mip-fixed');
+        var elements = document.querySelectorAll('mip-fixed,div[mip-semi-fixed-fixedSatus]');
         for (var i = 0; i < elements.length; i++) {
             elements[i].parentNode && elements[i].parentNode.removeChild(elements[i]);
         }
@@ -42,6 +42,8 @@ define(function (require) {
             var element = create('<mip-fixed type="left" top="20"></mip-fixed>');
             document.body.appendChild(element);
             fixedElement.init();
+            console.log(element.style.position);
+            console.log(fixedElement._count);
 
             expect(element.style.position).to.equal('absolute');
             expect(fixedElement._count).to.equal(1);
@@ -102,6 +104,41 @@ define(function (require) {
 
             // Remove the style element in case element.js's tester to be failed.
             document.head.removeChild(style);
+        });
+
+        it('move mip-semi-fixed dom to fixedLayer', function () {
+            var node = create([
+                '<mip-semi-fixed id="semi-fixed" threshold="0" fixedClassNames="fixedStyle">',
+                    '<div mip-semi-fixed-container id="mip-semi-fixed-fixed-container" class="absoluteStyle">',
+                        'This is the mip-semi-fixed dom',
+                    '</div>',
+                '</mip-semi-fixed>'
+            ].join(''));
+            document.body.appendChild(node);
+
+            var scrollNode = node.querySelector('div[mip-semi-fixed-container]');
+            scrollNode.setAttribute('mip-semi-fixed-fixedSatus', '');
+
+            // 自动生成 id
+            var element = create([
+                '<mip-semi-fixed id="mip-semi-fixed" threshold="0" fixedClassNames="fixedStyle">',
+                    '<div mip-semi-fixed-container class="absoluteStyle">',
+                        'This is the mip-semi-fixed dom',
+                    '</div>',
+                '</mip-semi-fixed>'
+            ].join(''));
+            document.body.appendChild(element);
+
+            var scrollElem = element.querySelector('div[mip-semi-fixed-container]');
+            scrollElem.setAttribute('mip-semi-fixed-fixedSatus', '');
+
+            fixedElement.init();
+
+            var fixedNode = fixedElement._fixedLayer.querySelector('#mip-semi-fixed-fixed-container');
+            expect(scrollNode).to.equal(fixedNode);
+
+            var fixedElem = fixedElement._fixedLayer.querySelector('#' + scrollElem.id);
+            expect(scrollElem).to.equal(fixedElem);
         });
 
         it('showFixedLayer', function () {
