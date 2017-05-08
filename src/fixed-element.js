@@ -1,4 +1,10 @@
-define('fixed-element', ['require', 'util', 'layout'], function(require) {
+/**
+ *
+ * @file fixed element
+ * @author xx
+ * @modify wupeng10@baidu.com 2017-03-27 upgrade mip fixed, The only limitation is ten fixed elements.
+ */
+define('fixed-element', ['require', 'util', 'layout'], function (require) {
     'use strict';
 
     var util = require('util');
@@ -8,6 +14,7 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
 
     /**
      * The fixed element processor.
+     *
      * @class
      */
     function FixedElement() {
@@ -21,18 +28,19 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
          * @private
          * @type {number}
          */
-        this._count = 0;
+        this._maxFixedCount = 10;
 
         /**
          * @private
-         * @type {Object}
+         * @type {number}
          */
-        this._fixedTypes = {
-            'top': 1,
-            'bottom': 1,
-            'gototop': 1,
-            'other': 1
-        };
+        this._currentFixedCount = 0;
+
+        /**
+         * @private
+         * @type {number}
+         */
+        this._count = 0;
 
         /**
          * Whether the platform is android and uc browser.
@@ -70,13 +78,25 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
 
     /**
      * Process some fixed elements.
-     * @param {Array.<MIPElement>} fixedElements
+     *
+     * @param {Array.<MIPElement>} fixedElements fixed elements
      */
     FixedElement.prototype.setFixedElement = function (fixedElements) {
         var fixedEle = {};
         var fixedTypeCount = {};
         for (var i = 0; i < fixedElements.length; i++) {
             var ele = fixedElements[i];
+            var fType = ele.getAttribute('type');
+            // check invalid element and delete from document
+            var bottom = layout.parseLength(ele.getAttribute('bottom'));
+            var top = layout.parseLength(ele.getAttribute('top'));
+            if (fType === 'left' && !top && !bottom
+                || this._currentFixedCount >= this._maxFixedCount
+                || fType === 'gototop'
+                && ele.firstElementChild.tagName.toLowerCase() !== 'mip-gototop') {
+                ele.parentElement.removeChild(ele);
+                continue;
+            }
             // Calculate z-index based on the declared z-index and DOM position.
             css(ele, {
                 'z-index': 10000 - i
@@ -87,33 +107,21 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
                     position: 'absolute'
                 });
             }
-            var fType = ele.getAttribute('type');
-            var transfType = (fType == 'right' || fType == 'left') ? 'other': fType;
-            if (transfType === 'gototop' && ele.firstElementChild.tagName.toLowerCase() !== 'mip-gototop') {
-                continue;
-            }
-            if (this._fixedTypes[transfType] && this._fixedTypes[transfType] < 2) {
-                this._fixedTypes[transfType] += 1;
-                this.setFixedElementRule(ele, fType);
-                if (this._fixedTypes[transfType] < 2) {
-                    this._count--;
-                    continue;
-                }
-                var eleId = 'Fixed' + (this._count++);
-                fixedEle = {
-                    id: eleId,
-                    element: fixedElements[i]
-                };
-                fixedEle.element.setAttribute('mipdata-fixedIdx', eleId);
-                this._fixedElements.push(fixedEle);
-            } else {
-                ele.parentElement.removeChild(ele);
-            }
+            this._currentFixedCount++;
+            this.setFixedElementRule(ele, fType);
+            var eleId = 'Fixed' + (this._count++);
+            fixedEle = {
+                id: eleId,
+                element: fixedElements[i]
+            };
+            fixedEle.element.setAttribute('mipdata-fixedIdx', eleId);
+            this._fixedElements.push(fixedEle);
         }
     };
 
     /**
      * Create the fixed layer of current object if it does not exsit and return it.
+     *
      * @return {Element}
      */
     FixedElement.prototype.getFixedLayer = function () {
@@ -154,8 +162,9 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
 
     /**
      * Move a fixed element to the fixed layer.
-     * @param {MIPElement} fixedEle
-     * @param {string} idx
+     *
+     * @param {MIPElement} fixedEle fixedEle
+     * @param {string} idx idx
      */
     FixedElement.prototype.moveToFixedLayer = function (fixedEle, idx) {
         var element = fixedEle.element;
@@ -188,7 +197,9 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
         var fixedSelectors = [];
         for (var i = 0; i < stylesheets.length; i++) {
             var stylesheet = stylesheets[i];
-            if (stylesheet.disabled || !stylesheet.ownerNode || stylesheet.ownerNode.tagName != 'STYLE' || stylesheet.ownerNode.hasAttribute('mip-extension')) {
+            if (stylesheet.disabled || !stylesheet.ownerNode
+                || stylesheet.ownerNode.tagName != 'STYLE'
+                || stylesheet.ownerNode.hasAttribute('mip-extension')) {
                 continue;
             }
             this._findFixedSelectors(stylesheet.cssRules);
@@ -204,7 +215,7 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
             var cssRule = cssRules[i];
             var rType = cssRule.type;
             if (rType == 1) {
-                /* CSSStyleRule */
+                // CSSStyleRule
                 if (cssRule.selectorText != '*' && cssRule.style.position == 'fixed') {
                     try {
                         var fixedSelector = cssRule.selectorText;
@@ -218,10 +229,10 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
                     }
                 }
             } else if (rType == 4) {
-                /* CSSMediaRule */
+                // CSSMediaRule
                 this._findFixedSelectors(cssRule.cssRules);
             } else if (rType == 12) {
-                /* CSSSupportsRule */
+                // CSSSupportsRule
                 this._findFixedSelectors(cssRule.cssRules);
             }
         }
@@ -229,20 +240,21 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
 
     /**
      * Set styles of a fixed element with type.
-     * @param {MIPElement} fixedEle
+     *
+     * @param {MIPElement} fixedEle fixedEle
      * @param {string} type Layout type of the fixedEle.
      */
     FixedElement.prototype.setFixedElementRule = function (fixedEle, type) {
         switch (type) {
-            case "top":
-            case "bottom":
-                fixedEle.style.maxHeight = '90px';
+            case 'top':
                 break;
-            case "right":
-            case "left":
+            case 'bottom':
+                break;
+            case 'right':
                 this.setStyle(fixedEle);
-                fixedEle.style.maxHeight = '25%';
-                fixedEle.style.maxWidth = '10%';
+                break;
+            case 'left':
+                this.setStyle(fixedEle);
                 break;
             case 'gototop':
                 fixedEle.style.bottom = '90px';
@@ -255,7 +267,8 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
 
     /**
      * Set styles of a fixed element.
-     * @param {MIPElement} fixedEle
+     *
+     * @param {MIPElement} fixedEle fixedEle
      */
     FixedElement.prototype.setStyle = function (fixedEle) {
         var bottom = layout.parseLength(fixedEle.getAttribute('bottom'));
@@ -268,19 +281,15 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
             fixedEle.style.top = top;
             return;
         }
-        if (!top && !bottom) {
-            fixedEle.parentElement.removeChild(fixedEle);
-            // It will not be counted if the elements's type is non-standard.
-            this._fixedTypes.other -= 1;
-        }
     };
 
     /**
      * Show fixed layer
-     * @param {HTMLElement} layer
+     *
+     * @param {HTMLElement} layer layer
      */
-    FixedElement.prototype.showFixedLayer = function(layer) {
-        if(layer) {
+    FixedElement.prototype.showFixedLayer = function (layer) {
+        if (layer) {
             css(layer, {
                 display: 'block'
             });
@@ -289,10 +298,11 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
 
     /**
      * Hide fixed layer
-     * @param {HTMLElement} layer
+     *
+     * @param {HTMLElement} layer layer
      */
-    FixedElement.prototype.hideFixedLayer = function(layer) {
-        if(layer) {
+    FixedElement.prototype.hideFixedLayer = function (layer) {
+        if (layer) {
             css(layer, {
                 display: 'none'
             });
@@ -301,4 +311,3 @@ define('fixed-element', ['require', 'util', 'layout'], function(require) {
 
     return new FixedElement();
 });
-

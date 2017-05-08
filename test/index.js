@@ -9,6 +9,7 @@ var TEST_FILES = Object.keys(window.__karma__.files).filter(isTestFile);
  * 依赖配置
  */
 var paths = pathMap(TEST_FILES);
+paths.naboo = '/base/deps/naboo';
 require.config({
     baseUrl: '/base/src',
     paths: paths

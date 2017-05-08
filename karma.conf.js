@@ -38,10 +38,12 @@ module.exports = function(config) {
             'deps/promise.js',
             'deps/document-register-element.max.js',
             'deps/esl.js',
-            'deps/esl_config.js',
             'deps/zepto.js',
             'test/index.js', {
                 pattern: 'src/**/*.js',
+                included: false
+            }, {
+                pattern: 'deps/**/*.js',
                 included: false
             }, {
                 pattern: 'test/**/*.js',
