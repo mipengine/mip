@@ -61,22 +61,7 @@ define('fixed-element', ['require', 'util', 'layout'], function (require) {
      */
     FixedElement.prototype.init = function () {
 
-        var semiFiexdElements = document.querySelectorAll('mip-semi-fixed');
-        for (var index = 0; index < semiFiexdElements.length; index++) {
-            var semiFixedDom = semiFiexdElements[index].querySelector('div[mip-semi-fixed-container]');
-            if(semiFixedDom.hasAttribute('id')) {
-                var semiFixedDomId = semiFixedDom.id;
-            } else {
-                var semiFixedDomId = 'mip-semi-fixed-' + Math.random().toString(36).slice(2);
-                semiFixedDom.id = semiFixedDomId;
-            }
-            var node = semiFixedDom.cloneNode(true);
-            node.setAttribute('mip-semi-fixed-fixedSatus', '');
-            node.id = semiFixedDomId;
-            semiFiexdElements[index].appendChild(node);
-        }
-
-        var mipFixedElements = document.querySelectorAll('mip-fixed,div[mip-semi-fixed-fixedSatus]');
+        var mipFixedElements = document.querySelectorAll('mip-fixed, mip-semi-fixed');
         this.setFixedElement(mipFixedElements);
         var fixedLen = this._fixedElements.length;
         var hasParentPage = window.parent !== window;
@@ -108,10 +93,17 @@ define('fixed-element', ['require', 'util', 'layout'], function (require) {
             var top = layout.parseLength(ele.getAttribute('top'));
             if (fType === 'left' && !top && !bottom || this._currentFixedCount >= this._maxFixedCount
                 || fType === 'gototop' && ele.firstElementChild.tagName.toLowerCase() !== 'mip-gototop'
-                || ele.tagName.toLowerCase() === 'div' && !ele.hasAttribute('mip-semi-fixed-container')) {
+                || ele.tagName.toLowerCase() !== 'mip-semi-fixed' && ele.tagName.toLowerCase() !== 'mip-fixed') {
                 ele.parentElement.removeChild(ele);
                 continue;
             }
+
+            // mip-semi-fixed 特殊处理，复制不移动
+            if (ele.tagName.toLowerCase() === 'mip-semi-fixed') {
+                var node = ele.cloneNode(true);
+                ele.parentNode.insertBefore(node, ele);
+            }
+
             // Calculate z-index based on the declared z-index and DOM position.
             css(ele, {
                 'z-index': 10000 - i
