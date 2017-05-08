@@ -12,6 +12,10 @@ define(function (require) {
     require('./utils/event-emitter');
     require('./utils/event-action');
     var CustomStorage = require('./utils/customStorage');
+    var sleepWakeModule = require('./sleepWakeModule');
+    
+    // Initialize sleepWakeModule
+    sleepWakeModule.init();
 
     /* dom */
     require('./dom/css-loader');
@@ -22,6 +26,7 @@ define(function (require) {
 
     /* mip frame */
     var layout = require('./layout');
+
     require('./fixed-element');
     var viewport = require('./viewport');
     require('./customElement');
