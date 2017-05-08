@@ -35,18 +35,17 @@ define(function (require) {
     }
 
     /**
-     * Judge system, iOS, android
+     * Judge system, personal computer or mobile, iOS or android
      *
      */
     Platform.prototype._matchOs = function () {
-        if (/iPhone|iPad|iPod/i.test(this._ua())) {
+        // computer or mobile device
+        if (!/Mobile/i.test(this._ua())) {            
+            this.isPc = true;
+        } else if (/iPhone|iPad|iPod/i.test(this._ua())) {
             this.isIos = true;
         } else if (/Android/i.test(this._ua())) {
             this.isAndroid = true;
-        }
-        // computer or mobile device
-        if (!/Mobile/i.test(this._ua())) {
-            this.isPc = true;
         }
     };
 

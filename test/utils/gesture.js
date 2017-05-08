@@ -2,6 +2,7 @@ define(function (require) {
     'use strict';
 
     var Gesture = require('utils/gesture');
+    var platform = require('utils/platform');
     var domEvent = require('dom/event');
     var docBody = document.body;
 
@@ -17,6 +18,12 @@ define(function (require) {
     var data = {};
     function dispatch(name, clientX, clientY) {
         docBody.dispatchEvent(mockTouchEvent(name, clientX, clientY));
+    }
+    function changeUa(ua) {
+        var uaStub = sinon.stub(platform, '_ua');
+            uaStub.returns(ua);
+        platform.start();
+        uaStub.restore();
     }
 
     describe('gesture', function () {
@@ -139,6 +146,17 @@ define(function (require) {
 
             expect(data.preventDefault).to.equal(1);
         });
-
+    });
+    describe('function: getPlatformEvent',function () {
+        // it('ua: pc', function(){
+        //     // change ua into a PC ua
+        //     changeUA('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36');
+        //     expect(getPlatformEvent()).to.equal('click');
+        // });
+        // it('ua: mobile', function(){
+        //     // change ua into a mobile ua
+        //     changeUA('Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1');
+        //     expect(getPlatformEvent()).to.equal('touchstart touchmove touchend touchcancel');
+        // });
     });
 });
