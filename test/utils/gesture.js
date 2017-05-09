@@ -19,8 +19,27 @@ define(function (require) {
     function dispatch(name, clientX, clientY) {
         docBody.dispatchEvent(mockTouchEvent(name, clientX, clientY));
     }
-    
-    
+
+    // 重置Platform里的各项属性为FALSE
+    function resetPlatform() {
+        for(var key in platform) {
+            if(platform.hasOwnProperty(key) && typeof platform[key] == 'function') {
+                platform[key] = function(){
+                    return false;
+                }
+            }
+        };
+    }
+
+    function changeUa (ua) {
+        resetPlatform();
+        var stub = sinon.stub(platform, '_ua', function() {
+            return ua;
+        });
+        platform.start();
+        stub.restore();
+    }    
+
     var data = {};
     describe('gesture', function () {
         it('on & off', function () {
@@ -149,16 +168,10 @@ define(function (require) {
 
         describe('function: getPlatformEvent',function () {
             before(function (){
-                var stub1 = sinon.stub(platform, '_ua');
-                stub1.returns('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36');
-                platform.start();
-                stub1.restore();
+                changeUa('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36');
             });
             after(function (){
-                var stub1 = sinon.stub(platform, '_ua');
-                stub1.returns('Mozilla/5.0 (Linux; Android 5.0.2; vivo X5M Build/LRX22G) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/38.0.0.0 Mobile Safari/537.36');
-                platform.start();
-                stub1.restore();
+                changeUa('Mozilla/5.0 (Linux; Android 5.0.2; vivo X5M Build/LRX22G) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/38.0.0.0 Mobile Safari/537.36');
             });
             it('tapInPc', function () {
                 var gesture = new Gesture(docBody);
