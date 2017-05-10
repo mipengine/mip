@@ -51,7 +51,7 @@ define(function (require) {
             };
             base.recognize(data);
             expect(base.emit).to.have.been.calledWith(data);
-            
+
             base.setState('hold');
             base.recognize({
                 eventState: 'move'
@@ -104,6 +104,25 @@ define(function (require) {
             swipe.setState('start');
             swipe.recognize(data);
             expect(swipe.isState('end')).to.be.true;
+        });
+        describe('gesture/recognizerClick', function () {
+            it('tapProcessClick', function () {
+                var tap = new TapRecognizer(mockGesture);
+                var data = {
+                    eventState: 'click'
+                };
+                var processResult = tap.process(data);
+                expect(processResult).to.be.equal(4);
+            });
+            it('swipeProcessClick', function () {
+                var tap = new SwipeRecognizer(mockGesture);
+                var data = {
+                    eventState: 'click'
+                };
+                var processResult = tap.process(data);
+                expect(processResult).to.be.undefined;
+            });
+
         });
     });
 });

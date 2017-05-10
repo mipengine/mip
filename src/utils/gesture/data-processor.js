@@ -36,50 +36,55 @@ define(function () {
          */
         process: function (event, preventX, preventY) {
             var data = {};
-            var now = Date.now();
-            var touches = event.touches.length ? event.touches : event.changedTouches;
-            if (event.type === 'touchstart') {
-                this.startCenter = this.getCenter(touches);
-                this.startTime = now;
-                this.startData = data;
-                this.preData = null;
-            }
-            var startCenter = this.startCenter;
-            var center = this.getCenter(touches);
-            var deltaTime = data.deltaTime = now - this.startTime;
-
-            data.pointers = touches;
-
-            data.x = center.x;
-            data.y = center.y;
-
-            var deltaX = data.deltaX = center.x - startCenter.x;
-            var deltaY = data.deltaY = center.y - startCenter.y;
-
-            data.velocityX = deltaX / deltaTime || 0;
-            data.velocityY = deltaY / deltaTime || 0;
-            data.velocity = max(abs(data.velocityX), abs(data.velocityY));
-            data.angle = this.getAngle(startCenter, center);
-            data.distance = this.getDistance(startCenter, center);
-            data.direction = this.getDirection(deltaX, deltaY);
-            data.eventState = event.type.replace('touch', '');
-            data.timeStamp = now;
-
-            if (this.preData) {
-                var instTime = data.instantDeltaTime = now - this.preData.timeStamp;
-                var instX = data.instantVelocityX = (data.x - this.preData.x) / instTime || 0;
-                var instY = data.instantVelocityY = (data.y - this.preData.y) / instTime || 0;
-                if (data.eventState === 'move' && (preventX || preventY)) {
-                    var curDirection = abs(instX) > abs(instY);
-                    if ((preventX && curDirection) || (preventY && !curDirection)) {
-                        event.preventDefault();
-                    }
-                }
+            if (event.type == 'click') {
+                // click event do not need to calculate movement
+                // neither speed nor direction
+                data.eventState = 'click';
             } else {
-                data.instantDeltaTime = data.instantVelocityX = data.instantVelocityY = 0;
-            }
+                var now = Date.now();
+                var touches = event.touches.length ? event.touches : event.changedTouches;
+                if (event.type === 'touchstart') {
+                    this.startCenter = this.getCenter(touches);
+                    this.startTime = now;
+                    this.startData = data;
+                    this.preData = null;
+                }
+                var startCenter = this.startCenter;
+                var center = this.getCenter(touches);
+                var deltaTime = data.deltaTime = now - this.startTime;
 
-            this.preData = data;
+                data.pointers = touches;
+
+                data.x = center.x;
+                data.y = center.y;
+
+                var deltaX = data.deltaX = center.x - startCenter.x;
+                var deltaY = data.deltaY = center.y - startCenter.y;
+
+                data.velocityX = deltaX / deltaTime || 0;
+                data.velocityY = deltaY / deltaTime || 0;
+                data.velocity = max(abs(data.velocityX), abs(data.velocityY));
+                data.angle = this.getAngle(startCenter, center);
+                data.distance = this.getDistance(startCenter, center);
+                data.direction = this.getDirection(deltaX, deltaY);
+                data.eventState = event.type.replace('touch', '');
+                data.timeStamp = now;
+
+                if (this.preData) {
+                    var instTime = data.instantDeltaTime = now - this.preData.timeStamp;
+                    var instX = data.instantVelocityX = (data.x - this.preData.x) / instTime || 0;
+                    var instY = data.instantVelocityY = (data.y - this.preData.y) / instTime || 0;
+                    if (data.eventState === 'move' && (preventX || preventY)) {
+                        var curDirection = abs(instX) > abs(instY);
+                        if ((preventX && curDirection) || (preventY && !curDirection)) {
+                            event.preventDefault();
+                        }
+                    }
+                } else {
+                    data.instantDeltaTime = data.instantVelocityX = data.instantVelocityY = 0;
+                }
+                this.preData = data;
+            }
 
             data.event = event;
             return Object.freeze(data);

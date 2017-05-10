@@ -9,8 +9,28 @@ define(function (require) {
         platform.start();
         stub.restore();
     }
+    function resetPlatform() {
+    	for(var key in platform) {
+    		if(platform.hasOwnProperty(key) && typeof platform[key] == 'function') {
+    			platform[key] = function(){
+    				return false;
+    			}
+    		}
+    	};
+    }
+    function resetPlatformAfter() {
+    	resetPlatform();
+    	var stub1 = sinon.stub(platform, '_ua');
+    	stub1.returns('Mozilla/5.0 (Linux; Android 5.0.2; vivo X5M Build/LRX22G) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/38.0.0.0 Mobile Safari/537.36');
+    	platform.start();
+    	stub1.restore();
+    }
 
     describe('platform', function () {
+    	// 执行下一个spec前，重置plaftorm的各项参数。以防前后影响
+    	beforeEach(resetPlatform);
+    	// 执行所有spec后，重置plaftorm的各项参数。以防影响后面的其他文件
+    	after(resetPlatformAfter);
     	describe('osVersion', function () {
 			it('android version', function () {
 				var stub1 = sinon.stub(platform, '_ua');
@@ -137,6 +157,17 @@ define(function (require) {
     		it('needSpecialScroll', function () {
     			expect(platform.needSpecialScroll).to.be.true;
 	    	});
+    	});
+
+    	describe('system', function() {
+    		it('personalComputer', function () {
+    			changeUa('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36');
+    			expect(platform.isPc()).to.be.true;
+    		});
+    		it('mobilePhone', function () {
+    			changeUa('Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1');    			
+    			expect(platform.isPc()).to.be.false;
+    		});
     	});
     });
 });

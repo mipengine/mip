@@ -8,6 +8,8 @@ define(function (require) {
     var customElement = require('customElement');
     var util = require('util');
 
+    util.platform.isPc = function () {return false;};
+
     viewer.init();
 
     // Create a custom element for element's tester.
