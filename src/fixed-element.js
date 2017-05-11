@@ -100,6 +100,9 @@ define('fixed-element', ['require', 'util', 'layout'], function (require) {
 
             // mip-semi-fixed 特殊处理，复制不移动
             if (ele.tagName.toLowerCase() === 'mip-semi-fixed') {
+                if(!ele.id) {
+                    ele.id = 'mip-semi-fixed' + i;
+                }
                 var node = ele.cloneNode(true);
                 ele.parentNode.insertBefore(node, ele);
             }
