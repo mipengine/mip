@@ -60,7 +60,8 @@ define('fixed-element', ['require', 'util', 'layout'], function (require) {
      * Initializition of current fixed element processor.
      */
     FixedElement.prototype.init = function () {
-        var mipFixedElements = document.querySelectorAll('mip-fixed');
+
+        var mipFixedElements = document.querySelectorAll('mip-fixed, mip-semi-fixed');
         this.setFixedElement(mipFixedElements);
         var fixedLen = this._fixedElements.length;
         var hasParentPage = window.parent !== window;
@@ -90,13 +91,22 @@ define('fixed-element', ['require', 'util', 'layout'], function (require) {
             // check invalid element and delete from document
             var bottom = layout.parseLength(ele.getAttribute('bottom'));
             var top = layout.parseLength(ele.getAttribute('top'));
-            if (fType === 'left' && !top && !bottom
-                || this._currentFixedCount >= this._maxFixedCount
-                || fType === 'gototop'
-                && ele.firstElementChild.tagName.toLowerCase() !== 'mip-gototop') {
+            if (fType === 'left' && !top && !bottom || this._currentFixedCount >= this._maxFixedCount
+                || fType === 'gototop' && ele.firstElementChild.tagName.toLowerCase() !== 'mip-gototop'
+                || ele.tagName.toLowerCase() !== 'mip-semi-fixed' && ele.tagName.toLowerCase() !== 'mip-fixed') {
                 ele.parentElement.removeChild(ele);
                 continue;
             }
+
+            // mip-semi-fixed 特殊处理，复制不移动
+            if (ele.tagName.toLowerCase() === 'mip-semi-fixed') {
+                if(!ele.id) {
+                    ele.id = 'mip-semi-fixed' + i;
+                }
+                var node = ele.cloneNode(true);
+                ele.parentNode.insertBefore(node, ele);
+            }
+
             // Calculate z-index based on the declared z-index and DOM position.
             css(ele, {
                 'z-index': 10000 - i

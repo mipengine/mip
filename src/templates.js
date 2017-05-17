@@ -105,12 +105,19 @@ define(function () {
             return template;
         },
         extendFun: function (data) {
-            data.escape2Html = function () {
-                return function (text, render) {
-                    return render(text).replace(/&lt;/ig, '<')
-                        .replace(/&gt;/ig, '>').replace(/&#x2F;/ig, '/');
+            try {
+                data.escape2Html = function () {
+                    return function (text, render) {
+                        return render(text).replace(/&lt;/ig, '<')
+                            .replace(/&gt;/ig, '>').replace(/&#x2F;/ig, '/');
+                    };
                 };
-            };
+
+                data.isSF = function () {
+                    return this.urltype === 'sf';
+                };
+            } catch(e) {
+            }
 
             return data;
         },
