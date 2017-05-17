@@ -34,7 +34,7 @@ define(function (require) {
             }
             window.location.hash = curHash;
         }
-        
+
         /**
          * get hash value of specific key
          *
@@ -107,15 +107,18 @@ define(function (require) {
 
     /**
      * test ss is available
+     *
+     * @return {boolean} ssEnabled
      */
     function ssEnabled() {
         try {
             window.sessionStorage.setItem('_t', 1);
             window.sessionStorage.removeItem('_t');
             return true;
-        } catch (e) {
+        }
+        catch (e) {
             return false;
-        }  
+        }
     }
 
     return new Hash();

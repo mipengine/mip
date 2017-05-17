@@ -213,6 +213,12 @@ define(function (require) {
                         'pageType': parent.getAttribute('pageType')
                     });
                 }
+                else if (this.getAttribute('data-history')) {
+                    self.sendMessage('loadshell', {
+                        'url': this.href,
+                        'data-history': this.getAttribute('data-history') || 'push'
+                    });
+                }
                 else {
                     self.sendMessage('mibm-jumplink', {
                         'url': this.href
