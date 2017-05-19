@@ -213,6 +213,77 @@ define(function (require) {
         // 手势移动的距离
         var diffNum = 0;
 
+
+
+// ---------------------------start---------------------------------------kang_gai----
+  
+              
+        //mousemove
+        function Unbundling(event){
+            if (startPos.x === event.clientX && startPos.y === event.clientY) {
+                     return false;
+                 }else{
+                     event.preventDefault();
+                     endPos = {
+                            x: event.clientX - startPos.x,
+                            y: event.clientY - startPos.y
+                        };
+                        
+                        diffNum = event.clientX - prvGestureClientx;
+
+                        // 外框同步运动
+                        translateFn(diffNum + curGestureClientx, '0ms', wrapBox);
+
+                        // 滚动手势锁 正在滑动
+                        slideLock.stop = 0;                          
+                 }
+                
+        }
+    //先触发mousedown 再触发mousemove
+    wrapBox.addEventListener('mousedown', function (event) {          
+            startPos = {
+                x: event.clientX,
+                y: event.clientY,
+                time: (+new Date)
+            };
+            isScrolling = 0; // 这个参数判断是垂直滚动还是水平滚动
+            // 获取手势点击位置
+            prvGestureClientx = event.clientX;
+            clearInterval(moveInterval);
+            
+             wrapBox.addEventListener('mousemove', Unbundling, false);
+        
+    }, false);
+
+    //mouseup 
+    wrapBox.addEventListener('mouseup', function (event) {
+
+                //解绑mousemove
+                wrapBox.removeEventListener('mousemove', Unbundling, false);
+                //  只有滑动之后才会触发
+                if (!slideLock.stop) {
+                    var startIdx = imgIndex;
+                    var endIdx = startIdx;
+                    // 如果大于设定阈值
+                    if (Math.abs(diffNum) > eleWidth * carouselParas.threshold) {
+                        endIdx = (diffNum > 0) ? imgIndex - 1 : imgIndex + 1;
+                    }
+                    move(wrapBox, startIdx, endIdx);
+                    slideLock.stop = 1;
+                }
+
+                // 如果存在自动则调用自动轮播
+                if (isAutoPlay) {
+                    clearInterval(moveInterval);
+                    autoPlay();
+                }
+    
+
+     }, false);
+    
+// ---------------------------end---------------------------------------kang_gai----     
+
+
         // 绑定手势点击事件
         wrapBox.addEventListener('touchstart', function (event) {
             // 以下兼容横屏时禁止左右滑动
@@ -253,10 +324,7 @@ define(function (require) {
         }, false);
 
         wrapBox.addEventListener('touchend', function (event) {
-            // 如果不是图片的时候应该阻止事件
-            if (event.target.tagName.toLocaleLowerCase() !== 'img') {
-                event.preventDefault();
-            }
+            
             //  只有滑动之后才会触发
             if (!slideLock.stop) {
                 var startIdx = imgIndex;
