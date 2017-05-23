@@ -67,9 +67,23 @@ define('fixed-element', ['require', 'util', 'layout'], function (require) {
         var hasParentPage = window.parent !== window;
         if ((platform.isIos()) && hasParentPage) {
             var fixedLayer = this.getFixedLayer();
-
             for (var i = 0; i < fixedLen; i++) {
-                this.moveToFixedLayer(this._fixedElements[i], i);
+                var fixedElem = this._fixedElements[i];
+                this.moveToFixedLayer(fixedElem, i);
+
+                if (fixedElem.element.tagName.toLowerCase() === 'mip-semi-fixed') {
+                    var ele = fixedElem.element;
+                    var parentNode = ele.parentNode;
+                    var nextSbiling = ele.nextSbiling;
+                    var node = ele.cloneNode(true);
+
+                    if (nextSbiling) {
+                        parentNode.insertBefore(node, nextSbiling);
+                    }
+                    else {
+                        parentNode.appendChild(node);
+                    }
+                }
             }
         }
         if (hasParentPage) {
@@ -100,11 +114,10 @@ define('fixed-element', ['require', 'util', 'layout'], function (require) {
 
             // mip-semi-fixed 特殊处理，复制不移动
             if (ele.tagName.toLowerCase() === 'mip-semi-fixed') {
-                if(!ele.id) {
+                if (!ele.id) {
                     ele.id = 'mip-semi-fixed' + i;
                 }
-                var node = ele.cloneNode(true);
-                ele.parentNode.insertBefore(node, ele);
+                fType = 'semi-fixed';
             }
 
             // Calculate z-index based on the declared z-index and DOM position.
@@ -140,8 +153,8 @@ define('fixed-element', ['require', 'util', 'layout'], function (require) {
         }
         this._fixedLayer = document.createElement('body');
         this._fixedLayer.className = 'mip-fixedlayer';
-        var height = (this._isAndroidUc) ? '100%': 0;
-        var width = (this._isAndroidUc) ? '100%': 0;
+        var height = (this._isAndroidUc) ? '100%' : 0;
+        var width = (this._isAndroidUc) ? '100%' : 0;
         css(this._fixedLayer, {
             'position': 'absolute',
             'top': 0,
@@ -178,7 +191,7 @@ define('fixed-element', ['require', 'util', 'layout'], function (require) {
      */
     FixedElement.prototype.moveToFixedLayer = function (fixedEle, idx) {
         var element = fixedEle.element;
-        if (element.parentElement == this._fixedLayer) {
+        if (element.parentElement === this._fixedLayer) {
             return;
         }
         if (!fixedEle.placeholder) {
@@ -208,7 +221,7 @@ define('fixed-element', ['require', 'util', 'layout'], function (require) {
         for (var i = 0; i < stylesheets.length; i++) {
             var stylesheet = stylesheets[i];
             if (stylesheet.disabled || !stylesheet.ownerNode
-                || stylesheet.ownerNode.tagName != 'STYLE'
+                || stylesheet.ownerNode.tagName !== 'STYLE'
                 || stylesheet.ownerNode.hasAttribute('mip-extension')) {
                 continue;
             }
@@ -224,9 +237,9 @@ define('fixed-element', ['require', 'util', 'layout'], function (require) {
         for (var i = 0; i < cssRules.length; i++) {
             var cssRule = cssRules[i];
             var rType = cssRule.type;
-            if (rType == 1) {
+            if (rType === 1) {
                 // CSSStyleRule
-                if (cssRule.selectorText != '*' && cssRule.style.position == 'fixed') {
+                if (cssRule.selectorText !== '*' && cssRule.style.position === 'fixed') {
                     try {
                         var fixedSelector = cssRule.selectorText;
                         var elements = document.querySelectorAll(fixedSelector);
@@ -234,14 +247,17 @@ define('fixed-element', ['require', 'util', 'layout'], function (require) {
                             // remove ?
                             elements[j].parentElement.removeChild(elements[j]);
                         }
-                    } catch(e) {
+                    }
+                    catch (e) {
                         console.warn('Cannot find the selector of custom fixed elements');
                     }
                 }
-            } else if (rType == 4) {
+            }
+            else if (rType === 4) {
                 // CSSMediaRule
                 this._findFixedSelectors(cssRule.cssRules);
-            } else if (rType == 12) {
+            }
+            else if (rType === 12) {
                 // CSSSupportsRule
                 this._findFixedSelectors(cssRule.cssRules);
             }
@@ -265,6 +281,8 @@ define('fixed-element', ['require', 'util', 'layout'], function (require) {
                 break;
             case 'left':
                 this.setStyle(fixedEle);
+                break;
+            case 'semi-fixed':
                 break;
             case 'gototop':
                 fixedEle.style.bottom = '90px';
