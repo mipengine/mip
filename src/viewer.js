@@ -8,6 +8,7 @@ define(function (require) {
     var platform = util.platform;
     var EventAction = require('./utils/event-action');
     var EventEmitter = require('./utils/event-emitter');
+    var fn = require('./utils/fn');
 
     /**
      * Save window.
@@ -117,9 +118,7 @@ define(function (require) {
          * Setup event-action of viewer. To handle `on="tap:xxx"`.
          */
         setupEventAction: function () {
-            var hasTouch = ('ontouchstart' in window 
-                || (window.navigator['maxTouchPoints'] !== undefined && window.navigator['maxTouchPoints'] > 0) 
-                || window['DocumentTouch'] !== undefined);
+            var hasTouch = fn.hasTouch();
             var eventAction = this.eventAction = new EventAction();
             if (hasTouch) {
                 // In mobile phone, bind Gesture-tap which listen to touchstart/touchend event
@@ -133,7 +132,6 @@ define(function (require) {
                 }, false);
             }  
         },
-
 
         /**
          * Event binding callback.
