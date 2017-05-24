@@ -205,7 +205,7 @@ define(function (require) {
          _proxyLink: function () {
             var self = this;
             var regexp = /^http/;
-            util.event.delegate(document.body, 'a', 'click', function (e) {
+            util.event.delegate(document, 'a', 'click', function (e) {
                 if (!this.href) {
                     return;
                 }
