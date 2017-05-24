@@ -127,10 +127,10 @@ define(function (require) {
                 });
             } else {
                 // In personal computer, bind click event, then trigger event. eg. `on=tap:sidebar.open`, when click, trigger open() function of #sidebar
-                document.addEventListener('click', function(e) {
+                document.addEventListener('click', function (e) {
                     eventAction.execute('tap', event.target, event);
                 }, false);
-            }  
+            }
         },
 
         /**
