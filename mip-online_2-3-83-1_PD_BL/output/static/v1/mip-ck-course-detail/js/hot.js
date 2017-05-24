@@ -1,1 +1,0 @@
-define("mip-ck-course-detail/js/hot",["require","zepto","./util","./tpl-data"],function(t){function i(){var t=o.get("courseInfo"),i=t.courseid,s=t.sid,r=n.domain+"/wap/mip/course/hot";e.ajax({url:r,data:{courseId:i,sid:s},dataType:"jsonp",success:function(t,i,n){t=t||{};var o=t.html||"";if(o)e("#dir_box").append(o)}})}var e=t("zepto"),n=t("./util"),o=t("./tpl-data");return i});
