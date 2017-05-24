@@ -2,6 +2,7 @@ define(function (require) {
     'use strict';
 
     var util = require('./util');
+    var viewport = require('./viewport');
     var Gesture = util.Gesture;
     var css = util.css;
     var platform = util.platform;
@@ -38,6 +39,7 @@ define(function (require) {
                 this.patchForIframe();
                 // proxy links
                 this._proxyLink();
+                this._viewportScroll();
                 // Tell parent page the current page is loaded.
                 this.sendMessage('mippageload', {
                     time: Date.now(),
@@ -136,13 +138,62 @@ define(function (require) {
         },
 
         /**
+         * Listerning viewport scroll
+         * @private
+         */
+        _viewportScroll: function () {
+
+            var self = this;
+            var dist = 0;
+            var direct = 0;
+            var scrollTop = viewport.getScrollTop();
+            var lastDirect = 0;
+            var scrollHeight = viewport.getScrollHeight();
+            var lastScrollTop = 0;
+            var wrapper = (util.platform.needSpecialScroll ? document.body : win);
+
+            wrapper.addEventListener('touchstart',function(event){
+                scrollTop = viewport.getScrollTop();
+                scrollHeight = viewport.getScrollHeight();
+            });
+
+            function pagemove () {
+                scrollTop = viewport.getScrollTop();
+                scrollHeight = viewport.getScrollHeight();
+                if (scrollTop > 0 && scrollTop < scrollHeight) {
+                    if (lastScrollTop < scrollTop) {
+                        // down
+                        direct = 1;
+                    }
+                    else if (lastScrollTop > scrollTop) {
+                        // up
+                        direct = -1;
+                    }
+                    dist = lastScrollTop - scrollTop;
+                    lastScrollTop = scrollTop;
+                    if (dist > 10 || dist < -10) {
+                        // 转向判断，暂时没用到，后续升级需要
+                        lastDirect = dist/Math.abs(dist);
+                        self.sendMessage('mipscroll', { 'direct': direct, 'dist': dist});
+                    }
+                }
+            }
+            wrapper.addEventListener('touchmove',function(event){
+                pagemove();
+            });
+            wrapper.addEventListener('touchend',function(event){
+                pagemove();
+            });
+        },
+
+        /**
          * Agent all the links in iframe.
          * @private
          */ 
          _proxyLink: function () {
             var self = this;
             var regexp = /^http/;
-            util.event.delegate(document.body, 'a', 'click', function (e) {
+            util.event.delegate(document, 'a', 'click', function (e) {
                 if (!this.href) {
                     return;
                 }

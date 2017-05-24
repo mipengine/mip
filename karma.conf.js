@@ -91,6 +91,12 @@ module.exports = function(config) {
         // Note: 如果要调试Karma，请设置为DEBUG
         logLevel: config.LOG_INFO,
 
+        // browser console options
+        browserConsoleLogOptions: {
+            // possible values: 'log' || 'error' || 'warn' || 'info' || 'debug'
+            level:  'log',
+            terminal: true
+        },
 
         // enable / disable watching file and executing tests whenever any file changes
         // Note: 代码改动自动运行测试，需要singleRun为false

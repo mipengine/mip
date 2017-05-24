@@ -6,6 +6,7 @@ define(function (require) {
 
     var util = require('util');
     var viewer = require('viewer');
+    var viewport = require('viewport');
 
     var docElement = document.documentElement || document.body;
     var ele = document.createElement('a');
@@ -14,41 +15,39 @@ define(function (require) {
     docElement.appendChild(ele);
 
     describe('viewer', function () {
-        describe('patchForIframeTestCase', function () {
-            it('patchForIframe', function () {
-                util.platform.needSpecialScroll = false;
-                document.body.style.cssText = '';
-                document.body.style.margin = 0;
-                function checkHeight() {
-                    return document.body.style.height === '100%';
-                };
-                viewer.patchForIframe();
-                var initedHeightEmpty = !checkHeight();
-                util.platform.needSpecialScroll = true;
-                viewer.patchForIframe();
+        it('patchForIframe', function () {
+            util.platform.needSpecialScroll = false;
+            document.body.style.cssText = '';
+            document.body.style.margin = 0;
+            function checkHeight() {
+                return document.body.style.height === '100%';
+            };
+            viewer.patchForIframe();
+            var initedHeightEmpty = !checkHeight();
+            util.platform.needSpecialScroll = true;
+            viewer.patchForIframe();
 
-                expect(initedHeightEmpty).to.be.true;
-                expect(checkHeight()).to.be.true;
-            });
-
-            it('needBackReload', function () {
-                var stub1 = sinon.stub(util.platform, 'getOsVersion', function () {
-                    return '9.1.1';
-                });
-                var stub2 = sinon.stub(util.platform, 'isSafari', function () {
-                    return true;
-                });
-                viewer.patchForIframe();
-                stub1.restore();
-                stub2.restore();
-
-                var eve = document.createEvent("HTMLEvents");
-                eve.initEvent("pageshow", true, true);
-                window.dispatchEvent(eve);
-            });
+            expect(initedHeightEmpty).to.be.true;
+            expect(checkHeight()).to.be.true;
         });
 
-        describe('delegateTestCase', function () {
+        it('needBackReload', function () {
+            var stub1 = sinon.stub(util.platform, 'getOsVersion', function () {
+                return '9.1.1';
+            });
+            var stub2 = sinon.stub(util.platform, 'isSafari', function () {
+                return true;
+            });
+            viewer.patchForIframe();
+            stub1.restore();
+            stub2.restore();
+
+            var eve = document.createEvent("HTMLEvents");
+            eve.initEvent("pageshow", true, true);
+            window.dispatchEvent(eve);
+        });
+
+        it('delegateTestCase', function () {
             viewer.init();
 
             var ele = document.getElementById('delegateLink');
@@ -67,6 +66,18 @@ define(function (require) {
             viewer.init();
             expect(viewer._gesture).to.be.instanceof(util.Gesture);
         });
+
+        it('sroll up', function (done) {
+            viewer.init();
+            document.body.style.height = '10000px';
+            viewport.setScrollTop(800);
+            setTimeout(function () {                    
+                viewport.setScrollTop(500);
+                done();
+            }, 500);
+            expect(viewport.getScrollTop()).to.equal(800);
+        });
+
 
         it('sendMessage', function () {
             viewer.isIframed = false;
