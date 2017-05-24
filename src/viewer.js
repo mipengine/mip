@@ -8,6 +8,7 @@ define(function (require) {
     var platform = util.platform;
     var EventAction = require('./utils/event-action');
     var EventEmitter = require('./utils/event-emitter');
+    var fn = require('./utils/fn');
 
     /**
      * Save window.
@@ -117,10 +118,19 @@ define(function (require) {
          * Setup event-action of viewer. To handle `on="tap:xxx"`.
          */
         setupEventAction: function () {
+            var hasTouch = fn.hasTouch();
             var eventAction = this.eventAction = new EventAction();
-            this._gesture.on('tap', function (event) {
-                eventAction.execute('tap', event.target, event);
-            });
+            if (hasTouch) {
+                // In mobile phone, bind Gesture-tap which listen to touchstart/touchend event
+                this._gesture.on('tap', function (event) {
+                    eventAction.execute('tap', event.target, event);
+                });
+            } else {
+                // In personal computer, bind click event, then trigger event. eg. `on=tap:sidebar.open`, when click, trigger open() function of #sidebar
+                document.addEventListener('click', function (e) {
+                    eventAction.execute('tap', event.target, event);
+                }, false);
+            }
         },
 
         /**
