@@ -43,18 +43,20 @@ mip-iframe 是用来支持在 mip 中嵌入第三方内容的一种方式，需�
 ```html
 <mip-iframe
     allowfullscreen 
-    srcdoc
+    srcdoc="
+        <div>You say that you love rain,</div>
+        <div>but you open your umbrella when it rains.</div>
+        <div>You say that you love the sun,</div>
+        <div>but you find a shadow spot when the sun shines.</div>
+        <div>You say that you love the wind,</div>
+        <div>but you close your windows when wind blows.</div>
+        <div>This is why I am afraid,</div>
+        <div>because you say that you love me too.</div>
+        "
     width="400"
     height="300"
+    sandbox="" 
     allowtransparency="true">
-    
-    <div>城市慷慨亮整夜光</div>
-    <div>如同少年不惧岁月长</div>
-    <div>她想要的不多只是和别人的不一样</div>
-    <div>烛光倒影为我添茶</div>
-    <div>相逢太短不等茶水凉</div>
-    <div>你扔下的习惯还顽强活在我身上</div>
-
 </mip-iframe>
 ```
 
