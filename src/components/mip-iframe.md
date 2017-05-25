@@ -21,7 +21,6 @@ mip-iframe 是用来支持在 mip 中嵌入第三方内容的一种方式，需�
     src="https://www.mipengine.org/article/instant-pageview.html" 
     width="400"
     height="300" 
-    class="border"
     allowtransparency="true">
 </mip-iframe>
 ```
@@ -35,7 +34,6 @@ mip-iframe 是用来支持在 mip 中嵌入第三方内容的一种方式，需�
     allowfullscreen
     width="400"
     height="300"
-    class="border"
     allowtransparency="true">
 </mip-iframe>
 ```
@@ -47,8 +45,7 @@ mip-iframe 是用来支持在 mip 中嵌入第三方内容的一种方式，需�
     allowfullscreen 
     srcdoc
     width="400"
-    height="300" 
-    class="border"
+    height="300"
     allowtransparency="true">
     
     <div>城市慷慨亮整夜光</div>
@@ -57,7 +54,7 @@ mip-iframe 是用来支持在 mip 中嵌入第三方内容的一种方式，需�
     <div>烛光倒影为我添茶</div>
     <div>相逢太短不等茶水凉</div>
     <div>你扔下的习惯还顽强活在我身上</div>
-    
+
 </mip-iframe>
 ```
 
