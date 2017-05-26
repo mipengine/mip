@@ -146,6 +146,17 @@ define(function (require) {
         }
     }
 
+    /**
+     * if window has Touch event(is mobile) or not (is PC)
+     *
+     * @return {boolean} if window has Touch event(is mobile) or not (is PC)
+     */
+    function hasTouch() {
+        return ('ontouchstart' in window
+            || (window.navigator.maxTouchPoints !== undefined && window.navigator.maxTouchPoints > 0)
+            || window.DocumentTouch !== undefined);
+    }
+
     return {
         throttle: throttle,
         values: values,
@@ -153,6 +164,7 @@ define(function (require) {
         pick: pick,
         isPlainObject: isPlainObject,
         isString: isString,
-        del: del
+        del: del,
+        hasTouch: hasTouch
     }
 });
