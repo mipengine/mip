@@ -51,7 +51,7 @@ mip-iframe 是用来支持在 mip 中嵌入第三方内容的一种方式，需�
         <div>You say that you love the wind,</div>
         <div>but you close your windows when wind blows.</div>
         <div>This is why I am afraid,</div>
-        <div>because you say that you love me too.</div>
+        <div>because you say that you love me too.</div> 
         "
     width="400"
     height="300"
