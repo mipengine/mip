@@ -356,9 +356,9 @@ define('fixed-element', ['require', 'util', 'layout'], function (require) {
     /**
      * set a placeholder
      *
-     * @param {Object} style style for element
+     * @param {Object} height the height of element
      */
-    FixedElement.prototype.setPlaceholder = function (style) {
+    FixedElement.prototype.setPlaceholder = function (height) {
 
         var placeholder = document.body.querySelector('div[mip-fixed-placeholder]');
 
@@ -372,8 +372,11 @@ define('fixed-element', ['require', 'util', 'layout'], function (require) {
             document.body.appendChild(placeholder);
         }
 
-        if (style) {
-            util.css(placeholder, style);
+        if (height) {
+            util.css(placeholder, {
+                display: 'block',
+                height: height + 'px'
+            });
         }
     };
 

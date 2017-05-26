@@ -153,7 +153,7 @@ define(function (require) {
             var placeholder = document.body.querySelector('div[mip-fixed-placeholder]');
             expect(placeholder).to.not.equal(null);
 
-            fixedElement.setPlaceholder({display: 'block'});
+            fixedElement.setPlaceholder(30);
             expect('block').to.equal(util.css(placeholder, 'display'));
         });
 
