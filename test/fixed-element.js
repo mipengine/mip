@@ -120,6 +120,43 @@ define(function (require) {
             expect(node).to.equal(fixedelem);
         });
 
+        it('insert before the nextSbiling of mip-semi-fixed which has no id', function () {
+            var parent = create([
+                '<div>',
+                    '<mip-semi-fixed threshold="0" fixedClassNames="fixedStyle">',
+                        '<div mip-semi-fixed-container id="mip-semi-fixed-fixed-container" class="absoluteStyle">',
+                            'This is the mip-semi-fixed dom',
+                        '</div>',
+                    '</mip-semi-fixed>',
+                '</div>'
+            ].join(''));
+
+            var nextSbiling = create('<div>this is the sbiling element</div>');
+            parent.appendChild(nextSbiling);
+            document.body.appendChild(parent);
+
+            fixedElement.init();
+
+            expect(nextSbiling).to.equal(parent.querySelector('mip-semi-fixed').nextElementSibling);
+        });
+
+        it('call setFixedElement in components', function () {
+            var node = create('<mip-fixed type="top">this is the top fixed element.</mip-fixed>');
+            document.body.appendChild(node);
+            var zIndex = fixedElement.setFixedElement([node], true);
+
+            expect(zIndex).to.equal(parseInt(util.css(node, 'z-index')));
+        });
+
+        it('setPlaceholder', function () {
+            fixedElement.setPlaceholder();
+            var placeholder = document.body.querySelector('div[mip-fixed-placeholder]');
+            expect(placeholder).to.not.equal(null);
+
+            fixedElement.setPlaceholder({display: 'block'});
+            expect('block').to.equal(util.css(placeholder, 'display'));
+        });
+
         it('showFixedLayer', function () {
             fixedElement.showFixedLayer(document.body);
         });
