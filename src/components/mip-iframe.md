@@ -18,10 +18,7 @@ mip-iframe 是用来支持在 mip 中嵌入第三方内容的一种方式，需�
 ```html
 <mip-iframe
     allowfullscreen 
-    srcdoc="<p>123</p>" 
     src="https://www.mipengine.org/article/instant-pageview.html" 
-    sandbox="" 
-    allowfullscreen
     width="400"
     height="300" 
     allowtransparency="true">
@@ -33,14 +30,32 @@ mip-iframe 是用来支持在 mip 中嵌入第三方内容的一种方式，需�
 ```html
 <mip-iframe
     layout="fixed-height" 
-    height="50" 
-    allowfullscreen 
-    srcdoc="<p>123</p>" 
     src="https://www.mipengine.org/article/instant-pageview.html" 
-    sandbox="" 
     allowfullscreen
     width="400"
     height="300"
+    allowtransparency="true">
+</mip-iframe>
+```
+
+### 加srcdoc
+
+```html
+<mip-iframe
+    allowfullscreen 
+    srcdoc="
+        <div>You say that you love rain,</div>
+        <div>but you open your umbrella when it rains.</div>
+        <div>You say that you love the sun,</div>
+        <div>but you find a shadow spot when the sun shines.</div>
+        <div>You say that you love the wind,</div>
+        <div>but you close your windows when wind blows.</div>
+        <div>This is why I am afraid,</div>
+        <div>because you say that you love me too.</div> 
+        "
+    width="400"
+    height="300"
+    sandbox="" 
     allowtransparency="true">
 </mip-iframe>
 ```
