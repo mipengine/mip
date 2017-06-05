@@ -214,20 +214,21 @@ define(function (require) {
                     return;
                 }
                 e.preventDefault();
+                var messageKey = 'mibm-jumplink';
+                var messageData = {};
+                messageData.url = this.href;
                 if (this.hasAttribute('mip-link')) {
                     var parent = this.parentNode;
-                    self.sendMessage('loadiframe', {
-                        'url': this.href,
-                        'title': parent.getAttribute('title') || parent.innerText.trim().split('\n')[0],
-                        'click': parent.getAttribute('data-click'),
-                        'pageType': parent.getAttribute('pageType')
-                    });
+                    messageKey = 'loadiframe';
+                    messageData.title = parent.getAttribute('title') || parent.innerText.trim().split('\n')[0];
+                    messageData.click = parent.getAttribute('data-click');
                 }
-                else {
-                    self.sendMessage('mibm-jumplink', {
-                        'url': this.href
-                    });
+                else if (this.getAttribute('data-type') === 'mip') {
+                    messageKey = 'loadiframe';
+                    messageData.title = this.getAttribute('data-title') || this.innerText.trim().split('\n')[0];
+                    messageData.click = this.getAttribute('data-click');
                 }
+                self.sendMessage(messageKey, messageData);
             }, false); 
         }
     };
