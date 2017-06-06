@@ -107,12 +107,45 @@ define(function (require) {
         return children.length > 1 ? children : children[0]; 
     }
 
+    /**
+     * Waits until the dom is ready. Then the
+     * callback is executed.
+     * @param {!Element} dom
+     * @param {function()} callback
+     */
+    function waitDomReady(dom, cb) {
+        if (!!document.body) {
+            cb();
+            return;
+        }
+        var domWin = dom.ownerDocument.defaultView;
+        // if MutationObserver is available, use this path
+        if (domWin.MutationObserver) {
+            var mutationObserver = new win.MutationObserver(function () {
+                if (!!document.body) {
+                  mutationObserver.disconnect();
+                  cb();
+                }
+            });
+            mutationObserver.observe(dom, {childList: true});
+          } else {
+            // if MutationObserver is not available, use polyfill
+            var interval = domWin.setInterval(function () {
+              if (!!document.body) {
+                domWin.clearInterval(interval);
+                cb();
+              }
+            }, 5);
+          }
+    }
+
 
     return {
         closest: closest,
         closestTo: closestTo,
         matches: matches,
         contains: contains,
-        create: create
+        create: create,
+        waitDomReady, waitDomReady
     }
 });

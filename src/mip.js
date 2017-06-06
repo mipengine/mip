@@ -13,16 +13,13 @@ define(function (require) {
     require('./utils/event-action');
     var CustomStorage = require('./utils/customStorage');
     var sleepWakeModule = require('./sleepWakeModule');
-    
-    // Initialize sleepWakeModule
-    sleepWakeModule.init();
 
     /* dom */
     require('./dom/css-loader');
     require('./dom/rect');
     require('./dom/event');
     require('./dom/css');
-    require('./dom/dom');
+    var dom = require('./dom/dom');
 
     /* mip frame */
     var layout = require('./layout');
@@ -49,7 +46,12 @@ define(function (require) {
 
     // The global variable of MIP
     var Mip = {};
-    if (!window.MIP) {
+    if (window.MIP) {
+        var exts = window.MIP;
+        window.MIP = Mip;
+        window.MIP.extensions = exts;
+    } else
+    {
         window.MIP = Mip;
     }
 
@@ -65,36 +67,38 @@ define(function (require) {
         }
     };
     MIP.hash = hash;
+ 
+    dom.waitDomReady(document.body, function () {
+        // Initialize sleepWakeModule
+        sleepWakeModule.init();
+        // Initialize viewer
+        viewer.init();
+        // Find the default-hidden elements.
+        var hiddenElements = Array.prototype.slice.call(document.getElementsByClassName('mip-hidden'));
+        // Regular for checking mip elements.
+        var mipTagReg = /mip-/i;
+        // Apply layout for default-hidden elements.
+        hiddenElements.forEach(function (element) {
+            if (element.tagName.search(mipTagReg) > -1) {
+                layout.applyLayout(element);
+            }
+        });
+        // Register builtin extensions
+        components.register();
 
-    // Initialize viewer
-    viewer.init();
+        performance.start(window._mipStartTiming);
 
-    // Find the default-hidden elements.
-    var hiddenElements = Array.prototype.slice.call(document.getElementsByClassName('mip-hidden'));
-    // Regular for checking mip elements.
-    var mipTagReg = /mip-/i;
-    // Apply layout for default-hidden elements.
-    hiddenElements.forEach(function (element) {
-        if (element.tagName.search(mipTagReg) > -1) {
-            layout.applyLayout(element);
-        }
+        performance.on('update', function (timing) {
+            viewer.sendMessage('performance_update', timing);
+        });
+
+        // Show page
+        viewer.show();
+
+        // clear cookie
+        var storage = new CustomStorage(2);
+        storage.delExceedCookie();
     });
-
-    // Register builtin extensions
-    components.register();
-
-    performance.start(window._mipStartTiming);
-
-    performance.on('update', function (timing) {
-        viewer.sendMessage('performance_update', timing);
-    });
-
-    // Show page
-    viewer.show();
-
-    // clear cookie
-    var storage = new CustomStorage(2);
-    storage.delExceedCookie();
 
     return Mip;
 });
