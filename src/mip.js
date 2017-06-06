@@ -68,7 +68,7 @@ define(function (require) {
     };
     MIP.hash = hash;
  
-    dom.waitDomReady(document.body, function () {
+    dom.waitDocumentReady(function () {
         // Initialize sleepWakeModule
         sleepWakeModule.init();
         // Initialize viewer

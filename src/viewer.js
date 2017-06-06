@@ -35,14 +35,14 @@ define(function (require) {
             });
 
             this.setupEventAction();
+            // handle preregistered  extensions
+            this.handlePreregisteredExtensions();
 
             if (this.isIframed) {
                 this.patchForIframe();
                 // proxy links
                 this._proxyLink();
                 this._viewportScroll();
-                // handle preregistered  extensions
-                this.handlePreregisteredExtensions();
                 // Tell parent page the current page is loaded.
                 this.sendMessage('mippageload', {
                     time: Date.now(),
@@ -139,19 +139,21 @@ define(function (require) {
          * Setup event-action of viewer. To handle `on="tap:xxx"`.
          */
         handlePreregisteredExtensions: function () {
-            window.MIP.push = function(extensions) {
-                if (extensions && typeof extensions.f == 'function') {
-                    extensions.f();
+            window.MIP.push = function (extensions) {
+                if (extensions && typeof extensions.func == 'function') {
+                    extensions.func();
                 } 
             };
             var preregisteredExtensions = window.MIP.extensions;
-            for (var i = 0; i < preregisteredExtensions.length; i++) {
-                var curExtensionObj = preregisteredExtensions[i];
-                if (curExtensionObj && typeof curExtensionObj.f == 'function') {
-                    curExtensionObj.f();
-                } 
-              }
-        };
+            if (preregisteredExtensions && preregisteredExtensions.length) {
+                for (var i = 0; i < preregisteredExtensions.length; i++) {
+                    var curExtensionObj = preregisteredExtensions[i];
+                    if (curExtensionObj && typeof curExtensionObj.func == 'function') {
+                        curExtensionObj.func();
+                    } 
+                }
+            }
+        },
 
         /**
          * Event binding callback.
