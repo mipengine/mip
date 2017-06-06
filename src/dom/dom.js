@@ -107,43 +107,6 @@ define(function (require) {
         return children.length > 1 ? children : children[0]; 
     }
 
-    /**
-     * Waits until the Document is ready. Then the
-     * callback is executed.
-     * @param {!Element} dom
-     * @param {function()} callback
-     */
-    function waitDocumentReady(cb) {
-        if (!!document.body) {
-            cb();
-            return;
-        }
-        var interval = window.setInterval(function () {
-          if (!!document.body) {
-            window.clearInterval(interval);
-            cb();
-          }
-        }, 5);
-        /*var domWin = dom.ownerDocument.defaultView;
-        // if MutationObserver is available, use this path
-        if (domWin.MutationObserver) {
-            var mutationObserver = new win.MutationObserver(function () {
-                if (!!document.body) {
-                  mutationObserver.disconnect();
-                  cb();
-                }
-            });
-            mutationObserver.observe(dom, {childList: true});
-          } else {
-            // if MutationObserver is not available, use polyfill
-            var interval = domWin.setInterval(function () {
-              if (!!document.body) {
-                domWin.clearInterval(interval);
-                cb();
-              }
-            }, 5);
-          }*/
-    }
 
     /**
      * Waits until the Document is ready. Then the
@@ -162,32 +125,6 @@ define(function (require) {
             cb();
           }
         }, 5);
-    }
-
-    function waitDomReady(dom, cb) {
-        if (!!document.body) {
-            cb();
-            return;
-        }
-        var domWin = dom.ownerDocument.defaultView;
-        // if MutationObserver is available, use this path
-        if (domWin.MutationObserver) {
-            var mutationObserver = new win.MutationObserver(function () {
-                if (!!document.body) {
-                  mutationObserver.disconnect();
-                  cb();
-                }
-            });
-            mutationObserver.observe(dom, {childList: true});
-        } else {
-            // if MutationObserver is not available, use polyfill
-            var interval = domWin.setInterval(function () {
-                if (!!document.body) {
-                    domWin.clearInterval(interval);
-                    cb();
-                }
-            }, 5);
-        }
     }
 
 
@@ -197,6 +134,6 @@ define(function (require) {
         matches: matches,
         contains: contains,
         create: create,
-        waitDomReady, waitDomReady
+        waitDocumentReady, waitDocumentReady
     }
 });
