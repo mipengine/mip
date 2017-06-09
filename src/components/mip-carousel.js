@@ -250,10 +250,6 @@ define(function (require) {
         }, false);
 
         wrapBox.addEventListener('touchend', function (event) {
-            // 如果不是图片的时候应该阻止事件
-            if (event.target.tagName.toLocaleLowerCase() !== 'img') {
-                event.preventDefault();
-            }
             //  只有滑动之后才会触发
             if (!slideLock.stop) {
                 var startIdx = imgIndex;
@@ -342,7 +338,7 @@ define(function (require) {
 
         // 绑定按钮切换事件
         function bindBtn() {
-            ele.querySelector('.mip-carousel-preBtn').addEventListener('touchend', function (event) {
+            ele.querySelector('.mip-carousel-preBtn').addEventListener('click', function (event) {
                 if (!btnLock.stop) {
                     return;
                 }
@@ -359,7 +355,7 @@ define(function (require) {
 
             }, false);
 
-            ele.querySelector('.mip-carousel-nextBtn').addEventListener('touchend', function (event) {
+            ele.querySelector('.mip-carousel-nextBtn').addEventListener('click', function (event) {
                 if (!btnLock.stop) {
                     return;
                 }

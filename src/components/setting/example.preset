@@ -1,0 +1,5 @@
+<style mip-custom>
+ 	mip-iframe{
+		border:1px solid black;
+ 	}
+</style>
