@@ -74,7 +74,7 @@ define(function (require) {
             setTimeout(function () {                    
                 viewport.setScrollTop(500);
                 done();
-            }, 100);
+            }, 500);
             expect(viewport.getScrollTop()).to.equal(800);
         });
 

@@ -8,6 +8,7 @@ define(function (require) {
     var platform = util.platform;
     var EventAction = require('./utils/event-action');
     var EventEmitter = require('./utils/event-emitter');
+    var fn = require('./utils/fn');
 
     /**
      * Save window.
@@ -117,10 +118,19 @@ define(function (require) {
          * Setup event-action of viewer. To handle `on="tap:xxx"`.
          */
         setupEventAction: function () {
+            var hasTouch = fn.hasTouch();
             var eventAction = this.eventAction = new EventAction();
-            this._gesture.on('tap', function (event) {
-                eventAction.execute('tap', event.target, event);
-            });
+            if (hasTouch) {
+                // In mobile phone, bind Gesture-tap which listen to touchstart/touchend event
+                this._gesture.on('tap', function (event) {
+                    eventAction.execute('tap', event.target, event);
+                });
+            } else {
+                // In personal computer, bind click event, then trigger event. eg. `on=tap:sidebar.open`, when click, trigger open() function of #sidebar
+                document.addEventListener('click', function (event) {
+                    eventAction.execute('tap', event.target, event);
+                }, false);
+            }
         },
 
         /**
@@ -193,7 +203,7 @@ define(function (require) {
          _proxyLink: function () {
             var self = this;
             var regexp = /^http/;
-            util.event.delegate(document.body, 'a', 'click', function (e) {
+            util.event.delegate(document, 'a', 'click', function (e) {
                 if (!this.href) {
                     return;
                 }
@@ -204,20 +214,21 @@ define(function (require) {
                     return;
                 }
                 e.preventDefault();
+                var messageKey = 'mibm-jumplink';
+                var messageData = {};
+                messageData.url = this.href;
                 if (this.hasAttribute('mip-link')) {
                     var parent = this.parentNode;
-                    self.sendMessage('loadiframe', {
-                        'url': this.href,
-                        'title': parent.getAttribute('title') || parent.innerText.trim().split('\n')[0],
-                        'click': parent.getAttribute('data-click'),
-                        'pageType': parent.getAttribute('pageType')
-                    });
+                    messageKey = 'loadiframe';
+                    messageData.title = parent.getAttribute('title') || parent.innerText.trim().split('\n')[0];
+                    messageData.click = parent.getAttribute('data-click');
                 }
-                else {
-                    self.sendMessage('mibm-jumplink', {
-                        'url': this.href
-                    });
+                else if (this.getAttribute('data-type') === 'mip') {
+                    messageKey = 'loadiframe';
+                    messageData.title = this.getAttribute('data-title') || this.innerText.trim().split('\n')[0];
+                    messageData.click = this.getAttribute('data-click');
                 }
+                self.sendMessage(messageKey, messageData);
             }, false); 
         }
     };
