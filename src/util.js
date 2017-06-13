@@ -26,8 +26,8 @@ define(function (require) {
     }
 
     /**
-     * Exchange a url to cache url.
-     * Reg result are four aspect
+     * Exchange cache url to origin url.
+     * Reg result has many aspects, it's following
      *  reg[0] whole url
      *  reg[1] url protocol
      *  reg[2] url mip cache domain
