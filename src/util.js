@@ -34,9 +34,9 @@ define(function (require) {
             return url;
         }
         var hp = (type === 'img') ? '/i/' : '/c/';
-        var hsp = hp + 's/';
+        var hps = hp + 's/';
         var hpItems = url.split(hp);
-        var hspItems = url.split(hsp);
+        var hspItems = url.split(hps);
         if (hspItems.length === 2) {
             url = 'https://' + hspItems[1];
         } else if (hpItems.length === 2) {
