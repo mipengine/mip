@@ -36,11 +36,11 @@ define(function (require) {
      *  reg[5] origin url
      * @param {string} url Source url.
      * @param {string} type The url type.
-     * @return {string} Cache url.
+     * @return {string} origin url.
      */
     function parseCacheUrl (url, type) {
         if (!url) {
-            return url;
+            return;
         }
         if (!(url.indexOf('http') === 0
             || url.indexOf('/') === 0)) {
@@ -52,15 +52,8 @@ define(function (require) {
         if (!result) {
             return url;
         }
-        var uri = 'http:';
-        if (result[1]) {
-            uri = result[1];
-        } else if (result[4]) {
-            uri = 'https:';
-        }
-        if (result && result[5]) {
-            uri += '//' + result[5];
-        }
+        var uri = result[4] ? 'https:' : 'http:';
+        uri += result[5] ? ('//' + result[5]) : '';
         var urlRegExp = /http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
         if(!urlRegExp.test(uri)){
             return url;
