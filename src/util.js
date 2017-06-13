@@ -1,7 +1,7 @@
 define(function (require) {
     'use strict';
-    
-    // Page url 
+
+    // Page url
     var pageUrl = location.href;
     /**
      * Exchange a url to cache url.
@@ -22,8 +22,10 @@ define(function (require) {
         var urlParas = url.split('//');
         urlParas.shift();
         url = urlParas.join('//');
-        return prefix + url; 
-    function parseUrl (url, type) {
+        return prefix + url;
+    }
+
+    function parseCacheUrl (url, type) {
         if (!url) {
             return url;
         }
@@ -44,7 +46,7 @@ define(function (require) {
     }
 
     return {
-        parseUrl: parseUrl,
+        parseCacheUrl: parseCacheUrl,
         makeCacheUrl: makeCacheUrl,
         fn: require('./utils/fn'),
         dom: require('./dom/dom'),
