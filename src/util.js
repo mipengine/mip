@@ -31,8 +31,9 @@ define(function (require) {
      *  reg[0] whole url
      *  reg[1] url protocol
      *  reg[2] url mip cache domain
-     *  reg[3] /s flag
-     *  reg[4] origin url
+     *  reg[3] url domain extname
+     *  reg[4] /s flag
+     *  reg[5] origin url
      * @param {string} url Source url.
      * @param {string} type The url type.
      * @return {string} Cache url.
@@ -45,7 +46,8 @@ define(function (require) {
             || url.indexOf('/') === 0)) {
             return url;
         }
-        var reg = new RegExp("^(http[s]:){0,1}(\/\/mipcache.bdstatic.com){0,1}\/[ic](\/s){0,1}\/(.*)$", 'g');
+        var reg = new RegExp('^(http[s]:){0,1}(\/\/[a-zA-Z0-9][-a-zA-Z0-9]{0,62}'
+            + '(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+\.?){0,1}\/[ic](\/s){0,1}\/(.*)$', 'g');
         var result = reg.exec(url);
         if (!result) {
             return url;
@@ -53,11 +55,15 @@ define(function (require) {
         var uri = 'http:';
         if (result[1]) {
             uri = result[1];
-        } else if (result[3]) {
+        } else if (result[4]) {
             uri = 'https:';
         }
-        if (result && result[4]) {
-            uri += '//' + result[4];
+        if (result && result[5]) {
+            uri += '//' + result[5];
+        }
+        var urlRegExp = /http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
+        if(!urlRegExp.test(uri)){
+            return url;
         }
         return uri;
     }
