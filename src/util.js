@@ -35,10 +35,9 @@ define(function (require) {
      *  reg[4] /s flag
      *  reg[5] origin url
      * @param {string} url Source url.
-     * @param {string} type The url type.
      * @return {string} origin url.
      */
-    function parseCacheUrl (url, type) {
+    function parseCacheUrl (url) {
         if (!url) {
             return;
         }
