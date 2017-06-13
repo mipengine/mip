@@ -23,9 +23,28 @@ define(function (require) {
         urlParas.shift();
         url = urlParas.join('//');
         return prefix + url; 
+    function parseUrl (url, type) {
+        if (!url) {
+            return url;
+        }
+        if (!(url.indexOf('http') === 0
+            || url.indexOf('/') === 0)) {
+            return url;
+        }
+        var hp = (type === 'img') ? '/i/' : '/c/';
+        var hsp = hp + 's/';
+        var hpItems = url.split(hp);
+        var hspItems = url.split(hsp);
+        if (hspItems.length === 2) {
+            url = 'https://' + hspItems[1];
+        } else if (hpItems.length === 2) {
+            url = 'http://' + hpItems[1];
+        }
+        return url;
     }
 
     return {
+        parseUrl: parseUrl,
         makeCacheUrl: makeCacheUrl,
         fn: require('./utils/fn'),
         dom: require('./dom/dom'),
