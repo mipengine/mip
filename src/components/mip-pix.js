@@ -52,6 +52,9 @@ define(function (require) {
             src = addParas(src, matchExp, getBodyAttr(matchExp));
         }
 
+        //  去除匹配失败的其餘{參數}
+        src = src.replace(new RegExp("{.+?}", 'gi'), '');
+        
         // 创建请求img
         var image = new Image();
         image.src = src;
