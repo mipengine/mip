@@ -15,7 +15,7 @@ define(function (require) {
     function addParas(src, paraName, paraVal) {
         var paraNameQ = '{' + paraName + '}';
         if (src.indexOf(paraNameQ) > -1) {
-            return src.replace(new RegExp(paraNameQ, 'gi'), paraVal);
+            return src.replace(new RegExp(paraNameQ, 'g'), paraVal);
         }
         src += src.indexOf('?') > -1 ? '&' : '?';
         return src + paraName + '=' + paraVal;
@@ -53,7 +53,7 @@ define(function (require) {
         }
 
         // 去除匹配失败的其餘{參數}
-        src = src.replace(new RegExp("{.+?}", 'gi'), '');
+        src = src.replace(new RegExp("{.+?}", 'g'), '');
         // 去除其餘 '{', '}' 確保輸出不包含 MIP 定义的语法
         src = src.replace(new RegExp("{|}", 'g'), '');
         
