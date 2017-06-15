@@ -52,8 +52,10 @@ define(function (require) {
             src = addParas(src, matchExp, getBodyAttr(matchExp));
         }
 
-        //  去除匹配失败的其餘{參數}
+        // 去除匹配失败的其餘{參數}
         src = src.replace(new RegExp("{.+?}", 'gi'), '');
+        // 去除其餘 '{', '}' 確保輸出不包含 MIP 定义的语法
+        src = src.replace(new RegExp("{|}", 'g'), '');
         
         // 创建请求img
         var image = new Image();
