@@ -13,9 +13,9 @@ define(function (require) {
      * @param {string} paraVal  value, 如当前时间戳
      */
     function addParas(src, paraName, paraVal) {
-        var paraNameQ = '{' + paraName + '}';
-        if (src.indexOf(paraNameQ) > -1) {
-            return src.replace(new RegExp(paraNameQ, 'g'), paraVal);
+        var paraNameQ = new RegExp('\\$?{' + paraName + '}', 'g');
+        if (src.search(paraNameQ) > -1) {
+            return src.replace(paraNameQ, paraVal);
         }
         src += src.indexOf('?') > -1 ? '&' : '?';
         return src + paraName + '=' + paraVal;
