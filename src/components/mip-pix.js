@@ -53,9 +53,9 @@ define(function (require) {
         }
 
         // 去除匹配失败的其餘{參數}
-        src = src.replace(new RegExp("{.+?}", 'g'), '');
-        // 去除其餘 '{', '}' 確保輸出不包含 MIP 定义的语法
-        src = src.replace(new RegExp("{|}", 'g'), '');
+        src = src.replace(/\$?{.+?}/g, '');
+        // 去除其餘 '${', '{', '}' 確保輸出不包含 MIP 定义的语法
+        src = src.replace(/\$?{|}/g, '');
         
         // 创建请求img
         var image = new Image();
