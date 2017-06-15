@@ -15,7 +15,7 @@ define(function (require) {
     function addParas(src, paraName, paraVal) {
         var paraNameQ = '{' + paraName + '}';
         if (src.indexOf(paraNameQ) > -1) {
-            return src.replace(new RegExp(paraNameQ, 'g'), paraVal);
+            return src.replace(new RegExp(paraNameQ, 'gi'), paraVal);
         }
         src += src.indexOf('?') > -1 ? '&' : '?';
         return src + paraName + '=' + paraVal;
