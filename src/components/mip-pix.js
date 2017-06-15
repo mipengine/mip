@@ -40,9 +40,9 @@ define(function (require) {
         var time = Date.now();
 
         // 替换通用参数
-        src = addParas(src, 't', time);
-        src = addParas(src, 'title', encodeURIComponent(title));
-        src = addParas(src, 'host', encodeURIComponent(host));
+        src = addParas(src, 'TIME', time);
+        src = addParas(src, 'TITLE', encodeURIComponent(title));
+        src = addParas(src, 'HOST', encodeURIComponent(host));
 
         // 增加对<mip-experiment>支持，获取实验分组
         var expReg = /mip-x-((\w|-|\d|_)+)/g;
