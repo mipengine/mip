@@ -241,7 +241,7 @@ define(function () {
           element.style.height = height;
         } else if (layout == LAYOUT.FIXED_HEIGHT) {
           element.style.height = height;
-        } else if (layout == LAYOUT.RESPONSIVE) {
+        } else if (layout == LAYOUT.RESPONSIVE && element.querySelectorAll('mip-i-space').length < 1) {
           var space = element.ownerDocument.createElement('mip-i-space');
           space.style.display = 'block';
           space.style.paddingTop =
