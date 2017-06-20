@@ -273,4 +273,3 @@ define(function () {
 
     return new Layout();
 });
-
