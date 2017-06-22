@@ -128,7 +128,6 @@ mip-carousel 用来支持 mip 中图片的一种展示方式，支出多图轮�
 
 ```html
 <mip-carousel
-    autoplay
     defer="1000"  
     layout="responsive" 
     width="600" 
