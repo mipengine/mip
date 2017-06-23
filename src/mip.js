@@ -1,74 +1,91 @@
 define(function (require) {
     require('zepto');
     require('naboo');
-    require('fetch-jsonp');
-    require('fetch');
-
-    require('./utils/fn');
-    require('./utils/gesture/gesture-recognizer');
-    require('./utils/gesture/data-processor');
-    require('./utils/gesture');
-    require('./utils/platform');
-    require('./utils/event-emitter');
-    require('./utils/event-action');
-    var CustomStorage = require('./utils/customStorage');
-    var sleepWakeModule = require('./sleepWakeModule');
 
     /* dom */
-    require('./dom/css-loader');
-    require('./dom/rect');
-    require('./dom/event');
-    require('./dom/css');
     var dom = require('./dom/dom');
-
-    /* mip frame */
-    var layout = require('./layout');
-
-    require('./fixed-element');
-    var viewport = require('./viewport');
-    require('./customElement');
-    var registerElement = require('./element');
-    require('./util');
-    var resources = require('./resources');
-    var viewer = require('./viewer');
-    var performance = require('./performance');
-    var templates = require('./templates');
-
-    /* mip hash */
-    var hash = require('./hash');
-
-    /* builtin components */
-    require('./components/mip-img');
-    require('./components/mip-pix');
-    require('./components/mip-carousel');
-    require('./components/mip-iframe');
-    var components = require('./components/index');
 
     // The global variable of MIP
     var Mip = {};
     if (window.MIP) {
         var exts = window.MIP;
         window.MIP = Mip;
-        window.MIP.extensions = exts;
+        MIP.extensions = exts;
     } else
     {
         window.MIP = Mip;
     }
 
-    Mip.css = {};
-    Mip.viewer = viewer;
-    Mip.viewport = viewport;
-    Mip.prerenderElement = resources.prerenderElement;    
-    Mip.registerMipElement = function (name, customClass, css) {
-        if (templates.isTemplateClass(customClass)) {
-            templates.register(name, customClass);
-        } else {
-            registerElement(name, customClass, css);
+    // before document ready
+    MIP.push = function (extensions) {
+        if (!MIP.extensions) {
+            MIP.extensions = [];
         }
+        MIP.extensions.push(extensions);
     };
-    MIP.hash = hash;
- 
+
     dom.waitDocumentReady(function () {
+
+        require('fetch-jsonp');
+        require('fetch');
+
+        require('./utils/fn');
+        require('./utils/gesture/gesture-recognizer');
+        require('./utils/gesture/data-processor');
+        require('./utils/gesture');
+        require('./utils/platform');
+        require('./utils/event-emitter');
+        require('./utils/event-action');
+
+
+        require('./dom/css-loader');
+        require('./dom/rect');
+        require('./dom/event');
+        require('./dom/css');
+
+        var CustomStorage = require('./utils/customStorage');
+        var sleepWakeModule = require('./sleepWakeModule');
+
+        
+
+        /* mip frame */
+        var layout = require('./layout');
+
+        require('./fixed-element');
+        var viewport = require('./viewport');
+        require('./customElement');
+        var registerElement = require('./element');
+        require('./util');
+        var resources = require('./resources');
+        var viewer = require('./viewer');
+        var performance = require('./performance');
+        var templates = require('./templates');
+
+        /* mip hash */
+        var hash = require('./hash');
+
+        /* builtin components */
+        require('./components/mip-img');
+        require('./components/mip-pix');
+        require('./components/mip-carousel');
+        require('./components/mip-iframe');
+        var components = require('./components/index');
+
+        
+        Mip.css = {};
+        Mip.viewer = viewer;
+        Mip.viewport = viewport;
+        Mip.prerenderElement = resources.prerenderElement;    
+        Mip.registerMipElement = function (name, customClass, css) {
+            if (templates.isTemplateClass(customClass)) {
+                templates.register(name, customClass);
+            } else {
+                registerElement(name, customClass, css);
+            }
+        };
+        MIP.hash = hash;
+ 
+
         // Initialize sleepWakeModule
         sleepWakeModule.init();
         // Initialize viewer

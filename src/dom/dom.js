@@ -140,6 +140,6 @@ define(function (require) {
         matches: matches,
         contains: contains,
         create: create,
-        waitDocumentReady, waitDocumentReady
+        waitDocumentReady: waitDocumentReady
     }
 });
