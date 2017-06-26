@@ -139,6 +139,7 @@ define(function (require) {
          * Setup event-action of viewer. To handle `on="tap:xxx"`.
          */
         handlePreregisteredExtensions: function () {
+            window.MIP = window.MIP || {};
             window.MIP.push = function (extensions) {
                 if (extensions && typeof extensions.func == 'function') {
                     extensions.func();
