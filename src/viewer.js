@@ -35,6 +35,8 @@ define(function (require) {
             });
 
             this.setupEventAction();
+            // handle preregistered  extensions
+            this.handlePreregisteredExtensions();
 
             if (this.isIframed) {
                 this.patchForIframe();
@@ -130,6 +132,27 @@ define(function (require) {
                 document.addEventListener('click', function (event) {
                     eventAction.execute('tap', event.target, event);
                 }, false);
+            }
+        },
+
+        /**
+         * Setup event-action of viewer. To handle `on="tap:xxx"`.
+         */
+        handlePreregisteredExtensions: function () {
+            window.MIP = window.MIP || {};
+            window.MIP.push = function (extensions) {
+                if (extensions && typeof extensions.func == 'function') {
+                    extensions.func();
+                } 
+            };
+            var preregisteredExtensions = window.MIP.extensions;
+            if (preregisteredExtensions && preregisteredExtensions.length) {
+                for (var i = 0; i < preregisteredExtensions.length; i++) {
+                    var curExtensionObj = preregisteredExtensions[i];
+                    if (curExtensionObj && typeof curExtensionObj.func == 'function') {
+                        curExtensionObj.func();
+                    } 
+                }
             }
         },
 
