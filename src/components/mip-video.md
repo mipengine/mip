@@ -84,4 +84,4 @@ mip-video 用来支持在 mip 中增加视频内容，是HTML `<video>`的直接
 
 1. 为防止视频加载造成页面抖动，指定视频的高度和宽度是一个好习惯。MIP中，指定宽高是强制的。
 2. 如果定义了layout属性，width和height属性将配合layout进行缩放。
-3. 为了正确地播放视频，src为空时请务必添加`<source>`子元素。
+3. 暂时不支持 source 属性。
