@@ -13,10 +13,9 @@ define(function (require) {
      * @param {string} paraVal  value, 如当前时间戳
      */
     function addParas(src, paraName, paraVal) {
-        if (src.indexOf('?' + paraName) > -1 || src.indexOf('&' + paraName) > -1) {
-            var reg = new RegExp(paraName + '=({\\w+})');
-            var placeholder = reg.exec(src) ? reg.exec(src)[1] : '';
-            return src.replace(placeholder, paraVal);
+        var paraNameQ = new RegExp('\\$?{' + paraName + '}', 'g');
+        if (src.search(paraNameQ) > -1) {
+            return src.replace(paraNameQ, paraVal);
         }
         src += src.indexOf('?') > -1 ? '&' : '?';
         return src + paraName + '=' + paraVal;
@@ -41,9 +40,9 @@ define(function (require) {
         var time = Date.now();
 
         // 替换通用参数
-        src = addParas(src, 't', time);
-        src = addParas(src, 'title', encodeURIComponent(title));
-        src = addParas(src, 'host', encodeURIComponent(host));
+        src = addParas(src, 'TIME', time);
+        src = addParas(src, 'TITLE', encodeURIComponent(title));
+        src = addParas(src, 'HOST', encodeURIComponent(host));
 
         // 增加对<mip-experiment>支持，获取实验分组
         var expReg = /mip-x-((\w|-|\d|_)+)/g;
@@ -53,6 +52,11 @@ define(function (require) {
             src = addParas(src, matchExp, getBodyAttr(matchExp));
         }
 
+        // 去除匹配失败的其餘{參數}
+        src = src.replace(/\$?{.+?}/g, '');
+        // 去除其餘 '${', '{', '}' 確保輸出不包含 MIP 定义的语法
+        src = src.replace(/\$?{|}/g, '');
+        
         // 创建请求img
         var image = new Image();
         image.src = src;
