@@ -1,3 +1,9 @@
+/**
+ *
+ * @file fixed element
+ * @author qijian@baidu.com
+ * @modify lilangbo@baidu.com 2017-06-06 upgrade to support asycn
+ */
 define(function (require) {
     'use strict';
 
@@ -5,7 +11,7 @@ define(function (require) {
      * Save documentElement.
      * @inner
      * @type {Object}
-     */    
+     */
     var docElem = document.documentElement;
 
     /**
@@ -27,7 +33,7 @@ define(function (require) {
      * @return {boolean}
      */
     function matches(element, selector) {
-        if (!element || element.nodeType != 1) {
+        if (!element || element.nodeType !== 1) {
             return false;
         }
         return nativeMatches.call(element, selector);
@@ -49,7 +55,7 @@ define(function (require) {
                         return element;
                     }
                     element = element.parentNode;
-                };
+                }
                 return null;
             };
 
@@ -69,7 +75,7 @@ define(function (require) {
                         return true;
                     }
                     child = child.parentElement;
-                };
+                }
                 return false;
             };
 
@@ -104,7 +110,27 @@ define(function (require) {
         }
         var children = Array.prototype.slice.call(createTmpElement.children);
         createTmpElement.innerHTML = '';
-        return children.length > 1 ? children : children[0]; 
+        return children.length > 1 ? children : children[0];
+    }
+
+
+    /**
+     * Waits until the Document is ready. Then the
+     * callback is executed.
+     * @param {!Element} dom
+     * @param {function()} callback
+     */
+    function waitDocumentReady(cb) {
+        if (!!document.body) {
+            cb();
+            return;
+        }
+        var interval = window.setInterval(function () {
+            if (!!document.body) {
+                window.clearInterval(interval);
+                cb();
+            }
+        }, 5);
     }
 
 
@@ -113,6 +139,7 @@ define(function (require) {
         closestTo: closestTo,
         matches: matches,
         contains: contains,
-        create: create
+        create: create,
+        waitDocumentReady: waitDocumentReady
     }
 });
