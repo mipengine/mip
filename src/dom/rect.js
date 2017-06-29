@@ -1,7 +1,7 @@
 define(function (require) {
     'use strict';
 
-    var platform = require('../utils/platform');
+    var platform = require('../utils/platform').start();
 
     // Save the native object or method.
     var docBody = document.body;

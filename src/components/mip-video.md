@@ -31,21 +31,6 @@ mip-video 用来支持在 mip 中增加视频内容，是HTML `<video>`的直接
 </mip-video>
 ```
 
-### 多视频源
-
-与HTML5`<video>`一样，可以提供多个视频源，以兼容不同解码库的浏览器。
-
-```html
-<mip-video controls layout="responsive" width="640" height="360">
-  <!-- MP4 must be first for iPad! -->
-  <source src="https://gss0.bdstatic.com/-b1Caiqa0d9Bmcmop9aC2jh9h2w8e4_h7sED0YQ_t9iCPK/mda-gjkt21pkrsd8ae5y/mda-gjkt21pkrsd8ae5y.mp4" type="video/mp4">
-  <!-- Safari / iOS, IE9 -->
-  <source src="https://clips.vorwaerts-gmbh.de/VfE.webm" type="video/webm">
-  <!-- Chrome10+, Ffx4+, Opera10.6+ -->
-  <source src="https://clips.vorwaerts-gmbh.de/VfE.ogv" type="video/ogg">
-</mip-video>
-```
-
 ### 失效提示
 
 对于不支持HTML5`<video>`的环境，`<mip-video>`同样可以显示提示信息。`<mip-video>`内部的DOM（`<source>`除外）将会在不支持`<video>`标签的浏览器中显示。
@@ -99,4 +84,4 @@ mip-video 用来支持在 mip 中增加视频内容，是HTML `<video>`的直接
 
 1. 为防止视频加载造成页面抖动，指定视频的高度和宽度是一个好习惯。MIP中，指定宽高是强制的。
 2. 如果定义了layout属性，width和height属性将配合layout进行缩放。
-3. 为了正确地播放视频，src为空时请务必添加`<source>`子元素。
+3. 暂时不支持 source 。

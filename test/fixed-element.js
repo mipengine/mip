@@ -9,16 +9,26 @@ define(function (require) {
     var FixedElement = require('fixed-element').constructor;
     var fixedElement;
     var reset = function () {
-        var elements = document.querySelectorAll('mip-fixed');
+        var elements = document.querySelectorAll('mip-fixed,div[mip-semi-fixed-fixedSatus]');
         for (var i = 0; i < elements.length; i++) {
             elements[i].parentNode && elements[i].parentNode.removeChild(elements[i]);
         }
         fixedElement = new FixedElement();
     };
+    var style = document.createElement('style');
+    style.textContent = "@media screen and (max-width:240px){ body {} }";
+    var supportStyle = document.createElement('style');
+    supportStyle.textContent = "@supports not (border-color: red) {}";
+    document.head.appendChild(supportStyle);
+    document.head.appendChild(style);
 
     describe('fixed-element', function () {
-        it('uc', function () {
+        after(function () {
+            document.head.removeChild(style);
+            document.head.removeChild(supportStyle);
+        });
 
+        it('uc', function () {
             util.platform.isIos = function () {
                 return false;
             };
@@ -34,7 +44,7 @@ define(function (require) {
             fixedElement.init();
 
             expect(element.style.position).to.equal('absolute');
-            expect(fixedElement._count).to.equal(0);
+            expect(fixedElement._count).to.equal(1);
         });
 
         it('normal', function () {
@@ -51,19 +61,28 @@ define(function (require) {
             document.body.appendChild(elementBottom);
             var elementRight = create('<mip-fixed type="right" bottom="20"></mip-fixed>');
             document.body.appendChild(elementRight);
+            var elementGoto = create('<mip-fixed type="gototop"><mip-gototop></mip-gototop></mip-fixed>');
+            document.body.appendChild(elementGoto);
+            var elementGotoInvalid = create('<mip-fixed type="gototop"><div></div></mip-fixed>');
+            document.body.appendChild(elementGotoInvalid);
             var elementNone = create('<mip-fixed></mip-fixed>');
             fixedElement.setFixedElementRule(elementNone);
             document.body.appendChild(elementNone);
             fixedElement.init();
 
-            expect(elementTop.style.maxHeight).to.equal('88px');
-            expect(elementBottom.style.maxHeight).to.equal('88px');
             expect(elementRight.style.bottom).to.equal('20px');
             expect(elementNone.style.display).to.equal('none');
             expect(elementNone.parentNode).to.not.equal(document.body);
         });
 
         it('ios', function () {
+            util.platform.isIos = function () {
+                return true;
+            };
+            util.platform.isUc = function () {
+                return false;
+            };
+            fixedElement._isAndroidUc = false;
             reset();
             var elementTop = create('<mip-fixed type="top"></mip-fixed>');
             document.body.appendChild(elementTop);
@@ -78,7 +97,6 @@ define(function (require) {
 
             fixedElement.init();
 
-            expect(elementTop.style.maxHeight).to.equal('88px');
             // The elementCustom will be removed.
             expect(elementCustom.parentNode).to.not.equal(document.body);
 
@@ -86,7 +104,65 @@ define(function (require) {
             document.head.removeChild(style);
         });
 
-     
+        it('move mip-semi-fixed dom to fixedLayer', function () {
+            var node = create([
+                '<mip-semi-fixed id="semi-fixed" threshold="0" fixedClassNames="fixedStyle">',
+                    '<div mip-semi-fixed-container id="mip-semi-fixed-fixed-container" class="absoluteStyle">',
+                        'This is the mip-semi-fixed dom',
+                    '</div>',
+                '</mip-semi-fixed>'
+            ].join(''));
+            document.body.appendChild(node);
 
+            fixedElement.init();
+
+            var fixedelem = fixedElement._fixedLayer.querySelector('#semi-fixed');
+            expect(node).to.equal(fixedelem);
+        });
+
+        it('insert before the nextSbiling of mip-semi-fixed which has no id', function () {
+            var parent = create([
+                '<div>',
+                    '<mip-semi-fixed threshold="0" fixedClassNames="fixedStyle">',
+                        '<div mip-semi-fixed-container id="mip-semi-fixed-fixed-container" class="absoluteStyle">',
+                            'This is the mip-semi-fixed dom',
+                        '</div>',
+                    '</mip-semi-fixed>',
+                '</div>'
+            ].join(''));
+
+            var nextSbiling = create('<div>this is the sbiling element</div>');
+            parent.appendChild(nextSbiling);
+            document.body.appendChild(parent);
+
+            fixedElement.init();
+
+            expect(nextSbiling).to.equal(parent.querySelector('mip-semi-fixed').nextElementSibling);
+        });
+
+        it('call setFixedElement in components', function () {
+            var node = create('<mip-fixed type="top">this is the top fixed element.</mip-fixed>');
+            document.body.appendChild(node);
+            var zIndex = fixedElement.setFixedElement([node], true);
+
+            expect(zIndex).to.equal(parseInt(util.css(node, 'z-index')));
+        });
+
+        it('setPlaceholder', function () {
+            fixedElement.setPlaceholder();
+            var placeholder = document.body.querySelector('div[mip-fixed-placeholder]');
+            expect(placeholder).to.not.equal(null);
+
+            fixedElement.setPlaceholder(30);
+            expect('block').to.equal(util.css(placeholder, 'display'));
+        });
+
+        it('showFixedLayer', function () {
+            fixedElement.showFixedLayer(document.body);
+        });
+
+        it('hideFixedLayer', function () {
+            fixedElement.hideFixedLayer(document.body);
+        });
     });
 });
