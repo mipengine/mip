@@ -28,8 +28,9 @@ define(function (require) {
 
     /**
      * Support for matches. Check whether a element matches a selector.
-     * @param {HTMLElement} element
-     * @param {string} selector
+     *
+     * @param {HTMLElement} element target element
+     * @param {string} selector element selector
      * @return {boolean}
      */
     function matches(element, selector) {
@@ -41,8 +42,9 @@ define(function (require) {
 
     /**
      * Support for closest. Find the closest parent node that matches the selector.
-     * @param {HTMLElement} element
-     * @param {string} selector
+     *
+     * @param {HTMLElement} element element
+     * @param {string} selector selector
      * @return {?HTMLElement}
      */
     var closest = docElem.closest
@@ -61,8 +63,9 @@ define(function (require) {
 
     /**
      * Support for contains.
-     * @param {HTMLElement} element
-     * @param {HTMLElement} child
+     *
+     * @param {HTMLElement} element parent node
+     * @param {HTMLElement} child child node
      * @return {boolean}
      */
     var contains = docElem.contains
@@ -81,9 +84,10 @@ define(function (require) {
 
     /**
      * Find the nearest element that matches the selector from current element to target element.
-     * @param {HTMLElement} element
-     * @param {string} selector
-     * @param {HTMLElement} target
+     *
+     * @param {HTMLElement} element element
+     * @param {string} selector element selector
+     * @param {HTMLElement} target target element
      * @return {?HTMLElement}
      */
     function closestTo(element, selector, target) {
@@ -100,6 +104,7 @@ define(function (require) {
 
     /**
      * Create a element by string
+     *
      * @param {string} str Html string
      * @return {HTMLElement}
      */
@@ -117,8 +122,8 @@ define(function (require) {
     /**
      * Waits until the Document is ready. Then the
      * callback is executed.
-     * @param {!Element} dom
-     * @param {function()} callback
+     *
+     * @param {Function} cb callback
      */
     function waitDocumentReady(cb) {
         if (!!document.body) {
@@ -165,5 +170,5 @@ define(function (require) {
         create: create,
         insert: insert,
         waitDocumentReady: waitDocumentReady
-    }
+    };
 });
