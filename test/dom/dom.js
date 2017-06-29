@@ -6,13 +6,28 @@ define(function (require) {
 
     var dom = require('dom/dom');
     var element = dom.create(
-'<div class="dom-test test">\
-<div class="dom-closest-target">\
-    <div class="dom-closest-source">\
-</div>\
-</div>'
+        '<div class="dom-test test">\
+            <div class="dom-closest-target">\
+                <div class="dom-closest-source">\
+                </div>\
+            </div>'
     );
+    var insertEle = dom.create(
+        '<div class="dom-test test">\
+            <div class="dist1"></div>\
+            <div class="move1">\
+                <span>move1</span>\
+            </div>\
+            <div class="move2">\
+                <span>move2</span>\
+            </div>\
+            <div class="move3">\
+                <span>move3</span>\
+            </div>\
+        </div>'
+    )
     document.body.appendChild(element);
+    document.body.appendChild(insertEle);
     describe(name || 'dom', function () {
         it('matches', function () {
             expect(dom.matches(element, 'div.dom-test')).to.be.true;
@@ -38,6 +53,21 @@ define(function (require) {
         it('create', function () {
             expect(dom.create('')).to.be.null;
             expect(dom.create('<div></div><div></div>')).to.have.lengthOf(2);
+        });
+
+        it('insert', function() {
+            var move1 = document.querySelector('.move1');
+            var move2 = document.querySelector('.move2');
+            var move3 = document.querySelector('.move3');
+            var dist1 = document.querySelector('.move3');
+            var doms = [move2, move3];
+            dom.insert(dist1, move1);
+            dom.insert(dist1, doms);
+            expect(dom.insert(dist1, null)).to.be.undefined;
+            expect(dom.insert(null, move1)).to.be.undefined;
+            expect(dom.contains(dist1, move1)).to.be.true;
+            expect(dom.contains(dist1, move2)).to.be.true;
+            expect(dom.contains(dist1, move3)).to.be.true;
         });
     });
 
