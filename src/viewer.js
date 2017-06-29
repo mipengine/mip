@@ -53,12 +53,7 @@ define(function (require) {
                 // Tell parent page the current page is loaded.
                 this.sendMessage('mippageload', {
                     time: Date.now(),
-                    title: encodeURIComponent(document.title)
-                });
-                // Send title and mip url to sf in order to get share informations
-                this.sendMessage('mippageinfo', {
-                    title: document.title,
-                    url: location.href
+                    title: document.title ? encodeURIComponent(document.title) : ''
                 });
             }
         },
