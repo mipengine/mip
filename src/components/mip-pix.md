@@ -24,34 +24,34 @@
     <mip-pix src="https://www.mipengine.org/a.gif?t=${TIME}&title=${TITLE}&host=${HOST}"></mip-pix>
 ```
 mip-pix会自动匹配参数，生成请求地址，最终请求为：
-> https://www.mipengine.org/tj.gif?t=1487307586286&title=random_title&host=http%3A%2F%2Fwww.mipengine.org%2Findex.html   
+> https://www.mipengine.org/a.gif?t=1487307586286&title=random_title&host=http%3A%2F%2Fwww.mipengine.org%2Findex.html   
 
 ### 参数缺省写法
 ```html
     <mip-pix src="https://www.mipengine.org/a.gif"></mip-pix>
 ```
 mip-pix会自动添加t, title, host参数，最终请求为：
-> https://www.mipengine.org/tj.gif?t=1487307586286&title=random_title&host=http%3A%2F%2Fwww.mipengine.org%2Findex.html   
+> https://www.mipengine.org/a.gif?t=1487307586286&title=random_title&host=http%3A%2F%2Fwww.mipengine.org%2Findex.html   
 
 ### 添加自定义参数
 ```html
-    <mip-pix src="https://www.mipengine.org/a.gif?t=${TIME}&title=${TITLE}&host=${HOST}&area=A"></mip-pix>
+    <mip-pix src="https://www.mipengine.org/a.gif?t=${TIME}&title=${TITLE}&host=${HOST}&area=A"></mip-pix>
 ```
 自定义参数可拼接在src末尾，最终请求为：
 > https://www.mipengine.org/a.gif?t=1487307670913&title=random_title&host=http%3A%2F%2Fwww.mipengine.org%2Fmip-pix-test.html&area=A   
 
 ### 添加`<mip-experiment>`实验分组
-其中mip-x-button-color建议使用为'mip-x-'+'实验名'，也可以自定义任意名称，对应的${xxx}内容会被替换成当前实验分组。  
+参数名建议使用为'mip-x-'+'实验名'，也可以自定义任意名称，对应的${MIP-X-xxx}内容会被替换成当前实验分组。
 
 ```html
-<mip-pix src="https://www.mipengine.org/a.gif?mip-x-button-color=${MIP-X-BUTTON-COLOR}&mip-x-font-color=${MIP-X-FONT-COLOR}"></mip-pix>
+<mip-pix src="https://www.mipengine.org/a.gif?mip-x-button-color=${MIP-X-BUTTON-COLOR}&mip-x-font-color=${MIP-X-FONT-COLOR}&mip-x-C=${MIP-X-C}"></mip-pix>
 ```
 
 最终请求为：
-> https://www.mipengine.org/tj.gif?t=1487307586286&title=random_title&host=http%3A%2F%2Fwww.mipengine.org%2Findex.html&mip-x-button-color=grey&mip-x-font-color=white&mip-x-font-color2=default
+> https://www.mipengine.org/a.gif?t=1487307586286&title=random_title&host=http%3A%2F%2Fwww.mipengine.org%2Findex.html&mip-x-button-color=grey&mip-x-font-color=default&mip-x-C=default
 
-- 如果本份流量在实验A被分到01组，则最终请求为mip-x-A=01
-- 如果本份流量在实验B被分到默认组，则最终请求为mip-x-B=default
+- 如果本份流量在实验button-color被分到01组，则最终请求为mip-x-button-color=01
+- 如果本份流量在实验font-color被分到默认组，则最终请求为mip-x-font-color=default
 - 如果本份流量中未配置实验C, 却在mip-pix中存在`mip-x-C=${MIP-X-C}`取值，则最终请求为mip-x-C=default
 
 
@@ -72,4 +72,3 @@ t|当前时间|1487307670913|是
 title|页面title|random_title|是
 host|当前页面地址|http%3A%2F%2Fwww.mipengine.org%2Fmip-pix-test.html|是
 mip-x-……|mip-expriment分组|(分组名)|否
-
