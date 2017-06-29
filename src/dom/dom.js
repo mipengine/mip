@@ -133,6 +133,29 @@ define(function (require) {
         }, 5);
     }
 
+    /**
+     * Insert dom list to a node
+     *
+     * @param  {HTMLElement} parent the node will be inserted
+     * @param {Array} children node list which will insert into parent
+     */
+    function insert(parent, children) {
+        if (!parent || !children) {
+            return;
+        }
+        var nodes = Array.prototype.slice.call(children);
+        if (nodes.length === 0) {
+            nodes.push(children);
+        }
+        for (var i = 0; i < nodes.length; i++) {
+            if (this.contains(nodes[i], parent)) {
+                continue;
+            }
+            if (nodes[i] !== parent) {
+                parent.append(nodes[i]);
+            }
+        }
+    }
 
     return {
         closest: closest,
@@ -140,6 +163,7 @@ define(function (require) {
         matches: matches,
         contains: contains,
         create: create,
+        insert: insert,
         waitDocumentReady: waitDocumentReady
     }
 });
