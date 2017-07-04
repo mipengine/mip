@@ -156,9 +156,9 @@ define(function (require) {
             || (window.navigator.maxTouchPoints !== undefined && window.navigator.maxTouchPoints > 0)
             || window.DocumentTouch !== undefined);
     }
-    
+
     /**
-     * Exchange a url to cache url.
+     * Whether pageUrl is mip cache url.
      *
      * @param {string} pageUrl - current page url.
      * @return {Boolean} isCacheUrl.
