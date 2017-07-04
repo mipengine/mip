@@ -8,6 +8,7 @@ define(function (require) {
     'use strict';
 
     var fn = require('./fn');
+    var util = require('util');
 
     /**
      * Type of storage
@@ -148,7 +149,7 @@ define(function (require) {
                 break;
             case storageType.LOCALSTORAGE:
                 this.storage = new LocalStorage();
-                this.storage._isCachePage(href);
+                isCachePage = util.isCacheUrl(href);
                 break;
             case storageType.COOKIESTORAGE:
                 this.storage = new CookieStorage();
@@ -411,16 +412,6 @@ define(function (require) {
             this._rmLocalStorage(key);
         }
         this.set(name, value, expire);
-    };
-
-    /**
-     * If page is cache page
-     *
-     * @param {string} href page href
-     */
-    LocalStorage.prototype._isCachePage = function (href) {
-        isCachePage = /mipcache.bdstatic.com/.test(href)
-                    || /c.mipcdn.com/.test(href);
     };
 
     /**
