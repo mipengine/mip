@@ -8,7 +8,6 @@ define(function (require) {
     'use strict';
 
     var fn = require('./fn');
-    var util = require('util');
 
     /**
      * Type of storage
@@ -149,7 +148,7 @@ define(function (require) {
                 break;
             case storageType.LOCALSTORAGE:
                 this.storage = new LocalStorage();
-                isCachePage = util.isCacheUrl(href);
+                isCachePage = fn.isCacheUrl(href);
                 break;
             case storageType.COOKIESTORAGE:
                 this.storage = new CookieStorage();

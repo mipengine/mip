@@ -10,6 +10,8 @@ define(function (require) {
     // Page url
     var pageUrl = location.href;
 
+    var fn = require('./utils/fn');
+
     /**
      * Exchange a url to cache url.
      *
@@ -18,7 +20,7 @@ define(function (require) {
      * @return {string} Cache url.
      */
     function makeCacheUrl(url, type) {
-        if (isCacheUrl(pageUrl)
+        if (fn.isCacheUrl(pageUrl)
             || (url && url.length < 8)
             || !(url.indexOf('http') === 0 || url.indexOf('//') === 0)) {
             return url;
@@ -33,16 +35,6 @@ define(function (require) {
         return prefix + url;
     }
 
-    /**
-     * Exchange a url to cache url.
-     *
-     * @param {string} pageUrl - current page url.
-     * @return {Boolean} isCacheUrl.
-     */
-    function isCacheUrl(pageUrl) {
-        return /mipcache.bdstatic.com/.test(href)
-                    ||  /^(\/\/|http:\/\/|https:\/\/)[A-Za-z0-9]{1,}-.*.mipcdn.com\/c\//.test(href);
-    }
 
     /**
      * Exchange cache url to origin url.
@@ -83,8 +75,7 @@ define(function (require) {
     return {
         parseCacheUrl: parseCacheUrl,
         makeCacheUrl: makeCacheUrl,
-        isCacheUrl: isCacheUrl,
-        fn: require('./utils/fn'),
+        fn: fn,
         dom: require('./dom/dom'),
         event: require('./dom/event'),
         rect: require('./dom/rect'),
