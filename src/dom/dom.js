@@ -156,8 +156,8 @@ define(function (require) {
             if (this.contains(nodes[i], parent)) {
                 continue;
             }
-            if (nodes[i] !== parent) {
-                parent.append(nodes[i]);
+            if (nodes[i] !== parent && parent.appendChild) {
+                parent.appendChild(nodes[i]);
             }
         }
     }
