@@ -3,6 +3,7 @@ define(function (require) {
 
     window.location.href += '#mipcache.bdstatic.com';
     var CustomStorage = require('utils/customStorage');
+    var fn = require('utils/fn');
     var LocalStorage = new CustomStorage(0);
     var AsyncStorage = new CustomStorage(1);
     var CookieStorage = new CustomStorage(2);
@@ -73,7 +74,7 @@ define(function (require) {
             });
 
             it('noCache', function () {
-                LocalStorage._isCachePage('http://example/com');
+                fn.isCacheUrl('http://example/com');
                 LocalStorage.set(name, nameValue);
                 LocalStorage.set(age, ageValue);
                 expect(localStorage.getItem(name)).to.be.equal(nameValue);
@@ -93,7 +94,7 @@ define(function (require) {
             });
 
             it('noSupportLs', function () {
-                LocalStorage._isCachePage('http://example/com');
+                fn.isCacheUrl('http://example/com');
                 var stub = sinon.stub(LocalStorage, '_supportLs', function () {
                     return false;
                 });
@@ -112,7 +113,7 @@ define(function (require) {
             });
 
             it('coverBranch', function () {
-                LocalStorage._isCachePage('mipcache.bdstatic.com');
+                fn.isCacheUrl('mipcache.bdstatic.com');
                 var stub = sinon.stub(LocalStorage, '_supportLs', function () {
                     return false;
                 });
