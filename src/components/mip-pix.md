@@ -18,7 +18,12 @@
 
 ## 示例
 
-接入方提供一个接收请求的服务地址，例如：`https://www.mipengine.org/a.gif`，此时要求服务器地址为 HTTPS。如果服务地址不支持 HTTPS，可以使用百度云加速或类似产品的HTTPS代理服务，向服务地址定向发送请求。如：
+接入方提供一个接收请求的服务地址，例如：`https://www.mipengine.org/a.gif`。
+
+[warning] 由于 mip-cache 为 https 环境，mip-pix 中 src 参数指向的服务器地址必须支持 https。
+
+如果服务地址不支持 HTTPS，可以使用百度云加速或类似产品的HTTPS代理服务，向服务地址定向发送请求。
+
 ### 简单示例
 ```html
     <mip-pix src="https://www.mipengine.org/a.gif?t=${TIME}&title=${TITLE}&host=${HOST}"></mip-pix>
