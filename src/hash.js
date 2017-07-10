@@ -1,6 +1,7 @@
 /**
  * @file Hash Function. Support hash get function
  * @author Jenny_L
+ * @modify wupeng10@baidu.com 2017-07-06 If the hash has only a key, it is not processed
  */
 define(function (require) {
     'use strict';
@@ -96,26 +97,32 @@ define(function (require) {
      * @return {string} hash
      */
     Hash.prototype._getHashValue = function () {
+        var params = [];
         var hashTree = this.hashTree;
-        var hash = '';
         for (var key in hashTree) {
-            var val = hashTree[key];
-            hash += '&' + key + '=' + encodeURIComponent(val);
+            if (hashTree.hasOwnProperty(key)) {
+                var val = hashTree[key];
+                val = val ? key + '=' + encodeURIComponent(val) : key;
+                params.push(val);
+            }
         }
-        return hash.slice(1);
+        return params.join('&');
     };
 
     /**
      * test ss is available
+     *
+     * @return {boolean} whether enabled or not
      */
     function ssEnabled() {
         try {
             window.sessionStorage.setItem('_t', 1);
             window.sessionStorage.removeItem('_t');
             return true;
-        } catch (e) {
+        }
+        catch (e) {
             return false;
-        }  
+        }
     }
 
     return new Hash();
