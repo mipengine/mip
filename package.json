@@ -1,6 +1,6 @@
 {
     "name": "mip",
-    "version": "1.0.51",
+    "version": "1.0.54",
     "description": "mobile instant page",
     "main": "dist/mip.js",
     "dependencies": {},
