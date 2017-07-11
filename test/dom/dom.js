@@ -59,7 +59,7 @@ define(function (require) {
             var move1 = document.querySelector('.move1');
             var move2 = document.querySelector('.move2');
             var move3 = document.querySelector('.move3');
-            var dist1 = document.querySelector('.move3');
+            var dist1 = document.querySelector('.dist1');
             var doms = [move2, move3];
             dom.insert(dist1, move1);
             dom.insert(dist1, doms);
