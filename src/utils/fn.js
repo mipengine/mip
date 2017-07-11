@@ -157,6 +157,17 @@ define(function (require) {
             || window.DocumentTouch !== undefined);
     }
 
+    /**
+     * Whether pageUrl is mip cache url.
+     *
+     * @param {string} pageUrl - current page url.
+     * @return {Boolean} isCacheUrl.
+     */
+    function isCacheUrl(pageUrl) {
+        return /mipcache.bdstatic.com/.test(pageUrl)
+                    ||  /^(\/\/|http:\/\/|https:\/\/)[A-Za-z0-9]{1,}-.*.mipcdn.com\/c\//.test(pageUrl);
+    }
+
     return {
         throttle: throttle,
         values: values,
@@ -165,6 +176,7 @@ define(function (require) {
         isPlainObject: isPlainObject,
         isString: isString,
         del: del,
-        hasTouch: hasTouch
+        hasTouch: hasTouch,
+        isCacheUrl: isCacheUrl
     }
 });

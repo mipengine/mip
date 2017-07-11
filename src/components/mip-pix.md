@@ -18,10 +18,15 @@
 
 ## 示例
 
-接入方提供一个接收请求的服务地址，例如：`https://www.mipengine.org/a.gif`，此时要求服务器地址为 HTTPS。如果服务地址不支持 HTTPS，可以使用百度云加速或类似产品的HTTPS代理服务，向服务地址定向发送请求。如：
+接入方提供一个接收请求的服务地址，例如：`https://www.mipengine.org/a.gif`。
+
+[warning] 由于 mip-cache 为 https 环境，mip-pix 中 src 参数指向的服务器地址必须支持 https。
+
+如果服务地址不支持 HTTPS，可以使用百度云加速或类似产品的HTTPS代理服务，向服务地址定向发送请求。
+
 ### 简单示例
 ```html
-    <mip-pix src="https://www.mipengine.org/a.gif?t={TIME}&title={TITLE}&host={HOST}"></mip-pix>
+    <mip-pix src="https://www.mipengine.org/a.gif?t=${TIME}&title=${TITLE}&host=${HOST}"></mip-pix>
 ```
 mip-pix会自动匹配参数，生成请求地址，最终请求为：
 > https://www.mipengine.org/tj.gif?t=1487307586286&title=random_title&host=http%3A%2F%2Fwww.mipengine.org%2Findex.html   
@@ -35,16 +40,16 @@ mip-pix会自动添加t, title, host参数，最终请求为：
 
 ### 添加自定义参数
 ```html
-    <mip-pix src="https://www.mipengine.org/a.gif?t={TIME}&title={TITLE}&host={HOST}&area=A"></mip-pix>
+    <mip-pix src="https://www.mipengine.org/a.gif?t=${TIME}&title=${TITLE}&host=${HOST}&area=A"></mip-pix>
 ```
 自定义参数可拼接在src末尾，最终请求为：
 > https://www.mipengine.org/a.gif?t=1487307670913&title=random_title&host=http%3A%2F%2Fwww.mipengine.org%2Fmip-pix-test.html&area=A   
 
 ### 添加`<mip-experiment>`实验分组
-其中mip-x-button-color为'mip-x-'及'实验名'，对应的{GROUP}会被替换成当前实验分组。  
+其中mip-x-button-color建议使用为'mip-x-'+'实验名'，也可以自定义任意名称，对应的${xxx}内容会被替换成当前实验分组。  
 
 ```html
-<mip-pix src="https://www.mipengine.org/a.gif?mip-x-button-color={GROUP}&mip-x-font-color={GROUP}"></mip-pix>
+<mip-pix src="https://www.mipengine.org/a.gif?mip-x-button-color=${MIP-X-BUTTON-COLOR}&mip-x-font-color=${MIP-X-FONT-COLOR}"></mip-pix>
 ```
 
 最终请求为：
@@ -52,11 +57,11 @@ mip-pix会自动添加t, title, host参数，最终请求为：
 
 - 如果本份流量在实验A被分到01组，则最终请求为mip-x-A=01
 - 如果本份流量在实验B被分到默认组，则最终请求为mip-x-B=default
-- 如果本份流量中未配置实验C, 却在mip-pix中存在`mip-x-C={GROUP}`取值，则最终请求为mip-x-C=default
+- 如果本份流量中未配置实验C, 却在mip-pix中存在`mip-x-C=${MIP-X-C}`取值，则最终请求为mip-x-C=default
 
 
 ### 添加referrer
-在html `<head>` 标签中增加`<meta name="referrer" content="always">`, 可以在请求头中增加referrer信息
+在html `<head>` 标签中增加`<meta name="referrer" content="unsafe-url">`, 可以在请求头中增加referrer信息
 
 ## 属性
 ### src
