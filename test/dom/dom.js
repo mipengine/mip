@@ -63,6 +63,7 @@ define(function (require) {
             var doms = [move2, move3];
             dom.insert(dist1, move1);
             dom.insert(dist1, doms);
+            dom.insert(move1, dist1);
             expect(dom.insert(dist1, null)).to.be.undefined;
             expect(dom.insert(null, move1)).to.be.undefined;
             expect(dom.contains(dist1, move1)).to.be.true;
