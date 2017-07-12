@@ -27,8 +27,6 @@ define(function (require) {
             console.log(url);
             return url;
         }
-        console.log(222);
-        console.log(url);
         var prefix = (type === 'img') ? '/i/' : '/c/';
         if (url.indexOf('//') === 0 || url.indexOf('https') === 0) {
             prefix += 's/';
@@ -36,9 +34,8 @@ define(function (require) {
         var urlParas = url.split('//');
         urlParas.shift();
         url = urlParas.join('//');
-        console.log(333);
-        console.log(prefix);
-        console.log(url);
+        console.log(222);
+        console.log(prefix + url);
         return prefix + url;
     }
 
