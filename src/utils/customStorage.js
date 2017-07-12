@@ -49,14 +49,6 @@ define(function (require) {
     var href = window.location.href;
 
     /**
-     * Whether page in cache
-     * @const
-     * @inner
-     * @type {boolean}
-     */
-    var isCachePage = false;
-
-    /**
      * Domain of website
      * @const
      * @inner
@@ -148,7 +140,6 @@ define(function (require) {
                 break;
             case storageType.LOCALSTORAGE:
                 this.storage = new LocalStorage();
-                isCachePage = fn.isCacheUrl(href);
                 break;
             case storageType.COOKIESTORAGE:
                 this.storage = new CookieStorage();
@@ -164,6 +155,15 @@ define(function (require) {
      */
     function LocalStorage() {
     }
+
+    /**
+     * Whether support Local Storage
+     *
+     * @return {boolean} Whether support ls
+     */
+    LocalStorage.prototype._isCachePage = function () {
+        return fn.isCacheUrl(href);
+    };
 
     /**
      * Whether support Local Storage
@@ -221,7 +221,7 @@ define(function (require) {
             return;
         }
         callback = typeof expire === 'function' ? expire : callback;
-        if (isCachePage) {
+        if (this._isCachePage()) {
             var ls = this._getLocalStorage();
             ls[name] = value;
             expire = parseInt(expire, 10);
@@ -256,9 +256,9 @@ define(function (require) {
             try {
                 localStorage.setItem(key, value);
             } catch (e) {
-                if (this._isExceed(e) && isCachePage) {
+                if (this._isExceed(e) && this._isCachePage()) {
                     this._exceedHandler(key, value, expire);
-                } else if (this._isExceed(e) && !isCachePage) {
+                } else if (this._isExceed(e) && !this._isCachePage()) {
                     callback && callback(getError(eCode.lsExceed, mess));
                     throw mess;
                 }
@@ -290,7 +290,7 @@ define(function (require) {
         }
 
         var result;
-        if (isCachePage) {
+        if (this._isCachePage()) {
             var ls = this._getLocalStorage();
             if (ls && ls[name]) {
                 result = ls[name];
@@ -311,7 +311,7 @@ define(function (require) {
             return;
         }
 
-        if (isCachePage) {
+        if (this._isCachePage()) {
             var ls = this._getLocalStorage();
             if (ls && ls[name]) {
                 fn.del(ls, name);
@@ -327,7 +327,7 @@ define(function (require) {
      *
      */
     LocalStorage.prototype.clear = function () {
-        if (isCachePage) {
+        if (this._isCachePage()) {
             this._rmLocalStorage();
         } else {
             this._supportLs() ? localStorage.clear() : lsCache = {};
@@ -341,7 +341,7 @@ define(function (require) {
      */
     LocalStorage.prototype.rmExpires = function () {
         var hasExpires = false;
-        if (isCachePage) {
+        if (this._isCachePage()) {
             var ls = this._supportLs() ? localStorage : lsCache;
             for (var k in ls) {
                 if (ls[k]) {

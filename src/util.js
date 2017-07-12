@@ -7,9 +7,6 @@
 define(function (require) {
     'use strict';
 
-    // Page url
-    var pageUrl = location.href;
-
     var fn = require('./utils/fn');
 
     /**
@@ -20,11 +17,9 @@ define(function (require) {
      * @return {string} Cache url.
      */
     function makeCacheUrl(url, type) {
-        if (!fn.isCacheUrl(pageUrl)
+        if (!fn.isCacheUrl(location.href)
             || (url && url.length < 8)
             || !(url.indexOf('http') === 0 || url.indexOf('//') === 0)) {
-            console.log(111);
-            console.log(url);
             return url;
         }
         var prefix = (type === 'img') ? '/i/' : '/c/';
@@ -34,8 +29,6 @@ define(function (require) {
         var urlParas = url.split('//');
         urlParas.shift();
         url = urlParas.join('//');
-        console.log(222);
-        console.log(prefix + url);
         return prefix + url;
     }
 

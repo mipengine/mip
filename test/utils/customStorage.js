@@ -1,7 +1,6 @@
-define(function (require) {
+define(function(require) {
     'use strict';
 
-    window.location.href += '#mipcache.bdstatic.com';
     var CustomStorage = require('utils/customStorage');
     var fn = require('utils/fn');
     var LocalStorage = new CustomStorage(0);
@@ -21,9 +20,21 @@ define(function (require) {
         exceedNameValue += 'a';
     };
 
-    describe('customStorage', function () {
-        describe('localstorage', function () {
-            it('set', function () {
+    var cacheStub;
+
+    describe('customStorage', function() {
+        describe('localstorage', function() {
+            beforeEach(function() {
+                cacheStub = sinon.stub(LocalStorage, '_isCachePage', function() {
+                    return true;
+                });
+            });
+
+            afterEach(function() {
+                cacheStub.restore();
+            });
+
+            it('set', function() {
                 // Check boundary condition
                 LocalStorage.set(null, null);
 
@@ -32,14 +43,14 @@ define(function (require) {
                 expect(LocalStorage.get(name)).to.be.equal(nameValue);
             });
 
-            it('get', function () {
+            it('get', function() {
                 // Check boundary condition
                 LocalStorage.get(null);
 
                 expect(LocalStorage.get(name)).to.be.equal(nameValue);
             });
 
-            it('rm', function () {
+            it('rm', function() {
                 // Check boundary condition
                 LocalStorage.rm(null);
 
@@ -48,33 +59,32 @@ define(function (require) {
                 expect(!!LocalStorage.get(name)).to.be.false;
             });
 
-            it('rmExpires', function (done) {
+            it('rmExpires', function(done) {
                 LocalStorage.set(expireName, expireNameValue, 1);
-                setTimeout(function () {
+                setTimeout(function() {
                     LocalStorage.rmExpires();
                     expect(!!LocalStorage.get(expireName)).to.be.false;
                     done();
                 }, 50);
             });
 
-            it('clear', function () {
+            it('clear', function() {
                 LocalStorage.clear();
                 expect(!!LocalStorage.get(name)).to.be.false;
                 expect(!!LocalStorage.get(age)).to.be.false;
             });
 
-            it('exceed', function () {
+            it('exceed', function() {
                 try {
                     localStorage.setItem(name, nameValue, 20000);
                     localStorage.setItem(age, ageValue, 20000);
                     localStorage.setItem('test', 'test');
-                    LocalStorage._setLocalStorage(exceedName, exceedNameValue, function (data) {});
+                    LocalStorage._setLocalStorage(exceedName, exceedNameValue, function(data) {});
                     expect(!!LocalStorage.get(exceedName)).to.be.false;
                 } catch (e) {}
             });
 
-            it('noCache', function () {
-                fn.isCacheUrl('http://example/com');
+            it('noCache', function() {
                 LocalStorage.set(name, nameValue);
                 LocalStorage.set(age, ageValue);
                 expect(localStorage.getItem(name)).to.be.equal(nameValue);
@@ -88,33 +98,13 @@ define(function (require) {
 
 
                 try {
-                    LocalStorage.set(exceedName, exceedNameValue, function () {});
+                    LocalStorage.set(exceedName, exceedNameValue, function() {});
                     expect(!!LocalStorage.get(exceedName)).to.be.false;
                 } catch (e) {};
             });
 
-            it('noSupportLs', function () {
-                fn.isCacheUrl('http://example/com');
-                var stub = sinon.stub(LocalStorage, '_supportLs', function () {
-                    return false;
-                });
-                LocalStorage.set(name, nameValue);
-                LocalStorage.set(age, ageValue);
-                expect(!!LocalStorage.get(name)).to.be.true;
-                LocalStorage.rm(name);
-                expect(!!LocalStorage.get(name)).to.be.false;
-                LocalStorage.clear();
-                expect(!!LocalStorage.get(age)).to.be.false;
-                try {
-                    LocalStorage.set(exceedName, exceedNameValue, function () {});
-                    expect(!!LocalStorage.get(exceedName)).to.be.false;
-                } catch (e) {}
-                stub.restore();
-            });
-
-            it('coverBranch', function () {
-                fn.isCacheUrl('mipcache.bdstatic.com');
-                var stub = sinon.stub(LocalStorage, '_supportLs', function () {
+            it('coverBranch', function() {
+                var stub = sinon.stub(LocalStorage, '_supportLs', function() {
                     return false;
                 });
                 LocalStorage._getLocalStorage();
@@ -128,20 +118,70 @@ define(function (require) {
                     number: -2147024882
                 });
                 stub.restore();
-
-                window.localStorage.removeItem = null;
-                LocalStorage._supportLs();
             });
         });
 
-        describe('asyncstorage', function () {
-            it('request1', function (done) {
+        describe('localstorage-nocache', function() {
+            beforeEach(function() {
+                cacheStub = sinon.stub(LocalStorage, '_isCachePage', function() {
+                    return false;
+                });
+            });
+
+            afterEach(function() {
+                cacheStub.restore();
+            });
+
+            it('noSupportLs', function() {
+                var stub = sinon.stub(LocalStorage, '_supportLs', function() {
+                    return false;
+                });
+                LocalStorage.set(name, nameValue);
+                LocalStorage.set(age, ageValue);
+                expect(!!LocalStorage.get(name)).to.be.true;
+                LocalStorage.rm(name);
+                expect(!!LocalStorage.get(name)).to.be.false;
+                LocalStorage.clear();
+                expect(!!LocalStorage.get(age)).to.be.false;
+                try {
+                    LocalStorage.set(exceedName, exceedNameValue, function() {});
+                    expect(!!LocalStorage.get(exceedName)).to.be.false;
+                } catch (e) {}
+                stub.restore();
+            });
+
+            it('supportLs', function() {
+                var stub = sinon.stub(LocalStorage, '_supportLs', function() {
+                    return true;
+                });
+                LocalStorage.set(name, nameValue);
+                LocalStorage.set(age, ageValue);
+                expect(!!LocalStorage.get(name)).to.be.true;
+                LocalStorage.rm(name);
+                expect(!!LocalStorage.get(name)).to.be.false;
+                LocalStorage.clear();
+                expect(!!LocalStorage.get(age)).to.be.false;
+                try {
+                    LocalStorage.set(exceedName, exceedNameValue, function() {});
+                    expect(!!LocalStorage.get(exceedName)).to.be.false;
+                } catch (e) {}
+                stub.restore();
+            });
+        });
+
+        describe('localstorage-isCachePage', function() {
+            it('isCachePage', function() {
+                expect(LocalStorage._isCachePage()).to.be.false;
+            });
+        });
+
+        describe('asyncstorage', function() {
+            it('request1', function(done) {
                 // Check boundary condition
                 AsyncStorage.request();
 
                 var server = sinon.fakeServer.create();
-                server.respondWith("POST", "/req1",
-                [200, {
+                server.respondWith("POST", "/req1", [200, {
                     "Content-Type": "application/json",
                     "Access-Control-Allow-origin": "*",
                     "Access-Control-Allow-Methods": "GET, POST, OPTIONS"
@@ -153,41 +193,64 @@ define(function (require) {
                     headers: {
                         'Access-Control-Request-Headers': 'X-PINGOTHER',
                     },
-                    success: function (data) {
+                    success: function(data) {
                         done();
                     },
-                    error: function (err) {
+                    error: function(err) {
                         done();
                     }
                 });
-                setTimeout(function () {
+                setTimeout(function() {
                     server.respond();
                 }, 100);
             });
-            it('request2', function (done) {
+            it('request2', function(done) {
                 var server = sinon.fakeServer.create();
-                server.respondWith("POST", "/req2",
-                [200, {
+                server.respondWith("GET", "http://baidu.com", [200, {
                     "Content-Type": "application/json"
                 }, '{}']);
                 AsyncStorage.request({
-                    url: '/req2',
-                    method: 'POST',
-                    success: function (data) {
+                    url: 'http://baidu.com',
+                    mode: 'cors',
+                    credentials: 'omit',
+                    cache: 'default',
+                    headers: {
+                        'Access-Control-Request-Headers': 'X-PINGOTHER',
+                    },
+                    success: function(data) {
                         done();
                     },
-                    error: function (err) {
+                    error: function(err) {
                         done();
                     }
                 });
-                setTimeout(function () {
+                setTimeout(function() {
+                    server.respond();
+                }, 200);
+            });
+            it('request3', function(done) {
+                var server = sinon.fakeServer.create();
+                server.respondWith("POST", "/req3", [200, {
+                    "Content-Type": "application/json"
+                }, '{}']);
+                AsyncStorage.request({
+                    url: '/req3',
+                    method: 'POST',
+                    success: function(data) {
+                        done();
+                    },
+                    error: function(err) {
+                        done();
+                    }
+                });
+                setTimeout(function() {
                     server.respond();
                 }, 300);
             });
         });
 
-        describe('asyncstorage', function () {
-            it('delExceedCookie', function () {
+        describe('asyncstorage', function() {
+            it('delExceedCookie', function() {
                 var exceedNameValue;
                 for (var i = 0; i < 1024 * 3; i++) {
                     exceedNameValue += 'a';
