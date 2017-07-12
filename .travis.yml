@@ -1,0 +1,16 @@
+language: node_js
+dist: trusty
+addons:
+  chrome: stable
+node_js:
+  - "5"
+before_script:
+  - npm install
+  - export DISPLAY=:99.0; sh -e /etc/init.d/xvfb start +extension RANDR
+  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+script: npm run test
+after_script:
+  - NODE_ENV=test cat ./dist/test-coverage/lcov/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+env:
+  global:
+    secure: "NLoab/kezXwnHmvfjq0QOsdXV+7BLhV13IFFjFEALQNV6k7lsHHdunFx7NgzSiUXkUr+uQzSIPCKIRRJGl3rGJADqHxX9yw9718pofDuoH7WdB3L085jKIN2InlWdkLQVCO3k6UPt9ZEMOrbGB7pNElHUXKoBo7+AgUspeu7b8Dteqqjs2A4/l1JaGzys0PxYoc9PcgmpJd7ZB3ILctrQPbRXd4Bse4NXRDXT3NtxIyrPlk9EzdzpjWLNAHKeqTW+Bi9p9bkhJid3KvmXTr6IrMTJ9jnsk/NJyQ8j2jbtKPMMWNSKRt/7+7UhpODrLbqCONG1OIE8NBmGwtyPIfxsFVANRxHBO8I/X01eCcaKw9E7Z6XD/8mSnkYyw250L6HPrh6mKfJI7PME26RfCjMLkTHWTxEVDyC077qFDzUJ/obufw/haYt4zJKClA0iTD6succfk6nsE6SDMLlYuEyFA2zpfLUdctlZ/KEQTQzyIZIJu3CdNraAzAUn+Pzcq2O8VacZAUu+Y4R0PWJIcvvbvHoduDghztQGvmXU4gAXRzGICQL8kxl+AL1ABluDffKl/wHclGZOqMEiT1jlQ/54aka+VWzfMA39ibeJkXxzV99+rBMp7yZeg6Uaqtm8HlhxCKGWYRIqY7oYClptYPFkI0x+Tqcj1sOXDK3RZB9V3M="
