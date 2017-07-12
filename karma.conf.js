@@ -74,7 +74,16 @@ module.exports = function(config) {
             outputDir: './dist/test-result' // relative to cwd
         },
         coverageReporter: {
-            dir: './test-coverage'  // relative to basePath
+            dir: './test-coverage',  // relative to basePath
+            reporters: [
+                {
+                    type: 'html'
+                },
+                {
+                    type: 'lcov',
+                    subdir: 'lcov'
+                }
+            ]
         },
 
 
