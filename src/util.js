@@ -34,8 +34,9 @@ define(function (require) {
         var urlParas = url.split('//');
         urlParas.shift();
         url = urlParas.join('//');
-        console.log(1111);
+        console.log(222);
         console.log(prefix);
+        console.log(url);
         return prefix + url;
     }
 
