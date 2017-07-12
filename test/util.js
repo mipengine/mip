@@ -16,7 +16,7 @@ define(function(util) {
             expect(util.makeCacheUrl(url, '')).to.equal('/c/s/example.com');
             expect(util.makeCacheUrl(url, 'img')).to.equal('/i/s/example.com');
 
-            var url = 'https://example.com';
+            url = 'https://example.com';
             expect(util.makeCacheUrl(url, 'img')).to.equal('/i/s/example.com');
         });
 
