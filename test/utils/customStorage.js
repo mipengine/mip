@@ -166,37 +166,12 @@ define(function (require) {
             });
             it('request2', function (done) {
                 var server = sinon.fakeServer.create();
-                server.respondWith("GET", "http://baidu.com",
+                server.respondWith("POST", "/req2",
                 [200, {
                     "Content-Type": "application/json"
                 }, '{}']);
                 AsyncStorage.request({
-                    url: 'http://baidu.com',
-                    mode: 'cors',
-                    credentials: 'omit',
-                    cache: 'default',
-                    headers: {
-                        'Access-Control-Request-Headers': 'X-PINGOTHER',
-                    },
-                    success: function (data) {
-                        done();
-                    },
-                    error: function (err) {
-                        done();
-                    }
-                });
-                setTimeout(function () {
-                    server.respond();
-                }, 300);
-            });
-            it('request3', function (done) {
-                var server = sinon.fakeServer.create();
-                server.respondWith("POST", "/req3",
-                [200, {
-                    "Content-Type": "application/json"
-                }, '{}']);
-                AsyncStorage.request({
-                    url: '/req3',
+                    url: '/req2',
                     method: 'POST',
                     success: function (data) {
                         done();
@@ -207,7 +182,7 @@ define(function (require) {
                 });
                 setTimeout(function () {
                     server.respond();
-                }, 400);
+                }, 300);
             });
         });
 
