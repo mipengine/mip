@@ -187,7 +187,7 @@ define(function (require) {
                 });
                 setTimeout(function () {
                     server.respond();
-                }, 200);
+                }, 300);
             });
             it('request3', function (done) {
                 var server = sinon.fakeServer.create();
@@ -207,7 +207,7 @@ define(function (require) {
                 });
                 setTimeout(function () {
                     server.respond();
-                }, 300);
+                }, 400);
             });
         });
 

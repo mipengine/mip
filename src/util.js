@@ -23,9 +23,11 @@ define(function (require) {
         if (!fn.isCacheUrl(pageUrl)
             || (url && url.length < 8)
             || !(url.indexOf('http') === 0 || url.indexOf('//') === 0)) {
+            console.log(111);
+            console.log(url);
             return url;
         }
-        console.log(1111);
+        console.log(222);
         console.log(url);
         var prefix = (type === 'img') ? '/i/' : '/c/';
         if (url.indexOf('//') === 0 || url.indexOf('https') === 0) {
@@ -34,7 +36,7 @@ define(function (require) {
         var urlParas = url.split('//');
         urlParas.shift();
         url = urlParas.join('//');
-        console.log(222);
+        console.log(333);
         console.log(prefix);
         console.log(url);
         return prefix + url;
