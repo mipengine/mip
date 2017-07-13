@@ -2,6 +2,10 @@ language: node_js
 dist: trusty
 addons:
   chrome: stable
+  sauce_connect:
+    username: "smartfutureplayer"
+  jwt:
+    secure: "EV5u6vld9UstVlLe9L6ueWeugmPZVnOWOcDqT3ZHcjAtlKH2Hs6tEyKZGDKA8o4rDYsMKIirvVAEDzJyZKkYGiuPcKhv+RNfyu/TF69CZRlXOCX/6i9QOS2M2VJu+mXRkbn218T/bq4znuaW2nhryp85MfXm5ox4mGtuIoixkxDgvkYSb6xh3ur1Cr7qD+YAmVu2Pq5IUqRVAYaOPmU1rBe6OrQcwEounzznftyKahF8NTvzbkDNqbdijN1w2YiaFtU06C+ZH3DBqNO4FgSg97/121HzcEf1Ax5RY1weWiEdovbYsvSonqLIsadwM0RUzbDFJ1eFLondO9Rajt5NSEaFTQcFsnxnXTzWcC29JERFClKFrevRWfZRDh0rtgfsN/g51gnbx85hNshWQrhCwIszXWhUEtDbO514Bzgy6laJX/bXTAE8QybCjdHiBt5Wnn8iu6Ox9yb6Q9u5ugCzMwoe6J1OPQHto1xT4SgfveRTNuWWiZ+ID/eayFGZ86SPhKQzzbqNMDYPZr4KQbsYSgSxQavx5+mK2U1WRGaxxZXnrWYlKzBIMHNx2PgjkYuTHy9k3NPOoISiYG+1u8bUr+tjtYVCr+6C8MVVKhAqpzf7ym/rvxh3rM1BcvTaX7737Gq2VdymI0Gxgnon92oxOLxzCfITZrYWgL4li5Q6vxI="
 node_js:
   - "5"
 before_script:
@@ -11,7 +15,3 @@ before_script:
 script: npm run test
 after_script:
   - NODE_ENV=test cat ./dist/test-coverage/lcov/lcov.info | ./node_modules/coveralls/bin/coveralls.js
-env:
-  global:
-    - SAUCE_USERNAME=smartfutureplayer
-    - SAUCE_ACCESS_KEY=1602b39c-b8e2-41e8-8974-42ab3cc95dd5

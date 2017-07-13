@@ -5,30 +5,20 @@
 
 module.exports = function(config) {
     var customLaunchers = require('./saucelab_browsers.js');
-    var coverageReporter = [
-        {
-            type: 'html'
-        }
-    ];
+    var coverageReporter = [{
+        type: 'html'
+    }];
     var reporters = [
         'mocha'
     ];
     var browsers = ['Chrome'];
     if (process.env.TRAVIS) {
-        console.log('has travis');
         coverageReporter.push({
             type: 'lcov',
             subdir: 'lcov',
         });
-    } else {
-        console.log('no travis');
-    }
-
-    if (process.env.SAUCE_USERNAME) {
-        console.log('has saucelabs');
+        reporters.push('saucelabs');
         browsers = browsers.concat(Object.keys(customLaunchers));
-    } else {
-        console.log('no saucelabs');
     }
 
     config.set({
@@ -141,16 +131,11 @@ module.exports = function(config) {
         singleRun: true
     });
 
-    if (process.env.TRAVIS && process.env.SAUCE_USERNAME) {
-        // config headless chrome, it can execute the code without opening browser
-        var label = "TRAVIS #" + process.env.TRAVIS_BUILD_NUMBER + " (" + process.env.TRAVIS_BUILD_ID + ")";
+    if (process.env.TRAVIS) {
         config.sauceLabs = {
-            testName: 'MIP Unit Tests',
-            build: label,
-            startConnect: false,
-            recordScreenshots: true,
-            tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER
+            testName: 'MIP Unit Tests'
         };
+        config.captureTimeout = 60000;
         config.customLaunchers = customLaunchers;
     }
 };
