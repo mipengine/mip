@@ -125,24 +125,35 @@ module.exports = function(config) {
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits
         // 脚本调用请设为 true
-        singleRun: true
-    });
+        singleRun: true,
 
-    if (process.env.TRAVIS) {
-        config.sauceLabs = {
-            testName: 'MIP Unit Tests',
+        customLaunchers: customLaunchers,
+
+        sauceLabs: {
+            retryLimit: 3,
             startConnect: false,
             recordVideo: false,
             recordScreenshots: false,
-            tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER,
             options: {
                 'selenium-version': '2.53.0',
                 'command-timeout': 600,
                 'idle-timeout': 600,
                 'max-duration': 5400,
             }
-        };
-        config.captureTimeout = 180000;
-        config.customLaunchers = customLaunchers;
+        },
+
+        captureTimeout: 180000
+    });
+
+    if (process.env.TRAVIS) {
+        var buildId =
+            'TRAVIS #' + process.env.TRAVIS_BUILD_NUMBER + ' (' + process.env.TRAVIS_BUILD_ID + ')';
+        config.sauceLabs.build = buildId;
+        config.sauceLabs.tunnelIdentifier = process.env.TRAVIS_JOB_NUMBER;
+
+        // TODO(mlaval): remove once SauceLabs supports websockets.
+        // This speeds up the capturing a bit, as browsers don't even try to use websocket.
+        console.log('>>>> setting socket.io transport to polling <<<<');
+        config.transports = ['polling'];
     }
 };
