@@ -147,7 +147,7 @@ module.exports = function(config) {
         config.sauceLabs = {
             testName: 'MIP Unit Tests',
             build: label,
-            startConnect: true,
+            startConnect: false,
             recordScreenshots: true,
             tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER
         };
