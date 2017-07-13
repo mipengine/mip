@@ -10,6 +10,8 @@ before_script:
   - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
 script: npm run test
 after_script:
+  - echo 123123123123
+  - cat ./dist/test-coverage/lcov/lcov.info
   - NODE_ENV=test cat ./dist/test-coverage/lcov/lcov.info | ./node_modules/coveralls/bin/coveralls.js
 env:
   global:
