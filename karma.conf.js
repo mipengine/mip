@@ -147,6 +147,8 @@ module.exports = function(config) {
         var label = "TRAVIS #" + process.env.TRAVIS_BUILD_NUMBER + " (" + process.env.TRAVIS_BUILD_ID + ")";
         config.sauceLabs = {
             testName: 'MIP Unit Tests',
+            username: process.env.SAUCE_USERNAME,
+            accessKey: process.env.SAUCE_ACCESS_KEY,
             startConnect: true,
             build: label,
             startConnect: false,
