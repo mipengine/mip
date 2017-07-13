@@ -31,7 +31,7 @@ define(function () {
         }
     }
 
-    // mock Object assign
+    // Mock Object assign
     var mockElement2 = {};
     for (var key in mockElement1) {
         if (mockElement1.hasOwnProperty(key)) {
