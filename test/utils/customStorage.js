@@ -74,20 +74,28 @@ define(function(require) {
                 expect(!!LocalStorage.get(age)).to.be.false;
             });
 
-            it('exceed', function() {
-                try {
-                    localStorage.setItem(name, nameValue, 20000);
-                    localStorage.setItem(age, ageValue, 20000);
-                    localStorage.setItem('test', 'test');
-                    LocalStorage._setLocalStorage(exceedName, exceedNameValue, function(data) {});
-                    expect(!!LocalStorage.get(exceedName)).to.be.false;
-                } catch (e) {}
+            it('exceed', function(done) {
+                if (LocalStorage._supportLs()) {
+                    try {
+                        localStorage.setItem(name, nameValue, 20000);
+                        localStorage.setItem(age, ageValue, 20000);
+                        localStorage.setItem('test', 'test');
+                        LocalStorage._setLocalStorage(exceedName, exceedNameValue, function(data) {});
+                        expect(!!LocalStorage.get(exceedName)).to.be.false;
+                    } catch (e) {
+                        done();
+                    }
+                } else {
+                    done();
+                }
             });
 
             it('noCache', function() {
                 LocalStorage.set(name, nameValue);
                 LocalStorage.set(age, ageValue);
-                expect(localStorage.getItem(name)).to.be.equal(nameValue);
+                if (LocalStorage._supportLs()) {
+                    expect(localStorage.getItem(name)).to.be.equal(nameValue);
+                }
                 expect(LocalStorage.get(name)).to.be.equal(nameValue);
 
                 LocalStorage.rm(name);
