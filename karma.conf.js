@@ -19,12 +19,10 @@ module.exports = function(config) {
         coverageReporter.push({
             type: 'lcov',
             subdir: 'lcov',
-            dir: './'
         });
     } else {
         coverageReporter.push({
-            type: 'html',
-            dir: './test-coverage'
+            type: 'html'
         });
     }
 
@@ -103,6 +101,7 @@ module.exports = function(config) {
             outputDir: './dist/test-result' // relative to cwd
         },
         coverageReporter: {
+            dir: './test-coverage', // relative to basePath
             reporters: coverageReporter
         },
 
