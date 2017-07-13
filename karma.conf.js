@@ -131,7 +131,6 @@ module.exports = function(config) {
     if (process.env.TRAVIS) {
         config.sauceLabs = {
             testName: 'MIP Unit Tests',
-            startConnect: false,
             recordVideo: false,
             recordScreenshots: false,
             tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER,
