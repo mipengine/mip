@@ -16,19 +16,24 @@ module.exports = function(config) {
     ];
     const browsers = ['Chrome'];
     if (process.env.TRAVIS) {
+        console.log('has travis');
         coverageReporter.push({
             type: 'lcov',
             subdir: 'lcov',
         });
     } else {
+        console.log('no travis');
         coverageReporter.push({
             type: 'html'
         });
     }
 
     if (process.env.SAUCE_USERNAME) {
+        console.log('no saucelabs');
         reporters.push('saucelabs');
         browsers.push(Object.keys(customLaunchers));
+    } else {
+        console.log('no saucelabs');
     }
 
     config.set({
@@ -142,10 +147,10 @@ module.exports = function(config) {
 
     if (process.env.TRAVIS && process.env.SAUCE_USERNAME) {
         // config headless chrome, it can execute the code without opening browser
-        config.customLaunchers = customLaunchers;
         config.sauceLabs = {
             testName: 'MIP Unit Tests',
             startConnect: true
         };
+        config.customLaunchers = customLaunchers;
     }
 };
