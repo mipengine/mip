@@ -8,6 +8,6 @@ before_script:
   - npm install
   - export DISPLAY=:99.0; sh -e /etc/init.d/xvfb start +extension RANDR
   - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
-script: npm run report
+script: npm run test
 after_script:
   - NODE_ENV=test cat ./dist/test-coverage/lcov/lcov.info | ./node_modules/coveralls/bin/coveralls.js
