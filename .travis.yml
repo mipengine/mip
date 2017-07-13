@@ -11,3 +11,7 @@ before_script:
 script: npm run test
 after_script:
   - NODE_ENV=test cat ./dist/test-coverage/lcov/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+env:
+  global:
+    - SAUCE_USERNAME=smartfutureplayerpeng
+    - SAUCE_ACCESS_KEY=1602b39c-b8e2-41e8-8974-42ab3cc95dd5

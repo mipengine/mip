@@ -20,10 +20,6 @@ module.exports = function(config) {
             type: 'lcov',
             subdir: 'lcov',
         });
-    } else {
-        coverageReporter.push({
-            type: 'html'
-        });
     }
 
     if (process.env.SAUCE_USERNAME) {
@@ -54,7 +50,8 @@ module.exports = function(config) {
             'karma-html-reporter',
 
             // launchers
-            'karma-chrome-launcher'
+            'karma-chrome-launcher',
+            "karma-sauce-launcher"
         ],
 
         // frameworks to use
@@ -144,10 +141,15 @@ module.exports = function(config) {
     });
 
     if (process.env.TRAVIS && process.env.SAUCE_USERNAME) {
-        // config headless chrome, it can execute the code without opening browser
+        config headless chrome, it can execute the code without opening browser
+        const label = "TRAVIS #" + process.env.TRAVIS_BUILD_NUMBER + " (" + process.env.TRAVIS_BUILD_ID + ")";
         config.sauceLabs = {
             testName: 'MIP Unit Tests',
-            startConnect: true
+            startConnect: true,
+            build: label,
+            startConnect: false,
+            recordScreenshots: true,
+            tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER
         };
         config.customLaunchers = customLaunchers;
     }
