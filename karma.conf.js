@@ -4,6 +4,61 @@
  */
 
 module.exports = function(config) {
+    var customLaunchers = {
+        'SL_Chrome': {
+            base: 'SauceLabs',
+            browserName: 'chrome',
+            version: '51'
+        },
+        'SL_Firefox': {
+            base: 'SauceLabs',
+            browserName: 'firefox',
+            version: '47'
+        },
+        'SL_Safari_8': {
+            base: 'SauceLabs',
+            browserName: 'safari',
+            platform: 'OS X 10.10',
+            version: '8'
+        },
+        'SL_Safari_9': {
+            base: 'SauceLabs',
+            browserName: 'safari',
+            platform: 'OS X 10.11',
+            version: '9'
+        },
+        'SL_IE_9': {
+            base: 'SauceLabs',
+            browserName: 'internet explorer',
+            platform: 'Windows 2008',
+            version: '9'
+        },
+        'SL_IE_10': {
+            base: 'SauceLabs',
+            browserName: 'internet explorer',
+            platform: 'Windows 2012',
+            version: '10'
+        },
+        'SL_IE_11': {
+            base: 'SauceLabs',
+            browserName: 'internet explorer',
+            platform: 'Windows 8.1',
+            version: '11'
+        },
+        'SL_EDGE': {
+            base: 'SauceLabs',
+            browserName: 'microsoftedge',
+            platform: 'Windows 10',
+            version: '14'
+        },
+        'SL_iOS': {
+            base: 'SauceLabs',
+            browserName: 'iphone',
+            platform: 'OS X 10.10',
+            version: '8.1'
+        }
+    };
+
     config.set({
 
         // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -74,16 +129,13 @@ module.exports = function(config) {
             outputDir: './dist/test-result' // relative to cwd
         },
         coverageReporter: {
-            dir: './test-coverage',  // relative to basePath
-            reporters: [
-                {
-                    type: 'html'
-                },
-                {
-                    type: 'lcov',
-                    subdir: 'lcov'
-                }
-            ]
+            dir: './test-coverage', // relative to basePath
+            reporters: [{
+                type: 'html'
+            }, {
+                type: 'lcov',
+                subdir: 'lcov'
+            }]
         },
 
 
@@ -103,7 +155,7 @@ module.exports = function(config) {
         // browser console options
         browserConsoleLogOptions: {
             // possible values: 'log' || 'error' || 'warn' || 'info' || 'debug'
-            level:  'log',
+            level: 'log',
             terminal: true
         },
 
@@ -114,20 +166,15 @@ module.exports = function(config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['Chrome', 'HeadlessChrome'],
+        browsers: Object.keys(customLaunchers),
+
+        sauceLabs: {
+            testName: 'MIP Unit Tests',
+            startConnect: true
+        },
 
         // config headless chrome, it can execute the code without opening browser
-        customLaunchers: {
-            HeadlessChrome: {
-                base: 'Chrome',
-                flags: [
-                    '--headless',
-                    '--disable-gpu',
-                    // Without a remote debugging port, Google Chrome exits immediately.
-                    '--remote-debugging-port=9222',
-                ]
-            }
-        },
+        customLaunchers: customLaunchers,
 
 
         // Continuous Integration mode
@@ -135,4 +182,10 @@ module.exports = function(config) {
         // 脚本调用请设为 true
         singleRun: true
     });
+
+    if (process.env.TRAVIS) {
+        var buildLabel = 'TRAVIS #' + process.env.TRAVIS_BUILD_NUMBER + ' (' + process.env.TRAVIS_BUILD_ID + ')';
+        config.sauceLabs.build = buildLabel;
+        config.sauceLabs.tunnelIdentifier = process.env.TRAVIS_JOB_NUMBER;
+    }
 };
