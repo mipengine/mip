@@ -4,16 +4,16 @@
  */
 
 module.exports = function(config) {
-    const customLaunchers = require('./saucelab_browsers.js');
-    const coverageReporter = [
+    var customLaunchers = require('./saucelab_browsers.js');
+    var coverageReporter = [
         {
             type: 'html'
         }
     ];
-    const reporters = [
+    var reporters = [
         'mocha'
     ];
-    let browsers = ['Chrome'];
+    var browsers = ['Chrome'];
     if (process.env.TRAVIS) {
         coverageReporter.push({
             type: 'lcov',
@@ -141,7 +141,7 @@ module.exports = function(config) {
 
     if (process.env.TRAVIS && process.env.SAUCE_USERNAME) {
         // config headless chrome, it can execute the code without opening browser
-        const label = "TRAVIS #" + process.env.TRAVIS_BUILD_NUMBER + " (" + process.env.TRAVIS_BUILD_ID + ")";
+        var label = "TRAVIS #" + process.env.TRAVIS_BUILD_NUMBER + " (" + process.env.TRAVIS_BUILD_ID + ")";
         config.sauceLabs = {
             testName: 'MIP Unit Tests',
             startConnect: true,
