@@ -90,27 +90,6 @@ define(function(require) {
                 }
             });
 
-            it('noCache', function() {
-                LocalStorage.set(name, nameValue);
-                LocalStorage.set(age, ageValue);
-                if (LocalStorage._supportLs()) {
-                    expect(localStorage.getItem(name)).to.be.equal(nameValue);
-                }
-                expect(LocalStorage.get(name)).to.be.equal(nameValue);
-
-                LocalStorage.rm(name);
-                expect(!!LocalStorage.get(name)).to.be.false;
-
-                LocalStorage.clear();
-                expect(!!LocalStorage.get(age)).to.be.false;
-
-
-                try {
-                    LocalStorage.set(exceedName, exceedNameValue, function() {});
-                    expect(!!LocalStorage.get(exceedName)).to.be.false;
-                } catch (e) {};
-            });
-
             it('coverBranch', function() {
                 var stub = sinon.stub(LocalStorage, '_supportLs', function() {
                     return false;
