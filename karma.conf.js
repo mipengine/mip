@@ -15,10 +15,13 @@ module.exports = function(config) {
     ];
     var browsers = ['Chrome'];
     if (process.env.TRAVIS) {
+        console.log('has travis');
         coverageReporter.push({
             type: 'lcov',
             subdir: 'lcov',
         });
+    } else {
+        console.log('no travis');
     }
 
     if (process.env.SAUCE_USERNAME) {
