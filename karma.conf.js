@@ -50,7 +50,10 @@ module.exports = function(config) {
 
             // launchers
             "karma-sauce-launcher",
-            'karma-chrome-launcher'
+            'karma-chrome-launcher',
+            "karma-firefox-launcher",
+            "karma-ie-launcher",
+            "karma-safari-launcher"
         ],
 
         // frameworks to use
