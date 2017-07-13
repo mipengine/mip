@@ -26,7 +26,7 @@ define(function (require) {
 
 	    	it('iOS version', function () {
 	    		var stub = sinon.stub(platform, '_ua', function() {
-	            	return 'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1';
+	            	return 'Mozilla/5.0 (iPhone; CPU iPhone OS 10_1_1 like Mac OS X) AppleWebKit/602.2.14 (KHTML, like Gecko) Mobile/14B100 MicroMessenger/6.5.5 NetType/WIFI Language/zh_CN';
  				});
  				platform.start();
 	    		var stub1 = sinon.stub(platform, '_appVersion');
