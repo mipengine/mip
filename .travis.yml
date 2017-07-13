@@ -3,7 +3,7 @@ dist: trusty
 addons:
   chrome: stable
   sauce_connect:
-    username: "smartfutureplayer",
+    username: "smartfutureplayer"
     access_key: "1602b39c-b8e2-41e8-8974-42ab3cc95dd5"
 node_js:
   - "5"
