@@ -88,8 +88,6 @@ define(function (require) {
         try {
             str = JSON.parse(str);
         } catch (e) {
-            str = JSON.stringify(str);
-            str = JSON.parse(str);
         }
         return str;
     }
@@ -444,7 +442,7 @@ define(function (require) {
         fetch(opt.url, myInit).then(function (res) {
             if (res.ok) {
                 res.text().then(function (data) {
-                    opt.success && opt.success(JSON.parse(data));
+                    opt.success && opt.success(parseJson(data));
                 });
             } else {
                 opt.error && opt.error(res);
