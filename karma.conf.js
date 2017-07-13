@@ -137,7 +137,7 @@ module.exports = function(config) {
             startConnect: false,
             recordVideo: false,
             recordScreenshots: false,
-            tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER
+            tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER,
             options: {
                 'selenium-version': '2.53.0',
                 'command-timeout': 600,
