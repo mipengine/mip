@@ -3,9 +3,8 @@ dist: trusty
 addons:
   chrome: stable
   sauce_connect:
-    username: "smartfutureplayer"
-  jwt:
-    secure: "PmuF+Y8THOEN4eUNUk6YYWPFcb0oKYIvRJBkJK4DTmjsYLE0rIaRwBHGl6glPUi+wYvYpmeXq7caBxJGOgxVgBXPQklGZWH+QotaqWj6hAWOw5BrlOoMrLOV4FD3RlkfMs4BqBzNMBWMJVJ1EyfjUOri+ZBmzsA+f+y9myuLpCu0gh61SZc5RJhXGrB1v3o5ERUZ57QAmA0jezP7g+FKTysU8Et3kcnaLjDQUibtgqE/cbs0bkTc4omcHIkJRnAaoS7v5oML2uGusgGmeJaROkIsiJEtUNlCMP9UbJ0+GBnfQA6ZazxpF5MoK5hZ7Yyz3sx+qQLguYjtEzb3pbbuoPZEXFrfMFz2Mu1SkT+0rYqoCccQNHd2fJaUTXM+/yKAUjDpBQoFwoy/giR1rqnSItqiFcBPOasck5Y1vSxhgvKV3ulJut50hm6ljNckbtHjSTcgn4fx4+hVgLcT8QG9b7Nw6S0KPOwsTHY6k2PaOwz7L1M/Vpzz1riMs/oGQKpMr9VxmwWL7zdfI+cw7ezngPqLUKFH4SfNPNgqoXmDXDMsyKJeCUoDR60Xtr/cQI101WTRdQJu1z7miNmBqnS+7wpK5LsbmUVgyy1dJOMMaT5mO156z7ZbwJ0KSRLgHuEMmo30JZfH0nJr/cV0Y4P/IYTr8Oy+tX9yvvAySoKbqFk="
+    username: "smartfutureplayer",
+    access_key: "1602b39c-b8e2-41e8-8974-42ab3cc95dd5"
 node_js:
   - "5"
 before_script:
