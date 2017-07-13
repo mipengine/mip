@@ -13,7 +13,7 @@ module.exports = function(config) {
     const reporters = [
         'mocha'
     ];
-    const browsers = ['Chrome'];
+    let browsers = ['Chrome'];
     if (process.env.TRAVIS) {
         coverageReporter.push({
             type: 'lcov',
@@ -24,7 +24,7 @@ module.exports = function(config) {
     if (process.env.SAUCE_USERNAME) {
         console.log('has saucelabs');
         reporters.push('saucelabs');
-        browsers.push(Object.keys(customLaunchers));
+        browsers = browsers.concat(Object.keys(customLaunchers));
     } else {
         console.log('no saucelabs');
     }
@@ -49,8 +49,8 @@ module.exports = function(config) {
             'karma-html-reporter',
 
             // launchers
-            'karma-chrome-launcher',
-            "karma-sauce-launcher"
+            "karma-sauce-launcher",
+            'karma-chrome-launcher'
         ],
 
         // frameworks to use
