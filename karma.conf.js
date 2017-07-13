@@ -17,8 +17,8 @@ module.exports = function(config) {
             type: 'lcov',
             subdir: 'lcov',
         });
-        reporters.push('saucelabs');
-        browsers = browsers.concat(Object.keys(customLaunchers));
+        reporters = reporters.concat(['dots', 'saucelabs']);
+        browsers = Object.keys(customLaunchers);
     }
 
     config.set({
@@ -133,9 +133,19 @@ module.exports = function(config) {
 
     if (process.env.TRAVIS) {
         config.sauceLabs = {
-            testName: 'MIP Unit Tests'
+            testName: 'MIP Unit Tests',
+            startConnect: false,
+            recordVideo: false,
+            recordScreenshots: false,
+            tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER
+            options: {
+                'selenium-version': '2.53.0',
+                'command-timeout': 600,
+                'idle-timeout': 600,
+                'max-duration': 5400,
+            }
         };
-        config.captureTimeout = 60000;
+        config.captureTimeout = 180000;
         config.customLaunchers = customLaunchers;
     }
 };
