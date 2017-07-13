@@ -4,60 +4,34 @@
  */
 
 module.exports = function(config) {
-    var customLaunchers = {
-        'SL_Chrome': {
-            base: 'SauceLabs',
-            browserName: 'chrome',
-            version: '51'
-        },
-        'SL_Firefox': {
-            base: 'SauceLabs',
-            browserName: 'firefox',
-            version: '47'
-        },
-        'SL_Safari_8': {
-            base: 'SauceLabs',
-            browserName: 'safari',
-            platform: 'OS X 10.10',
-            version: '8'
-        },
-        'SL_Safari_9': {
-            base: 'SauceLabs',
-            browserName: 'safari',
-            platform: 'OS X 10.11',
-            version: '9'
-        },
-        'SL_IE_9': {
-            base: 'SauceLabs',
-            browserName: 'internet explorer',
-            platform: 'Windows 2008',
-            version: '9'
-        },
-        'SL_IE_10': {
-            base: 'SauceLabs',
-            browserName: 'internet explorer',
-            platform: 'Windows 2012',
-            version: '10'
-        },
-        'SL_IE_11': {
-            base: 'SauceLabs',
-            browserName: 'internet explorer',
-            platform: 'Windows 8.1',
-            version: '11'
-        },
-        'SL_EDGE': {
-            base: 'SauceLabs',
-            browserName: 'microsoftedge',
-            platform: 'Windows 10',
-            version: '14'
-        },
-        'SL_iOS': {
-            base: 'SauceLabs',
-            browserName: 'iphone',
-            platform: 'OS X 10.10',
-            version: '8.1'
+    var customLaunchers = require('./saucelab_browsers');
+
+    const coverageReporter = [
+        {
+            type: 'html'
         }
-    };
+    ];
+    const reporters = [
+        'mocha'
+    ];
+    const browsers = ['Chrome'];
+    if (process.env.TRAVIS) {
+        coverageReporter.push({
+            type: 'lcov',
+            subdir: 'lcov',
+            dir: './'
+        });
+    } else {
+        coverageReporter.push({
+            type: 'html',
+            dir: './test-coverage'
+        });
+    }
+
+    if (process.env.SAUCE_USERNAME) {
+        reporters.push('saucelabs');
+        browsers.push(Object.keys(customLaunchers));
+    }
 
     config.set({
 
@@ -124,18 +98,12 @@ module.exports = function(config) {
         // test results reporter to use
         // possible values: 'dots', 'progress'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: ['mocha'],
+        reporters: reporters,
         htmlReporter: {
             outputDir: './dist/test-result' // relative to cwd
         },
         coverageReporter: {
-            dir: './test-coverage', // relative to basePath
-            reporters: [{
-                type: 'html'
-            }, {
-                type: 'lcov',
-                subdir: 'lcov'
-            }]
+            reporters: coverageReporter
         },
 
 
@@ -163,19 +131,9 @@ module.exports = function(config) {
         // Note: 代码改动自动运行测试，需要singleRun为false
         autoWatch: false,
 
-
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: Object.keys(customLaunchers),
-
-        sauceLabs: {
-            testName: 'MIP Unit Tests',
-            startConnect: true
-        },
-
-        // config headless chrome, it can execute the code without opening browser
-        customLaunchers: customLaunchers,
-
+        browsers: browsers,
 
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits
@@ -183,9 +141,12 @@ module.exports = function(config) {
         singleRun: true
     });
 
-    if (process.env.TRAVIS) {
-        var buildLabel = 'TRAVIS #' + process.env.TRAVIS_BUILD_NUMBER + ' (' + process.env.TRAVIS_BUILD_ID + ')';
-        config.sauceLabs.build = buildLabel;
-        config.sauceLabs.tunnelIdentifier = process.env.TRAVIS_JOB_NUMBER;
+    if (process.env.TRAVIS && process.env.SAUCE_USERNAME) {
+        // config headless chrome, it can execute the code without opening browser
+        config.customLaunchers = customLaunchers;
+        config.sauceLabs = {
+            testName: 'MIP Unit Tests',
+            startConnect: true
+        };
     }
 };
