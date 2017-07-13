@@ -4,6 +4,7 @@
  */
 
 module.exports = {
+    // the cool kids
     sl_chrome: {
         base: 'SauceLabs',
         browserName: 'chrome',
@@ -36,11 +37,6 @@ module.exports = {
         browserName: 'internet explorer',
         platform: 'Windows 8.1',
         version: '11'
-    },
-    sl_edge: {
-        base: 'SauceLabs',
-        browserName: 'MicrosoftEdge',
-        platform: 'Windows 10'
     },
     // mobile
     sl_ios_safari_9: {
