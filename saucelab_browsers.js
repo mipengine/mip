@@ -34,10 +34,6 @@ module.exports = {
         version: '11'
     },
     // mobile
-    sl_ios_safari_9: {
-        base: 'SauceLabs',
-        browserName: 'iphone'
-    },
     sl_android_6_0: {
         base: 'SauceLabs',
         browserName: 'android'
