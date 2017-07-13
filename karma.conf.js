@@ -23,7 +23,6 @@ module.exports = function(config) {
 
     if (process.env.SAUCE_USERNAME) {
         console.log('has saucelabs');
-        reporters.push('saucelabs');
         browsers = browsers.concat(Object.keys(customLaunchers));
     } else {
         console.log('no saucelabs');
