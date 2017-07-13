@@ -13,13 +13,13 @@
     "mip-processor-jscompress": "^1.2.0",
     "chai": "^3.5.0",
     "chai-as-promised": "^5.3.0",
-    "coveralls": "^2.13.1",
     "karma": "^1.3.0",
     "karma-chai": "^0.1.0",
     "karma-chai-as-promised": "^0.1.2",
     "karma-chai-sinon": "^0.1.5",
     "karma-chrome-launcher": "^0.1.7",
     "karma-coverage": "^1.1.1",
+    "karma-coveralls": "^1.1.2",
     "karma-html-reporter": "^0.2.7",
     "karma-mocha": "^1.1.1",
     "karma-mocha-reporter": "^2.0.4",
@@ -31,7 +31,8 @@
   "scripts": {
     "build": "node tools/build.js",
     "dev": "node tools/build.js dev",
-    "test": "node tools/build.js test;./node_modules/karma/bin/karma --port 9877 start --reporters mocha,html,coverage"
+    "test": "node tools/build.js test;./node_modules/karma/bin/karma --port 9877 start --reporters mocha,html,coverage",
+    "report": "node tools/build.js test;./node_modules/karma/bin/karma --port 9877 start --reporters mocha,html,coverage,coveralls"
   },
   "repository": {
     "type": "git",

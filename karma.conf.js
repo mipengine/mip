@@ -5,18 +5,11 @@
 
 module.exports = function(config) {
     var customLaunchers = require('./saucelab_browsers.js');
-    var coverageReporter = [{
-        type: 'html'
-    }];
     var reporters = [
         'mocha'
     ];
     var browsers = ['Chrome'];
     if (process.env.TRAVIS) {
-        coverageReporter.push({
-            type: 'lcov',
-            subdir: 'lcov',
-        });
         reporters = reporters.concat(['dots', 'saucelabs']);
         browsers = Object.keys(customLaunchers);
     }
@@ -42,7 +35,10 @@ module.exports = function(config) {
 
             // launchers
             "karma-sauce-launcher",
-            'karma-chrome-launcher'
+            'karma-chrome-launcher',
+
+            // coverage
+            'karma-coveralls'
         ],
 
         // frameworks to use
@@ -93,7 +89,12 @@ module.exports = function(config) {
         },
         coverageReporter: {
             dir: './test-coverage', // relative to basePath
-            reporters: coverageReporter
+            reporters: [{
+                type: 'html'
+            }, {
+                type: 'lcov',
+                subdir: 'lcov',
+            }]
         },
 
 
