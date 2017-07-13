@@ -3,12 +3,11 @@
 <p align="center">
 <a href="https://travis-ci.org/GeekFE/mip"><img src="https://travis-ci.org/GeekFE/mip.svg?branch=master" alt="Build Status"></a>
 <a href="https://coveralls.io/github/GeekFE/mip?branch=master"><img src="https://coveralls.io/repos/github/GeekFE/mip/badge.svg?branch=master&v" alt="Coverage Status"></a>
-
 <a href="https://saucelabs.com/beta/builds/26dd1e325a0640e8a3b01c90cee65ac4"><img src="https://saucelabs.com/buildstatus/smartfutureplayer" alt="Build Status"></a>
 </p>
 
-<p>
-	<a href="https://saucelabs.com/beta/builds/26dd1e325a0640e8a3b01c90cee65ac4"><img src="https://saucelabs.com/browser-matrix/smartfutureplayer.svg" alt="Build Status"></a>
+<p align="center">
+<a href="https://saucelabs.com/beta/builds/26dd1e325a0640e8a3b01c90cee65ac4"><img src="https://saucelabs.com/browser-matrix/smartfutureplayer.svg" alt="Build Status"></a>
 </p>
 
 ## MIP(Mobile page In Baidu)
