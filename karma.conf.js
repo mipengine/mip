@@ -16,13 +16,11 @@ module.exports = function(config) {
     ];
     const browsers = ['Chrome'];
     if (process.env.TRAVIS) {
-        console.log('has travis');
         coverageReporter.push({
             type: 'lcov',
             subdir: 'lcov',
         });
     } else {
-        console.log('no travis');
         coverageReporter.push({
             type: 'html'
         });
