@@ -4,24 +4,6 @@
  */
 
 module.exports = function(config) {
-    var customLaunchers = require('./saucelab_browsers.js');
-    var browsers = ['Chrome'];
-    var reporters = ['mocha'];
-    if (process.env.TRAVIS) {
-        browsers = Object.keys(customLaunchers);
-        reporters.push('coveralls');
-    }
-
-    if (process.env.SAUCE_USERNAME) {
-        reporters.push('saucelabs');
-    }
-
-    console.log('browsers are:');
-    console.log(browsers);
-
-    console.log('reports are:');
-    console.log(reporters);
-
     config.set({
 
         // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -42,7 +24,6 @@ module.exports = function(config) {
             'karma-html-reporter',
 
             // launchers
-            "karma-sauce-launcher",
             'karma-chrome-launcher'
         ],
 
@@ -88,18 +69,21 @@ module.exports = function(config) {
         // test results reporter to use
         // possible values: 'dots', 'progress'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: reporters,
+        reporters: ['mocha'],
         htmlReporter: {
             outputDir: './dist/test-result' // relative to cwd
         },
         coverageReporter: {
-            dir: './test-coverage', // relative to basePath
-            reporters: [{
-                type: 'html'
-            }, {
-                type: 'lcov',
-                subdir: 'lcov',
-            }]
+            dir: './test-coverage',  // relative to basePath
+            reporters: [
+                {
+                    type: 'html'
+                },
+                {
+                    type: 'lcov',
+                    subdir: 'lcov'
+                }
+            ]
         },
 
 
@@ -119,7 +103,7 @@ module.exports = function(config) {
         // browser console options
         browserConsoleLogOptions: {
             // possible values: 'log' || 'error' || 'warn' || 'info' || 'debug'
-            level: 'log',
+            level:  'log',
             terminal: true
         },
 
@@ -127,42 +111,28 @@ module.exports = function(config) {
         // Note: 代码改动自动运行测试，需要singleRun为false
         autoWatch: false,
 
+
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: browsers,
+        browsers: ['Chrome', 'HeadlessChrome'],
+
+        // config headless chrome, it can execute the code without opening browser
+        customLaunchers: {
+            HeadlessChrome: {
+                base: 'Chrome',
+                flags: [
+                    '--headless',
+                    '--disable-gpu',
+                    // Without a remote debugging port, Google Chrome exits immediately.
+                    '--remote-debugging-port=9222',
+                ]
+            }
+        },
+
 
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits
         // 脚本调用请设为 true
-        singleRun: true,
-
-        customLaunchers: customLaunchers,
-
-        sauceLabs: {
-            retryLimit: 3,
-            startConnect: false,
-            recordVideo: false,
-            recordScreenshots: false,
-            options: {
-                'selenium-version': '2.53.0',
-                'command-timeout': 600,
-                'idle-timeout': 600,
-                'max-duration': 5400,
-            }
-        },
-
-        captureTimeout: 180000
+        singleRun: true
     });
-
-    if (process.env.TRAVIS) {
-        var buildId =
-            'TRAVIS #' + process.env.TRAVIS_BUILD_NUMBER + ' (' + process.env.TRAVIS_BUILD_ID + ')';
-        config.sauceLabs.build = buildId;
-        config.sauceLabs.tunnelIdentifier = process.env.TRAVIS_JOB_NUMBER;
-
-        // TODO(mlaval): remove once SauceLabs supports websockets.
-        // This speeds up the capturing a bit, as browsers don't even try to use websocket.
-        console.log('>>>> setting socket.io transport to polling <<<<');
-        config.transports = ['polling'];
-    }
 };
