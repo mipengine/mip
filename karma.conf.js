@@ -11,8 +11,6 @@ module.exports = function(config) {
     }
     console.log('browsers are:');
     console.log(browsers);
-    console.log('reports are:');
-    console.log(reporters);
 
     config.set({
 
