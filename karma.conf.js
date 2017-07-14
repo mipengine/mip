@@ -4,6 +4,21 @@
  */
 
 module.exports = function(config) {
+    var customLaunchers = require('./saucelab_browsers.js');
+    var browsers = ['Chrome'];
+    var reporters = ['mocha'];
+    if (process.env.TRAVIS) {
+        browsers = Object.keys(customLaunchers);
+        reporters.push('coveralls');
+    }
+    if (process.env.SAUCE_USERNAME) {
+        reporters.push('saucelabs');
+    }
+    console.log('browsers are:');
+    console.log(browsers);
+    console.log('reports are:');
+    console.log(reporters);
+
     config.set({
 
         // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -24,7 +39,8 @@ module.exports = function(config) {
             'karma-html-reporter',
 
             // launchers
-            'karma-chrome-launcher'
+            'karma-chrome-launcher',
+            "karma-sauce-launcher"
         ],
 
         // frameworks to use
@@ -114,20 +130,25 @@ module.exports = function(config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['Chrome', 'HeadlessChrome'],
+        browsers: browsers,
 
         // config headless chrome, it can execute the code without opening browser
-        customLaunchers: {
-            HeadlessChrome: {
-                base: 'Chrome',
-                flags: [
-                    '--headless',
-                    '--disable-gpu',
-                    // Without a remote debugging port, Google Chrome exits immediately.
-                    '--remote-debugging-port=9222',
-                ]
+        customLaunchers: customLaunchers,
+
+        sauceLabs: {
+            retryLimit: 3,
+            startConnect: false,
+            recordVideo: false,
+            recordScreenshots: false,
+            options: {
+                'selenium-version': '2.53.0',
+                'command-timeout': 600,
+                'idle-timeout': 600,
+                'max-duration': 5400,
             }
         },
+
+        captureTimeout: 180000,
 
 
         // Continuous Integration mode
@@ -135,4 +156,16 @@ module.exports = function(config) {
         // 脚本调用请设为 true
         singleRun: true
     });
+
+    if (process.env.TRAVIS) {
+        var buildId =
+            'TRAVIS #' + process.env.TRAVIS_BUILD_NUMBER + ' (' + process.env.TRAVIS_BUILD_ID + ')';
+        config.sauceLabs.build = buildId;
+        config.sauceLabs.tunnelIdentifier = process.env.TRAVIS_JOB_NUMBER;
+
+        // TODO(mlaval): remove once SauceLabs supports websockets.
+        // This speeds up the capturing a bit, as browsers don't even try to use websocket.
+        console.log('>>>> setting socket.io transport to polling <<<<');
+        config.transports = ['polling'];
+    }
 };

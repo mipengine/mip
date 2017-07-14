@@ -18,6 +18,7 @@
     "karma-html-reporter": "^0.2.7",
     "karma-mocha": "^1.1.1",
     "karma-mocha-reporter": "^2.0.4",
+    "karma-sauce-launcher": "^1.1.0",
     "mip-builder": "^1.2.1",
     "mip-processor": "^1.2.0",
     "mip-processor-amd": "^1.2.1",
