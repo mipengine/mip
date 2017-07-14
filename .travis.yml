@@ -6,6 +6,8 @@ cache:
     - "node_modules"
 before_script:
   - npm install
+  - export DISPLAY=:99.0; sh -e /etc/init.d/xvfb start +extension RANDR
+  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
 script: npm run report
 env:
   global:
