@@ -13,7 +13,7 @@ module.exports = {
     sl_android_6_0: {
       base: 'SauceLabs',
       browserName: 'android',
-      version: '7.0'
+      version: '6.0'
     },
 
     // the cool kids
@@ -25,11 +25,6 @@ module.exports = {
     sl_firefox: {
         base: 'SauceLabs',
         browserName: 'firefox'
-    },
-    sl_mac_safari: {
-      base: 'SauceLabs',
-      browserName: 'safari',
-      platform: 'OS X 10.10'
     },
 
     // ie family
