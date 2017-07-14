@@ -10,6 +10,10 @@ module.exports = function(config) {
     if (process.env.TRAVIS) {
         browsers = Object.keys(customLaunchers);
     }
+    var buildId =
+        'TRAVIS #' + process.env.TRAVIS_BUILD_NUMBER
+        + ' (' + process.env.TRAVIS_BUILD_ID
+        + ') --  SAUCELABS #' + process.env.SAUCE_BUILD_ID;
 
     config.set({
 
@@ -135,7 +139,7 @@ module.exports = function(config) {
             connectOptions: {
                 'no-ssl-bump-domains': 'all' // Ignore SSL error on Android emulator
             },
-            build: process.env.SAUCE_BUILD_ID || Date.now()
+            build: buildId
         },
 
         captureTimeout: 300000,
