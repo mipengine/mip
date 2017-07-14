@@ -2,7 +2,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/GeekFE/mip/badge.svg?branch=master)](https://coveralls.io/github/GeekFE/mip?branch=master)
 [![Pull Request closed](http://issuestats.com/github/mipengine/mip/badge/pr)](http://issuestats.com/github/mipengine/mip)
 [![Issue closed](http://issuestats.com/github/mipengine/mip/badge/issue)](http://issuestats.com/github/mipengine/mip)
-[![devDependencies Status](https://david-dm.org/GeekFE/mip/dev-status.svg)](https://david-dm.org/GeekFE/mip?type=dev)
+[![dependencies Status](https://david-dm.org/GeekFE/mip/status.svg)](https://david-dm.org/GeekFE/mip)
 
 ![Sauce Test Status](https://saucelabs.com/browser-matrix/smartfutureplayer.svg?auth=9728ea81d03f2fabc14755d35f0dff35)
 
