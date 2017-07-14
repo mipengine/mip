@@ -43,10 +43,7 @@ module.exports = function(config) {
 
             // launchers
             "karma-sauce-launcher",
-            'karma-chrome-launcher',
-
-            // coverage
-            'karma-coveralls'
+            'karma-chrome-launcher'
         ],
 
         // frameworks to use
