@@ -131,7 +131,7 @@ module.exports = function(config) {
             connectOptions: {
                 'no-ssl-bump-domains': 'all' // Ignore SSL error on Android emulator
             },
-            build: process.env.CIRCLE_BUILD_NUM || process.env.SAUCE_BUILD_ID || Date.now()
+            build: process.env.SAUCE_BUILD_ID || Date.now()
         },
 
         captureTimeout: 300000,
