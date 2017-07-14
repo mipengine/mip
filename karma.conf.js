@@ -33,7 +33,10 @@ module.exports = function(config) {
 
             // launchers
             'karma-chrome-launcher',
-            "karma-sauce-launcher"
+            'karma-sauce-launcher',
+
+            // coveralls
+            'karma-coveralls'
         ],
 
         // frameworks to use
@@ -78,7 +81,7 @@ module.exports = function(config) {
         // test results reporter to use
         // possible values: 'dots', 'progress'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: process.env.CI ? ['mocha', 'html', 'dots', 'saucelabs'] : ['mocha', 'html', 'progress', 'saucelabs'],
+        reporters: process.env.CI ? ['mocha', 'html', 'dots', 'saucelabs', 'coverage'] : ['mocha', 'html', 'progress', 'saucelabs', 'coverage'],
         htmlReporter: {
             outputDir: './dist/test-result' // relative to cwd
         },
