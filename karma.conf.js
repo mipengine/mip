@@ -5,12 +5,11 @@
 
 module.exports = function(config) {
     var customLaunchers = require('./saucelab_browsers.js');
+    var reporters = ['mocha', 'html', 'progress', 'coverage', 'coveralls'];
     var browsers = ['Chrome'];
     if (process.env.TRAVIS) {
         browsers = Object.keys(customLaunchers);
     }
-    console.log('browsers are:');
-    console.log(browsers);
 
     config.set({
 
@@ -81,7 +80,7 @@ module.exports = function(config) {
         // test results reporter to use
         // possible values: 'dots', 'progress'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: process.env.CI ? ['mocha', 'html', 'dots', 'saucelabs', 'coverage'] : ['mocha', 'html', 'progress', 'saucelabs', 'coverage'],
+        reporters: process.env.CI ? reporters.push('dots') : reporters.push('saucelabs'),
         htmlReporter: {
             outputDir: './dist/test-result' // relative to cwd
         },
