@@ -16,6 +16,12 @@ module.exports = function(config) {
         reporters.push('saucelabs');
     }
 
+    console.log('browsers are:');
+    console.log(browsers);
+
+    console.log('reports are:');
+    console.log(reporters);
+
     config.set({
 
         // base path that will be used to resolve all patterns (eg. files, exclude)
