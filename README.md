@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-<a href="https://saucelabs.com/beta/builds/26dd1e325a0640e8a3b01c90cee65ac4"><img src="https://saucelabs.com/browser-matrix/smartfutureplayer.svg?v" alt="Build Status"></a>
+<a href="https://saucelabs.com/beta/builds/26dd1e325a0640e8a3b01c90cee65ac4"><img src="https://saucelabs.com/browser-matrix/smartfutureplayer.svg" alt="Build Status"></a>
 </p>
 
 ## MIP(Mobile page In Baidu)
