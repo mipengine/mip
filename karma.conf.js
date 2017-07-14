@@ -137,7 +137,7 @@ module.exports = function(config) {
 
         sauceLabs: {
             retryLimit: 3,
-            startConnect: false,
+            startConnect: true,
             recordVideo: false,
             recordScreenshots: false,
             options: {
