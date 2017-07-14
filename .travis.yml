@@ -1,14 +1,13 @@
 language: node_js
-dist: trusty
-addons:
-  chrome: stable
-  sauce_connect:
-    username: "smartfutureplayer"
-    access_key: "1602b39c-b8e2-41e8-8974-42ab3cc95dd5"
 node_js:
-  - '6.9.5'
+  - 'node'
+cache:
+  directories:
+    - "node_modules"
 before_script:
   - npm install
-  - export DISPLAY=:99.0; sh -e /etc/init.d/xvfb start +extension RANDR
-  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
 script: npm run report
+env:
+  global:
+    - SAUCE_USERNAME=smartfutureplayer
+    - SAUCE_ACCESS_KEY=1602b39c-b8e2-41e8-8974-42ab3cc95dd5

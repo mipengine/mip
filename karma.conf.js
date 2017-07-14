@@ -6,8 +6,14 @@
 module.exports = function(config) {
     var customLaunchers = require('./saucelab_browsers.js');
     var browsers = ['Chrome'];
+    var reporters = ['mocha'];
     if (process.env.TRAVIS) {
         browsers = Object.keys(customLaunchers);
+        reporters.push('coveralls');
+    }
+
+    if (process.env.SAUCE_USERNAME) {
+        reporters.push('saucelabs');
     }
 
     config.set({
@@ -79,7 +85,7 @@ module.exports = function(config) {
         // test results reporter to use
         // possible values: 'dots', 'progress'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: ['mocha'],
+        reporters: reporters,
         htmlReporter: {
             outputDir: './dist/test-result' // relative to cwd
         },
