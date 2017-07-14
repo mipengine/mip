@@ -10,10 +10,10 @@ module.exports = {
       browserName: 'iphone',
       version: '10.3'
     },
-    sl_android_7_1: {
+    sl_android_6_0: {
       base: 'SauceLabs',
       browserName: 'android',
-      version: '7.1'
+      version: '6.0'
     },
 
     // the cool kids

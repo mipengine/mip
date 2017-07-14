@@ -80,7 +80,9 @@ module.exports = function(config) {
         // test results reporter to use
         // possible values: 'dots', 'progress'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: process.env.CI ? reporters.push('dots') : reporters.push('saucelabs'),
+        reporters: process.env.CI
+            ? ['mocha', 'html', 'dots', 'saucelabs', 'coverage', 'coveralls']
+            : ['mocha', 'html', 'progress', 'saucelabs', 'coverage', 'coveralls'],
         htmlReporter: {
             outputDir: './dist/test-result' // relative to cwd
         },
@@ -143,6 +145,4 @@ module.exports = function(config) {
         // 脚本调用请设为 true
         singleRun: true
     });
-
-    console.log('this is my ci params:' + process.env.CI);
 };
