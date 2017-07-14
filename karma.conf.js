@@ -8,7 +8,7 @@ module.exports = function(config) {
     var browsers = ['Chrome'];
     var reporters = ['mocha'];
     if (process.env.TRAVIS) {
-        // browsers = Object.keys(customLaunchers);
+        browsers = Object.keys(customLaunchers);
         reporters.push('coveralls');
     }
 
