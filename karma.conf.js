@@ -6,13 +6,8 @@
 module.exports = function(config) {
     var customLaunchers = require('./saucelab_browsers.js');
     var browsers = ['Chrome'];
-    var reporters = ['mocha'];
     if (process.env.TRAVIS) {
         browsers = Object.keys(customLaunchers);
-        reporters.push('coveralls');
-    }
-    if (process.env.SAUCE_USERNAME) {
-        reporters.push('saucelabs');
     }
     console.log('browsers are:');
     console.log(browsers);
@@ -85,21 +80,18 @@ module.exports = function(config) {
         // test results reporter to use
         // possible values: 'dots', 'progress'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: ['mocha'],
+        reporters: process.env.CI ? ['dots', 'saucelabs'] : ['progress', 'saucelabs'],
         htmlReporter: {
             outputDir: './dist/test-result' // relative to cwd
         },
         coverageReporter: {
-            dir: './test-coverage',  // relative to basePath
-            reporters: [
-                {
-                    type: 'html'
-                },
-                {
-                    type: 'lcov',
-                    subdir: 'lcov'
-                }
-            ]
+            dir: './test-coverage', // relative to basePath
+            reporters: [{
+                type: 'html'
+            }, {
+                type: 'lcov',
+                subdir: 'lcov'
+            }]
         },
 
 
@@ -119,7 +111,7 @@ module.exports = function(config) {
         // browser console options
         browserConsoleLogOptions: {
             // possible values: 'log' || 'error' || 'warn' || 'info' || 'debug'
-            level:  'log',
+            level: 'log',
             terminal: true
         },
 
@@ -136,36 +128,21 @@ module.exports = function(config) {
         customLaunchers: customLaunchers,
 
         sauceLabs: {
-            retryLimit: 3,
-            startConnect: true,
-            recordVideo: false,
+            testName: 'MIP Unit Tests',
             recordScreenshots: false,
-            options: {
-                'selenium-version': '2.53.0',
-                'command-timeout': 600,
-                'idle-timeout': 600,
-                'max-duration': 5400,
-            }
+            connectOptions: {
+                'no-ssl-bump-domains': 'all' // Ignore SSL error on Android emulator
+            },
+            build: process.env.CIRCLE_BUILD_NUM || process.env.SAUCE_BUILD_ID || Date.now()
         },
 
-        captureTimeout: 180000,
-
-
+        captureTimeout: 300000,
+        browserNoActivityTimeout: 300000,
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits
         // 脚本调用请设为 true
         singleRun: true
     });
 
-    if (process.env.TRAVIS) {
-        var buildId =
-            'TRAVIS #' + process.env.TRAVIS_BUILD_NUMBER + ' (' + process.env.TRAVIS_BUILD_ID + ')';
-        config.sauceLabs.build = buildId;
-        config.sauceLabs.tunnelIdentifier = process.env.TRAVIS_JOB_NUMBER;
-
-        // TODO(mlaval): remove once SauceLabs supports websockets.
-        // This speeds up the capturing a bit, as browsers don't even try to use websocket.
-        console.log('>>>> setting socket.io transport to polling <<<<');
-        config.transports = ['polling'];
-    }
+    console.log('this is my ci params:' + process.env.CI);
 };
