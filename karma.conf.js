@@ -36,7 +36,10 @@ module.exports = function(config) {
 
             // launchers
             'karma-chrome-launcher',
-            'karma-sauce-launcher'
+            'karma-sauce-launcher',
+
+            // coveralls
+            'karma-coveralls'
         ],
 
         // frameworks to use
@@ -93,7 +96,7 @@ module.exports = function(config) {
                 type: 'html'
             }, {
                 type: 'lcov',
-                subdir: 'lcov'
+                dir: './coverage'
             }]
         },
 
