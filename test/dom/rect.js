@@ -6,11 +6,12 @@ define(function (require) {
     var docEle = document.body || document.documentElement;
     var height = docEle.height;
     describe('rect', function () {
-        before(function () {
+        beforeEach(function () {
+            height = docEle.height;
             docEle.style.height = '10000px';
         });
 
-        after(function () {
+        afterEach(function () {
             docEle.style.height = height;
         });
 
