@@ -9,7 +9,7 @@ module.exports = {
       base: 'SauceLabs',
       browserName: 'iphone',
       version: '10.3'
-    }
+    },
     sl_android_6_0: {
       base: 'SauceLabs',
       browserName: 'android',
