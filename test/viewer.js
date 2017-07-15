@@ -67,17 +67,15 @@ define(function (require) {
             expect(viewer._gesture).to.be.instanceof(util.Gesture);
         });
 
-        it('sroll up', function (done) {
+        it('sroll up', function () {
+            var style = getComputedStyle(document.body);
+            var height = style.height;
             viewer.init();
             document.body.style.height = '10000px';
             viewport.setScrollTop(800);
-            setTimeout(function () {                    
-                viewport.setScrollTop(500);
-                done();
-            }, 500);
             expect(viewport.getScrollTop()).to.equal(800);
+            document.body.style.height = height;
         });
-
 
         it('sendMessage', function () {
             viewer.isIframed = false;
