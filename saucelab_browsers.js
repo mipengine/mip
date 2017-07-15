@@ -24,19 +24,19 @@ module.exports = {
     sl_chrome: {
         base: 'SauceLabs',
         browserName: 'chrome',
-    },
+    }
 
     // ie family
-    sl_ie_10: {
-      base: 'SauceLabs',
-      browserName: 'internet explorer',
-      platform: 'Windows 8',
-      version: '10'
-    },
-    sl_ie_11: {
-      base: 'SauceLabs',
-      browserName: 'internet explorer',
-      platform: 'Windows 8.1',
-      version: '11'
-    }
+    // sl_ie_10: {
+    //     base: 'SauceLabs',
+    //     browserName: 'internet explorer',
+    //     platform: 'Windows 8',
+    //     version: '10'
+    // },
+    // sl_ie_11: {
+    //     base: 'SauceLabs',
+    //     browserName: 'internet explorer',
+    //     platform: 'Windows 8.1',
+    //     version: '11'
+    // },
 }
