@@ -18,9 +18,6 @@
 	<a href='http://issuestats.com/github/mipengine/mip'>
 		<img src='http://issuestats.com/github/mipengine/mip/badge/pr'  title='Pull Request closed' alt='Pull Request closed'>
 	</a>
-	<a href='http://issuestats.com/github/mipengine/mip'>
-		<img src='http://issuestats.com/github/mipengine/mip/badge/issue'  title='Issue closed' alt='Issue closed'>
-	</a>
 	<a href='https://github.com/mipengine/mip'>
 		<img src='https://img.shields.io/github/license/mashape/apistatus.svg'  title='license' alt='license'>
 	</a>
