@@ -1,10 +1,31 @@
-[![Build Status](https://travis-ci.org/GeekFE/mip.svg?branch=master)](https://travis-ci.org/GeekFE/mip)
-[![Coverage Status](https://coveralls.io/repos/github/GeekFE/mip/badge.svg?branch=master)](https://coveralls.io/github/GeekFE/mip?branch=master)
-[![dependencies Status](https://david-dm.org/GeekFE/mip/status.svg)](https://david-dm.org/GeekFE/mip)
+<p align='center'>
+	<a href='https://travis-ci.org/GeekFE/mip'>
+		<img src='https://travis-ci.org/GeekFE/mip.svg?branch=master'  title='Build Status' alt='Build Status'>
+	</a>
+	<a href='https://coveralls.io/github/GeekFE/mip?branch=master'>
+		<img src='https://coveralls.io/repos/github/GeekFE/mip/badge.svg?branch=master'  title='Coverage Status' alt='Coverage Status'>
+	</a>
+	<a href='https://david-dm.org/GeekFE/mip'>
+		<img src='https://david-dm.org/GeekFE/mip/status.svg'  title='dependencies Status' alt='dependencies Status'>
+	</a>
+</p>
+<p align='center'>
+	<a href='http://issuestats.com/github/mipengine/mip'>
+		<img src='http://issuestats.com/github/mipengine/mip/badge/pr'  title='Pull Request closed' alt='Pull Request closed'>
+	</a>
+	<a href='http://issuestats.com/github/mipengine/mip'>
+		<img src='http://issuestats.com/github/mipengine/mip/badge/issue'  title='Issue closed' alt='Issue closed'>
+	</a>
+	<a href='https://github.com/mipengine/mip'>
+		<img src='https://img.shields.io/github/license/mashape/apistatus.svg'  title='license' alt='license'>
+	</a>
+</p>
+<p align='center'>
+	<a href="https://saucelabs.com/u/smartfutureplayer?auth=9728ea81d03f2fabc14755d35f0dff35">
+		<img src='https://saucelabs.com/browser-matrix/smartfutureplayer.svg?auth=9728ea81d03f2fabc14755d35f0dff35' title='Sauce Test Status' alt='Sauce Test Status'>
+	</a>
+</p>
 
-[![Pull Request closed](http://issuestats.com/github/mipengine/mip/badge/pr)](http://issuestats.com/github/mipengine/mip)
-[![Issue closed](http://issuestats.com/github/mipengine/mip/badge/issue)](http://issuestats.com/github/mipengine/mip)
-[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/mipengine/mip)
 
 ![Sauce Test Status](https://saucelabs.com/browser-matrix/smartfutureplayer.svg?auth=9728ea81d03f2fabc14755d35f0dff35)
 
