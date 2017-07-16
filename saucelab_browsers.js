@@ -25,12 +25,12 @@ module.exports = {
         base: 'SauceLabs',
         browserName: 'chrome',
     },
-    sl_mac_safari: {
-        base: 'SauceLabs',
-        browserName: 'safari',
-        platform: 'OS X 10.11',
-        version: '10'
-    }
+    // sl_mac_safari: {
+    //     base: 'SauceLabs',
+    //     browserName: 'safari',
+    //     platform: 'OS X 10.11',
+    //     version: '10'
+    // },
 
     // ie family
     // sl_ie_10: {
