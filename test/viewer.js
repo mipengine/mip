@@ -47,15 +47,6 @@ define(function (require) {
             window.dispatchEvent(eve);
         });
 
-        it('delegateTestCase', function () {
-            viewer.init();
-
-            var ele = document.getElementById('delegateLink');
-            var eve = document.createEvent("HTMLEvents");
-            eve.initEvent("click", true, true);
-            ele.dispatchEvent(eve);
-        });
-
         it('show', function () {
             viewer.show();
 

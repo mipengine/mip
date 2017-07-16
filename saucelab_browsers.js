@@ -28,7 +28,7 @@ module.exports = {
     sl_mac_safari: {
         base: 'SauceLabs',
         browserName: 'safari',
-        platform: 'OS X 10.11',
+        platform: 'OS X 10.12',
         version: '10'
     }
 
