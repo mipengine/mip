@@ -1,6 +1,7 @@
 define(function(require) {
     'use strict';
 
+    require('fetch');
     var CustomStorage = require('utils/customStorage');
     var fn = require('utils/fn');
     var LocalStorage = new CustomStorage(0);

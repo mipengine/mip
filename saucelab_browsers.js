@@ -5,11 +5,11 @@
 
 module.exports = {
     // mobile
-    sl_ios_safari_10: {
-      base: 'SauceLabs',
-      browserName: 'iphone',
-      version: '10.3'
-    },
+    // sl_ios_safari_9: {
+    //     base: 'SauceLabs',
+    //     browserName: 'iphone',
+    //     version: '10.3'
+    // }
     sl_android_6_0: {
       base: 'SauceLabs',
       browserName: 'android',
@@ -24,6 +24,12 @@ module.exports = {
     sl_chrome: {
         base: 'SauceLabs',
         browserName: 'chrome',
+    },
+    sl_mac_safari: {
+        base: 'SauceLabs',
+        browserName: 'safari',
+        platform: 'OS X 10.11',
+        version: '10'
     }
 
     // ie family
