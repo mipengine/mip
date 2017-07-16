@@ -57,6 +57,7 @@ module.exports = {
     // list of files to exclude
     exclude: [],
 
+    // borwser list
     browsers: ['Chrome'],
 
     // preprocess matching files before serving them to the browser
