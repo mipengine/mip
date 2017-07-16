@@ -11,9 +11,7 @@ module.exports = function(config) {
         browsers = Object.keys(customLaunchers);
     }
     var buildId =
-        'TRAVIS #' + process.env.TRAVIS_BUILD_NUMBER
-        + ' (' + process.env.TRAVIS_BUILD_ID
-        + ') --  SAUCELABS #' + process.env.SAUCE_BUILD_ID;
+        'TRAVIS #' + process.env.TRAVIS_BUILD_NUMBER;
 
     config.set({
 
