@@ -39,8 +39,6 @@ module.exports = function(config) {
         coverageReporter: {
             dir: './test-coverage', // relative to basePath
             reporters: [{
-                type: 'html'
-            }, {
                 type: 'lcov',
                 dir: './coverage'
             }]
