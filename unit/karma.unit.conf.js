@@ -1,6 +1,6 @@
 /*
- * @author yangjun14(yangjun14@baidu.com)
- * @file Karma 配置文件
+ * @author wupeng(wupeng10@baidu.com)
+ * @file Karma Unit 配置文件
  */
 
 var base = require('./karma.base.conf.js');

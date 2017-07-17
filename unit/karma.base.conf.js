@@ -1,6 +1,6 @@
 /*
  * @author yangjun14(yangjun14@baidu.com)
- * @file Karma 配置文件
+ * @file Karma 基础配置文件
  */
 
 module.exports = {
