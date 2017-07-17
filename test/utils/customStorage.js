@@ -75,21 +75,21 @@ define(function(require) {
             expect(!!LocalStorage.get(age)).to.be.false;
         });
 
-        // it('exceed', function(done) {
-        //     if (LocalStorage._supportLs()) {
-        //         try {
-        //             localStorage.setItem(name, nameValue, 20000);
-        //             localStorage.setItem(age, ageValue, 20000);
-        //             localStorage.setItem('test', 'test');
-        //             LocalStorage._setLocalStorage(exceedName, exceedNameValue, function(data) {});
-        //             !!LocalStorage.get(exceedName);
-        //         } catch (e) {
-        //             done();
-        //         }
-        //     } else {
-        //         done();
-        //     }
-        // });
+        it('exceed', function(done) {
+            if (LocalStorage._supportLs()) {
+                try {
+                    localStorage.setItem(name, nameValue, 20000);
+                    localStorage.setItem(age, ageValue, 20000);
+                    localStorage.setItem('test', 'test');
+                    LocalStorage._setLocalStorage(exceedName, exceedNameValue, function(data) {});
+                    !!LocalStorage.get(exceedName);
+                } catch (e) {
+                    done();
+                }
+            } else {
+                done();
+            }
+        });
 
         it('coverBranch', function() {
             var stub = sinon.stub(LocalStorage, '_supportLs', function() {
