@@ -5,7 +5,7 @@
 
 module.exports = {
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: '../dist/',
+    basePath: '../../dist/',
 
     // Important: 所有插件必须在此声明
     plugins: [

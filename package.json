@@ -31,9 +31,9 @@
   "scripts": {
     "build": "node tools/build.js",
     "dev": "node tools/build.js dev",
-    "test": "node tools/build.js test;karma start ./unit/karma.unit.conf.js",
-    "test:sl": "karma start ./unit/karma.sauce.conf.js",
-    "test:co": "karma start ./unit/karma.cover.conf.js"
+    "test": "node tools/build.js test;karma start ./scripts/unit/karma.unit.conf.js",
+    "test:sl": "karma start ./scripts/unit/karma.sauce.conf.js",
+    "test:co": "karma start ./scripts/unit/karma.cover.conf.js"
   },
   "repository": {
     "type": "git",
