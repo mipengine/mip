@@ -30,7 +30,7 @@ var customLaunchers = {
 
 module.exports = function(config) {
     var buildId =
-        'TRAVIS #' + process.env.TRAVIS_BUILD_NUMBER;
+        'MIP TRAVIS #' + process.env.TRAVIS_BUILD_NUMBER;
     var options = Object.assign(base, {
         // test results reporter to use
         // possible values: 'dots', 'progress'
