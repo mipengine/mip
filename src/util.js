@@ -7,9 +7,6 @@
 define(function (require) {
     'use strict';
 
-    // Page url
-    var pageUrl = location.href;
-
     var fn = require('./utils/fn');
 
     /**
@@ -20,7 +17,7 @@ define(function (require) {
      * @return {string} Cache url.
      */
     function makeCacheUrl(url, type) {
-        if (!fn.isCacheUrl(pageUrl)
+        if (!fn.isCacheUrl(location.href)
             || (url && url.length < 8)
             || !(url.indexOf('http') === 0 || url.indexOf('//') === 0)) {
             return url;
