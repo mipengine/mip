@@ -49,14 +49,6 @@ define(function (require) {
     var href = window.location.href;
 
     /**
-     * Whether page in cache
-     * @const
-     * @inner
-     * @type {boolean}
-     */
-    var isCachePage = false;
-
-    /**
      * Domain of website
      * @const
      * @inner
@@ -96,8 +88,6 @@ define(function (require) {
         try {
             str = JSON.parse(str);
         } catch (e) {
-            str = JSON.stringify(str);
-            str = JSON.parse(str);
         }
         return str;
     }
@@ -116,7 +106,7 @@ define(function (require) {
                 mess = 'storage space need less than 4k';
             case eCode.lsExceed:
                 mess = 'Uncaught DOMException: Failed to execute setItem on Storage: Setting the value of '
-                        + name + ' exceeded the quota at ' + window.location.href;
+                    + name + ' exceeded the quota at ' + window.location.href;
         }
         return mess;
     }
@@ -148,7 +138,6 @@ define(function (require) {
                 break;
             case storageType.LOCALSTORAGE:
                 this.storage = new LocalStorage();
-                isCachePage = fn.isCacheUrl(href);
                 break;
             case storageType.COOKIESTORAGE:
                 this.storage = new CookieStorage();
@@ -162,8 +151,16 @@ define(function (require) {
      *
      * @class
      */
-    function LocalStorage() {
-    }
+    function LocalStorage() {}
+
+    /**
+     * Whether support Local Storage
+     *
+     * @return {boolean} Whether support ls
+     */
+    LocalStorage.prototype._isCachePage = function () {
+        return fn.isCacheUrl(href);
+    };
 
     /**
      * Whether support Local Storage
@@ -221,7 +218,7 @@ define(function (require) {
             return;
         }
         callback = typeof expire === 'function' ? expire : callback;
-        if (isCachePage) {
+        if (this._isCachePage()) {
             var ls = this._getLocalStorage();
             ls[name] = value;
             expire = parseInt(expire, 10);
@@ -256,9 +253,9 @@ define(function (require) {
             try {
                 localStorage.setItem(key, value);
             } catch (e) {
-                if (this._isExceed(e) && isCachePage) {
+                if (this._isExceed(e) && this._isCachePage()) {
                     this._exceedHandler(key, value, expire);
-                } else if (this._isExceed(e) && !isCachePage) {
+                } else if (this._isExceed(e) && !this._isCachePage()) {
                     callback && callback(getError(eCode.lsExceed, mess));
                     throw mess;
                 }
@@ -290,7 +287,7 @@ define(function (require) {
         }
 
         var result;
-        if (isCachePage) {
+        if (this._isCachePage()) {
             var ls = this._getLocalStorage();
             if (ls && ls[name]) {
                 result = ls[name];
@@ -311,7 +308,7 @@ define(function (require) {
             return;
         }
 
-        if (isCachePage) {
+        if (this._isCachePage()) {
             var ls = this._getLocalStorage();
             if (ls && ls[name]) {
                 fn.del(ls, name);
@@ -327,7 +324,7 @@ define(function (require) {
      *
      */
     LocalStorage.prototype.clear = function () {
-        if (isCachePage) {
+        if (this._isCachePage()) {
             this._rmLocalStorage();
         } else {
             this._supportLs() ? localStorage.clear() : lsCache = {};
@@ -341,7 +338,7 @@ define(function (require) {
      */
     LocalStorage.prototype.rmExpires = function () {
         var hasExpires = false;
-        if (isCachePage) {
+        if (this._isCachePage()) {
             var ls = this._supportLs() ? localStorage : lsCache;
             for (var k in ls) {
                 if (ls[k]) {
@@ -418,8 +415,7 @@ define(function (require) {
      *
      * @class
      */
-    function AsyncStorage() {
-    }
+    function AsyncStorage() {}
 
     /**
      * Send request to server with params
@@ -444,7 +440,7 @@ define(function (require) {
         fetch(opt.url, myInit).then(function (res) {
             if (res.ok) {
                 res.text().then(function (data) {
-                    opt.success && opt.success(JSON.parse(data));
+                    opt.success && opt.success(parseJson(data));
                 });
             } else {
                 opt.error && opt.error(res);
@@ -459,8 +455,7 @@ define(function (require) {
      *
      * @class
      */
-    function CookieStorage() {
-    }
+    function CookieStorage() {}
 
     /**
      * Delete exceed cookie storage
@@ -468,25 +463,63 @@ define(function (require) {
      * @param {Object} opt request params
      */
     CookieStorage.prototype.delExceedCookie = function () {
+        var host = window.location.host;
         var cks = document.cookie;
         var cksLen = cks.length;
         var MINSIZE = 3 * 1024;
         var MAXSIZE = 5 * 1024;
-        if (cksLen >= MAXSIZE) {
-            var items = cks.split(';');
-            for (var i = 0; i < items.length; i++) {
-                var item = items[i].split('=');
-                if (item && item.length > 1) {
-                    cksLen -= items[i].length;
-                    var exp = new Date();
-                    exp.setTime(exp.getTime() - 1000);
-                    document.cookie = item[0] + '=' + item[1] + ';expires=' + exp.toGMTString();
-                }
-                if (cksLen <= MINSIZE) {
-                    break;
+        if (cksLen < MAXSIZE) {
+            return;
+        }
+        var items = cks.split(';');
+        for (var i = 0; i < items.length; i++) {
+            var item = items[i].split('=');
+            if (item && item.length > 1) {
+                cksLen -= items[i].length;
+                var exp = new Date();
+                exp.setMilliseconds(exp.getMilliseconds() - 1 * 864e+5);
+                this.set(item, exp, host);
+                if (this._get(item[0]) && window !== top) {
+                    this._set(item, exp, host.split('.').slice(-2).join('.'));
                 }
             }
+            if (cksLen <= MINSIZE) {
+                break;
+            }
         }
+    };
+
+    /**
+     * Get cookie
+     *
+     * @param {string} name cookie name
+     * @return {string} cookie value
+     */
+    CookieStorage.prototype._get = function (name) {
+        var cks = document.cookie;
+        var cookies = cks ? cks.split('; ') : [];
+        for (var i = 0; i < cookies.length; i++) {
+            var items = cks.split('=');
+            if (items.shift() === name) {
+                return items[1];
+            }
+        }
+    };
+
+    /**
+     * Set cookie
+     *
+     * @param {string} item cookie string
+     * @param {string} exp expires
+     * @param {string} host url host
+     */
+    CookieStorage.prototype._set = function (item, exp, host) {
+        document.cookie = [
+            item[0], '=', item[1],
+            '; expires=' + exp.toUTCString(),
+            '; path=/',
+            '; domain=' + host
+        ].join('');
     };
 
     return customStorage;
