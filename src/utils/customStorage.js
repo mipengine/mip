@@ -167,6 +167,15 @@ define(function (require) {
      *
      * @return {boolean} Whether support ls
      */
+    LocalStorage.prototype._isCachePage = function () {
+        return fn.isCacheUrl(href);
+    };
+
+    /**
+     * Whether support Local Storage
+     *
+     * @return {boolean} Whether support ls
+     */
     LocalStorage.prototype._supportLs = function () {
         var support = false;
         if (window.localStorage && window.localStorage.setItem) {
