@@ -487,7 +487,7 @@ define(function (require) {
                 cksLen -= items[i].length;
                 var exp = new Date();
                 exp.setMilliseconds(exp.getMilliseconds() - 1 * 864e+5);
-                this.set(item, exp, host);
+                this._set(item, exp, host);
                 if (this._get(item[0]) && window !== top) {
                     this._set(item, exp, host.split('.').slice(-2).join('.'));
                 }

@@ -215,12 +215,12 @@ define(function(require) {
 
     describe('asyncstorage', function() {
         it('delExceedCookie', function() {
-            var exceedNameValue;
+            var exceedNameValue = '';
             for (var i = 0; i < 1024 * 3; i++) {
                 exceedNameValue += 'a';
             };
-            document.cookie = 'test1=' + exceedNameValue + ';';
-            document.cookie = 'test2=' + exceedNameValue + ';';
+            document.cookie = 'test1=' + exceedNameValue + ';path=/;domain=' + window.location.host;
+            document.cookie = 'test2=' + exceedNameValue + ';path=/;domain=' + window.location.host;
             CookieStorage.delExceedCookie();
             expect(document.cookie.length / 1024).to.be.below(3);
         });
