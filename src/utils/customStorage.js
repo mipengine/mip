@@ -475,7 +475,6 @@ define(function (require) {
                 var exp = new Date();
                 var key = item[0].trim();
                 var value = item[1].trim();
-                console.log(item[0]);
                 exp.setMilliseconds(exp.getMilliseconds() - 1 * 864e+5);
                 this._set({
                     key: key,
