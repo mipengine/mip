@@ -472,6 +472,9 @@ define(function (require) {
      * @param {Object} opt request params
      */
     CookieStorage.prototype.delExceedCookie = function () {
+        if (window === top) {
+            return;
+        }
         var domain = window.location.hostname;
         var cks = document.cookie;
         var MINSIZE = 3 * 1024;
@@ -484,17 +487,19 @@ define(function (require) {
             var item = items[i].split('=');
             if (item && item.length > 1) {
                 var exp = new Date();
-                exp.setTime(exp.getTime() - 1000);
+                var key = item[0].trim();
+                var value = item[1].trim();
+                exp.setMilliseconds(exp.getMilliseconds() - 1 * 864e+5);
                 this._set({
-                    key: item[0],
-                    value: item[1],
+                    key: key,
+                    value: value,
                     expires: exp,
                     domain: domain
                 });
-                if (this._get(item[0]) && window !== top) {
+                if (this._get(key)) {
                     this._set({
-                        key: item[0],
-                        value: item[1],
+                        key: key,
+                        value: value,
                         expires: exp,
                         domain: domain.split('.').slice(-2).join('.')
                     });
