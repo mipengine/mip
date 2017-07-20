@@ -88,5 +88,13 @@ define(function (require) {
             expect(document.body === document.querySelector('.handlePreregisteredExtensions')).to.be.true;
             document.body.classList.remove('handlePreregisteredExtensions');
         });
+
+        it('bindEventCallback', function () {
+            viewer._bindEventCallback('show', function () {
+                document.body.classList.add('_bindEventCallback');
+            });
+            expect(document.body === document.querySelector('._bindEventCallback')).to.be.true;
+            document.body.classList.remove('_bindEventCallback');
+        });
     });
 });
