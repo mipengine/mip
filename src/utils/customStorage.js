@@ -472,7 +472,7 @@ define(function (require) {
      * @param {Object} opt request params
      */
     CookieStorage.prototype.delExceedCookie = function () {
-        var host = window.location.host;
+        var domain = window.location.host;
         var cks = document.cookie;
         var cksLen = cks.length;
         var MINSIZE = 3 * 1024;
@@ -491,14 +491,14 @@ define(function (require) {
                     key: item[0],
                     value: item[1],
                     expires: exp,
-                    host: host
+                    domain: host
                 });
                 if (this._get(item[0]) && window !== top) {
                     this._set({
                         key: item[0],
                         value: item[1],
                         expires: exp,
-                        host: host.split('.').slice(-2).join('.')
+                        domain: host.split('.').slice(-2).join('.')
                     });
                 }
             }
@@ -535,7 +535,7 @@ define(function (require) {
             options.key, '=', options.value,
             '; expires=' + options.expires.toUTCString(),
             '; path=/',
-            '; domain=' + options.host
+            '; domain=' + options.domain
         ].join('');
     };
 
