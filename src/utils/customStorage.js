@@ -72,9 +72,6 @@ define(function (require) {
      * @param {Object} storage it's local storage
      */
     function updateTime(storage) {
-        if (!storage) {
-            return;
-        }
         storage.u = new Date().getTime();
     }
 
@@ -169,14 +166,12 @@ define(function (require) {
      */
     LocalStorage.prototype._supportLs = function () {
         var support = false;
-        if (window.localStorage && window.localStorage.setItem) {
-            try {
-                window.localStorage.setItem('lsExisted', '1');
-                window.localStorage.removeItem('lsExisted');
-                support = true;
-            } catch (e) {
-                support = false;
-            }
+        try {
+            window.localStorage.setItem('lsExisted', '1');
+            window.localStorage.removeItem('lsExisted');
+            support = true;
+        } catch (e) {
+            support = false;
         }
         return support;
     };
@@ -480,6 +475,7 @@ define(function (require) {
                 var exp = new Date();
                 var key = item[0].trim();
                 var value = item[1].trim();
+                console.log(item[0]);
                 exp.setMilliseconds(exp.getMilliseconds() - 1 * 864e+5);
                 this._set({
                     key: key,
