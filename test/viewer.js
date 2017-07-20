@@ -77,7 +77,12 @@ define(function (require) {
         });
 
         it('handlePreregisteredExtensions', function () {
-            window.MIP.extensions = ['mip-form'];
+            window.MIP.extensions = [{
+                name: "mip-form",
+                func: function() {
+                    document.body.classList.add('handlePreregisteredExtensions');
+                }
+            }];
             viewer.handlePreregisteredExtensions();
             var result = window.MIP.push({
                 name: "mip-form",
