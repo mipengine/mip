@@ -458,7 +458,8 @@ define(function (require) {
      * @param {Object} opt request params
      */
     CookieStorage.prototype.delExceedCookie = function () {
-        if (window === top) {
+        // don't execute in origin page
+        if (this._notIframed()) {
             return;
         }
         var domain = window.location.hostname;
@@ -495,6 +496,15 @@ define(function (require) {
                 break;
             }
         }
+    };
+
+    /**
+     * Whether iframed or not
+     *
+     * @return {string} Whether iframed
+     */
+    CookieStorage.prototype._notIframed = function (name) {
+        return window === top;
     };
 
     /**

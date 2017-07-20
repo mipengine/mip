@@ -195,7 +195,6 @@ define(function(require) {
         it('request2', function(done) {
             AsyncStorage.request({
                 url: 'http://localhost:3000/req2',
-                method: 'GET',
                 mode: 'cors',
                 credentials: 'omit',
                 cache: 'default',
@@ -238,14 +237,22 @@ define(function(require) {
                 exceedNameValue += 'a';
             };
             document.cookie = 'test1=' + exceedNameValue + ';path=/;domain=' + window.location.hostname;
-            document.cookie = 'test2=' + exceedNameValue + ';path=/;domain=' + window.location.hostname;
             CookieStorage.delExceedCookie();
+            document.cookie = 'test2=' + exceedNameValue + ';path=/;domain=' + window.location.hostname;
             document.cookie = 'test3=' + exceedNameValue + ';path=/;domain=' + window.location.hostname;
             document.cookie = 'test4=' + exceedNameValue + ';path=/;domain=' + window.location.hostname;
             document.cookie = 'test5=' + exceedNameValue + ';path=/;domain=' + window.location.hostname;
             document.cookie = 'test6=' + exceedNameValue + ';path=/;domain=' + window.location.hostname;
             CookieStorage.delExceedCookie();
             expect(document.cookie.length / 1024).to.be.below(3);
+        });
+
+        it('not isIframed', function() {
+            var stub = sinon.stub(CookieStorage, '_notIframed', function() {
+                return true;
+            });
+            CookieStorage.delExceedCookie();
+            stub.restore();
         });
     });
 });
