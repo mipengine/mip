@@ -192,6 +192,21 @@ define(function(require) {
                 server.respond();
             }, 100);
         });
+        it('request2', function(done) {
+            AsyncStorage.request({
+                url: 'http://localhost:3000/req2',
+                method: 'GET',
+                mode: 'cors',
+                credentials: 'omit',
+                cache: 'default',
+                success: function(data) {
+                    done();
+                },
+                error: function(err) {
+                    done();
+                }
+            });
+        });
         it('request3', function(done) {
             var server = sinon.fakeServer.create();
             server.respondWith("POST", "/req3", [200, {
