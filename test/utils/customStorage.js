@@ -219,8 +219,13 @@ define(function(require) {
             for (var i = 0; i < 1024 * 3; i++) {
                 exceedNameValue += 'a';
             };
-            document.cookie = 'test1=' + exceedNameValue + ';path=/;domain=' + window.location.host;
-            document.cookie = 'test2=' + exceedNameValue + ';path=/;domain=' + window.location.host;
+            document.cookie = 'test1=' + exceedNameValue + ';path=/;domain=' + window.location.hostname;
+            document.cookie = 'test2=' + exceedNameValue + ';path=/;domain=./' + window.location.hostname;
+            CookieStorage.delExceedCookie();
+            document.cookie = 'test3=' + exceedNameValue + ';path=/;domain=' + window.location.hostname;
+            document.cookie = 'test4=' + exceedNameValue + ';path=/;domain=' + window.location.hostname;
+            document.cookie = 'test5=' + exceedNameValue + ';path=/;domain=' + window.location.hostname;
+            document.cookie = 'test6=' + exceedNameValue + ';path=/;domain=' + window.location.hostname;
             CookieStorage.delExceedCookie();
             expect(document.cookie.length / 1024).to.be.below(3);
         });
