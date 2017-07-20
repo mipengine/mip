@@ -486,10 +486,20 @@ define(function (require) {
             if (item && item.length > 1) {
                 cksLen -= items[i].length;
                 var exp = new Date();
-                exp.setMilliseconds(exp.getMilliseconds() - 1 * 864e+5);
-                this._set(item, exp, host);
+                exp.setTime(exp.getTime() - 1000);
+                this._set({
+                    key: item[0],
+                    value: item[1],
+                    expires: exp,
+                    host: host
+                });
                 if (this._get(item[0]) && window !== top) {
-                    this._set(item, exp, host.split('.').slice(-2).join('.'));
+                    this._set({
+                        key: item[0],
+                        value: item[1],
+                        expires: exp,
+                        host: host.split('.').slice(-2).join('.')
+                    });
                 }
             }
             if (cksLen <= MINSIZE) {
@@ -509,7 +519,7 @@ define(function (require) {
         var cookies = cks ? cks.split('; ') : [];
         for (var i = 0; i < cookies.length; i++) {
             var items = cks.split('=');
-            if (items.shift() === name) {
+            if (items[0] === name) {
                 return items[1];
             }
         }
@@ -518,16 +528,14 @@ define(function (require) {
     /**
      * Set cookie
      *
-     * @param {string} item cookie string
-     * @param {string} exp expires
-     * @param {string} host url host
+     * @param {Object} options cookie option
      */
-    CookieStorage.prototype._set = function (item, exp, host) {
+    CookieStorage.prototype._set = function (options) {
         document.cookie = [
-            item[0], '=', item[1],
-            '; expires=' + exp.toUTCString(),
+            options.key, '=', options.value,
+            '; expires=' + options.expires.toUTCString(),
             '; path=/',
-            '; domain=' + host
+            '; domain=' + options.host
         ].join('');
     };
 
