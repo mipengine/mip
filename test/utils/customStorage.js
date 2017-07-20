@@ -206,6 +206,9 @@ define(function(require) {
                     done();
                 }
             });
+            setTimeout(function() {
+                done();
+            }, 200);
         });
         it('request3', function(done) {
             var server = sinon.fakeServer.create();
