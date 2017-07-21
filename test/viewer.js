@@ -75,6 +75,31 @@ define(function (require) {
             viewer.isIframed = true;
             expect(viewer.sendMessage.bind(viewer)).to.not.throw(Error);
         });
-    });
 
+        it('handlePreregisteredExtensions', function () {
+            window.MIP.extensions = [{
+                name: "mip-form",
+                func: function() {
+                    document.body.classList.add('handlePreregisteredExtensions');
+                }
+            }];
+            viewer.handlePreregisteredExtensions();
+            var result = window.MIP.push({
+                name: "mip-form",
+                func: function() {
+                    document.body.classList.add('handlePreregisteredExtensions');
+                }
+            });
+            expect(document.body === document.querySelector('.handlePreregisteredExtensions')).to.be.true;
+            document.body.classList.remove('handlePreregisteredExtensions');
+        });
+
+        it('bindEventCallback', function () {
+            viewer._bindEventCallback('show', function () {
+                document.body.classList.add('_bindEventCallback');
+            });
+            expect(document.body === document.querySelector('._bindEventCallback')).to.be.true;
+            document.body.classList.remove('_bindEventCallback');
+        });
+    });
 });

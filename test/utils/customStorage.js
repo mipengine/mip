@@ -192,6 +192,23 @@ define(function(require) {
                 server.respond();
             }, 100);
         });
+        it('request2', function(done) {
+            AsyncStorage.request({
+                url: 'http://localhost:3000/req2',
+                mode: 'cors',
+                credentials: 'omit',
+                cache: 'default',
+                success: function(data) {
+                    done();
+                },
+                error: function(err) {
+                    done();
+                }
+            });
+            setTimeout(function() {
+                done();
+            }, 200);
+        });
         it('request3', function(done) {
             var server = sinon.fakeServer.create();
             server.respondWith("POST", "/req3", [200, {
@@ -215,15 +232,27 @@ define(function(require) {
 
     describe('asyncstorage', function() {
         it('delExceedCookie', function() {
-            var exceedNameValue;
+            var exceedNameValue = '';
             for (var i = 0; i < 1024 * 3; i++) {
                 exceedNameValue += 'a';
             };
-            document.cookie = 'test1=' + exceedNameValue + ';';
-            document.cookie = 'test2=' + exceedNameValue + ';';
+            document.cookie = 'test1=' + exceedNameValue + ';path=/;domain=' + window.location.hostname;
+            CookieStorage.delExceedCookie();
+            document.cookie = 'test2=' + exceedNameValue + ';path=/;domain=' + window.location.hostname;
+            document.cookie = 'test3=' + exceedNameValue + ';path=/;domain=' + window.location.hostname;
+            document.cookie = 'test4=' + exceedNameValue + ';path=/;domain=' + window.location.hostname;
+            document.cookie = 'test5=' + exceedNameValue + ';path=/;domain=' + window.location.hostname;
+            document.cookie = 'test6=' + exceedNameValue + ';path=/;domain=' + window.location.hostname;
             CookieStorage.delExceedCookie();
             expect(document.cookie.length / 1024).to.be.below(3);
         });
+
+        it('not isIframed', function() {
+            var stub = sinon.stub(CookieStorage, '_notIframed', function() {
+                return true;
+            });
+            CookieStorage.delExceedCookie();
+            stub.restore();
+        });
     });
-    // });
 });

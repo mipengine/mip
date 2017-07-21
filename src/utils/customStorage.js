@@ -72,9 +72,6 @@ define(function (require) {
      * @param {Object} storage it's local storage
      */
     function updateTime(storage) {
-        if (!storage) {
-            return;
-        }
         storage.u = new Date().getTime();
     }
 
@@ -106,7 +103,7 @@ define(function (require) {
                 mess = 'storage space need less than 4k';
             case eCode.lsExceed:
                 mess = 'Uncaught DOMException: Failed to execute setItem on Storage: Setting the value of '
-                        + name + ' exceeded the quota at ' + window.location.href;
+                    + name + ' exceeded the quota at ' + window.location.href;
         }
         return mess;
     }
@@ -151,8 +148,7 @@ define(function (require) {
      *
      * @class
      */
-    function LocalStorage() {
-    }
+    function LocalStorage() {}
 
     /**
      * Whether support Local Storage
@@ -170,14 +166,12 @@ define(function (require) {
      */
     LocalStorage.prototype._supportLs = function () {
         var support = false;
-        if (window.localStorage && window.localStorage.setItem) {
-            try {
-                window.localStorage.setItem('lsExisted', '1');
-                window.localStorage.removeItem('lsExisted');
-                support = true;
-            } catch (e) {
-                support = false;
-            }
+        try {
+            window.localStorage.setItem('lsExisted', '1');
+            window.localStorage.removeItem('lsExisted');
+            support = true;
+        } catch (e) {
+            support = false;
         }
         return support;
     };
@@ -416,8 +410,7 @@ define(function (require) {
      *
      * @class
      */
-    function AsyncStorage() {
-    }
+    function AsyncStorage() {}
 
     /**
      * Send request to server with params
@@ -457,8 +450,7 @@ define(function (require) {
      *
      * @class
      */
-    function CookieStorage() {
-    }
+    function CookieStorage() {}
 
     /**
      * Delete exceed cookie storage
@@ -466,25 +458,84 @@ define(function (require) {
      * @param {Object} opt request params
      */
     CookieStorage.prototype.delExceedCookie = function () {
+        // don't execute in origin page
+        if (this._notIframed()) {
+            return;
+        }
+        var domain = window.location.hostname;
         var cks = document.cookie;
-        var cksLen = cks.length;
         var MINSIZE = 3 * 1024;
         var MAXSIZE = 5 * 1024;
-        if (cksLen >= MAXSIZE) {
-            var items = cks.split(';');
-            for (var i = 0; i < items.length; i++) {
-                var item = items[i].split('=');
-                if (item && item.length > 1) {
-                    cksLen -= items[i].length;
-                    var exp = new Date();
-                    exp.setTime(exp.getTime() - 1000);
-                    document.cookie = item[0] + '=' + item[1] + ';expires=' + exp.toGMTString();
-                }
-                if (cksLen <= MINSIZE) {
-                    break;
+        if (document.cookie.length < MAXSIZE) {
+            return;
+        }
+        var items = cks.split(';');
+        for (var i = 0; i < items.length; i++) {
+            var item = items[i].split('=');
+            if (item && item.length > 1) {
+                var exp = new Date();
+                var key = item[0].trim();
+                var value = item[1].trim();
+                exp.setMilliseconds(exp.getMilliseconds() - 1 * 864e+5);
+                this._set({
+                    key: key,
+                    value: value,
+                    expires: exp,
+                    domain: domain
+                });
+                if (this._get(key)) {
+                    this._set({
+                        key: key,
+                        value: value,
+                        expires: exp,
+                        domain: domain.split('.').slice(-2).join('.')
+                    });
                 }
             }
+            if (document.cookie.length <= MINSIZE) {
+                break;
+            }
         }
+    };
+
+    /**
+     * Whether iframed or not
+     *
+     * @return {string} Whether iframed
+     */
+    CookieStorage.prototype._notIframed = function (name) {
+        return window === top;
+    };
+
+    /**
+     * Get cookie
+     *
+     * @param {string} name cookie name
+     * @return {string} cookie value
+     */
+    CookieStorage.prototype._get = function (name) {
+        var cks = document.cookie;
+        var cookies = cks ? cks.split(';') : [];
+        for (var i = 0; i < cookies.length; i++) {
+            var items = cookies[i].split('=');
+            if (items[0].trim() === name.trim()) {
+                return items[1];
+            }
+        }
+    };
+
+    /**
+     * Set cookie
+     *
+     * @param {Object} options cookie option
+     */
+    CookieStorage.prototype._set = function (options) {
+        document.cookie = [
+            options.key, '=',
+            '; expires=' + options.expires.toGMTString(),
+            '; path=/',
+            '; domain=' + options.domain
+        ].join('');
     };
 
     return customStorage;
