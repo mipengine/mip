@@ -515,10 +515,10 @@ define(function (require) {
      */
     CookieStorage.prototype._get = function (name) {
         var cks = document.cookie;
-        var cookies = cks ? cks.split('; ') : [];
+        var cookies = cks ? cks.split(';') : [];
         for (var i = 0; i < cookies.length; i++) {
-            var items = cks.split('=');
-            if (items[0] === name) {
+            var items = cookies[i].split('=');
+            if (items[0].trim() === name.trim()) {
                 return items[1];
             }
         }
@@ -531,8 +531,8 @@ define(function (require) {
      */
     CookieStorage.prototype._set = function (options) {
         document.cookie = [
-            options.key, '=', options.value,
-            '; expires=' + options.expires.toUTCString(),
+            options.key, '=',
+            '; expires=' + options.expires.toGMTString(),
             '; path=/',
             '; domain=' + options.domain
         ].join('');
