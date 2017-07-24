@@ -10,6 +10,7 @@ var TEST_FILES = Object.keys(window.__karma__.files).filter(isTestFile);
  */
 var paths = pathMap(TEST_FILES);
 paths.naboo = '/base/deps/naboo';
+paths.fetch = '/base/deps/fetch';
 require.config({
     baseUrl: '/base/src',
     paths: paths

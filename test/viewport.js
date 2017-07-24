@@ -13,12 +13,21 @@ define(function (require) {
     viewport.on('resize', function () {
         this.resized = true;
     });
+    var docEle = document.body || document.documentElement;
+    var height = docEle.height;
 
     describe('viewport', function () {
+        beforeEach(function () {
+            height = docEle.height;
+            docEle.style.height = '10000px';
+        });
+
+        afterEach(function () {
+            docEle.style.height = height;
+        });
+
         // Getter and setter of scrollTop.
         it('scrollTop', function () {
-            var height = document.body.style.height;
-            document.body.style.height = '10000px';
             viewport.setScrollTop(1000);
             expect(viewport.getScrollTop()).to.equal(1000);
         });
