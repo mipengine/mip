@@ -35,7 +35,7 @@ define(function (require) {
             }
             window.location.hash = curHash;
         }
-        
+
         /**
          * get hash value of specific key
          *
@@ -97,16 +97,16 @@ define(function (require) {
      * @return {string} hash
      */
     Hash.prototype._getHashValue = function () {
-        var params = [];
+        var hash = [];
         var hashTree = this.hashTree;
         for (var key in hashTree) {
             if (hashTree.hasOwnProperty(key)) {
                 var val = hashTree[key];
                 val = val ? key + '=' + encodeURIComponent(val) : key;
-                params.push(val);
+                hash.push(val);
             }
         }
-        return params.join('&');
+        return hash.join('&');
     };
 
     /**
