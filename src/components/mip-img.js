@@ -193,16 +193,15 @@ define(function (require) {
                     img.setAttribute(k, imgsrc);
                 }
                 else if (k === 'srcset') {
-                    function func(url) {
-                        return util.makeCacheUrl(url, 'img');
-                    }
-                    // var imgSrcset = this.attributes.srcset;
-                    var imgSrcset = 'mip/mm-width_128px.jpg 128w, mm-width_256px.jpg 256w, mm-width_512px.jpg 512w';
+                    var imgSrcset = this.attributes.srcset;
                     var reg = /[\w-/]+.(jpg|jpeg|png|gif|webp|bmp|tiff) /g;
-                    var srcArr = imgSrcset.replace(reg, func);
+                    var srcArr = imgSrcset.replace(reg, function (url) {
+                        return util.makeCacheUrl(url, 'img');
+                    });
                     img.setAttribute('srcset', srcArr);
 
-                } else {
+                }
+                else {
                     img.setAttribute(k, this.attributes[k]);
                 }
             }
