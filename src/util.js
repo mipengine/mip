@@ -48,13 +48,13 @@ define(function (require) {
      */
     function parseCacheUrl(url) {
         if (!url) {
-            return;
+            return url;
         }
         if (!(url.indexOf('http') === 0
             || url.indexOf('/') === 0)) {
             return url;
         }
-        var reg = new RegExp('^(http[s]:)?(\/\/[\w-]*(\.[\w-]*)+\.?)?\/[ic](\/s)?\/(.*)$', 'g');
+        var reg = new RegExp('^(http[s]:)?(\/\/([^\/]+))?\/[ic](\/s)?\/(.*)$', 'g');
         var result = reg.exec(url);
         if (!result) {
             return url;
