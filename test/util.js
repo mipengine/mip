@@ -29,6 +29,7 @@ define(function(util) {
             expect(util.parseCacheUrl('//mipcache.bdstatic.com/c/s/a')).to.equal('//mipcache.bdstatic.com/c/s/a');
             expect(util.parseCacheUrl('//mipcache.bdstatic.com/c/s/www.360doc.cn/mip/415640292.html')).to.equal('https://www.360doc.cn/mip/415640292.html');
             expect(util.parseCacheUrl('https://mipcache.bdstatic.com/c/www.360doc.cn/mip/415640292.html')).to.equal('http://www.360doc.cn/mip/415640292.html');
+            expect(util.parseCacheUrl('https://mipcache.bdstatic.com/c/harttle.com/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')).to.equal('http://harttle.com/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
         });
     });
 });
