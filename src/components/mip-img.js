@@ -226,15 +226,8 @@ define(function (require) {
     Placeholder.prototype._add = function (type) {
         var placeholder = this.placeholder = document.createElement('div');
         placeholder.classList.add('mip-placeholder');
+        placeholder.classList.add('mip-placeholder-' + type);
 
-        // XXX: use placeholder2 in placeholder, placeholder has max-width:500px;
-        // placeholder has padding-bottom 70% of width of placeholder.
-        // if there is no placeholder2, padding-bottom will be 70% of whole screen,
-        // which results in over height img;
-        var placeholder2 = document.createElement('div');
-        placeholder2.classList.add('mip-placeholder-' + type);
-
-        placeholder.append(placeholder2);
         this.targetEle.append(placeholder);
     };
 
