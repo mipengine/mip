@@ -168,6 +168,66 @@ define(function (require) {
                     ||  /^(\/\/|http:\/\/|https:\/\/)[A-Za-z0-9]{1,}-.*.mipcdn.com\/c\//.test(pageUrl);
     }
 
+    /**
+     * Make height transiton for element that has unknown height.
+     * height transiton from 0px/40px to whatever height element will be.
+     *
+     * @param  {Object} opt
+     * @example
+     * {
+     *     "ele": document.getElementById('id1'), // target DOM
+     *     "type": "fold",                  // "fold" or "unfold"
+     *     "transitionTime": "0.3",         // seconds, animation time
+     *     "tarHeight": "140px",            // DOM height when animation ends
+     *     "oriHeight": "20px",             // DOM height when animation begins
+     *     "cbFun": function() {}.bind()    //callback, exec after animation
+     * }
+     */
+    function heightAni(opt) {
+        var element = opt.ele;
+        var type = opt.type;
+
+        if (!type || !element) {
+            return;
+        }
+
+        var transitionTime = opt.transitionTime || 0.3;
+        var oriHeight = opt.oriHeight || getComputedStyle(element).height;
+        var cbFun = opt.cbFun || function () {};
+
+        if (type === 'unfold') {
+            element.style.height = 'auto';
+            var targetHeight = opt.tarHeight || getComputedStyle(element).height;
+
+            // target height acquired, now start the animation
+            element.style.height = oriHeight;
+            element.style.transition = 'height ' + transitionTime + 's';
+
+            setTimeout(function () {
+                // XXX: in setTimeout, or there won't be any animation
+                element.style.height = targetHeight;
+            }, 10);
+
+            setTimeout(function () {
+                // XXX: after transition, set height to auto
+                // in case of height change of inside element later.
+                element.style.height = 'auto';
+                cbFun();
+            }, transitionTime * 1000);
+        }
+        else if (type === 'fold') {
+            element.style.height = oriHeight;
+            element.style.transition = 'height ' + transitionTime + 's';
+            setTimeout(function () {
+                // XXX: in setTimeout, or there won't be any animation
+                element.style.height = opt.tarHeight || 0;
+            }, 10);
+            setTimeout(function () {
+                cbFun();
+            }, transitionTime * 1000);
+        }
+    }
+
     return {
         throttle: throttle,
         values: values,
@@ -177,6 +237,7 @@ define(function (require) {
         isString: isString,
         del: del,
         hasTouch: hasTouch,
-        isCacheUrl: isCacheUrl
+        isCacheUrl: isCacheUrl,
+        heightAni: heightAni
     }
 });
