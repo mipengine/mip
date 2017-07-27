@@ -255,9 +255,8 @@ define(function (require) {
     customElem.prototype.createdCallback = function () {
         var element = this.element;
         var layoutAttr = element.getAttribute('layout');
-        var widthAttr = element.getAttribute('width');
         var heightAttr = element.getAttribute('height');
-        if (layoutAttr || (widthAttr && heightAttr)) {
+        if (layoutAttr || heightAttr) {
             // do nothing, use layout as placeholder: Layout.applyLayout
         }
         else {
