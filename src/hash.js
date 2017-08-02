@@ -105,7 +105,7 @@ define(function (require) {
             var index = item.indexOf('=');
             // key invalid
             if (index === 0) {
-                break;
+                continue;
             }
             // key valid
             if (index !== -1) {
