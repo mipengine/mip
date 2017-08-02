@@ -92,10 +92,10 @@ define(function (require) {
      * @return {Object} object of each hash
      */
     Hash.prototype._getHashObj = function (hash) {
-        if (!hash) {
-            return;
-        }
         var hashObj = {};
+        if (!hash) {
+            return hashObj;
+        }
         var hashString = hash.slice(hash.indexOf("#") + 1);
         var hashs = hashString.split('&');
         for (var key in hashs) {
