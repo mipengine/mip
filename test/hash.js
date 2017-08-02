@@ -1,12 +1,27 @@
 
 define(function (require) {
     'use strict';
-    window.location.hash = 'word=1123';
+    window.location.hash = 'word=1123&mip-anchor=anchor';
     var hash = require('hash');
+    var achorEle = document.createElement('div');
+    achorEle.id = 'anchor';
+    achorEle.name = 'anchor';
+    achorEle.style = 'margin-top:200px;width:100px;height:100px;background:green;';
+    document.body.appendChild(achorEle);
 
     window.location.hash = '';
 
     describe('hash', function () {
+        it('case: scroll to anchor', function(){
+            window.location.hash = 'mip-anchor=anchor';
+            hash.refreshHashTree();
+            hash.scrollToAnchor({
+                value: 'anchor',
+                sep: '='
+            });
+            expect(hash.get('mip-anchor')).to.be.equal('anchor');
+        });
+
         it('case: normal', function(){
             window.location.hash = 'word=123&eqid=321';
             hash.refreshHashTree();
