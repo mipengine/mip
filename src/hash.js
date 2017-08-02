@@ -1,10 +1,14 @@
 /**
  * @file Hash Function. Support hash get function
  * @author Jenny_L
- * @modify wupeng10@baidu.com 2017-07-06 If the hash has only a key, it is not processed
+ * @modify wupeng10@baidu.com 2017-08-01
+ *  1. If the hash has only a key, it is not processed;
+ *  2. Solve the problem of anchor location
  */
 define(function (require) {
     'use strict';
+
+    var rect = require('./dom/rect');
 
     /**
      * Hash class
@@ -12,15 +16,10 @@ define(function (require) {
      * @class
      */
     function Hash() {
-
         // init sessionStorage status
         this.ssEnabled = ssEnabled();
-
         this.pageId = window.location.href.split('#').shift();
-
         var hash = window.location.hash;
-
-
         if (this.ssEnabled) {
             var ssHash = window.sessionStorage.getItem(this.pageId) || '';
             // add the window.location.hash
@@ -35,17 +34,48 @@ define(function (require) {
             }
             window.location.hash = curHash;
         }
-
-        /**
-         * get hash value of specific key
-         *
-         * @param  {string} key key
-         * @return {value}     [description]
-         */
-        this.get = function (key) {
-            return this.hashTree[key] || '';
-        };
+        this.bindAnchor();
     }
+
+    /**
+     * get hash value of specific key
+     *
+     * @param  {string} key key
+     * @return {value}     [description]
+     */
+    Hash.prototype.get = function (key) {
+        var hv = this.hashTree[key];
+        return hv ? hv.value : '';
+    };
+
+    /**
+     * If there has anchor, Scroll to it
+     *
+     */
+    Hash.prototype.bindAnchor = function () {
+        var anchor = this.hashTree['mip-anchor'];
+        if (anchor && anchor.value) {
+            if (document.readyState === 'complete') {
+                this.scrollToAnchor();
+            } else {
+                var handle = this.scrollToAnchor.bind(null, anchor);
+                document.addEventListener('DOMContentLoaded', handle, false);
+            }
+        }
+    };
+
+    /**
+     * Scroll to anchor
+     *
+     * @params {Object} anchor anchor object
+     */
+    Hash.prototype.scrollToAnchor = function (anchor) {
+        var ele = document.getElementById(anchor.value);
+        if (ele) {
+            var rt = rect.getElementOffset(ele);
+            ele && rt.top && rect.setScrollTop(rt.top);
+        }
+    };
 
     /**
      * refresh hash object
@@ -58,33 +88,28 @@ define(function (require) {
     /**
      * get hash object from hash
      *
-     * @param  {string} originalHash hash
+     * @param  {string} hash hash
      * @return {Object} object of each hash
      */
-    Hash.prototype._getHashObj = function (originalHash) {
+    Hash.prototype._getHashObj = function (hash) {
         var hashObj = {};
-        if (originalHash) {
-            var hashVal;
-            var tmpList = originalHash.split('#');
-            hashVal = tmpList.join('&');
-            var hashArr = hashVal.split('&');
-            var haLen = hashArr.length;
-            for (var i = 0; i < haLen; i++) {
-                var curOne = hashArr[i];
-                var eqIdx = curOne.indexOf('=');
-                var key;
-                var val;
-                if (eqIdx !== -1) {
-                    key = decodeURIComponent(curOne.substring(0, eqIdx)).trim();
-                    val = decodeURIComponent(curOne.substring(eqIdx + 1)).trim();
+        if (hash) {
+            var hashString = hash.slice(hash.indexOf("#") + 1);
+            var hashs = hashString.split('&');
+            for (var key in hashs) {
+                var item = hashs[key];
+                var index = item.indexOf('=');
+                var hk = item;
+                var hv = '';
+                if (index !== -1) {
+                    hk = item.substring(0, index);
+                    hv = item.slice(index + 1);
                 }
-                else {
-                    key = decodeURIComponent(curOne).trim();
-                    val = '';
-                }
-                if (key) {
-                    // rewrite the Repeat Key
-                    hashObj[key] = val;
+                if (hk) {
+                    hashObj[hk] = {
+                        value: hv,
+                        sep: index !== -1 ? '=' : ''
+                    }
                 }
             }
         }
@@ -101,8 +126,9 @@ define(function (require) {
         var hashTree = this.hashTree;
         for (var key in hashTree) {
             if (hashTree.hasOwnProperty(key)) {
-                var val = hashTree[key];
-                val = val ? key + '=' + encodeURIComponent(val) : key;
+                var val = hashTree[key].value;
+                var sep = hashTree[key].sep;
+                val = key + sep + val;
                 hash.push(val);
             }
         }
