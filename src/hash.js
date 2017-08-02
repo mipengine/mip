@@ -92,25 +92,29 @@ define(function (require) {
      * @return {Object} object of each hash
      */
     Hash.prototype._getHashObj = function (hash) {
+        if (!hash) {
+            return;
+        }
         var hashObj = {};
-        if (hash) {
-            var hashString = hash.slice(hash.indexOf("#") + 1);
-            var hashs = hashString.split('&');
-            for (var key in hashs) {
-                var item = hashs[key];
-                var index = item.indexOf('=');
-                var hk = item;
-                var hv = '';
-                if (index !== -1) {
-                    hk = item.substring(0, index);
-                    hv = item.slice(index + 1);
-                }
-                if (hk) {
-                    hashObj[hk] = {
-                        value: hv,
-                        sep: index !== -1 ? '=' : ''
-                    }
-                }
+        var hashString = hash.slice(hash.indexOf("#") + 1);
+        var hashs = hashString.split('&');
+        for (var key in hashs) {
+            var item = hashs[key];
+            var hk = item;
+            var hv = '';
+            var index = item.indexOf('=');
+            // key invalid
+            if (index === 0) {
+                break;
+            }
+            // key valid
+            if (index !== -1) {
+                hk = item.substring(0, index);
+                hv = item.slice(index + 1);
+            }
+            hashObj[hk] = {
+                value: hv,
+                sep: index !== -1 ? '=' : ''
             }
         }
         return hashObj;
