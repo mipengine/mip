@@ -56,7 +56,7 @@ define(function (require) {
         var anchor = this.hashTree['mip-anchor'];
         if (anchor && anchor.value) {
             if (document.readyState === 'complete') {
-                this.scrollToAnchor();
+                this.scrollToAnchor(anchor);
             } else {
                 var handle = this.scrollToAnchor.bind(null, anchor);
                 document.addEventListener('DOMContentLoaded', handle, false);
