@@ -6,7 +6,7 @@ define(function (require) {
     var achorEle = document.createElement('div');
     achorEle.id = 'anchor';
     achorEle.name = 'anchor';
-    achorEle.style = 'margin-top:200px;width:100px;height:100px;background:green;';
+    achorEle.style = 'margin-top:1000px;width:100px;height:100px;background:green;';
     document.body.appendChild(achorEle);
 
     window.location.hash = '';
