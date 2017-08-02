@@ -21,7 +21,7 @@ define(function(util) {
         });
 
         it('parseCacheUrl', function() {
-            expect(util.parseCacheUrl('')).to.be.undefined;
+            expect(util.parseCacheUrl('')).to.be.equal('');
             expect(util.parseCacheUrl('aaa')).to.equal('aaa');
             expect(util.parseCacheUrl('http://baidu.com')).to.equal('http://baidu.com');
             expect(util.parseCacheUrl('/i/image79.360doc.cn/DownloadImg/2014/10/0922/45981023_1', 'img')).to.equal('http://image79.360doc.cn/DownloadImg/2014/10/0922/45981023_1');
