@@ -53,11 +53,12 @@ define(function (require) {
      *
      */
     Hash.prototype.bindAnchor = function () {
-        var anchor = this.hashTree['mip-anchor'];
+        var anchor = this.hashTree.mipanchor;
         if (anchor && anchor.value) {
             if (document.readyState === 'complete') {
                 this.scrollToAnchor(anchor);
-            } else {
+            }
+            else {
                 var handle = this.scrollToAnchor.bind(null, anchor);
                 document.addEventListener('DOMContentLoaded', handle, false);
             }
@@ -67,7 +68,7 @@ define(function (require) {
     /**
      * Scroll to anchor
      *
-     * @params {Object} anchor anchor object
+     * @param {Object} anchor anchor object
      */
     Hash.prototype.scrollToAnchor = function (anchor) {
         var ele = document.getElementById(anchor.value);
@@ -96,25 +97,27 @@ define(function (require) {
         if (!hash) {
             return hashObj;
         }
-        var hashString = hash.slice(hash.indexOf("#") + 1);
+        var hashString = hash.slice(hash.indexOf('#') + 1);
         var hashs = hashString.split('&');
         for (var key in hashs) {
-            var item = hashs[key];
-            var hk = item;
-            var hv = '';
-            var index = item.indexOf('=');
-            // key invalid
-            if (index === 0) {
-                continue;
-            }
-            // key valid
-            if (index !== -1) {
-                hk = item.substring(0, index);
-                hv = item.slice(index + 1);
-            }
-            hashObj[hk] = {
-                value: hv,
-                sep: index !== -1 ? '=' : ''
+            if (hashs.hasOwnProperty(key)) {
+                var item = hashs[key];
+                var hk = item;
+                var hv = '';
+                var index = item.indexOf('=');
+                // key invalid
+                if (index === 0) {
+                    continue;
+                }
+                // key valid
+                if (index !== -1) {
+                    hk = item.substring(0, index);
+                    hv = item.slice(index + 1);
+                }
+                hashObj[hk] = {
+                    value: hv,
+                    sep: index !== -1 ? '=' : ''
+                };
             }
         }
         return hashObj;
@@ -145,14 +148,15 @@ define(function (require) {
      * @return {boolean} whether enabled or not
      */
     function ssEnabled() {
+        var support = false;
         try {
             window.sessionStorage.setItem('_t', 1);
             window.sessionStorage.removeItem('_t');
-            return true;
+            support = true;
         }
         catch (e) {
-            return false;
         }
+        return support;
     }
 
     return new Hash();

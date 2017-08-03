@@ -1,7 +1,7 @@
 
 define(function (require) {
     'use strict';
-    window.location.hash = 'word=1123&mip-anchor=anchor';
+    window.location.hash = 'word=1123&mipanchor=anchor';
     var hash = require('hash');
     var achorEle = document.createElement('div');
     achorEle.id = 'anchor';
@@ -13,13 +13,13 @@ define(function (require) {
 
     describe('hash', function () {
         it('case: scroll to anchor', function(){
-            window.location.hash = 'mip-anchor=anchor';
+            window.location.hash = 'mipanchor=anchor';
             hash.refreshHashTree();
             hash.scrollToAnchor({
                 value: 'anchor',
                 sep: '='
             });
-            expect(hash.get('mip-anchor')).to.be.equal('anchor');
+            expect(hash.get('mipanchor')).to.be.equal('anchor');
         });
 
         it('case: normal', function(){
