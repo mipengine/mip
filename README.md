@@ -30,6 +30,8 @@
 
 ## MIP(Mobile page In Baidu)
 
+[![Join the chat at https://gitter.im/mipengine/mip](https://badges.gitter.im/mipengine/mip.svg)](https://gitter.im/mipengine/mip?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 MIP （Mobile Instant Pages - 移动网页加速器）, 是一套应用于移动网页的开放性技术标准。通过提供MIP-HTML规范、MIP-JS运行环境以及MIP-Cache页面缓存系统，实现移动网页加速。本项目属于其中的MIP-JS运行环境部分。
 
 ## 快速入门
