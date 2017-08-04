@@ -14,7 +14,11 @@
 		<img src="https://david-dm.org/mipengine/mip/status.svg"/>
 	</a>
 </p>
+</p>
 <p align='center'>
+	<a href="https://gitter.im/mipengine/mip?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge" title="gitter chat" alt='gitter chat'>
+		<img src="https://badges.gitter.im/mipengine/mip.svg"/>
+	</a>
 	<a href='http://issuestats.com/github/mipengine/mip'>
 		<img src='http://issuestats.com/github/mipengine/mip/badge/pr?style=flat' title='Pull Request closed' alt='Pull Request closed'>
 	</a>
