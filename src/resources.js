@@ -1,3 +1,9 @@
+/**
+ * @file Resource Function
+ *
+ * @author xx
+ * @modify wupeng10@baidu.com 2017-08-03 add layoutIfNeeded api
+ */
 define(function (require) {
     'use strict';
 
@@ -24,6 +30,7 @@ define(function (require) {
     /**
      * MIP Elements's controller. It's use to manage all the elements's custom life circle and
      * provide the overall interfaces of the MIP Elements.
+     *
      * @class
      */
     function Resources() {
@@ -33,12 +40,12 @@ define(function (require) {
          * @type {number}
          */
         this._rid = counter ++;
-       
+
         /**
          * Element id
          * @private
          * @type {number}
-         */ 
+         */
         this._eid = 0;
 
         // add to resources
@@ -67,6 +74,7 @@ define(function (require) {
     }
 
     Resources.prototype = {
+
         /**
          * Bind the events of current object.
          */
@@ -81,11 +89,13 @@ define(function (require) {
                 clearTimeout(timer);
                 timer = setTimeout(self.updateState, delay);
             });
+
             this.updateState();
         },
 
         /**
          * Add an element for current object and update all the elements's state.
+         *
          * @param {MIPElement} element A mip element
          */
         add: function (element) {
@@ -97,6 +107,7 @@ define(function (require) {
 
         /**
          * Remove element from current resources object.
+         *
          * @param {MIPElement|string} element Mip element or _eid of element
          * @return {boolean} the removed state of element
          */
@@ -112,6 +123,7 @@ define(function (require) {
 
         /**
          * Return an object of resources.
+         *
          * @return {Array}
          */
         getResources: function () {
@@ -120,6 +132,8 @@ define(function (require) {
 
         /**
          * Return an array of resources.
+         *
+         * @return {Array}
          */
         getResourcesList: function () {
             return fn.values(this.getResources());
@@ -127,8 +141,9 @@ define(function (require) {
 
         /**
          * Set an element's viewport state to 'true' or 'false'.
-         * @param {MIPElement} element
-         * @param {boolean} inViewport
+         *
+         * @param {MIPElement} element element
+         * @param {boolean} inViewport inViewport
          */
         setInViewport: function (element, inViewport) {
             if (element.inViewport() !== inViewport) {
@@ -138,7 +153,7 @@ define(function (require) {
 
         /**
          * Update elements's viewport state.
-         * @private
+         *
          */
         _update: function () {
             var resources = this.getResources();
@@ -146,7 +161,8 @@ define(function (require) {
             for (var i in resources) {
                 // Compute the viewport state of current element.
                 // If current element`s prerenderAllowed returns `true` always set the state to be `true`.
-                var inViewport = resources[i].prerenderAllowed() || rect.overlapping(rect.getElementRect(resources[i]), viewportRect);
+                var inViewport = resources[i].prerenderAllowed()
+                    || rect.overlapping(rect.getElementRect(resources[i]), viewportRect);
                 this.setInViewport(resources[i], inViewport);
             }
         }
@@ -154,7 +170,8 @@ define(function (require) {
 
     /**
      * Forced set the element's viewport state to 'true'.
-     * @param {MIPElement} element
+     *
+     * @param {MIPElement} element element
      */
     Resources.prerenderElement = function (element) {
         if (element.inViewport && !element.inViewport()) {
