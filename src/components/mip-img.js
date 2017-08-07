@@ -228,11 +228,11 @@ define(function (require) {
         placeholder.classList.add('mip-placeholder');
         placeholder.classList.add('mip-placeholder-' + type);
 
-        this.targetEle.append(placeholder);
+        this.targetEle.appendChild(placeholder);
     };
 
     Placeholder.prototype.remove = function () {
-        this.placeholder.remove();
+        this.placeholder.parentElement.removeChild(this.placeholder);
     };
 
     /**
