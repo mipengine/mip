@@ -33,12 +33,12 @@ define(function (require) {
          * @type {number}
          */
         this._rid = counter ++;
-
+       
         /**
          * Element id
          * @private
          * @type {number}
-         */
+         */ 
         this._eid = 0;
 
         // add to resources
