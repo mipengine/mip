@@ -10,9 +10,9 @@ before_script:
   - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
 script:
   - npm run test
-  # - npm run test:sl
+  - npm run test:sl
   - npm run test:co
 env:
   global:
-    - SAUCE_USERNAME=smartfutureplayer
-    - SAUCE_ACCESS_KEY=1602b39c-b8e2-41e8-8974-42ab3cc95dd5
+    - SAUCE_USERNAME=mipengine@baidu.com
+    - SAUCE_ACCESS_KEY=924e870c-d929-452f-96fc-806e0fb70c75
