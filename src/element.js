@@ -1,16 +1,9 @@
-/**
- * @file Element Function
- *
- * @author xx
- * @modify wupeng10@baidu.com 2017-08-03 add layoutIfNeeded api
- */
 define(function (require) {
     'use strict';
 
     var cssLoader = require('./dom/css-loader');
     var layout = require('./layout');
     var performance = require('./performance');
-    var Resources = require('./resources');
 
     /**
      * Storage of custom elements.
@@ -35,7 +28,6 @@ define(function (require) {
 
     /**
      * Create a basic prototype of mip elements classes
-     *
      * @return {Object}
      */
     function createBaseElementProto() {
@@ -49,7 +41,7 @@ define(function (require) {
         /**
          * Created callback of MIPElement. It will initialize the element.
          */
-        proto.createdCallback = function () {
+        proto.createdCallback = function() {
             var CustomEle = customElements[this.name];
             this.classList.add('mip-element');
 
@@ -92,7 +84,7 @@ define(function (require) {
         /**
          * When the element is inserted into the DOM, initialize the layout and add the element to the '_resources'.
          */
-        proto.attachedCallback = function () {
+        proto.attachedCallback = function() {
             // Apply layout for this.
             this._layout = layout.applyLayout(this);
             this.customElement.attachedCallback();
@@ -103,7 +95,7 @@ define(function (require) {
         /**
          * When the element is removed from the DOM, remove it from '_resources'.
          */
-        proto.detachedCallback = function () {
+        proto.detachedCallback = function() {
             this.customElement.detachedCallback();
             this._resources.remove(this);
             performance.fsElementLoaded(this);
@@ -112,13 +104,12 @@ define(function (require) {
         /**
          * Call the attributeChanged of custom element.
          */
-        proto.attributeChangedCallback = function () {
+        proto.attributeChangedCallback = function(){
             this.customElement.attributeChangedCallback();
         };
 
         /**
          * Check whether the element is in the viewport.
-         *
          * @return {boolean}
          */
         proto.inViewport = function () {
@@ -127,8 +118,6 @@ define(function (require) {
 
         /**
          * Called when the element enter or exit the viewport.
-         *
-         * @param {boolean} inViewport whether in viewport or not
          * And it will call the firstInviewCallback and viewportCallback of the custom element.
          */
         proto.viewportCallback = function (inViewport) {
@@ -137,25 +126,11 @@ define(function (require) {
                 this._firstInViewport = true;
                 this.customElement.firstInviewCallback();
             }
-            this.layoutIfNeeded();
             this.customElement.viewportCallback(inViewport);
         };
 
         /**
-         * Layout when extend this method
-         *
-         * @param {boolean} inViewport whether in viewport or not
-         * And it will call the firstInviewCallback and viewportCallback of the custom element.
-         */
-        proto.layoutIfNeeded = function () {
-            if (resources && this.customElement.layoutIfNeeded()) {
-                resources.updateState();
-            }
-        };
-
-        /**
          * Check whether the building callback has been executed.
-         *
          * @return {boolean}
          */
         proto.isBuilt = function () {
@@ -164,8 +139,7 @@ define(function (require) {
 
         /**
          * Check whether the element need to be rendered in advance.
-         *
-         * @return {boolean}
+         * @reutrn {boolean}
          */
         proto.prerenderAllowed = function () {
             return this.customElement.prerenderAllowed();
@@ -183,16 +157,13 @@ define(function (require) {
             try {
                 this.customElement.build();
                 this._built = true;
-            }
-            catch (e) {
+            } catch (e) {
                 console.warn('build error:', e);
             }
         };
 
         /**
          * Method of executing event actions of the custom Element
-         *
-         * @param {Object} action event action
          */
         proto.executeEventAction = function (action) {
             this.customElement.executeEventAction(action);
@@ -210,7 +181,6 @@ define(function (require) {
 
     /**
      * Create a mip element prototype by name
-     *
      * @param {string} name The mip element's name
      * @return {Object}
      */
@@ -222,9 +192,7 @@ define(function (require) {
 
     /**
      * Add a style tag to head by csstext
-     *
      * @param {string} css Css code
-     * @param {string} name name
      */
     function loadCss(css, name) {
         if (css) {
@@ -234,9 +202,8 @@ define(function (require) {
 
     /**
      * Register MIPElement.
-     *
      * @param {string} name Name of a MIPElement.
-     * @param {Class} elementClass element class
+     * @param {Class} elementClass
      * @param {string} css The csstext of the MIPElement.
      */
     function registerElement(name, elementClass, css) {
@@ -245,6 +212,7 @@ define(function (require) {
         }
 
         if (!resources) {
+            var Resources = require('./resources');
             resources = new Resources();
         }
         customElements[name] = elementClass;
