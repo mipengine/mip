@@ -163,7 +163,7 @@ define(function (require) {
         };
 
         /**
-         * Method of executing event actions of the custom Element
+         * Method of executing event actions of the custom Element 
          */
         proto.executeEventAction = function (action) {
             this.customElement.executeEventAction(action);
@@ -201,11 +201,11 @@ define(function (require) {
     }
 
     /**
-     * Register MIPElement.
+     * Register MIPElement. 
      * @param {string} name Name of a MIPElement.
      * @param {Class} elementClass
      * @param {string} css The csstext of the MIPElement.
-     */
+     */     
     function registerElement(name, elementClass, css) {
         if (customElements[name]) {
             return;
@@ -221,6 +221,6 @@ define(function (require) {
             prototype: createMipElementProto(name)
         });
     }
-
+    
     return registerElement;
 });
