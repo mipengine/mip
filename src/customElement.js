@@ -17,7 +17,7 @@ define(function (require) {
         this.element = element;
         if (this.init){
             this.init();
-        }
+        }    
     }
 
     /**
@@ -84,7 +84,7 @@ define(function (require) {
      * Expend current element's attributes which selected by attrs to an other object.
      * @param {Array.<string>} attrs Attributes' name list
      * @param {Object} element The target element
-     * @return {Object}
+     * @return {Object} 
      */
     customElement.prototype.expendAttr = function (attrs, element) {
         for (var i = 0; i < attrs.length; i++) {
@@ -110,7 +110,7 @@ define(function (require) {
             evt = this._actionEvent = new EventEmitter();
             evt.setEventContext(this);
         }
-
+        
         evt.on.apply(evt, arguments);
     };
 
