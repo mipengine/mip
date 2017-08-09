@@ -3,6 +3,11 @@ define(function (require) {
     window.location.hash = 'word=1123&mipanchor=anchor';
     var hash = require('hash');
     window.location.hash = '';
+    var achorEle = document.createElement('div');
+    achorEle.setAttribute('id', 'anchor');
+    achorEle.setAttribute('name', 'anchor');
+    achorEle.setAttribute('style', 'margin-top:1000px;width:100px;height:100px;background:green;');
+    document.body.appendChild(achorEle);
 
     describe('hash', function () {
         it('case: scroll to anchor', function(){
