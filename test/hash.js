@@ -6,7 +6,6 @@ define(function (require) {
     var achorEle = document.createElement('div');
     achorEle.setAttribute('id', 'anchor');
     achorEle.setAttribute('name', 'anchor');
-    achorEle.setAttribute('style', 'margin-top:1000px;width:100px;height:100px;background:green;');
     document.body.appendChild(achorEle);
 
     describe('hash', function () {
