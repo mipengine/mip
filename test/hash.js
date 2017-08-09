@@ -2,12 +2,6 @@ define(function (require) {
     'use strict';
     window.location.hash = 'word=1123&mipanchor=anchor';
     var hash = require('hash');
-    var achorEle = document.createElement('div');
-    achorEle.id = 'anchor';
-    achorEle.name = 'anchor';
-    achorEle.style = 'margin-top:1000px;width:100px;height:100px;background:green;';
-    document.body.appendChild(achorEle);
-
     window.location.hash = '';
 
     describe('hash', function () {
