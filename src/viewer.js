@@ -41,7 +41,9 @@ define(function (require) {
             if (this.isIframed) {
                 this.patchForIframe();
                 // proxy links
-                this._proxyLink();
+                if (window.name.indexOf('iframe-shell') > -1) {
+                    this._proxyLink();
+                }
                 this._viewportScroll();
                 // Tell parent page the current page is loaded.
                 this.sendMessage('mippageload', {
