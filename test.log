@@ -1,0 +1,192 @@
+
+> mip@1.0.56 test /Users/liangjiaying/git/mip-project/mip
+> node tools/build.js test;karma start ./scripts/unit/karma.unit.conf.js
+
+
+* Files loading ...
+* Files loaded! (2493ms)
+
+* Files process start ...
+--------  - AMDCompiler processing ...  - AMDCompiler - [1/61] deps/fetch-jsonp.js  - AMDCompiler - [2/61] deps/fetch.js  - AMDCompiler - [3/61] deps/naboo.js  - AMDCompiler - [4/61] deps/zepto.js  - AMDCompiler - [5/61] src/components/index.js  - AMDCompiler - [6/61] src/components/mip-carousel.js  - AMDCompiler - [7/61] src/components/mip-iframe.js  - AMDCompiler - [8/61] src/components/mip-img.js  - AMDCompiler - [9/61] src/components/mip-pix.js  - AMDCompiler - [10/61] src/components/mip-video.js  - AMDCompiler - [11/61] src/customElement.js  - AMDCompiler - [12/61] src/dom/css-loader.js  - AMDCompiler - [13/61] src/dom/css.js  - AMDCompiler - [14/61] src/dom/dom.js  - AMDCompiler - [15/61] src/dom/event.js  - AMDCompiler - [16/61] src/dom/rect.js  - AMDCompiler - [17/61] src/element.js  - AMDCompiler - [18/61] src/fixed-element.js  - AMDCompiler - [19/61] src/hash.js  - AMDCompiler - [20/61] src/layout.js  - AMDCompiler - [21/61] src/mip.js  - AMDCompiler - [22/61] src/performance.js  - AMDCompiler - [23/61] src/prefix.js  - AMDCompiler - [24/61] src/resources.js  - AMDCompiler - [25/61] src/sleepWakeModule.js  - AMDCompiler - [26/61] src/templates.js  - AMDCompiler - [27/61] src/util.js  - AMDCompiler - [28/61] src/utils/customStorage.js  - AMDCompiler - [29/61] src/utils/event-action.js  - AMDCompiler - [30/61] src/utils/event-emitter.js  - AMDCompiler - [31/61] src/utils/fn.js  - AMDCompiler - [32/61] src/utils/gesture/data-processor.js  - AMDCompiler - [33/61] src/utils/gesture/gesture-recognizer.js  - AMDCompiler - [34/61] src/utils/gesture.js  - AMDCompiler - [35/61] src/utils/platform.js  - AMDCompiler - [36/61] src/viewer.js  - AMDCompiler - [37/61] src/viewport.js  - AMDCompiler - [38/61] test/customElement.js  - AMDCompiler - [39/61] test/dom/css-loader.js  - AMDCompiler - [40/61] test/dom/css.js  - AMDCompiler - [41/61] test/dom/dom.js  - AMDCompiler - [42/61] test/dom/event.js  - AMDCompiler - [43/61] test/dom/rect.js  - AMDCompiler - [44/61] test/element.js  - AMDCompiler - [45/61] test/fixed-element.js  - AMDCompiler - [46/61] test/hash.js  - AMDCompiler - [47/61] test/index.js  - AMDCompiler - [48/61] test/layout.js  - AMDCompiler - [49/61] test/resources.js  - AMDCompiler - [50/61] test/sleepWakeModule.js  - AMDCompiler - [51/61] test/util.js  - AMDCompiler - [52/61] test/utils/customStorage.js  - AMDCompiler - [53/61] test/utils/event-action.js  - AMDCompiler - [54/61] test/utils/event-emitter.js  - AMDCompiler - [55/61] test/utils/fn.js  - AMDCompiler - [56/61] test/utils/gesture/data-processor.js  - AMDCompiler - [57/61] test/utils/gesture/gesture-recognizer.js  - AMDCompiler - [58/61] test/utils/gesture.js  - AMDCompiler - [59/61] test/utils/platform.js  - AMDCompiler - [60/61] test/viewer.js  - AMDCompiler - [61/61] test/viewport.js  - AMDCompiler done! (264ms)
+--------  - AMDPacker processing ...  - AMDPacker done! (3ms)
+--------  - FileCombiner processing ...  - FileCombiner done! (1ms)
+--------* Files process finished! (271ms)
+
+* Output start ...
+--------  [Output] deps/document-register-element.max.js  [Output] deps/esl.js  [Output] deps/fetch-jsonp.js  [Output] deps/fetch.js  [Output] deps/jquery.js  [Output] deps/naboo.js  [Output] deps/promise.js  [Output] deps/zepto.js  [Output] scripts/unit/karma.base.conf.js  [Output] scripts/unit/karma.cover.conf.js  [Output] scripts/unit/karma.sauce.conf.js  [Output] scripts/unit/karma.unit.conf.js  [Output] src/components/index.js  [Output] src/components/mip-carousel.js  [Output] src/components/mip-carousel.md  [Output] src/components/mip-iframe.js  [Output] src/components/mip-iframe.md  [Output] src/components/mip-img.js  [Output] src/components/mip-img.md  [Output] src/components/mip-pix.js  [Output] src/components/mip-pix.md  [Output] src/components/mip-video.js  [Output] src/components/mip-video.md  [Output] src/components/setting/example.preset  [Output] src/customElement.js  [Output] src/dom/css-loader.js  [Output] src/dom/css.js  [Output] src/dom/dom.js  [Output] src/dom/event.js  [Output] src/dom/rect.js  [Output] src/element.js  [Output] src/fixed-element.js  [Output] src/hash.js  [Output] src/layout.js  [Output] src/less/mip-base.less  [Output] src/less/mip-carousel.less  [Output] src/less/mip-fixed.less  [Output] src/less/mip-html.less  [Output] src/less/mip-iframe.less  [Output] src/less/mip-img.less  [Output] src/less/mip-text.less  [Output] src/less/mip-video.less  [Output] src/less/mip.less  [Output] src/less/mixin.less  [Output] src/less/variable.less  [Output] src/mip.js  [Output] src/performance.js  [Output] src/prefix.js  [Output] src/resources.js  [Output] src/sleepWakeModule.js  [Output] src/templates.js  [Output] src/util.js  [Output] src/utils/customStorage.js  [Output] src/utils/event-action.js  [Output] src/utils/event-emitter.js  [Output] src/utils/fn.js  [Output] src/utils/gesture/data-processor.js  [Output] src/utils/gesture/gesture-recognizer.js  [Output] src/utils/gesture.js  [Output] src/utils/platform.js  [Output] src/viewer.js  [Output] src/viewport.js  [Output] test/customElement.js  [Output] test/dom/css-loader.js  [Output] test/dom/css.js  [Output] test/dom/dom.js  [Output] test/dom/event.js  [Output] test/dom/rect.js  [Output] test/element.js  [Output] test/fixed-element.js  [Output] test/hash.js  [Output] test/index.js  [Output] test/layout.js  [Output] test/resources.js  [Output] test/sleepWakeModule.js  [Output] test/util.js  [Output] test/utils/customStorage.js  [Output] test/utils/event-action.js  [Output] test/utils/event-emitter.js  [Output] test/utils/fn.js  [Output] test/utils/gesture/data-processor.js  [Output] test/utils/gesture/gesture-recognizer.js  [Output] test/utils/gesture.js  [Output] test/utils/platform.js  [Output] test/viewer.js  [Output] test/viewport.js  [Output] test.log* Output finished! (34ms)
+
+Builded! (2800ms)
+[4m[1mSTART:[22m[24m
+[33m01 08 2017 18:42:39.105:WARN [watcher]: [39mAll files matched by "/Users/liangjiaying/git/mip-project/mip/node_modules/chai/chai.js" were excluded or matched by prior matchers.
+[32m01 08 2017 18:42:39.879:INFO [karma]: [39mKarma v1.7.0 server started at http://0.0.0.0:9876/
+[32m01 08 2017 18:42:39.879:INFO [launcher]: [39mLaunching browser Chrome with unlimited concurrency
+[32m01 08 2017 18:42:39.887:INFO [launcher]: [39mStarting browser Chrome
+[32m01 08 2017 18:42:41.514:INFO [Chrome 59.0.3071 (Mac OS X 10.11.6)]: [39mConnected on socket XBJQSRG0Vdzf1t82AAAA with id 34771830
+[1m  css[22m
+[32m    [32m✔[32m single element[39m
+[32m    [32m✔[32m multi elements[39m
+[32m    [32m✔[32m unit[39m
+[32m    [32m✔[32m prefix[39m
+[32m    [32m✔[32m non-standard[39m
+[1m  dom[22m
+[32m    [32m✔[32m matches[39m
+[32m    [32m✔[32m closest[39m
+[32m    [32m✔[32m contains[39m
+[32m    [32m✔[32m closestTo[39m
+[32m    [32m✔[32m create[39m
+[32m    [32m✔[32m insert[39m
+[1m  event[22m
+[32m    [32m✔[32m delegate[39m
+[32m    [32m✔[32m create[39m
+[1m  platform[22m
+[1m    osVersion[22m
+[32m      [32m✔[32m android version[39m
+[32m      [32m✔[32m iOS version[39m
+[32m      [32m✔[32m app version[39m
+[1m    version[22m
+[32m      [32m✔[32m iOS version[39m
+[32m      [32m✔[32m android version[39m
+[1m    browser[22m
+[32m      [32m✔[32m wechatApp[39m
+[32m      [32m✔[32m baiduApp[39m
+[32m      [32m✔[32m weiboApp[39m
+[32m      [32m✔[32m QQApp[39m
+[32m      [32m✔[32m uc[39m
+[32m      [32m✔[32m baidu[39m
+[32m      [32m✔[32m QQ[39m
+[32m      [32m✔[32m android browser[39m
+[32m      [32m✔[32m android samsung browser[39m
+[32m      [32m✔[32m safari[39m
+[32m      [32m✔[32m chrome[39m
+[32m      [32m✔[32m fireFox[39m
+[32m      [32m✔[32m trident[39m
+[32m      [32m✔[32m gecko[39m
+[32m      [32m✔[32m webkit[39m
+[1m    needSpecialScroll[22m
+[32m      [32m✔[32m needSpecialScroll[39m
+[1m  rect[22m
+[32m    [32m✔[32m getElementRect[39m
+[32m    [32m✔[32m getElementOffset[39m
+[32m    [32m✔[32m setScrollTop[39m
+[1m  hash[22m
+[32m    [32m✔[32m case: normal[39m
+[32m    [32m✔[32m case: no key input[39m
+[32m    [32m✔[32m case: no such key[39m
+[32m    [32m✔[32m case: multi =[39m
+[32m    [32m✔[32m case: no value[39m
+[32m    [32m✔[32m case: no key[39m
+[32m    [32m✔[32m case: no equal[39m
+[32m    [32m✔[32m case: no hash[39m
+[1m  event-action[22m
+[32m    [32m✔[32m normal[39m
+[32m    [32m✔[32m error check[39m
+[1m  fn[22m
+[32m    [32m✔[32m extend[39m
+[32m    [32m✔[32m values[39m
+[32m    [32m✔[32m throttle[39m
+[32m    [32m✔[32m isPlainObject[39m
+[32m    [32m✔[32m pick[39m
+[32m    [32m✔[32m isString[39m
+[32m    [32m✔[32m del[39m
+[32m    [32m✔[32m heightAni[39m
+[1m  customElement[22m
+[32m    [32m✔[32m init[39m
+[32m    [32m✔[32m eventaction[39m
+[1m  event-emitter[22m
+[32m    [32m✔[32m single[39m
+[32m    [32m✔[32m multi[39m
+[1m  gesture[22m
+[32m    [32m✔[32m on & off[39m
+[32m    [32m✔[32m tap[39m
+[32m    [32m✔[32m tap & doubletap[39m
+[32m    [32m✔[32m swipe[39m
+[32m    [32m✔[32m recognizer[39m
+[32m    [32m✔[32m cleanup[39m
+[32m    [32m✔[32m preventDefault[39m
+[1m  gesture/recognizer[22m
+[32m    [32m✔[32m base[39m
+[32m    [32m✔[32m tap[39m
+[32m    [32m✔[32m swipe[39m
+[1m  css-loader[22m
+[32m    [32m✔[32m insert[39m
+[1m  fixed-element[22m
+[32m    [32m✔[32m uc[39m
+[32m    [32m✔[32m normal[39m
+[32m    [32m✔[32m ios[39m
+[32m    [32m✔[32m move mip-semi-fixed dom to fixedLayer[39m
+[32m    [32m✔[32m insert before the nextSbiling of mip-semi-fixed which has no id[39m
+[32m    [32m✔[32m call setFixedElement in components[39m
+[32m    [32m✔[32m setPlaceholder[39m
+[32m    [32m✔[32m showFixedLayer[39m
+[32m    [32m✔[32m hideFixedLayer[39m
+[1m  layout[22m
+[32m    [32m✔[32m applyLayout[39m
+[32m    [32m✔[32m isLoadingAllowed[39m
+[32m    [32m✔[32m elementDimensions[39m
+[32m    [32m✔[32m parseLength[39m
+[1m  resources[22m
+[32m    [32m✔[32m getResources & getResourcesList[39m
+[32m    [32m✔[32m setInViewport and update[39m
+[32m    [32m✔[32m prerenderElement[39m
+[32m    [32m✔[32m remove[39m
+[32m    [32m✔[32m changed[39m
+[1m  sleepWakeModule[22m
+[32m    [32m✔[32m sleepIsTrue[39m
+[32m    [32m✔[32m wake[39m
+[32m    [32m✔[32m _stateChange[39m
+[32m    [32m✔[32m close[39m
+[32m    [32m✔[32m reset[39m
+[1m  util[22m
+[32m    [32m✔[32m makeCacheUrl[39m
+[32m    [32m✔[32m parseCacheUrl[39m
+[1m  localstorage[22m
+[32m    [32m✔[32m set[39m
+[32m    [32m✔[32m get[39m
+[32m    [32m✔[32m rm[39m
+[32m    [32m✔[32m rmExpires[39m
+[32m    [32m✔[32m clear[39m
+[33m01 08 2017 18:42:43.584:WARN [web-server]: [39m404: /req1
+[32m    [32m✔[32m exceed[39m
+[32m    [32m✔[32m coverBranch[39m
+[1m  localstorage-nocache[22m
+[32m    [32m✔[32m noSupportLs[39m
+[32m    [32m✔[32m supportLs[39m
+[1m  localstorage-isCachePage[22m
+[32m    [32m✔[32m isCachePage[39m
+[1m  asyncstorage[22m
+[32m    [32m✔[32m request1[39m
+[32m    [32m✔[32m request2[39m
+[33m01 08 2017 18:42:43.593:WARN [web-server]: [39m404: /req3
+[32m    [32m✔[32m request3[39m
+[32m    [32m✔[32m delExceedCookie[39m
+[32m    [32m✔[32m not isIframed[39m
+[1m  viewer[22m
+[32m    [32m✔[32m patchForIframe[39m
+[32m    [32m✔[32m needBackReload[39m
+[32m    [32m✔[32m show[39m
+[32m    [32m✔[32m init[39m
+[32m    [32m✔[32m sroll up[39m
+[32m    [32m✔[32m sendMessage[39m
+[32m    [32m✔[32m handlePreregisteredExtensions[39m
+[32m    [32m✔[32m bindEventCallback[39m
+[1m  viewport[22m
+[32m    [32m✔[32m scrollTop[39m
+[32m    [32m✔[32m getRect[39m
+[32m    [32m✔[32m scroll width & height[39m
+[32m    [32m✔[32m scroll&changed&resized[39m
+[1m  element[22m
+[32m    [32m✔[32m firstInviewCallback[39m
+[32m    [32m✔[32m prerenderAllowed[39m
+[32m    [32m✔[32m applyFillContent[39m
+[32m    [32m✔[32m expendAttr[39m
+[32m    [32m✔[32m detached[39m
+[32m    [32m✔[32m multi build[39m
+[32m    [32m✔[32m multi register[39m
+[32m    [32m✔[32m init[39m
+WARN: 'build error:', ReferenceError{}
+[32m    [32m✔[32m error check[39m
+
+[32mFinished in 1.105 secs / 0.942 secs @ 18:42:43 GMT+0800 (CST)[39m
+
+[4m[1mSUMMARY:[22m[24m
+[32m[32m✔[32m 131 tests completed[39m

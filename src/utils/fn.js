@@ -168,6 +168,74 @@ define(function (require) {
                     ||  /^(\/\/|http:\/\/|https:\/\/)[A-Za-z0-9]{1,}-.*.mipcdn.com\/c\//.test(pageUrl);
     }
 
+    /**
+     * Make height transiton for element that has unknown height.
+     * height transiton from 0px/40px to whatever height element will be.
+     *
+     * @param  {Object} opt
+     * @example
+     * {
+     *     "ele": document.getElementById('id1'), // target DOM
+     *     "type": "fold",                  // "fold" or "unfold"
+     *     "transitionTime": "0.3",         // seconds, animation time
+     *     "tarHeight": "140px",            // DOM height when animation ends
+     *     "oriHeight": "20px",             // DOM height when animation begins
+     *     "cbFun": function() {}.bind()    //callback, exec after animation
+     * }
+     */
+    function heightAni(opt) {
+        var element = opt.ele;
+        var type = opt.type;
+
+        if (!type || !element) {
+            return;
+        }
+
+        var transitionTime = opt.transitionTime || 0.3;
+        // use ?: to make sure oriHeight won't be rewrite when opt.oriHeight is set to 0
+        var oriHeight = (opt.oriHeight != undefined ? opt.oriHeight : getComputedStyle(element).height);
+        var tarHeight;
+        var cbFun = opt.cbFun || function () {};
+
+        if (type === 'unfold') {
+            
+            // make sure tarHeight won't be rewrite when opt.tarHeight is set to 0
+            if (opt.tarHeight != undefined) {
+                tarHeight = opt.tarHeight;
+            } else {
+                // before set height to auto, remove animation.
+                // or bad animation happens in iphone 4s
+                element.style.transition = 'height 0s';
+                element.style.height = 'auto';
+                tarHeight = getComputedStyle(element).height;
+            }
+
+            // set height to auto after transition,
+            // in case of height change of inside element later.
+            setTimeout(function () {
+                // before set height to auto, remove animation.
+                // or bad animation happens in iphone 4s
+                element.style.transition = 'height 0s';
+                element.style.height = 'auto';
+            }, transitionTime * 1000);
+        }
+        else if (type === 'fold') {
+            tarHeight = opt.tarHeight || 0;
+        }
+        
+        element.style.height = oriHeight;
+        // now start the animation
+        setTimeout(function () {
+            element.style.transition = 'height ' + transitionTime + 's';
+            // XXX: in setTimeout, or there won't be any animation
+            element.style.height = tarHeight;
+        }, 10);
+        // after transition, exec callback functions
+        setTimeout(function () {
+            cbFun();
+        }, transitionTime * 1000);
+    }
+
     return {
         throttle: throttle,
         values: values,
@@ -177,6 +245,7 @@ define(function (require) {
         isString: isString,
         del: del,
         hasTouch: hasTouch,
-        isCacheUrl: isCacheUrl
+        isCacheUrl: isCacheUrl,
+        heightAni: heightAni
     }
 });
