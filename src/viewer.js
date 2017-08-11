@@ -41,9 +41,7 @@ define(function (require) {
             if (this.isIframed) {
                 this.patchForIframe();
                 // proxy links
-                if (window.name.indexOf('iframe-shell') > -1) {
-                    this._proxyLink();
-                }
+                this._proxyLink();
                 this._viewportScroll();
                 // Tell parent page the current page is loaded.
                 this.sendMessage('mippageload', {
@@ -234,8 +232,8 @@ define(function (require) {
                 }
                 // For mail、phone、market、app ...
                 // Safari failed when iframed. So add the `target="_top"` to fix it.
-                if (!regexp.test(this.href)) {
-                    this.setAttribute('target', '_top');
+                if (!regexp.test(this.href) || window.name.indexOf('iframe-shell') === -1) {
+                    top.location = this.href;
                     return;
                 }
                 e.preventDefault();
