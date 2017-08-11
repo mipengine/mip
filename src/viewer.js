@@ -232,8 +232,8 @@ define(function (require) {
                 }
                 // For mail、phone、market、app ...
                 // Safari failed when iframed. So add the `target="_top"` to fix it.
-                if (!regexp.test(this.href) || window.name.indexOf('iframe-shell') === -1) {
-                    top.location = this.href;
+                if (!regexp.test(this.href)) {
+                    this.setAttribute('target', '_top');
                     return;
                 }
                 e.preventDefault();
@@ -245,13 +245,18 @@ define(function (require) {
                     messageKey = 'loadiframe';
                     messageData.title = parent.getAttribute('title') || parent.innerText.trim().split('\n')[0];
                     messageData.click = parent.getAttribute('data-click');
+                    self.sendMessage(messageKey, messageData);
                 }
                 else if (this.getAttribute('data-type') === 'mip') {
                     messageKey = 'loadiframe';
                     messageData.title = this.getAttribute('data-title') || this.innerText.trim().split('\n')[0];
                     messageData.click = this.getAttribute('data-click');
+                    self.sendMessage(messageKey, messageData);
+                } else {
+                    // 非MIP跳转，一律走top跳转
+                    top.location.href = this.href;
                 }
-                self.sendMessage(messageKey, messageData);
+                
             }, false); 
         }
     };
