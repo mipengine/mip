@@ -14,5 +14,5 @@ script:
   - npm run test:co
 env:
   global:
-    - SAUCE_USERNAME=mipengine@baidu.com
-    - SAUCE_ACCESS_KEY=924e870c-d929-452f-96fc-806e0fb70c75
+    - SAUCE_USERNAME=mipengine
+    - SAUCE_ACCESS_KEY=fab3190e-a7d4-49eb-b082-f01dca94e07c
