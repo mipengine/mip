@@ -7,18 +7,21 @@
 	<a href='https://travis-ci.org/mipengine/mip'>
 		<img src='https://travis-ci.org/mipengine/mip.svg?branch=master' title='Build Status' alt='Build Status'>
 	</a>
+	<a href='https://saucelabs.com/beta/builds/be1067b00f7c414297d77692ac82cf67'>
+		<img src='https://saucelabs.com/buildstatus/mipengine' title='Build Status' alt='Build Status'>
+	</a>
 	<a href='https://coveralls.io/github/mipengine/mip?branch=master'>
 		<img src='https://coveralls.io/repos/github/mipengine/mip/badge.svg?branch=master' title='Coverage Status' alt='Coverage Status' />
 	</a>
-	<a href="https://david-dm.org/mipengine/mip" title="dependencies status" alt='dependencies Status'>
-		<img src="https://david-dm.org/mipengine/mip/status.svg"/>
+	<a href="https://gitter.im/mipengine/mip?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge" title="gitter chat" alt='gitter chat'>
+		<img src="https://badges.gitter.im/mipengine/mip.svg"/>
 	</a>
 </p>
 </p>
 <p align='center'>
-	<a href="https://gitter.im/mipengine/mip?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge" title="gitter chat" alt='gitter chat'>
-		<img src="https://badges.gitter.im/mipengine/mip.svg"/>
-	</a>
+	<a href="https://david-dm.org/mipengine/mip" title="dependencies status" alt='dependencies Status'>
+		<img src="https://david-dm.org/mipengine/mip/status.svg"/>
+	</a>	
 	<a href='http://issuestats.com/github/mipengine/mip'>
 		<img src='http://issuestats.com/github/mipengine/mip/badge/pr?style=flat' title='Pull Request closed' alt='Pull Request closed'>
 	</a>
@@ -27,8 +30,8 @@
 	</a>
 </p>
 <p align='center'>
-	<a href="https://saucelabs.com/u/smartfutureplayer?auth=9728ea81d03f2fabc14755d35f0dff35">
-		<img src='https://saucelabs.com/browser-matrix/smartfutureplayer.svg?auth=9728ea81d03f2fabc14755d35f0dff35' title='Sauce Test Status' alt='Sauce Test Status'>
+	<a href="https://saucelabs.com/beta/builds/be1067b00f7c414297d77692ac82cf67">
+		<img src='https://saucelabs.com/browser-matrix/mipengine.svg' title='Sauce Test Status' alt='Sauce Test Status'>
 	</a>
 </p>
 
