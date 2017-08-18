@@ -18,13 +18,13 @@ mip-carousel 用来支持 mip 中图片的一种展示方式，支出多图轮�
     width="600" 
     height="400">
     <mip-img 
-        src="http://a2.att.hudong.com/71/04/300224654811132504044925945_950.jpg">
+        src="https://www.mipengine.org/static/img/sample_01.jpg">
     </mip-img>
     <mip-img 
-        src="http://www.bz55.com/uploads/allimg/150305/139-1503051FS0.jpg">
+        src="https://www.mipengine.org/static/img/sample_02.jpg">
     </mip-img>
     <mip-img 
-        src="http://img3.3lian.com/2013/v9/58/d/25.jpg">
+        src="https://www.mipengine.org/static/img/sample_03.jpg">
     </mip-img>
 </mip-carousel>
 ```
@@ -38,13 +38,13 @@ mip-carousel 用来支持 mip 中图片的一种展示方式，支出多图轮�
     width="600" 
     height="400">
     <mip-img 
-        src="http://a2.att.hudong.com/71/04/300224654811132504044925945_950.jpg">
+        src="https://www.mipengine.org/static/img/sample_01.jpg">
     </mip-img>
     <mip-img 
-        src="http://www.bz55.com/uploads/allimg/150305/139-1503051FS0.jpg">
+        src="https://www.mipengine.org/static/img/sample_02.jpg">
     </mip-img>
     <mip-img 
-        src="http://img3.3lian.com/2013/v9/58/d/25.jpg">
+        src="https://www.mipengine.org/static/img/sample_03.jpg">
     </mip-img>
 </mip-carousel>
 ```
@@ -59,13 +59,13 @@ mip-carousel 用来支持 mip 中图片的一种展示方式，支出多图轮�
     width="600" 
     height="400">
     <mip-img 
-        src="http://a2.att.hudong.com/71/04/300224654811132504044925945_950.jpg">
+        src="https://www.mipengine.org/static/img/sample_01.jpg">
     </mip-img>
     <mip-img 
-        src="http://www.bz55.com/uploads/allimg/150305/139-1503051FS0.jpg">
+        src="https://www.mipengine.org/static/img/sample_02.jpg">
     </mip-img>
     <mip-img 
-        src="http://img3.3lian.com/2013/v9/58/d/25.jpg">
+        src="https://www.mipengine.org/static/img/sample_03.jpg">
     </mip-img>
 </mip-carousel>
 ```
@@ -82,13 +82,13 @@ mip-carousel 用来支持 mip 中图片的一种展示方式，支出多图轮�
     indicator
     >
     <mip-img 
-        src="http://a2.att.hudong.com/71/04/300224654811132504044925945_950.jpg">
+        src="https://www.mipengine.org/static/img/sample_01.jpg">
     </mip-img>
     <mip-img 
-        src="http://www.bz55.com/uploads/allimg/150305/139-1503051FS0.jpg">
+        src="https://www.mipengine.org/static/img/sample_02.jpg">
     </mip-img>
     <mip-img 
-        src="http://img3.3lian.com/2013/v9/58/d/25.jpg">
+        src="https://www.mipengine.org/static/img/sample_03.jpg">
     </mip-img>
 </mip-carousel>
 ```
@@ -106,13 +106,13 @@ mip-carousel 用来支持 mip 中图片的一种展示方式，支出多图轮�
     indicatorId="mip-carousel-example"
     >
     <mip-img 
-        src="http://a2.att.hudong.com/71/04/300224654811132504044925945_950.jpg">
+        src="https://www.mipengine.org/static/img/sample_01.jpg">
     </mip-img>
     <mip-img 
-        src="http://www.bz55.com/uploads/allimg/150305/139-1503051FS0.jpg">
+        src="https://www.mipengine.org/static/img/sample_02.jpg">
     </mip-img>
     <mip-img 
-        src="http://img3.3lian.com/2013/v9/58/d/25.jpg">
+        src="https://www.mipengine.org/static/img/sample_03.jpg">
     </mip-img>
 </mip-carousel>
 <div class="mip-carousel-indicator-wrapper">
@@ -135,14 +135,14 @@ mip-carousel 用来支持 mip 中图片的一种展示方式，支出多图轮�
     indicator
     buttonController
     >
-    <mip-img 
-        src="http://a2.att.hudong.com/71/04/300224654811132504044925945_950.jpg">
+   <mip-img 
+        src="https://www.mipengine.org/static/img/sample_01.jpg">
     </mip-img>
     <mip-img 
-        src="http://www.bz55.com/uploads/allimg/150305/139-1503051FS0.jpg">
+        src="https://www.mipengine.org/static/img/sample_02.jpg">
     </mip-img>
     <mip-img 
-        src="http://img3.3lian.com/2013/v9/58/d/25.jpg">
+        src="https://www.mipengine.org/static/img/sample_03.jpg">
     </mip-img>
 </mip-carousel>
 ```
@@ -161,17 +161,17 @@ mip-carousel 用来支持 mip 中图片的一种展示方式，支出多图轮�
     >
     <a target="_blank" href="http://wenda.tianya.cn/m/question/1almfj0foas94gc7vtoq6ejbfbmdk3e78ehaa">
         <mip-img 
-            src="http://www.bz55.com/uploads/allimg/150305/139-1503051FS0.jpg" layout="responsive" 
+            src="https://www.mipengine.org/static/img/sample_01.jpg" layout="responsive" 
         width="600" 
         height="400">
         </mip-img>
         <div class="mip-carousle-subtitle">这里是title2</div>
     </a>
     <mip-img 
-        src="http://www.bz55.com/uploads/allimg/150305/139-1503051FS0.jpg">
+        src="https://www.mipengine.org/static/img/sample_02.jpg">
     </mip-img>
     <mip-img 
-        src="http://img3.3lian.com/2013/v9/58/d/25.jpg">
+        src="https://www.mipengine.org/static/img/sample_03.jpg">
     </mip-img>
 </mip-carousel>
 ```
@@ -188,15 +188,15 @@ mip-carousel 用来支持 mip 中图片的一种展示方式，支出多图轮�
     width="600" 
     height="400">
     <mip-img 
-        src="http://a2.att.hudong.com/71/04/300224654811132504044925945_950.jpg">
+        src="https://www.mipengine.org/static/img/sample_01.jpg">
     </mip-img>
     <a target="_blank" href="http://wenda.tianya.cn/m/question/1almfj0foas94gc7vtoq6ejbfbmdk3e78ehaa">
         <mip-img 
-            src="http://www.bz55.com/uploads/allimg/150305/139-1503051FS0.jpg" width="600" height="400">
+            src="https://www.mipengine.org/static/img/sample_02.jpg" width="600" height="400">
         </mip-img>
     </a>
     <mip-img 
-        src="http://img3.3lian.com/2013/v9/58/d/25.jpg">
+        src="https://www.mipengine.org/static/img/sample_03.jpg">
     </mip-img>
 </mip-carousel>
 ```
