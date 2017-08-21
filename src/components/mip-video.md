@@ -14,7 +14,7 @@ mip-video 用来支持在 mip 中增加视频内容，是HTML `<video>`的直接
 ### 基本使用
 
 ```html
-<mip-video poster="https://placehold.it/640x360" controls
+<mip-video poster="https://www.mipengine.org/static/img/sample_04.jpg" controls
   layout="responsive" width="640" height="360" 
   src="https://gss0.bdstatic.com/-b1Caiqa0d9Bmcmop9aC2jh9h2w8e4_h7sED0YQ_t9iCPK/mda-gjkt21pkrsd8ae5y/mda-gjkt21pkrsd8ae5y.mp4">
 </mip-video>
