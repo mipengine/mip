@@ -10,6 +10,8 @@ mip-img 用来支持在 mip 中增加图片内容。
 
 ## 示例
 
+[notice] `<mip-img>`需要对应的闭合标签`</mip-img>`, 不支持自闭合写法。自闭合规范请见[w3.org](https://www.w3.org/TR/html/syntax.html#void-elements)
+
 ### 最基本使用
 
 ```html
