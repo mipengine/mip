@@ -232,7 +232,8 @@ define(function (require) {
     };
 
     Placeholder.prototype.remove = function () {
-        this.placeholder.parentElement.removeChild(this.placeholder);
+        var parent = this.placeholder.parentElement;
+        parent && parent.removeChild(this.placeholder);
     };
 
     /**
