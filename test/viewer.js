@@ -101,5 +101,23 @@ define(function (require) {
             expect(document.body === document.querySelector('._bindEventCallback')).to.be.true;
             document.body.classList.remove('_bindEventCallback');
         });
+
+        it('bindEventALinkProxy', function (done) {
+            var ele = document.createElement('a');
+            document.body.appendChild(ele);  
+
+            ele.click();
+
+            ele.setAttribute('mip-link', '');
+            ele.href = 'http://www.mipengine.org';
+            ele.click();
+
+            ele.removeAttribute('mip-link');
+            ele.setAttribute('data-type', 'mip');
+            ele.click();
+
+            done();
+
+        });
     });
 });
