@@ -12,6 +12,16 @@ define(function (require) {
     var ele = document.createElement('a');
     docElement.appendChild(ele);
 
+    var testLink = 'https://www.mipengine.org';
+    var expectData = {
+        messageKey: 'loadiframe',
+        messageData: {
+            url: 'https://www.mipengine.org/',
+            title: '',
+            click: '{button:1}'
+        }
+    };
+
     describe('viewer', function () {
         it('patchForIframe', function () {
             util.platform.needSpecialScroll = false;
@@ -100,36 +110,12 @@ define(function (require) {
             document.body.classList.remove('_bindEventCallback');
         });
 
-        it('bindEventALinkProxy', function (done) {
-            // a link has no href
+        it('normalLinkProxy', function (done) {
             ele.click();
-
-            var expectData = {
-                messageKey: 'loadiframe',
-                messageData: {
-                    url: 'https://www.mipengine.org/',
-                    title: '',
-                    click: '{button:1}'
-                }
-            };
-            var testLink = 'https://www.mipengine.org';
-            var dataTypeTitle = 'test title for data-type';
+            done();
+        });
+        it('mipLinkProxy', function (done) {
             var mipLinkTitle = 'test title for mip-link';
-            var testLink = 'https://www.mipengine.org';
-
-            ele.href = testLink;
-            ele.setAttribute('data-type', 'mip');
-            ele.setAttribute('data-title', dataTypeTitle);
-            ele.setAttribute('data-click', '{button:1}');
-            expectData.messageData.title = dataTypeTitle;
-            expect(viewer._getMessageData.call(ele)).to.deep.equal(expectData);
-
-            ele.setAttribute('data-title', '');
-            ele.innerText = 'test title for non-set，just text  ';
-            expectData.messageData.title = ele.innerText;
-            expect(viewer._getMessageData.call(ele)).to.deep.equal(expectData);
-            ele.click();
-
 
             var childNode = document.createElement('a');
             var parentNode = document.createElement('div');
@@ -153,6 +139,26 @@ define(function (require) {
             childNode.click();
 
             done();
+
         });
+        it('dataTypeLinkProxy', function (done) {
+            var dataTypeTitle = 'test title for data-type';
+
+            ele.href = testLink;
+            ele.setAttribute('data-type', 'mip');
+            ele.setAttribute('data-title', dataTypeTitle);
+            ele.setAttribute('data-click', '{button:1}');
+            expectData.messageData.title = dataTypeTitle;
+            expect(viewer._getMessageData.call(ele)).to.deep.equal(expectData);
+
+            ele.setAttribute('data-title', '');
+            ele.innerText = 'test title for non-set，just text  ';
+            expectData.messageData.title = ele.innerText;
+            expect(viewer._getMessageData.call(ele)).to.deep.equal(expectData);
+            ele.click();
+
+            done();
+        });
+
     });
 });
