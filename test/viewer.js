@@ -110,11 +110,10 @@ define(function (require) {
             document.body.classList.remove('_bindEventCallback');
         });
 
-        it('normalLinkProxy', function (done) {
+        it('mipLinkProxy', function () {
+            // test for non href
             ele.click();
-            done();
-        });
-        it('mipLinkProxy', function (done) {
+
             var mipLinkTitle = 'test title for mip-link';
 
             var childNode = document.createElement('a');
@@ -137,11 +136,8 @@ define(function (require) {
             expect(viewer._getMessageData.call(childNode)).to.deep.equal(expectData);
 
             childNode.click();
-
-            done();
-
         });
-        it('dataTypeLinkProxy', function (done) {
+        it('dataTypeLinkProxy', function () {
             var dataTypeTitle = 'test title for data-type';
 
             ele.href = testLink;
@@ -156,8 +152,6 @@ define(function (require) {
             expectData.messageData.title = ele.innerText;
             expect(viewer._getMessageData.call(ele)).to.deep.equal(expectData);
             ele.click();
-
-            done();
         });
 
     });
