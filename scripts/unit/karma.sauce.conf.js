@@ -66,7 +66,7 @@ module.exports = function(config) {
             },
             build: buildId,
 
-            // 使用基于 travis + addons.jwt 连接
+            // use travis + addons.jwt to connect
             startConnect: false,
             tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER
         },
