@@ -67,7 +67,8 @@ module.exports = function(config) {
             build: buildId,
 
             // 使用基于 travis + addons.jwt 连接
-            startConnec: false
+            startConnect: false,
+            tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER
         },
 
         captureTimeout: 300000,
