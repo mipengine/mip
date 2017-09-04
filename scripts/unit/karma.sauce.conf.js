@@ -64,7 +64,11 @@ module.exports = function(config) {
             connectOptions: {
                 'no-ssl-bump-domains': 'all' // Ignore SSL error on Android emulator
             },
-            build: buildId
+            build: buildId,
+
+            // use travis + addons.jwt to connect
+            startConnect: false,
+            tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER
         },
 
         captureTimeout: 300000,
