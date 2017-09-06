@@ -5,6 +5,7 @@ define(function (require) {
     var mipPix = require('components/mip-pix');
     var viewport = require('viewport');
     var instance = new mipPix();
+    var clickEvent = util.event.create('click');
 
     function createElement (prop, cb) {
         var HTML = "<mip-img width=350 height=263 alt='mip img' "
@@ -20,7 +21,7 @@ define(function (require) {
         viewport.setScrollTop(0);
         setTimeout(function () {
             cb && cb();
-        }, 200);
+        }, 500);
     }
 
     describe('mip img', function () {
@@ -41,10 +42,10 @@ define(function (require) {
             }, function () {
                 var e = document.getElementById(id);
                 var img = e.querySelector('img');
-                img.click();
+                img.dispatchEvent(clickEvent);
                 var popupWrapper = document.querySelector('.mip-img-popUp-wrapper');
                 expect(popupWrapper.style.display).to.be.equal('block');
-                popupWrapper.click();
+                popupWrapper.dispatchEvent(clickEvent);
                 done();
             });
         });
@@ -56,7 +57,7 @@ define(function (require) {
             }, function () {
                 var ele = document.getElementById(id);
                 var img = ele.querySelector('img');
-                img.click();
+                img.dispatchEvent(clickEvent);
                 createElement({
                     'alt': 'mip img'
                 }, null);

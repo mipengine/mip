@@ -17,6 +17,7 @@ define(function (require) {
                         +       '<div class="mip-carousel-indecator-item"></div>'
                         +   '</div>'
                         + '</div>'
+    var clickEvent = util.event.create('click');
 
     function createElement (prop, cb) {
         var ele = util.dom.create(carouselHTML);
@@ -28,7 +29,7 @@ define(function (require) {
         document.body.appendChild(ele);
         setTimeout(function () {
             cb && cb();
-        }, 200);
+        }, 500);
     }
 
     describe('mip carousel', function () {
@@ -53,7 +54,7 @@ define(function (require) {
             }, function () {
                 var wrapper = document.querySelector('#cl-indicator');
                 var indicators = document.querySelectorAll('.mip-carousel-indecator-item');
-                indicators[1].click();
+                indicators[1].dispatchEvent(clickEvent);
                 var renderEle = document.querySelectorAll('#cl-indicator .mip-carousel-wrapper');
                 done();
             });
@@ -96,8 +97,8 @@ define(function (require) {
             var ele = document.querySelector('#bcs');
             var next = ele.querySelector('.mip-carousel-nextBtn');
             var pre = ele.querySelector('.mip-carousel-preBtn');
-            next.click();
-            pre.click();
+            next.dispatchEvent(clickEvent);
+            pre.dispatchEvent(clickEvent);
         });
     });
 });

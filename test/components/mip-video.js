@@ -4,6 +4,7 @@ define(function (require) {
     var util = require('util');
     var video = require('components/mip-video');
     var viewport = require('viewport');
+    var clickEvent = util.event.create('click');
 
     function createElement (prop, cb) {
         var HTML = '<mip-video id="mip-video" poster="https://www.mipengine.org/static/img/sample_04.jpg" '
@@ -21,7 +22,7 @@ define(function (require) {
         viewport.setScrollTop(0);
         setTimeout(function () {
             cb && cb();
-        }, 200);
+        }, 500);
     }
 
     function colorRGB2Hex(color) {
@@ -53,7 +54,7 @@ define(function (require) {
             }
             var ele = instance.renderPlayElsewhere();
             expect(ele.style.background).to.be.equal('rgb(51, 51, 51)');
-            ele.click();
+            ele.dispatchEvent(clickEvent);
 
             instance.attributes.poster = 'https://www.mipengine.org/static/img/sample_04.jpg';
             ele = instance.renderPlayElsewhere();
