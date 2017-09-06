@@ -32,9 +32,15 @@ define(function (require) {
 
         // 窗口是否是https
         var windowProHttps = !!window.location.protocol.match(/^https:/);
-        // 判断src是否https
+        // 判断video源文件是否https
+        var sourceIsHttps = true;
+        Array.prototype.slice.apply(this.sourceDoms).forEach(function (node) {
+            if (!node.src.match(/^https:|^\/\//)) {
+                sourceIsHttps = false;
+            }
+        });
         var videoProHttps = (this.src && this.src.match(/^https:|^\/\//))
-                            || (this.sourceDoms && this.sourceDoms[0].src.match(/^https:|^\/\//));
+                            || (this.sourceDoms && sourceIsHttps);
 
         // 页面https         + 视频https  = 当前页播放
         // 页面https(在iframe里) + 视频http    = 跳出播放
@@ -89,20 +95,19 @@ define(function (require) {
         videoEl.addEventListener('click', sendVideoMessage, false);
 
         // make sourceList, send to outer iframe
-        var sourceList = {};
-        for (var i in this.sourceDoms) {
-            var sourceDom = this.sourceDoms[i];
-            var src = sourceDom.src || '';
-            var type = sourceDom.type || '';
-            sourceList[src] = type;
-        }
+        var sourceList = [];
+        Array.prototype.slice.apply(this.sourceDoms).forEach(function (node) {
+            var obj = {};
+            obj.src = node.src || '';
+            obj.type = node.type || '';
+            sourceList.push(obj);
+        });
         function sendVideoMessage() {
             if (windowInIframe) {
                 // mip_video_jump 为写在外层的承接方法
                 viewer.sendMessage('mip_video_jump', {
                     poster: videoEl.dataset.videoPoster,
-                    src: videoEl.dataset.videoSrc,
-                    sourceList: sourceList
+                    src: JSON.stringify([videoEl.dataset.videoSrc, sourceList])
                 });
             }
         }
