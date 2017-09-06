@@ -1,9 +1,3 @@
-/**
- *
- * @file viewer function
- * @author xx
- * @modify wupeng10@baidu.com 2017-06-29 send message to sf in order to get sharing information.
- */
 define(function (require) {
     'use strict';
 
@@ -27,7 +21,6 @@ define(function (require) {
      * The mip viewer.Complement native viewer, and solve the page-level problems.
      */
     var viewer = {
-
         /**
          * The initialise method of viewer
          */
@@ -53,7 +46,7 @@ define(function (require) {
                 // Tell parent page the current page is loaded.
                 this.sendMessage('mippageload', {
                     time: Date.now(),
-                    title: document.title ? encodeURIComponent(document.title) : ''
+                    title: encodeURIComponent(document.title)
                 });
             }
         },
@@ -84,8 +77,8 @@ define(function (require) {
             // So we are forced to load the page in iphone 5s UC and ios 9 safari.
             var iosVersion = platform.getOsVersion();
             iosVersion = iosVersion ? iosVersion.split('.')[0] : '';
-            var needBackReload = (iosVersion === '8' && platform.isUc() && screen.width === 320)
-                || (iosVersion === '9' && platform.isSafari());
+            var needBackReload = (iosVersion == '8' && platform.isUc() && screen.width === 320)
+                || (iosVersion == '9' && platform.isSafari());
             if (needBackReload) {
                 window.addEventListener('pageshow', function (e) {
                     if (e.persisted) {
@@ -111,8 +104,7 @@ define(function (require) {
 
         /**
          * Send message to parent page.
-         *
-         * @param {string} eventName message name
+         * @param {string} eventName
          * @param {Object} data Message body
          */
         sendMessage: function (eventName, data) {
@@ -135,8 +127,7 @@ define(function (require) {
                 this._gesture.on('tap', function (event) {
                     eventAction.execute('tap', event.target, event);
                 });
-            }
-            else {
+            } else {
                 // In personal computer, bind click event, then trigger event. eg. `on=tap:sidebar.open`, when click, trigger open() function of #sidebar
                 document.addEventListener('click', function (event) {
                     eventAction.execute('tap', event.target, event);
@@ -150,7 +141,7 @@ define(function (require) {
         handlePreregisteredExtensions: function () {
             window.MIP = window.MIP || {};
             window.MIP.push = function (extensions) {
-                if (extensions && typeof extensions.func === 'function') {
+                if (extensions && typeof extensions.func == 'function') {
                     extensions.func();
                 }
             };
@@ -158,7 +149,7 @@ define(function (require) {
             if (preregisteredExtensions && preregisteredExtensions.length) {
                 for (var i = 0; i < preregisteredExtensions.length; i++) {
                     var curExtensionObj = preregisteredExtensions[i];
-                    if (curExtensionObj && typeof curExtensionObj.func === 'function') {
+                    if (curExtensionObj && typeof curExtensionObj.func == 'function') {
                         curExtensionObj.func();
                     }
                 }
@@ -170,8 +161,8 @@ define(function (require) {
          * For overridding _bindEventCallback of EventEmitter.
          *
          * @private
-         * @param {string} name event name
-         * @param {Function} handler function
+         * @param {string} name
+         * @param {Function} handler
          */
         _bindEventCallback: function (name, handler) {
             if (name === 'show' && this.isShow && typeof handler === 'function') {
@@ -181,7 +172,6 @@ define(function (require) {
 
         /**
          * Listerning viewport scroll
-         *
          * @private
          */
         _viewportScroll: function () {
@@ -195,12 +185,12 @@ define(function (require) {
             var lastScrollTop = 0;
             var wrapper = (util.platform.needSpecialScroll ? document.body : win);
 
-            wrapper.addEventListener('touchstart', function (event) {
+            wrapper.addEventListener('touchstart',function(event){
                 scrollTop = viewport.getScrollTop();
                 scrollHeight = viewport.getScrollHeight();
             });
 
-            function pagemove() {
+            function pagemove () {
                 scrollTop = viewport.getScrollTop();
                 scrollHeight = viewport.getScrollHeight();
                 if (scrollTop > 0 && scrollTop < scrollHeight) {
@@ -216,25 +206,24 @@ define(function (require) {
                     lastScrollTop = scrollTop;
                     if (dist > 10 || dist < -10) {
                         // 转向判断，暂时没用到，后续升级需要
-                        lastDirect = dist / Math.abs(dist);
-                        self.sendMessage('mipscroll', {'direct': direct, 'dist': dist});
+                        lastDirect = dist/Math.abs(dist);
+                        self.sendMessage('mipscroll', { 'direct': direct, 'dist': dist});
                     }
                 }
             }
-            wrapper.addEventListener('touchmove', function (event) {
+            wrapper.addEventListener('touchmove',function(event){
                 pagemove();
             });
-            wrapper.addEventListener('touchend', function (event) {
+            wrapper.addEventListener('touchend',function(event){
                 pagemove();
             });
         },
 
         /**
          * Agent all the links in iframe.
-         *
          * @private
          */
-        _proxyLink: function () {
+         _proxyLink: function () {
             var self = this;
             var regexp = /^http/;
             util.event.delegate(document, 'a', 'click', function (e) {
