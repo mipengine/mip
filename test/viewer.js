@@ -47,15 +47,6 @@ define(function (require) {
             window.dispatchEvent(eve);
         });
 
-        it('delegateTestCase', function () {
-            viewer.init();
-
-            var ele = document.getElementById('delegateLink');
-            var eve = document.createEvent("HTMLEvents");
-            eve.initEvent("click", true, true);
-            ele.dispatchEvent(eve);
-        });
-
         it('show', function () {
             viewer.show();
 
@@ -67,17 +58,15 @@ define(function (require) {
             expect(viewer._gesture).to.be.instanceof(util.Gesture);
         });
 
-        it('sroll up', function (done) {
+        it('sroll up', function () {
+            var style = getComputedStyle(document.body);
+            var height = style.height;
             viewer.init();
             document.body.style.height = '10000px';
             viewport.setScrollTop(800);
-            setTimeout(function () {                    
-                viewport.setScrollTop(500);
-                done();
-            }, 500);
             expect(viewport.getScrollTop()).to.equal(800);
+            document.body.style.height = height;
         });
-
 
         it('sendMessage', function () {
             viewer.isIframed = false;
@@ -86,6 +75,31 @@ define(function (require) {
             viewer.isIframed = true;
             expect(viewer.sendMessage.bind(viewer)).to.not.throw(Error);
         });
-    });
 
+        it('handlePreregisteredExtensions', function () {
+            window.MIP.extensions = [{
+                name: "mip-form",
+                func: function() {
+                    document.body.classList.add('handlePreregisteredExtensions');
+                }
+            }];
+            viewer.handlePreregisteredExtensions();
+            var result = window.MIP.push({
+                name: "mip-form",
+                func: function() {
+                    document.body.classList.add('handlePreregisteredExtensions');
+                }
+            });
+            expect(document.body === document.querySelector('.handlePreregisteredExtensions')).to.be.true;
+            document.body.classList.remove('handlePreregisteredExtensions');
+        });
+
+        it('bindEventCallback', function () {
+            viewer._bindEventCallback('show', function () {
+                document.body.classList.add('_bindEventCallback');
+            });
+            expect(document.body === document.querySelector('._bindEventCallback')).to.be.true;
+            document.body.classList.remove('_bindEventCallback');
+        });
+    });
 });

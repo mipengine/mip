@@ -16,23 +16,32 @@ define(function (require) {
 				var stub1 = sinon.stub(platform, '_ua');
     			stub1.returns('Mozilla/5.0 (Linux; Android 5.0.2; vivo X5M Build/LRX22G) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/38.0.0.0 Mobile Safari/537.36');
     			var stub2 = sinon.stub(platform, 'isAndroid');
-    			stub2.returns(true);
+	    		stub2.returns(true);
+	    		var stub3 = sinon.stub(platform, 'isIos');
+	    		stub3.returns(false);
 
 		        var osVersion = platform.getOsVersion();
 		        stub1.restore();
 		        stub2.restore();
+		        stub3.restore();
 		        expect(osVersion).to.be.equal('5.0.2');
 	    	});
 
 	    	it('iOS version', function () {
-	    		var stub1 = sinon.stub(platform, '_appVersion');
-	    		stub1.returns("5.0 (iPhone; CPU iPhone OS 10_1_1 like Mac OS X) AppleWebKit/602.2.14 (KHTML, like Gecko) Version/10.0 Mobile/14B100 Safari/602.1");
-    			var stub2 = sinon.stub(platform, 'isIos');
-    			stub2.returns(true);
+	    		var stub1 = sinon.stub(platform, '_ua');
+    			stub1.returns('Mozilla/5.0 (iPhone; CPU iPhone OS 10_1_1 like Mac OS X) AppleWebKit/602.2.14 (KHTML, like Gecko) Mobile/14B100 MicroMessenger/6.5.5 NetType/WIFI Language/zh_CN');
+	    		var stub2 = sinon.stub(platform, '_appVersion');
+	    		stub2.returns("5.0 (iPhone; CPU iPhone OS 10_1_1 like Mac OS X) AppleWebKit/602.2.14 (KHTML, like Gecko) Version/10.0 Mobile/14B100 Safari/602.1");
+	    		var stub3 = sinon.stub(platform, 'isAndroid');
+	    		stub3.returns(false);
+	    		var stub4 = sinon.stub(platform, 'isIos');
+	    		stub4.returns(true);
 
 	    		var osVersion = platform.getOsVersion();
 	    		stub1.restore();
 	    		stub2.restore();
+	    		stub3.restore();
+	    		stub4.restore();
     			expect(osVersion).to.be.equal('10.1.1');
 	    	});
 
