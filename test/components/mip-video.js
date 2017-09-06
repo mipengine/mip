@@ -35,6 +35,15 @@ define(function (require) {
         return hex;
      }
 
+    var dispatchEvent = function (element, evt, event) {
+        if (document.createEventObject) {
+            return element.fireEvent('on' + event, evt)
+        } else {
+            evt.initEvent(event, true, true);
+            return !element.dispatchEvent(evt);
+        }
+    };
+
     describe('mip video', function () {
         it('firstInviewCallback', function (done) {
             createElement({
@@ -54,7 +63,7 @@ define(function (require) {
             }
             var ele = instance.renderPlayElsewhere();
             expect(ele.style.background).to.be.equal('rgb(51, 51, 51)');
-            ele.dispatchEvent(clickEvent);
+            dispatchEvent(ele, clickEvent, 'click')
 
             instance.attributes.poster = 'https://www.mipengine.org/static/img/sample_04.jpg';
             ele = instance.renderPlayElsewhere();

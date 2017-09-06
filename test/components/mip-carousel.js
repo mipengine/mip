@@ -32,6 +32,15 @@ define(function (require) {
         }, 500);
     }
 
+    var dispatchEvent = function (element, evt, event) {
+        if (document.createEventObject) {
+            return element.fireEvent('on' + event, evt)
+        } else {
+            evt.initEvent(event, true, true);
+            return !element.dispatchEvent(evt);
+        }
+    };
+
     describe('mip carousel', function () {
         it('build', function (done) {
             var id = 'cl-build';
@@ -54,7 +63,7 @@ define(function (require) {
             }, function () {
                 var wrapper = document.querySelector('#cl-indicator');
                 var indicators = document.querySelectorAll('.mip-carousel-indecator-item');
-                indicators[1].dispatchEvent(clickEvent);
+                dispatchEvent(indicators[1], clickEvent, 'click');
                 var renderEle = document.querySelectorAll('#cl-indicator .mip-carousel-wrapper');
                 done();
             });
@@ -76,16 +85,16 @@ define(function (require) {
                     = moveEvent.targetTouches
                     = endEvent.targetTouches
                     = [{pageX: 0, pageY: 0}];
-                ele.dispatchEvent(startEvent);
-                ele.dispatchEvent(moveEvent);
-                ele.dispatchEvent(endEvent);
+                dispatchEvent(ele, startEvent, 'touchstart');
+                dispatchEvent(ele, moveEvent, 'touchmove');
+                dispatchEvent(ele, endEvent, 'touchend');
                 done();
             });
         });
 
         it('resize', function () {
             var resizeEvent = util.event.create('resize');
-            window.dispatchEvent(resizeEvent);
+            dispatchEvent(window, resizeEvent, 'resize');
         });
 
         it('carousel buttonController', function () {
@@ -97,8 +106,8 @@ define(function (require) {
             var ele = document.querySelector('#bcs');
             var next = ele.querySelector('.mip-carousel-nextBtn');
             var pre = ele.querySelector('.mip-carousel-preBtn');
-            next.dispatchEvent(clickEvent);
-            pre.dispatchEvent(clickEvent);
+            dispatchEvent(next, clickEvent, 'click');
+            dispatchEvent(pre, clickEvent, 'click');
         });
     });
 });

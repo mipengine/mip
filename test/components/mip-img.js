@@ -24,6 +24,15 @@ define(function (require) {
         }, 500);
     }
 
+    var dispatchEvent = function (element, evt, event) {
+        if (document.createEventObject) {
+            return element.fireEvent('on' + event, evt)
+        } else {
+            evt.initEvent(event, true, true);
+            return !element.dispatchEvent(evt);
+        }
+    };
+
     describe('mip img', function () {
         it('firstInviewCallback', function (done) {
             createElement({
@@ -42,10 +51,10 @@ define(function (require) {
             }, function () {
                 var e = document.getElementById(id);
                 var img = e.querySelector('img');
-                img.dispatchEvent(clickEvent);
+                dispatchEvent(img, clickEvent, 'click');
                 var popupWrapper = document.querySelector('.mip-img-popUp-wrapper');
                 expect(popupWrapper.style.display).to.be.equal('block');
-                popupWrapper.dispatchEvent(clickEvent);
+                dispatchEvent(popupWrapper, clickEvent, 'click');
                 done();
             });
         });
@@ -57,7 +66,7 @@ define(function (require) {
             }, function () {
                 var ele = document.getElementById(id);
                 var img = ele.querySelector('img');
-                img.dispatchEvent(clickEvent);
+                dispatchEvent(img, clickEvent, 'click');
                 createElement({
                     'alt': 'mip img'
                 }, null);
