@@ -29,7 +29,7 @@ define(function (require) {
         document.body.appendChild(ele);
         setTimeout(function () {
             cb && cb();
-        }, 500);
+        }, 600);
     }
 
     var dispatchEvent = function (element, evt, event) {
@@ -97,17 +97,20 @@ define(function (require) {
             dispatchEvent(window, resizeEvent, 'resize');
         });
 
-        it('carousel buttonController', function () {
+        it('carousel buttonController', function (done) {
             var ele = createElement({
                 id: 'bcs',
                 indicatorId: 'mip-carousel-example'
-            }, null);
-
-            var ele = document.querySelector('#bcs');
-            var next = ele.querySelector('.mip-carousel-nextBtn');
-            var pre = ele.querySelector('.mip-carousel-preBtn');
-            dispatchEvent(next, clickEvent, 'click');
-            dispatchEvent(pre, clickEvent, 'click');
+            }, function () {
+                var ele = document.querySelector('#bcs');
+                var next = ele.querySelector('.mip-carousel-nextBtn');
+                var pre = ele.querySelector('.mip-carousel-preBtn');
+                dispatchEvent(next, clickEvent, 'click');
+                dispatchEvent(pre, clickEvent, 'click');
+                expect(!!next).to.be.true;
+                expect(!!pre).to.be.true;
+                done();
+            });
         });
     });
 });

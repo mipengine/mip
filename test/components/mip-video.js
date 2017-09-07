@@ -62,7 +62,7 @@ define(function (require) {
                 src: 'https://gss0.bdstatic.com/-b1Caiqa0d9Bmcmop9aC2jh9h2w8e4_h7sED0YQ_t9iCPK/mda-gjkt21pkrsd8ae5y/mda-gjkt21pkrsd8ae5y.mp4'
             }
             var ele = instance.renderPlayElsewhere();
-            expect(ele.style.background).to.be.equal('rgb(51, 51, 51)');
+            expect(ele.style.background.indexOf('rgb(51, 51, 51)')).to.be.not.equal(-1);
             dispatchEvent(ele, clickEvent, 'click')
 
             instance.attributes.poster = 'https://www.mipengine.org/static/img/sample_04.jpg';
