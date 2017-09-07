@@ -19,7 +19,7 @@ define(function (require) {
         viewport.setScrollTop(0);
         setTimeout(function () {
             cb && cb();
-        }, 500);
+        }, 300);
     }
 
     describe('mip pix', function () {
