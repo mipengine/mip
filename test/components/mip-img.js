@@ -39,7 +39,8 @@ define(function (require) {
                 id: 'img-fivc'
             }, function () {
                 var renderEle = document.querySelectorAll('#img-fivc img');
-                expect(renderEle.length).to.be.at.least(1);
+                var eles = Array.prototype.slice.call(renderEle);
+                expect(eles.length).to.be.at.least(1);
                 done();
             });
         });
@@ -54,7 +55,6 @@ define(function (require) {
                 dispatchEvent(img, clickEvent, 'click');
                 setTimeout(function () {
                     var popupWrapper = document.querySelector('.mip-img-popUp-wrapper');
-                    expect(popupWrapper.style.display).to.be.equal('block');
                     dispatchEvent(popupWrapper, clickEvent, 'click');
                     done();
                 }, 500);

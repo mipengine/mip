@@ -48,7 +48,8 @@ define(function (require) {
                 id: id
             }, function () {
                 var renderEle = document.querySelectorAll('#cl-build .mip-carousel-wrapper');
-                expect(renderEle.length).to.be.at.least(1);
+                var eles = Array.prototype.slice.call(renderEle);
+                expect(eles.length).to.be.at.least(1);
                 done();
             });
         });
