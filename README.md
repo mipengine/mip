@@ -42,6 +42,7 @@ MIP（移动网页加速器)能够优化网页JS和资源加载，达到加速�
 在MIP页中可以这样创建一个轮播图：
 
 ```
+<script async src="https://c.mipcdn.com/static/v1/mip.js"></script>
 <mip-carousel>
     <mip-img src="01.jpg"></mip-img>
     <mip-img src="02.jpg"></mip-img>
@@ -55,19 +56,15 @@ MIP（移动网页加速器)能够优化网页JS和资源加载，达到加速�
 
 ## 文档&教程资源
 
-快速入门MIP页面开发，请查看 [官网文档](https://www.mipengine.org/doc/00-mip-101.html)。
-
-了解其它MIP组件使用，请查看 [MIP官方组件列表](https://www.mipengine.org/doc/3-widget/10-widgets.html).
-
-常见问题及解答，请查看博客 [MIP问题解决方案大全](http://www.cnblogs.com/mipengine/p/mip-faqs.html)。
-
-视频教程：
-
-- [初识 MIP](http://bit.baidu.com/course/detail/id/187/column/120.html)
-- [MIP页面开发](http://bit.baidu.com/Course/detail/id/188.html)
-- [MIP页面开发进阶](http://bit.baidu.com/Course/detail/id/189.html)
-- [MIP组件开发](http://bit.baidu.com/Course/detail/id/190.html)
-- [MIP搜索生效](http://bit.baidu.com/Course/detail/id/191.html)
+- 快速入门MIP页面开发，请查看 [官网文档](https://www.mipengine.org/doc/00-mip-101.html)。
+- 了解其它MIP组件使用，请查看 [MIP官方组件列表](https://www.mipengine.org/doc/3-widget/10-widgets.html).
+- 常见问题及解答，请查看博客 [MIP问题解决方案大全](http://www.cnblogs.com/mipengine/p/mip-faqs.html)。
+- 视频教程：
+	- [初识 MIP](http://bit.baidu.com/course/detail/id/187/column/120.html)
+	- [MIP页面开发](http://bit.baidu.com/Course/detail/id/188.html)
+	- [MIP页面开发进阶](http://bit.baidu.com/Course/detail/id/189.html)
+	- [MIP组件开发](http://bit.baidu.com/Course/detail/id/190.html)
+	- [MIP搜索生效](http://bit.baidu.com/Course/detail/id/191.html)
 
 ## 参与开发
 如果你认为某个函数或组件实现有更好的解决方案，可以提交[issue](https://github.com/mipengine/mip/issues)或代码（pull request）给我们。
@@ -95,7 +92,7 @@ MIP (Mobile Instant Pages) can make web pages open fast by optimizing javascript
 A carousel effect can be as easy as below:
 
 ```
-<script async src="https://mipcache.bdstatic.com/static/v1/mip.js"></script>
+<script async src="https://c.mipcdn.com/static/v1/mip.js"></script>
 <mip-carousel>
     <mip-img src="01.jpg"></mip-img>
     <mip-img src="02.jpg"></mip-img>
@@ -103,7 +100,7 @@ A carousel effect can be as easy as below:
 </mip-carousel>
 ```
 
-**Fast. ** Most pages build by MIP will load in 1 second.  
+**Fast.** Most pages build by MIP will load in 1 second.  
 **Easy to use.** Use components to assemble a page, no need to write javascript.  
 **Load on demand.** Both images and scripts are load on demand, minify network resources.  
 
