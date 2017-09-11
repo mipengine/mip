@@ -40,7 +40,7 @@ MIP（移动网页加速器)能够优化网页JS和资源加载，达到加速�
 
 在MIP页中可以这样创建一个轮播图：
 
-```
+```html
 <script async src="https://c.mipcdn.com/static/v1/mip.js"></script>
 <mip-carousel>
     <mip-img src="01.jpg"></mip-img>
