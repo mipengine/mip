@@ -52,10 +52,12 @@ define(function (require) {
                 var e = document.getElementById(id);
                 var img = e.querySelector('img');
                 dispatchEvent(img, clickEvent, 'click');
-                var popupWrapper = document.querySelector('.mip-img-popUp-wrapper');
-                expect(popupWrapper.style.display).to.be.equal('block');
-                dispatchEvent(popupWrapper, clickEvent, 'click');
-                done();
+                setTimeout(function () {
+                    var popupWrapper = document.querySelector('.mip-img-popUp-wrapper');
+                    expect(popupWrapper.style.display).to.be.equal('block');
+                    dispatchEvent(popupWrapper, clickEvent, 'click');
+                    done();
+                }, 500);
             });
         });
 

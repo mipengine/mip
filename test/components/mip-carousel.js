@@ -29,7 +29,7 @@ define(function (require) {
         document.body.appendChild(ele);
         setTimeout(function () {
             cb && cb();
-        }, 300);
+        }, 500);
     }
 
     var dispatchEvent = function (element, evt, event) {

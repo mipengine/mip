@@ -28,8 +28,8 @@ define(function (require) {
                 id: 'mip-pix',
                 src: 'https://www.example.org/a.gif?t=${TIME}&title=${TITLE}&host=${HOST}'
             }, function () {
-                var renderEle = document.querySelector('#mip-pix img');
-                expect(reg.test(renderEle.src)).to.be.false;
+                var renderEle = document.querySelectorAll('#mip-pix img');
+                expect(renderEle.length).to.be.at.least(1);
                 done();
             });
         });
