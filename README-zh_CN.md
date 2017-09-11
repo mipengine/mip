@@ -78,6 +78,6 @@ MIP（移动网页加速器)能够优化网页JS和资源加载，达到加速�
 4. 符合[Fecs](http://fecs.baidu.com/demo)编码规范
 
 ## License
-[MIT](https://opensource.org/licenses/MIT)
+[MIT](https://github.com/mipengine/mip/blob/master/LICENSE)
 
 Copyright (c) 2015-present, Baidu Inc.
