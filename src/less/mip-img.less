@@ -125,4 +125,26 @@
 mip-img {
     display: block;
     width: 100%;
+    /* XXX: remove small space between bottom of img and mip-img */
+    font-size: 0;
+    .mip-placeholder {
+        background: rgba(0,0,0,0.08);
+        width: 100%;
+        padding: 0;
+    }
+    .mip-img-loading {
+        position: absolute;
+        top: 0;
+        height: auto;
+    }
+    .mip-placeholder-jpg,
+    .mip-placeholder-jpeg {
+        padding-bottom: 75%;
+    }
+    .mip-placeholder-png,
+    .mip-placeholder-gif,
+    .mip-placeholder-webp,
+    .mip-placeholder-other {
+        padding-bottom: 100%;
+    }
 }
