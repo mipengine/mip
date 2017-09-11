@@ -86,6 +86,7 @@ MIP (Mobile Instant Pages) can make web pages open fast by optimizing javascript
 A carousel effect can be as easy as below:
 
 ```
+<script async src="https://mipcache.bdstatic.com/static/v1/mip.js"></script>
 <mip-carousel>
     <mip-img src="01.jpg"></mip-img>
     <mip-img src="02.jpg"></mip-img>
