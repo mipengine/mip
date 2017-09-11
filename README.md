@@ -44,6 +44,6 @@ MIP （Mobile Instant Pages - 移动网页加速器）, 是一套应用于移动
 
 ## License
 
-[MIT](https://opensource.org/licenses/MIT)
+[MIT](./LICENSE)
 
 Copyright (c) 2015-present, Baidu Inc.
