@@ -35,12 +35,43 @@
 	</a>
 </p>
 
-## MIP(Mobile page In Baidu)
+MIP (Mobile Instant Pages) can make web pages open fast by optimizing javascript and resources.
+MIP（移动网页加速器)能够优化网页JS和资源加载，达到加速打开网页的效果。
 
-MIP （Mobile Instant Pages - 移动网页加速器）, 是一套应用于移动网页的开放性技术标准。通过提供MIP-HTML规范、MIP-JS运行环境以及MIP-Cache页面缓存系统，实现移动网页加速。本项目属于其中的MIP-JS运行环境部分。
+A carousel effect can be as easy as below:
+在MIP页中可以这样创建一个轮播图：
 
-## 快速入门
-使用方式请见：[MIP新手教程](https://www.mipengine.org/doc/00-mip-101.html)
+```
+<mip-carousel>
+    <mip-img src="01.jpg"></mip-img>
+    <mip-img src="02.jpg"></mip-img>
+    <mip-img src="03.jpg"></mip-img>
+</mip-carousel>
+```
+
+**Fast. **Most pages build by MIP can load in 1 second.
+**Easy to use. **Use components to assemble a page without using javascript.
+**Load on demand. **Both images and scripts are load on demand, minify network resources.
+
+**极速打开：**大部分MIP页面都能在一秒内加载完成首屏。
+**使用简单：**直接使用MIP组件拼装网页，无需一行JS。
+**资源管理：**按需加载图片和js，精简网络请求。
+
+## 文档&教程资源
+
+快速入门MIP页面开发，请查看 [官网文档](https://www.mipengine.org/doc/00-mip-101.html)。
+
+了解其它MIP组件使用，请查看 [MIP官方组件列表](https://www.mipengine.org/doc/3-widget/10-widgets.html).
+
+常见问题及解答，请查看博客 [MIP问题解决方案大全](http://www.cnblogs.com/mipengine/p/mip-faqs.html)。
+
+视频教程：
+
+- [初识 MIP](http://bit.baidu.com/course/detail/id/187/column/120.html)
+- [MIP页面开发](http://bit.baidu.com/Course/detail/id/188.html)
+- [MIP页面开发进阶](http://bit.baidu.com/Course/detail/id/189.html)
+- [MIP组件开发](http://bit.baidu.com/Course/detail/id/190.html)
+- [MIP搜索生效](http://bit.baidu.com/Course/detail/id/191.html)
 
 ## License
 
