@@ -35,7 +35,8 @@
 	</a>
 </p>
 
-<a href="#english">English Version.</a>
+<a href="#english">English Version > </a>
+
 MIP（移动网页加速器)能够优化网页JS和资源加载，达到加速打开网页的效果。
 
 在MIP页中可以这样创建一个轮播图：
@@ -85,7 +86,9 @@ MIP（移动网页加速器)能够优化网页JS和资源加载，达到加速�
 Copyright (c) 2015-present, Baidu Inc.
 
 <div id="english"></div>
+
 ## What is MIP
+
 MIP (Mobile Instant Pages) can make web pages open fast by optimizing javascript and resources.
 
 A carousel effect can be as easy as below:
@@ -99,9 +102,9 @@ A carousel effect can be as easy as below:
 </mip-carousel>
 ```
 
-**Fast. **Most pages build by MIP will load in 1 second.
-**Easy to use. **Use components to assemble a page, no need to write javascript.
-**Load on demand. **Both images and scripts are load on demand, minify network resources.
+**Fast. **Most pages build by MIP will load in 1 second.  
+**Easy to use. **Use components to assemble a page, no need to write javascript.  
+**Load on demand. **Both images and scripts are load on demand, minify network resources.  
 
 ## Build a MIP Page
 
