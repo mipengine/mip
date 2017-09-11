@@ -48,9 +48,10 @@ MIP（移动网页加速器)能够优化网页JS和资源加载，达到加速�
     <mip-img src="03.jpg"></mip-img>
 </mip-carousel>
 ```
-**极速打开：**大部分MIP页面都能在一秒内加载完成首屏。
-**使用简单：**直接使用MIP组件拼装网页，无需一行JS。
-**资源管理：**按需加载图片和js，精简网络请求。
+
+**极速打开：** 大部分MIP页面都能在一秒内加载完成首屏。  
+**使用简单：** 直接使用MIP组件拼装网页，无需一行JS。  
+**资源管理：** 按需加载图片和js，精简网络请求。
 
 ## 文档&教程资源
 
@@ -102,9 +103,9 @@ A carousel effect can be as easy as below:
 </mip-carousel>
 ```
 
-**Fast. **Most pages build by MIP will load in 1 second.  
-**Easy to use. **Use components to assemble a page, no need to write javascript.  
-**Load on demand. **Both images and scripts are load on demand, minify network resources.  
+**Fast. ** Most pages build by MIP will load in 1 second.  
+**Easy to use.** Use components to assemble a page, no need to write javascript.  
+**Load on demand.** Both images and scripts are load on demand, minify network resources.  
 
 ## Build a MIP Page
 
