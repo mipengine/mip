@@ -59,7 +59,7 @@ A carousel effect can be as easy as below:
 
 ## Build a MIP Page
 
-Currently, all of the tutorials were written in Chinese. If you need an english version, please [submit an issue](https://github.com/mipengine/mip/issues) to let us know.
+Currently, all of the tutorials are written in Chinese. If you need an english version, please [submit an issue](https://github.com/mipengine/mip/issues) to let us know.
 
 - MIP 101 tutorial: [mipengine.org](https://www.mipengine.org/doc/00-mip-101.html)。
 - MIP video tutorials: [MIP Introduction](http://bit.baidu.com/course/detail/id/187/column/120.html)
