@@ -33,6 +33,9 @@ define(function (require) {
     }
 
     var dispatchEvent = function (element, evt, event) {
+        if (!element) {
+            return;
+        }
         if (document.createEventObject) {
             return element.fireEvent('on' + event, evt)
         } else {
