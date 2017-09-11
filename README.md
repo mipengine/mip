@@ -64,6 +64,7 @@ Currently, all of the tutorials were written in Chinese. If you need an english 
 - MIP 101 tutorial: [mipengine.org](https://www.mipengine.org/doc/00-mip-101.html)。
 - MIP video tutorials: [MIP Introduction](http://bit.baidu.com/course/detail/id/187/column/120.html)
 
+<<<<<<< HEAD
 
 ## How to contribute?
 If you have suggestions to a function or extensions, feel free to [report an issue](https://github.com/mipengine/mip/issues) or make a pull request.
@@ -78,6 +79,7 @@ Before adding a pull request, make sure:
 
 
 ## License
-[MIT](https://opensource.org/licenses/MIT)
+
+[MIT](./LICENSE)
 
 Copyright (c) 2015-present, Baidu Inc.
