@@ -237,22 +237,36 @@ define(function (require) {
                     return;
                 }
                 e.preventDefault();
-                var messageKey = 'mibm-jumplink';
-                var messageData = {};
-                messageData.url = this.href;
-                if (this.hasAttribute('mip-link')) {
-                    var parent = this.parentNode;
-                    messageKey = 'loadiframe';
-                    messageData.title = parent.getAttribute('title') || parent.innerText.trim().split('\n')[0];
-                    messageData.click = parent.getAttribute('data-click');
+                if (this.hasAttribute('mip-link') || this.getAttribute('data-type') === 'mip') {
+                    var message = self._getMessageData.call(this);
+                    self.sendMessage(message.messageKey, message.messageData);
+                } else {
+                    // other jump through '_top'
+                    top.location.href = this.href;
                 }
-                else if (this.getAttribute('data-type') === 'mip') {
-                    messageKey = 'loadiframe';
-                    messageData.title = this.getAttribute('data-title') || this.innerText.trim().split('\n')[0];
-                    messageData.click = this.getAttribute('data-click');
-                }
-                self.sendMessage(messageKey, messageData);
+
             }, false);
+        },
+        /**
+         * get alink postMessage data
+         * @return {Object} messageData
+         */
+        _getMessageData: function () {
+            var messageKey = 'loadiframe';
+            var messageData = {};
+            messageData.url = this.href;
+            if (this.hasAttribute('mip-link')) {
+                var parent = this.parentNode;
+                messageData.title = parent.getAttribute('title') || parent.innerText.trim().split('\n')[0];
+                messageData.click = parent.getAttribute('data-click');
+            } else {
+                messageData.title = this.getAttribute('data-title') || this.innerText.trim().split('\n')[0];
+                messageData.click = this.getAttribute('data-click');
+            }
+            return {
+                'messageKey': messageKey,
+                'messageData': messageData
+            };
         }
     };
 
