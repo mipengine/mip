@@ -7,7 +7,7 @@ define(function (require) {
     var instance = new mipPix();
     var reg = /\$?{.+?}/g;
 
-    function createElement (prop, cb) {
+    function createElement (prop) {
         var HTML = "<mip-pix></mip-pix>";
         var ele = util.dom.create(HTML);
         for (var key in prop) {
@@ -17,32 +17,25 @@ define(function (require) {
         }
         document.body.prepend(ele);
         viewport.setScrollTop(0);
-        setTimeout(function () {
-            cb && cb();
-        }, 300);
     }
+    createElement({
+        id: 'mip-pix',
+        src: 'https://www.example.org/a.gif?t=${TIME}&title=${TITLE}&host=${HOST}'
+    });
+    createElement({
+        id: 'mip-pix-experiment',
+        src: 'https://www.example.org/a.gif?mip-x-button-color=${MIP-X-BUTTON-COLOR}&mip-x-font-color=${MIP-X-FONT-COLOR}'
+    });
 
     describe('mip pix', function () {
-        it('firstInviewCallback', function (done) {
-            createElement({
-                id: 'mip-pix',
-                src: 'https://www.example.org/a.gif?t=${TIME}&title=${TITLE}&host=${HOST}'
-            }, function () {
-                var renderEle = document.querySelector('#mip-pix img');
-                expect(reg.test(renderEle.src)).to.be.false;
-                done();
-            });
+        it('firstInviewCallback', function () {
+            var renderEle = document.querySelector('#mip-pix img');
+            expect(reg.test(renderEle.src)).to.be.false;
         });
 
-        it('experiment', function (done) {
-            createElement({
-                id: 'mip-pix-experiment',
-                src: 'https://www.example.org/a.gif?mip-x-button-color=${MIP-X-BUTTON-COLOR}&mip-x-font-color=${MIP-X-FONT-COLOR}'
-            }, function () {
-                var renderEle = document.querySelector('#mip-pix-experiment img');
-                expect(reg.test(renderEle.src)).to.be.false;
-                done();
-            });
+        it('experiment', function () {
+            var renderEle = document.querySelector('#mip-pix-experiment img');
+            expect(reg.test(renderEle.src)).to.be.false;
         });
     });
 });
