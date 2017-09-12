@@ -20,6 +20,7 @@ var customLaunchers = {
     sl_chrome: {
         base: 'SauceLabs',
         browserName: 'chrome',
+        platform: 'Windows 7'
     },
     sl_mac_safari: {
         base: 'SauceLabs',
