@@ -13,6 +13,7 @@ define(function (require) {
     var rect = util.rect;
     var naboo = require('naboo');
     var viewport = require('viewport');
+    var viewer = require('viewer');
 
     function getPopupImgPos(imgWidth, imgHeight) {
         var width = viewport.getWidth();
@@ -122,7 +123,7 @@ define(function (require) {
         // Http header accept has 'image/webp', But browser don't support
         // Set image visibility hidden in order to hidden extra style
         img.addEventListener('error', function () {
-            if (/\.webp$/.test(this.src)) {
+            if (viewer.isIframed) {
                 element.classList.add('mip-hidden');
             }
         });
