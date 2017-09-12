@@ -51,7 +51,6 @@ define(function (require) {
                     dispatchEvent(popupWrapper, clickEvent, 'click');
                     done();
                 }, 500);
-                done();
             });
         });
 
