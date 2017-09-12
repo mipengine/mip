@@ -73,6 +73,9 @@ define(function (require) {
                 return element && element.contains(child);
             }
             : function (element, child) {
+                if (element === document) {
+                    element = document.documentElement || document.body.parentElement;
+                }
                 while (child) {
                     if (element === child) {
                         return true;
