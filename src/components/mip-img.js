@@ -112,10 +112,18 @@ define(function (require) {
         }, false);
     }
 
-    var bindLoad = function (element, img) {
+    var bindEvent = function (element, img) {
         img.addEventListener('load', function () {
             element.classList.add('mip-img-loaded');
             element.customElement.resourcesComplete();
+        });
+
+        // Http header accept has 'image/webp', But browser don't support
+        // Set image visibility hidden in order to hidden extra style
+        img.addEventListener('error', function () {
+            if (/\.webp$/.test(this.src)) {
+                element.classList.add('mip-hidden');
+            }
         });
     };
 
@@ -140,8 +148,9 @@ define(function (require) {
             bindPopup(ele, _img);
         }
 
-        bindLoad(ele, _img);
+        bindEvent(ele, _img);
     }
+
     customElem.prototype.firstInviewCallback = firstInviewCallback;
     customElem.prototype.hasResources = function () {
         return true;
