@@ -47,7 +47,7 @@ define(function (require) {
                 var renderEle = document.querySelectorAll('#video-fivc video');
                 expect(renderEle.length).to.be.at.least(1);
                 done();
-            });
+            }).catch(done);
         });
 
         it('renderPlayElsewhere', function (done) {
@@ -65,7 +65,7 @@ define(function (require) {
                 ele = instance.renderPlayElsewhere();
                 expect(ele.style.backgroundSize).to.be.equal('cover');
                 done();
-            });
+            }).catch(done);
         });
     });
 });

@@ -42,8 +42,8 @@ define(function (require) {
     };
 
     describe('mip carousel', function () {
-        it('carousel event', function () {
-            promise.then(function (done) {
+        it('carousel event', function (done) {
+            promise.then(function () {
                 var ele = document.querySelector('#mip-carousel .mip-carousel-slideBox');
                 var startEvent = util.event.create('touchstart');
                 var moveEvent = util.event.create('touchmove');
@@ -77,7 +77,7 @@ define(function (require) {
                 expect(!!next).to.be.true;
                 expect(!!pre).to.be.true;
                 done();
-            });
+            }).catch(done);
         });
     });
 });

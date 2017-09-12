@@ -45,7 +45,7 @@ define(function (require) {
                 var renderEle = document.querySelector('#mip-pix img');
                 expect(reg.test(renderEle.src)).to.be.false;
                 done();
-            });
+            }).catch(done);
         });
 
         it('experiment', function (done) {
@@ -53,7 +53,7 @@ define(function (require) {
                 var renderEle = document.querySelector('#mip-pix-experiment img');
                 expect(reg.test(renderEle.src)).to.be.false;
                 done();
-            })
+            }).catch(done);
         });
     });
 });

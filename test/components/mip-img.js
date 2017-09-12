@@ -38,21 +38,25 @@ define(function (require) {
                 var eles = Array.prototype.slice.call(renderEle);
                 expect(eles.length).to.be.at.least(1);
                 done();
-            });
+            }).catch(done);
         });
 
-        it('img click', function (done) {
+        it('img event', function (done) {
             promise.then(function () {
                 var e = document.getElementById('img-fivc');
                 var img = e.querySelector('img');
                 dispatchEvent(img, clickEvent, 'click');
                 var popupWrapper = document.querySelector('.mip-img-popUp-wrapper');
                 dispatchEvent(popupWrapper, clickEvent, 'click');
+
+                // resize
+                var resizeEvent = util.event.create('resize');
+                dispatchEvent(window, resizeEvent, 'resize');
                 done();
-            });
+            }).catch(done);
         });
 
-        it('repeat pupup', function () {
+        it('repeat pupup', function (done) {
             promise.then(function () {
                 var ele = document.getElementById('img-fivc');
                 var img = ele.querySelector('img');
@@ -60,7 +64,7 @@ define(function (require) {
                 var eles = document.querySelectorAll('.mip-img-popUp-wrapper');
                 expect(eles.length).to.be.equal(1);
                 done();
-            });
+            }).catch(done);
         });
     });
 });
