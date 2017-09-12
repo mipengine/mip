@@ -93,8 +93,11 @@ module.exports = {
     singleRun: true,
 
     // browser time out
-    browserDisconnectTimeout: 3000,
+    browserDisconnectTimeout: 10000,
 
     // process kill time
-    processKillTimeout: 3000
+    processKillTimeout: 10000,
+
+    // browser no activity time
+    browserNoActivityTimeout: 300000
 }

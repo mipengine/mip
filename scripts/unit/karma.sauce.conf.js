@@ -69,10 +69,7 @@ module.exports = function(config) {
             // use travis + addons.jwt to connect
             startConnect: false,
             tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER
-        },
-
-        captureTimeout: 300000,
-        browserNoActivityTimeout: 300000
+        }
     });
 
     config.set(options);
