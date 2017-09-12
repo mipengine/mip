@@ -8,15 +8,13 @@ define(function (require) {
     var clickEvent = util.event.create('click');
 
     var promise = new Promise(function (resolve, reject) {
-        var HTML = "<mip-img id='img-fivc' width=350 height=263 alt='mip img' "
-               +    "popup src='https://www.mipengine.org/static/img/sample_01.jpg'>"
-               + "</mip-img>"
+        var HTML = "<mip-img id='mfivc' width=350 height=263 alt='mip img' popup src='https://www.mipengine.org/static/img/sample_01.jpg'></mip-img>"
         var ele = util.dom.create(HTML);
         document.body.prepend(ele);
         viewport.setScrollTop(0);
         setTimeout(function () {
             resolve();
-        }, 1500);
+        }, 1000);
     });
 
     var dispatchEvent = function (element, evt, event) {
@@ -34,7 +32,7 @@ define(function (require) {
     describe('mip img', function () {
         it('firstInviewCallback', function (done) {
             promise.then(function () {
-                var renderEle = document.querySelectorAll('#img-fivc img');
+                var renderEle = document.querySelectorAll('#mfivc img');
                 var eles = Array.prototype.slice.call(renderEle);
                 expect(eles.length).to.be.at.least(1);
                 done();
@@ -43,9 +41,8 @@ define(function (require) {
 
         it('img event', function (done) {
             promise.then(function () {
-                var e = document.getElementById('img-fivc');
-                var img = e.querySelector('img');
-                dispatchEvent(img, clickEvent, 'click');
+                var renderEle = document.querySelector('#mfivc img');
+                dispatchEvent(renderEle, clickEvent, 'click');
                 var popupWrapper = document.querySelector('.mip-img-popUp-wrapper');
                 dispatchEvent(popupWrapper, clickEvent, 'click');
 
@@ -58,7 +55,7 @@ define(function (require) {
 
         it('repeat pupup', function (done) {
             promise.then(function () {
-                var ele = document.getElementById('img-fivc');
+                var ele = document.querySelector('#mfivc');
                 var img = ele.querySelector('img');
                 dispatchEvent(img, clickEvent, 'click');
 

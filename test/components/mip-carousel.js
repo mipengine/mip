@@ -26,7 +26,7 @@ define(function (require) {
         document.body.appendChild(ele);
         setTimeout(function () {
             resolve();
-        }, 1500);
+        }, 1000);
     });
 
     var dispatchEvent = function (element, evt, event) {
@@ -44,7 +44,9 @@ define(function (require) {
     describe('mip carousel', function () {
         it('carousel event', function (done) {
             promise.then(function () {
-                var ele = document.querySelector('#mip-carousel .mip-carousel-slideBox');
+                var ele = document.querySelector('#mip-carousel');
+
+                var slideBox = ele.querySelector('.mip-carousel-slideBox');
                 var startEvent = util.event.create('touchstart');
                 var moveEvent = util.event.create('touchmove');
                 var endEvent = util.event.create('touchend');
@@ -56,9 +58,9 @@ define(function (require) {
                     = moveEvent.targetTouches
                     = endEvent.targetTouches
                     = [{pageX: 0, pageY: 0}];
-                dispatchEvent(ele, startEvent, 'touchstart');
-                dispatchEvent(ele, moveEvent, 'touchmove');
-                dispatchEvent(ele, endEvent, 'touchend');
+                dispatchEvent(slideBox, startEvent, 'touchstart');
+                dispatchEvent(slideBox, moveEvent, 'touchmove');
+                dispatchEvent(slideBox, endEvent, 'touchend');
 
                 // resize
                 var resizeEvent = util.event.create('resize');
@@ -69,8 +71,7 @@ define(function (require) {
                 dispatchEvent(indicators[1], clickEvent, 'click');
 
                 // buttonController
-                var ele = document.querySelector('#mip-carousel');
-                var next = ele.querySelector('.mip-carousel-nextBtn');
+                var next = document.querySelector('.mip-carousel-nextBtn');
                 var pre = ele.querySelector('.mip-carousel-preBtn');
                 dispatchEvent(next, clickEvent, 'click');
                 dispatchEvent(pre, clickEvent, 'click');
