@@ -60,17 +60,15 @@ define(function (require) {
                 dispatchEvent(ele, moveEvent, 'touchmove');
                 dispatchEvent(ele, endEvent, 'touchend');
 
+                // resize
                 var resizeEvent = util.event.create('resize');
                 dispatchEvent(window, resizeEvent, 'resize');
 
+                // indicators
                 var indicators = document.querySelectorAll('.mip-carousel-indecator-item');
                 dispatchEvent(indicators[1], clickEvent, 'click');
-                done();
-            });
-        });
 
-        it('carousel buttonController', function (done) {
-            promise.then(function () {
+                // buttonController
                 var ele = document.querySelector('#mip-carousel');
                 var next = ele.querySelector('.mip-carousel-nextBtn');
                 var pre = ele.querySelector('.mip-carousel-preBtn');
@@ -79,7 +77,7 @@ define(function (require) {
                 expect(!!next).to.be.true;
                 expect(!!pre).to.be.true;
                 done();
-            })
+            });
         });
     });
 });
