@@ -28,9 +28,8 @@ define(function (require) {
                 id: 'mip-pix',
                 src: 'https://www.example.org/a.gif?t=${TIME}&title=${TITLE}&host=${HOST}'
             }, function () {
-                var renderEle = document.querySelectorAll('#mip-pix img');
-                var eles = Array.prototype.slice.call(renderEle);
-                expect(eles.length).to.be.at.least(1);
+                var renderEle = document.querySelector('#mip-pix img');
+                expect(reg.test(renderEle.src)).to.be.false;
                 done();
             });
         });
@@ -40,7 +39,7 @@ define(function (require) {
                 id: 'mip-pix-experiment',
                 src: 'https://www.example.org/a.gif?mip-x-button-color=${MIP-X-BUTTON-COLOR}&mip-x-font-color=${MIP-X-FONT-COLOR}'
             }, function () {
-                var renderEle = document.querySelector('#mip-pix img');
+                var renderEle = document.querySelector('#mip-pix-experiment img');
                 expect(reg.test(renderEle.src)).to.be.false;
                 done();
             });

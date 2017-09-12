@@ -45,18 +45,6 @@ define(function (require) {
     };
 
     describe('mip carousel', function () {
-        it('build', function (done) {
-            var id = 'cl-build';
-            var ele = createElement({
-                id: id
-            }, function () {
-                var renderEle = document.querySelectorAll('#cl-build .mip-carousel-wrapper');
-                var eles = Array.prototype.slice.call(renderEle);
-                expect(eles.length).to.be.at.least(1);
-                done();
-            });
-        });
-
         it('carousel indicator', function (done) {
             var id = 'cl-indicator';
             var dom = util.dom.create(indicatorHTML);
@@ -65,10 +53,8 @@ define(function (require) {
                 id: id,
                 indicatorId: 'mip-carousel-example'
             }, function () {
-                var wrapper = document.querySelector('#cl-indicator');
                 var indicators = document.querySelectorAll('.mip-carousel-indecator-item');
                 dispatchEvent(indicators[1], clickEvent, 'click');
-                var renderEle = document.querySelectorAll('#cl-indicator .mip-carousel-wrapper');
                 done();
             });
         });

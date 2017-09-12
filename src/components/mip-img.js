@@ -13,6 +13,7 @@ define(function (require) {
     var rect = util.rect;
     var naboo = require('naboo');
     var viewport = require('viewport');
+    var viewer = require('viewer');
 
     function getPopupImgPos(imgWidth, imgHeight) {
         var width = viewport.getWidth();
@@ -34,7 +35,8 @@ define(function (require) {
     // 创建弹层 dom
     function createPopup(element, img) {
         var mipPopWrap = document.querySelector('.mip-img-popUp-wrapper');
-        if (!!mipPopWrap && mipPopWrap.getAttribute('data-name') === 'mip-img-popUp-name' && mipPopWrap.parentNode.tagName.toLowerCase() === 'body') {
+        if (!!mipPopWrap && mipPopWrap.getAttribute('data-name') === 'mip-img-popUp-name'
+            && mipPopWrap.parentNode.tagName.toLowerCase() === 'body') {
             mipPopWrap.querySelector('img').setAttribute('src', img.src);
             return mipPopWrap;
         }
@@ -121,7 +123,7 @@ define(function (require) {
         // Http header accept has 'image/webp', But browser don't support
         // Set image visibility hidden in order to hidden extra style
         img.addEventListener('error', function () {
-            if (/\.webp$/.test(this.src)) {
+            if (viewer.isIframed) {
                 element.classList.add('mip-hidden');
             }
         });
