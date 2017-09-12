@@ -46,11 +46,9 @@ define(function (require) {
                 var e = document.getElementById('img-fivc');
                 var img = e.querySelector('img');
                 dispatchEvent(img, clickEvent, 'click');
-                setTimeout(function () {
-                    var popupWrapper = document.querySelector('.mip-img-popUp-wrapper');
-                    dispatchEvent(popupWrapper, clickEvent, 'click');
-                    done();
-                }, 500);
+                var popupWrapper = document.querySelector('.mip-img-popUp-wrapper');
+                dispatchEvent(popupWrapper, clickEvent, 'click');
+                done();
             });
         });
 
