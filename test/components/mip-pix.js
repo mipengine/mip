@@ -18,24 +18,42 @@ define(function (require) {
         document.body.prepend(ele);
         viewport.setScrollTop(0);
     }
-    createElement({
-        id: 'mip-pix',
-        src: 'https://www.example.org/a.gif?t=${TIME}&title=${TITLE}&host=${HOST}'
-    });
-    createElement({
-        id: 'mip-pix-experiment',
-        src: 'https://www.example.org/a.gif?mip-x-button-color=${MIP-X-BUTTON-COLOR}&mip-x-font-color=${MIP-X-FONT-COLOR}'
+
+    var promise1 = new Promise(function (resolve, reject) {
+        createElement({
+            id: 'mip-pix',
+            src: 'https://www.example.org/a.gif?t=${TIME}&title=${TITLE}&host=${HOST}'
+        });
+        setTimeout(function () {
+            resolve();
+        }, 1000);
     });
 
-    describe('mip pix', function () {
+    var promise2 = new Promise(function (resolve, reject) {
+        createElement({
+            id: 'mip-pix-experiment',
+            src: 'https://www.example.org/a.gif?mip-x-button-color=${MIP-X-BUTTON-COLOR}&mip-x-font-color=${MIP-X-FONT-COLOR}'
+        });
+        setTimeout(function () {
+            resolve();
+        }, 1000);
+    });
+
+    describe('mip pix', function (done) {
         it('firstInviewCallback', function () {
-            var renderEle = document.querySelector('#mip-pix img');
-            expect(reg.test(renderEle.src)).to.be.false;
+            promise1.then(function () {
+                var renderEle = document.querySelector('#mip-pix img');
+                expect(reg.test(renderEle.src)).to.be.false;
+                done();
+            });
         });
 
-        it('experiment', function () {
-            var renderEle = document.querySelector('#mip-pix-experiment img');
-            expect(reg.test(renderEle.src)).to.be.false;
+        it('experiment', function (done) {
+            promise2.then(function () {
+                var renderEle = document.querySelector('#mip-pix-experiment img');
+                expect(reg.test(renderEle.src)).to.be.false;
+                done();
+            })
         });
     });
 });

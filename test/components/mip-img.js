@@ -7,12 +7,17 @@ define(function (require) {
     var instance = new mipPix();
     var clickEvent = util.event.create('click');
 
-    var HTML = "<mip-img id='img-fivc' width=350 height=263 alt='mip img' "
+    var promise = new Promise(function (resolve, reject) {
+        var HTML = "<mip-img id='img-fivc' width=350 height=263 alt='mip img' "
                +    "popup src='https://www.mipengine.org/static/img/sample_01.jpg'>"
                + "</mip-img>"
-    var ele = util.dom.create(HTML);
-    document.body.prepend(ele);
-    viewport.setScrollTop(0);
+        var ele = util.dom.create(HTML);
+        document.body.prepend(ele);
+        viewport.setScrollTop(0);
+        setTimeout(function () {
+            resolve();
+        }, 1000);
+    });
 
     var dispatchEvent = function (element, evt, event) {
         if (!element) {
@@ -27,29 +32,38 @@ define(function (require) {
     };
 
     describe('mip img', function () {
-        it('firstInviewCallback', function () {
-            var renderEle = document.querySelectorAll('#img-fivc img');
-            var eles = Array.prototype.slice.call(renderEle);
-            expect(eles.length).to.be.at.least(1);
+        it('firstInviewCallback', function (done) {
+            promise.then(function () {
+                var renderEle = document.querySelectorAll('#img-fivc img');
+                var eles = Array.prototype.slice.call(renderEle);
+                expect(eles.length).to.be.at.least(1);
+                done();
+            });
         });
 
         it('img click', function (done) {
-            var e = document.getElementById('img-fivc');
-            var img = e.querySelector('img');
-            dispatchEvent(img, clickEvent, 'click');
-            setTimeout(function () {
-                var popupWrapper = document.querySelector('.mip-img-popUp-wrapper');
-                dispatchEvent(popupWrapper, clickEvent, 'click');
+            promise.then(function () {
+                var e = document.getElementById('img-fivc');
+                var img = e.querySelector('img');
+                dispatchEvent(img, clickEvent, 'click');
+                setTimeout(function () {
+                    var popupWrapper = document.querySelector('.mip-img-popUp-wrapper');
+                    dispatchEvent(popupWrapper, clickEvent, 'click');
+                    done();
+                }, 500);
                 done();
-            }, 500);
+            });
         });
 
         it('repeat pupup', function () {
-            var ele = document.getElementById('img-fivc');
-            var img = ele.querySelector('img');
-            dispatchEvent(img, clickEvent, 'click');
-            var eles = document.querySelectorAll('.mip-img-popUp-wrapper');
-            expect(eles.length).to.be.equal(1);
+            promise.then(function () {
+                var ele = document.getElementById('img-fivc');
+                var img = ele.querySelector('img');
+                dispatchEvent(img, clickEvent, 'click');
+                var eles = document.querySelectorAll('.mip-img-popUp-wrapper');
+                expect(eles.length).to.be.equal(1);
+                done();
+            });
         });
     });
 });

@@ -6,13 +6,18 @@ define(function (require) {
     var viewport = require('viewport');
     var clickEvent = util.event.create('click');
 
-    var HTML = '<mip-video id="video-fivc" poster="https://www.mipengine.org/static/img/sample_04.jpg" '
+    var promise = new Promise(function (resolve, reject) {
+        var HTML = '<mip-video id="video-fivc" poster="https://www.mipengine.org/static/img/sample_04.jpg" '
                +    'controls layout="responsive" width="640" height="360" '
                +    'src="https://gss0.bdstatic.com/-b1Caiqa0d9Bmcmop9aC2jh9h2w8e4_h7sED0YQ_t9iCPK/mda-gjkt21pkrsd8ae5y/mda-gjkt21pkrsd8ae5y.mp4">'
                + '</mip-video>'
-    var ele = util.dom.create(HTML);
-    document.body.prepend(ele);
-    viewport.setScrollTop(0);
+        var ele = util.dom.create(HTML);
+        setTimeout(function () {
+            resolve();
+        }, 1000);
+        document.body.prepend(ele);
+        viewport.setScrollTop(0);
+    });
 
     function colorRGB2Hex(color) {
         var rgb = color.split(',');
@@ -36,25 +41,31 @@ define(function (require) {
         }
     };
 
-    describe('mip video', function () {
+    describe('mip video', function (done) {
         it('firstInviewCallback', function () {
-            var renderEle = document.querySelectorAll('#video-fivc video');
-            expect(renderEle.length).to.be.at.least(1);
+            promise.then(function () {
+                var renderEle = document.querySelectorAll('#video-fivc video');
+                expect(renderEle.length).to.be.at.least(1);
+                done();
+            });
         });
 
-        it('renderPlayElsewhere', function () {
-            var instance = new video();
-            instance.element = document.body;
-            instance.attributes = {
-                src: 'https://gss0.bdstatic.com/-b1Caiqa0d9Bmcmop9aC2jh9h2w8e4_h7sED0YQ_t9iCPK/mda-gjkt21pkrsd8ae5y/mda-gjkt21pkrsd8ae5y.mp4'
-            }
-            var ele = instance.renderPlayElsewhere();
-            expect(ele.style.background.indexOf('rgb(51, 51, 51)')).to.be.not.equal(-1);
-            dispatchEvent(ele, clickEvent, 'click')
+        it('renderPlayElsewhere', function (done) {
+            promise.then(function () {
+                var instance = new video();
+                instance.element = document.body;
+                instance.attributes = {
+                    src: 'https://gss0.bdstatic.com/-b1Caiqa0d9Bmcmop9aC2jh9h2w8e4_h7sED0YQ_t9iCPK/mda-gjkt21pkrsd8ae5y/mda-gjkt21pkrsd8ae5y.mp4'
+                }
+                var ele = instance.renderPlayElsewhere();
+                expect(ele.style.background.indexOf('rgb(51, 51, 51)')).to.be.not.equal(-1);
+                dispatchEvent(ele, clickEvent, 'click')
 
-            instance.attributes.poster = 'https://www.mipengine.org/static/img/sample_04.jpg';
-            ele = instance.renderPlayElsewhere();
-            expect(ele.style.backgroundSize).to.be.equal('cover');
+                instance.attributes.poster = 'https://www.mipengine.org/static/img/sample_04.jpg';
+                ele = instance.renderPlayElsewhere();
+                expect(ele.style.backgroundSize).to.be.equal('cover');
+                done();
+            });
         });
     });
 });

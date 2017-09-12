@@ -21,8 +21,13 @@ define(function (require) {
     var dom = util.dom.create(indicatorHTML);
     document.body.appendChild(dom);
 
-    var ele = util.dom.create(carouselHTML);
-    document.body.appendChild(ele);
+    var promise = new Promise(function (resolve, reject) {
+        var ele = util.dom.create(carouselHTML);
+        document.body.appendChild(ele);
+        setTimeout(function () {
+            resolve();
+        }, 1000);
+    });
 
     var dispatchEvent = function (element, evt, event) {
         if (!element) {
@@ -38,37 +43,43 @@ define(function (require) {
 
     describe('mip carousel', function () {
         it('carousel event', function () {
-            var ele = document.querySelector('#mip-carousel .mip-carousel-slideBox');
-            var startEvent = util.event.create('touchstart');
-            var moveEvent = util.event.create('touchmove');
-            var endEvent = util.event.create('touchend');
-            startEvent.touches
-                = moveEvent.touches
-                = endEvent.touches
-                = [{clientX: 0, clientY: 0}];
-            startEvent.targetTouches
-                = moveEvent.targetTouches
-                = endEvent.targetTouches
-                = [{pageX: 0, pageY: 0}];
-            dispatchEvent(ele, startEvent, 'touchstart');
-            dispatchEvent(ele, moveEvent, 'touchmove');
-            dispatchEvent(ele, endEvent, 'touchend');
+            promise.then(function (done) {
+                var ele = document.querySelector('#mip-carousel .mip-carousel-slideBox');
+                var startEvent = util.event.create('touchstart');
+                var moveEvent = util.event.create('touchmove');
+                var endEvent = util.event.create('touchend');
+                startEvent.touches
+                    = moveEvent.touches
+                    = endEvent.touches
+                    = [{clientX: 0, clientY: 0}];
+                startEvent.targetTouches
+                    = moveEvent.targetTouches
+                    = endEvent.targetTouches
+                    = [{pageX: 0, pageY: 0}];
+                dispatchEvent(ele, startEvent, 'touchstart');
+                dispatchEvent(ele, moveEvent, 'touchmove');
+                dispatchEvent(ele, endEvent, 'touchend');
 
-            var resizeEvent = util.event.create('resize');
-            dispatchEvent(window, resizeEvent, 'resize');
+                var resizeEvent = util.event.create('resize');
+                dispatchEvent(window, resizeEvent, 'resize');
 
-            var indicators = document.querySelectorAll('.mip-carousel-indecator-item');
-            dispatchEvent(indicators[1], clickEvent, 'click');
+                var indicators = document.querySelectorAll('.mip-carousel-indecator-item');
+                dispatchEvent(indicators[1], clickEvent, 'click');
+                done();
+            });
         });
 
-        it('carousel buttonController', function () {
-            var ele = document.querySelector('#mip-carousel');
-            var next = ele.querySelector('.mip-carousel-nextBtn');
-            var pre = ele.querySelector('.mip-carousel-preBtn');
-            dispatchEvent(next, clickEvent, 'click');
-            dispatchEvent(pre, clickEvent, 'click');
-            expect(!!next).to.be.true;
-            expect(!!pre).to.be.true;
+        it('carousel buttonController', function (done) {
+            promise.then(function () {
+                var ele = document.querySelector('#mip-carousel');
+                var next = ele.querySelector('.mip-carousel-nextBtn');
+                var pre = ele.querySelector('.mip-carousel-preBtn');
+                dispatchEvent(next, clickEvent, 'click');
+                dispatchEvent(pre, clickEvent, 'click');
+                expect(!!next).to.be.true;
+                expect(!!pre).to.be.true;
+                done();
+            })
         });
     });
 });
