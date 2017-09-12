@@ -1,6 +1,7 @@
 define(function (require) {
     'use strict';
 
+    var $ = require('jquery');
     var util = require('util');
     var video = require('components/mip-video');
     var viewport = require('viewport');
@@ -10,13 +11,12 @@ define(function (require) {
         var HTML = '<mip-video id="video-fivc" poster="https://www.mipengine.org/static/img/sample_04.jpg" '
                +    'controls layout="responsive" width="640" height="360" '
                +    'src="https://gss0.bdstatic.com/-b1Caiqa0d9Bmcmop9aC2jh9h2w8e4_h7sED0YQ_t9iCPK/mda-gjkt21pkrsd8ae5y/mda-gjkt21pkrsd8ae5y.mp4">'
-               + '</mip-video>'
-        var ele = util.dom.create(HTML);
+               + '</mip-video>';
+        $(document.body).prepend(HTML);
+        viewport.setScrollTop(0);
         setTimeout(function () {
             resolve();
         }, 1000);
-        document.body.prepend(ele);
-        viewport.setScrollTop(0);
     });
 
     function colorRGB2Hex(color) {
@@ -44,7 +44,7 @@ define(function (require) {
     describe('mip video', function (done) {
         it('firstInviewCallback', function () {
             promise.then(function () {
-                var renderEle = document.querySelectorAll('#video-fivc video');
+                var renderEle = $('#video-fivc video');
                 expect(renderEle.length).to.be.at.least(1);
                 done();
             }).catch(done);

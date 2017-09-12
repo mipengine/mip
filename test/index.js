@@ -9,6 +9,7 @@ var TEST_FILES = Object.keys(window.__karma__.files).filter(isTestFile);
  * 依赖配置
  */
 var paths = pathMap(TEST_FILES);
+paths.jquery = '/base/deps/jquery';
 paths.naboo = '/base/deps/naboo';
 paths.fetch = '/base/deps/fetch';
 require.config({
@@ -39,7 +40,7 @@ function pathMap(arr) {
 }
 
 function isTestFile(filepath){
-    return /\/base\/test\//.test(filepath) && 
+    return /\/base\/test\//.test(filepath) &&
         filepath !== '/base/test/index.js';
 }
 

@@ -1,29 +1,25 @@
 define(function (require) {
     'use strict';
-
+    var $ = require('jquery');
     var resource = require('resources');
     var util = require('util');
-    var carouselHTML = "<mip-carousel id='mip-carousel' indicatorId='mip-carousel-example' width=600 height=400 defer=200 layout='responsive'"
+    var clickEvent = util.event.create('click');
+    var carouselHTML = '<mip-carousel id="mip-carousel" indicatorId="mip-carousel-example" width=600 height=400 defer=200 layout="responsive"'
                         +    "autoplay buttonController indicator popup src='https://www.mipengine.org/static/img/sample_01.jpg'>"
                         +   '<div popup><mip-img popup src=""></mip-img></div>'
                         +   '<div><mip-img src=""></mip-img></div>'
                         +   '<div><mip-img src=""></mip-img></div>'
-                        + "</mip-img>"
-
-    var indicatorHTML = '<div class="mip-carousel-indicator-wrapper">'
+                        + '</mip-carousel>'
+                        + '<div class="mip-carousel-indicator-wrapper">'
                         +   '<div class="mip-carousel-indicatorDot" id="mip-carousel-example">'
                         +       '<div class="mip-carousel-activeitem mip-carousel-indecator-item"></div>'
                         +       '<div class="mip-carousel-indecator-item"></div>'
                         +       '<div class="mip-carousel-indecator-item"></div>'
                         +   '</div>'
                         + '</div>'
-    var clickEvent = util.event.create('click');
-    var dom = util.dom.create(indicatorHTML);
-    document.body.appendChild(dom);
 
     var promise = new Promise(function (resolve, reject) {
-        var ele = util.dom.create(carouselHTML);
-        document.body.appendChild(ele);
+        $(document.body).prepend(carouselHTML);
         setTimeout(function () {
             resolve();
         }, 1000);
@@ -44,9 +40,7 @@ define(function (require) {
     describe('mip carousel', function () {
         it('carousel event', function (done) {
             promise.then(function () {
-                var ele = document.querySelector('#mip-carousel');
-
-                var slideBox = ele.querySelector('.mip-carousel-slideBox');
+                var slideBox = $('#mip-carousel .mip-carousel-wrapper').get(0);
                 var startEvent = util.event.create('touchstart');
                 var moveEvent = util.event.create('touchmove');
                 var endEvent = util.event.create('touchend');
@@ -67,16 +61,16 @@ define(function (require) {
                 dispatchEvent(window, resizeEvent, 'resize');
 
                 // indicators
-                var indicators = document.querySelectorAll('.mip-carousel-indecator-item');
+                var indicators = $('.mip-carousel-indecator-item');
                 dispatchEvent(indicators[1], clickEvent, 'click');
 
                 // buttonController
-                var next = document.querySelector('.mip-carousel-nextBtn');
-                var pre = ele.querySelector('.mip-carousel-preBtn');
+                var next = $('.mip-carousel-nextBtn').get(0);
+                var pre = $('.mip-carousel-preBtn').get(0);
                 dispatchEvent(next, clickEvent, 'click');
                 dispatchEvent(pre, clickEvent, 'click');
-                // expect(!!next).to.be.true;
-                // expect(!!pre).to.be.true;
+                expect(!!next).to.be.true;
+                expect(!!pre).to.be.true;
                 done();
             }).catch(done);
         });

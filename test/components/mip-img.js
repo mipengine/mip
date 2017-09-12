@@ -1,6 +1,7 @@
 define(function (require) {
     'use strict';
 
+    var $ = require('jquery');
     var util = require('util');
     var mipPix = require('components/mip-pix');
     var viewport = require('viewport');
@@ -8,9 +9,8 @@ define(function (require) {
     var clickEvent = util.event.create('click');
 
     var promise = new Promise(function (resolve, reject) {
-        var HTML = "<mip-img id='mfivc' width=350 height=263 alt='mip img' popup src='https://www.mipengine.org/static/img/sample_01.jpg'></mip-img>"
-        var ele = util.dom.create(HTML);
-        document.body.prepend(ele);
+        var HTML = "<mip-img id='mfivc' width=350 height=263 alt='mip img' popup src='https://www.mipengine.org/static/img/sample_01.jpg'></mip-img>";
+        $(document.body).prepend(HTML);
         viewport.setScrollTop(0);
         setTimeout(function () {
             resolve();
@@ -32,18 +32,18 @@ define(function (require) {
     describe('mip img', function () {
         it('firstInviewCallback', function (done) {
             promise.then(function () {
-                var renderEle = document.querySelectorAll('#mfivc img');
+                var renderEle = $('#mfivc img');
                 var eles = Array.prototype.slice.call(renderEle);
-                // expect(eles.length).to.be.at.least(1);
+                expect(eles.length).to.be.at.least(1);
                 done();
             }).catch(done);
         });
 
         it('img event', function (done) {
             promise.then(function () {
-                var renderEle = document.querySelector('#mfivc img');
+                var renderEle = $('#mfivc img').get(0);
                 dispatchEvent(renderEle, clickEvent, 'click');
-                var popupWrapper = document.querySelector('.mip-img-popUp-wrapper');
+                var popupWrapper = $('.mip-img-popUp-wrapper').get(0);
                 dispatchEvent(popupWrapper, clickEvent, 'click');
 
                 // resize
@@ -55,15 +55,14 @@ define(function (require) {
 
         it('repeat pupup', function (done) {
             promise.then(function () {
-                var ele = document.querySelector('#mfivc');
-                var img = ele.querySelector('img');
-                dispatchEvent(img, clickEvent, 'click');
+                var ele = $('#mfivc img').get(0);
+                dispatchEvent(ele, clickEvent, 'click');
 
                 setTimeout(function () {
-                    var eles = document.querySelectorAll('.mip-img-popUp-wrapper');
-                    // expect(eles.length).to.be.equal(1);
+                    var eles = $('.mip-img-popUp-wrapper');
+                    expect(eles.length).to.be.equal(1);
                     done();
-                }, 600);
+                }, 1000);
             }).catch(done);
         });
     });
