@@ -26,7 +26,7 @@ define(function (require) {
         document.body.appendChild(ele);
         setTimeout(function () {
             resolve();
-        }, 1000);
+        }, 1500);
     });
 
     var dispatchEvent = function (element, evt, event) {

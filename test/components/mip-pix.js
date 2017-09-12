@@ -26,7 +26,7 @@ define(function (require) {
         });
         setTimeout(function () {
             resolve();
-        }, 1000);
+        }, 600);
     });
 
     var promise2 = new Promise(function (resolve, reject) {

@@ -16,7 +16,7 @@ define(function (require) {
         viewport.setScrollTop(0);
         setTimeout(function () {
             resolve();
-        }, 1000);
+        }, 1500);
     });
 
     var dispatchEvent = function (element, evt, event) {
@@ -61,9 +61,12 @@ define(function (require) {
                 var ele = document.getElementById('img-fivc');
                 var img = ele.querySelector('img');
                 dispatchEvent(img, clickEvent, 'click');
-                var eles = document.querySelectorAll('.mip-img-popUp-wrapper');
-                expect(eles.length).to.be.equal(1);
-                done();
+
+                setTimeout(function () {
+                    var eles = document.querySelectorAll('.mip-img-popUp-wrapper');
+                    expect(eles.length).to.be.equal(1);
+                    done();
+                }, 600);
             }).catch(done);
         });
     });
