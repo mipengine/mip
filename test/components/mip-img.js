@@ -37,6 +37,7 @@ define(function (require) {
         it('firstInviewCallback', function () {
             var HTML = "<mip-img width=350 height=263 alt='mip img' popup src='https://www.mipengine.org/static/img/sample_01.jpg'></mip-img>";
             img.element = util.dom.create(HTML);
+            img.customElement = {resourcesComplete:function(){}};
             img.firstInviewCallback();
             var ele = img.element.querySelectorAll('img');
             expect(ele.length).to.be.at.least(1);
@@ -45,6 +46,7 @@ define(function (require) {
         it('load error', function () {
             var HTML = "<mip-img width=350 height=263 alt='mip img' popup src='https://www.mipengine.org/static/img/sample_01xx.jpg'></mip-img>";
             img.element = util.dom.create(HTML);
+            img.customElement = {resourcesComplete:function(){}};
             img.firstInviewCallback();
             var ele = img.element.querySelectorAll('img');
             expect(ele.length).to.be.at.least(1);
@@ -53,6 +55,7 @@ define(function (require) {
         it('has build', function () {
             var HTML = "<mip-img width=350 height=263 alt='mip img' popup src='https://www.mipengine.org/static/img/sample_01.jpg'><img></mip-img>";
             img.element = util.dom.create(HTML);
+            img.customElement = {resourcesComplete:function(){}};
             var result = img.firstInviewCallback();
             expect(result).to.be.undefined;
         });
