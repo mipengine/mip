@@ -67,6 +67,7 @@ define(function (require) {
             // set the style to be `height: 100%; overflow: auto`
             // to solve this problem.
             if (!platform.needSpecialScroll) {
+                console.log('add Normal Class');
                 document.documentElement.classList.add('mip-normal-scroll');
                 document.body.classList.add('mip-normal-scroll');
             }
