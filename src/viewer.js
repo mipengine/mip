@@ -66,11 +66,9 @@ define(function (require) {
             // page can not be scrollable. So we need
             // set the style to be `height: 100%; overflow: auto`
             // to solve this problem.
-            document.documentElement.classList.add('mip-scroll');
-            document.body.classList.add('mip-scroll');
-            if (! platform.needSpecialScroll) {
-                document.documentElement.classList.remove('mip-scroll');
-                document.body.classList.remove('mip-scroll');
+            if (!platform.needSpecialScroll) {
+                document.documentElement.classList.add('mip-normal-scroll');
+                document.body.classList.add('mip-normal-scroll');
             }
 
             // Fix iphone 5s UC and ios 9 safari bug.
