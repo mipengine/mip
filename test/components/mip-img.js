@@ -7,10 +7,6 @@ define(function (require) {
     var img = new Img();
     var clickEvent = util.event.create('click');
 
-    var ele = document.createElement('script');
-    ele.src = 'https://mipcache.bdstatic.com/static/v1/mip.js';
-    document.body.appendChild(ele);
-
     var dispatchEvent = function (element, evt, event) {
         if (!element) {
             return;
@@ -24,13 +20,22 @@ define(function (require) {
     };
 
     var promise = new Promise(function (resolve, reject) {
-        var HTML = "<mip-img id='mfivc' width=350 height=263 alt='mip img' popup src='https://www.mipengine.org/static/img/sample_01.jpg'></mip-img>";
-        var ele = util.dom.create(HTML);
-        document.body.prepend(ele);
-        viewport.setScrollTop(0);
-        setTimeout(function () {
-            resolve();
-        }, 1000);
+        var ele = document.createElement('script');
+        ele.src = 'https://mipcache.bdstatic.com/static/v1/mip.js';
+        document.body.appendChild(ele);
+        ele.onload = function () {
+            var HTML = "<mip-img id='mfivc' width=350 height=263 alt='mip img' popup src='https://www.mipengine.org/static/img/sample_01.jpg'></mip-img>";
+            var ele = util.dom.create(HTML);
+            document.body.prepend(ele);
+            viewport.setScrollTop(0);
+            setTimeout(function () {
+                resolve();
+            }, 1000);
+        }
+
+        ele.onerror = function () {
+            reject();
+        }
     });
 
     describe('mip img', function () {
@@ -71,7 +76,7 @@ define(function (require) {
                 var resizeEvent = util.event.create('resize');
                 dispatchEvent(window, resizeEvent, 'resize');
                 done();
-            }).catch(done);
+            });
         });
     });
 });
