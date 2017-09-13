@@ -65,7 +65,7 @@ define(function (require) {
                     var resizeEvent = util.event.create('resize');
                     dispatchEvent(window, resizeEvent, 'resize');
                     done();
-                }, 1000);
+                }, 500);
             }
             ele.onerror = function () {
                 done();
