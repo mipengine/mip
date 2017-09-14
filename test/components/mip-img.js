@@ -28,22 +28,14 @@ define(function (require) {
             }, 1000);
         });
 
-        it('popupHandle', function (done) {
+        it('popup hash exist', function (done) {
             var HTML = '<mip-img alt="mip img" popup layout="responsive" width="350" height="263" src="https://www.mipengine.org/static/img/sample_01.jpg"></mip-img>';
             img.element = util.dom.create(HTML);
             img.element.customElement = {resourcesComplete: function () {}};
             img.firstInviewCallback();
-
             var ele = img.element.querySelector('img');
             img.popupHandle(cEvent, img.element, ele);
-            setTimeout(function () {
-                var ele = document.body.querySelectorAll('.mip-img-popUp-wrapper');
-                expect(ele.length).to.be.at.least(1);
-                done();
-            }, 1000);
-        });
 
-        it('popup hash exist', function (done) {
             setTimeout(function () {
                 var HTML = '<mip-img alt="mip img" popup layout="responsive" width="350" height="263" src="https://www.mipengine.org/static/img/sample_01.jpg"></mip-img>';
                 img.element = util.dom.create(HTML);
