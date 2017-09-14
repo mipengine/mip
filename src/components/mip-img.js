@@ -151,7 +151,7 @@ define(function (require) {
      */
     customElem.prototype.resizeHandle = function (opt) {
         var imgOffset = this.getImgOffset(opt.img);
-        css(opt.popupImg, opt.imgOffset);
+        css(opt.popupImg, imgOffset);
         naboo.animate(opt.popupImg, this.getPopupImgPos(imgOffset.width, imgOffset.height)).start();
     };
 

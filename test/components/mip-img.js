@@ -6,6 +6,18 @@ define(function (require) {
     var img = new Img();
     var cEvent = util.event.create('click');
 
+    var dispatchEvent = function (element, evt, event) {
+        if (!element) {
+            return;
+        }
+        if (document.createEventObject) {
+            return element.fireEvent('on' + event, evt)
+        } else {
+            evt.initEvent(event, true, true);
+            return !element.dispatchEvent(evt);
+        }
+    };
+
     describe('mip img', function () {
         it('firstInviewCallback', function () {
             var HTML = '<mip-img alt="mip img" popup layout="responsive" width="350" height="263" src="https://www.mipengine.org/static/img/sample_01.jpg"></mip-img>';
@@ -65,6 +77,7 @@ define(function (require) {
                 expect(popUpBg).to.not.be.undefined;
                 expect(popupImg).to.not.be.undefined;
                 expect(ele).to.not.be.undefined;
+                ele.width = 1000;
                 img.popupClickHandle({
                     popup: popup,
                     popUpBg: popUpBg,
@@ -74,5 +87,26 @@ define(function (require) {
                 done();
             }, 1000);
         });
+
+        it('resize', function () {
+            var HTML = '<mip-img alt="mip img" popup layout="responsive" width="350" height="263" src="https://www.mipengine.org/static/img/sample_01.jpg"></mip-img>';
+            img.element = util.dom.create(HTML);
+            img.element.customElement = {resourcesComplete: function () {}};
+            img.firstInviewCallback();
+
+            setTimeout(function () {
+                var popup = document.querySelector('.mip-img-popUp-wrapper');
+                var popUpBg = popup.querySelector('.mip-img-popUp-bg');
+                var popupImg = popup.querySelector('img');
+                var ele = img.element.querySelector('img');
+                expect(popUpBg).to.not.be.undefined;
+                expect(popupImg).to.not.be.undefined;
+                expect(ele).to.not.be.undefined;
+                img.resizeHandle({
+                    img: ele,
+                    popupImg: popupImg
+                });
+            }, 1000);
+        })
     });
 });
