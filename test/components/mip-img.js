@@ -17,7 +17,7 @@ define(function (require) {
         });
 
         it('img load error', function (done) {
-            var HTML = '<mip-img src="https://www.mipengine.org/static/img/sample_xx.jpg"></mip-img>';
+            var HTML = '<mip-img src="https://www.example.com/xx.jpg"></mip-img>';
             img.element = util.dom.create(HTML);
             img.element.customElement = {resourcesComplete: function () {}};
             img.firstInviewCallback();
@@ -25,7 +25,7 @@ define(function (require) {
             setTimeout(function () {
                 expect(ele.src.indexOf('mip_img_ori')).to.be.at.least(0);
                 done();
-            }, 500);
+            }, 1000);
         });
 
         it('popupHandle', function (done) {
@@ -40,7 +40,7 @@ define(function (require) {
                 var ele = document.body.querySelectorAll('.mip-img-popUp-wrapper');
                 expect(ele.length).to.be.at.least(1);
                 done();
-            }, 100);
+            }, 1000);
         });
 
         it('popup hash exist', function (done) {
@@ -51,11 +51,11 @@ define(function (require) {
                 img.firstInviewCallback();
 
                 var ele = img.element.querySelector('img');
-                img.popupHandle(cEvent, img.element, ele);
-                var ele = document.body.querySelectorAll('.mip-img-popUp-wrapper');
-                expect(ele.length).to.be.at.least(1);
+                var result = img.createPopup(ele);
+                var wrapper = document.body.querySelector('.mip-img-popUp-wrapper');
+                expect(result).to.be.equal(wrapper);
                 done();
-            }, 200);
+            }, 1000);
         });
 
         it('popupClickHandle', function (done) {
@@ -80,7 +80,7 @@ define(function (require) {
                     img: ele
                 });
                 done();
-            }, 200);
+            }, 1000);
         });
     });
 });
