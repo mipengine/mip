@@ -110,10 +110,6 @@ define(function (require) {
             expect(mipTest.customElement.count).to.equal(1);
         });
 
-        it('multi register', function () {
-            expect(document.head.getElementsByTagName('style').length).to.equal(1);
-        });
-
         it('init', function () {
             expect(mipTest.customElement.inited).to.be.true;
         });

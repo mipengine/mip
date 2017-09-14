@@ -131,7 +131,7 @@ define(function (require) {
 
     function firstInviewCallback() {
         var ele = this.element.querySelector('img');
-        if(ele && ele.length > 0){
+        if (ele) {
             return;
         }
         var _img = new Image();

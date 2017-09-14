@@ -58,7 +58,7 @@ define(function (require) {
          */
         isIframed: win !== top,
 
-        /** 
+        /**
          * Patch for iframe
          */
         patchForIframe: function () {
@@ -143,7 +143,7 @@ define(function (require) {
             window.MIP.push = function (extensions) {
                 if (extensions && typeof extensions.func == 'function') {
                     extensions.func();
-                } 
+                }
             };
             var preregisteredExtensions = window.MIP.extensions;
             if (preregisteredExtensions && preregisteredExtensions.length) {
@@ -151,7 +151,7 @@ define(function (require) {
                     var curExtensionObj = preregisteredExtensions[i];
                     if (curExtensionObj && typeof curExtensionObj.func == 'function') {
                         curExtensionObj.func();
-                    } 
+                    }
                 }
             }
         },
@@ -222,7 +222,7 @@ define(function (require) {
         /**
          * Agent all the links in iframe.
          * @private
-         */ 
+         */
          _proxyLink: function () {
             var self = this;
             var regexp = /^http/;
@@ -244,8 +244,8 @@ define(function (require) {
                     // other jump through '_top'
                     top.location.href = this.href;
                 }
-                
-            }, false); 
+
+            }, false);
         },
         /**
          * get alink postMessage data
@@ -274,4 +274,3 @@ define(function (require) {
 
     return viewer;
 });
-
