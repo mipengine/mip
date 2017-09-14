@@ -4,7 +4,6 @@ define(function (require) {
     var util = require('util');
     var Img = require('components/mip-img');
     var img = new Img();
-    var cEvent = util.event.create('click');
 
     var dispatchEvent = function (element, evt, event) {
         if (!element) {
@@ -46,6 +45,9 @@ define(function (require) {
             img.element.customElement = {resourcesComplete: function () {}};
             img.firstInviewCallback();
             var ele = img.element.querySelector('img');
+            var cEvent = {
+                stopPropagation: function () {}
+            }
             img.popupHandle(cEvent, img.element, ele);
 
             setTimeout(function () {
