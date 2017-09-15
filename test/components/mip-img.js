@@ -2,8 +2,10 @@ define(function (require) {
     'use strict';
 
     var util = require('util');
+    var viewer = require('viewer');
     var Img = require('components/mip-img');
     var img = new Img();
+    viewer.isIframed = true;
 
     var dispatchEvent = function (element, evt, event) {
         if (!element) {
@@ -109,6 +111,29 @@ define(function (require) {
                     popupImg: popupImg
                 });
             }, 1000);
+        });
+
+        it('error handle', function () {
+            var ele = new Image();
+            ele.src = 'http://www.example.com?mip_img_ori&a=1';
+            var result = img.errorHandle(ele);
+            expect(ele.src.match('mip_img_ori').length).to.be.equal(1);
+
+            ele.src = 'http://www.example.com?a=1&mip_img_ori';
+            var result = img.errorHandle(ele);
+            expect(ele.src.match('mip_img_ori').length).to.be.equal(1);
+
+            ele.src = 'http://www.example.com?a=1&mip_img_ori&b=2';
+            var result = img.errorHandle(ele);
+            expect(ele.src.match('mip_img_ori').length).to.be.equal(1);
+
+            ele.src = 'http://www.example.com';
+            var result = img.errorHandle(ele);
+            expect(ele.src.match('mip_img_ori').length).to.be.equal(1);
+        });
+
+        it('has resource', function () {
+            expect(img.hasResources()).to.be.true;
         })
     });
 });

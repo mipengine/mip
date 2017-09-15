@@ -78,6 +78,11 @@ define(function (require) {
         }
         var ele = document.createElement('a');
         ele.href = img.src;
+
+        if (/[\?&]mip_img_ori[&]*/.test(ele.search)) {
+            return;
+        }
+
         ele.search = ele.search ? ele.search : '?';
         ele.search += (/&$/.test(ele.search) ? '' : '&') + 'mip_img_ori';
         img.src = ele.href;
