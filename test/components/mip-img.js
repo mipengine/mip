@@ -48,6 +48,7 @@ define(function (require) {
             var cEvent = {
                 stopPropagation: function () {}
             }
+            ele.width = 1000;
             img.popupHandle(cEvent, img.element, ele);
 
             setTimeout(function () {
@@ -79,7 +80,6 @@ define(function (require) {
                 expect(popUpBg).to.not.be.undefined;
                 expect(popupImg).to.not.be.undefined;
                 expect(ele).to.not.be.undefined;
-                ele.width = 1000;
                 img.popupClickHandle({
                     popup: popup,
                     popUpBg: popUpBg,
