@@ -24,12 +24,12 @@ define(function (require) {
 
     describe('viewer', function () {
         it('patchForIframe', function () {
-            document.body.classList.remove('mip-normal-scroll');
+            document.body.classList.remove('mip-i-android-scroll');
             util.platform.needSpecialScroll = true;
             document.body.style.cssText = '';
             document.body.style.margin = 0;
             function normalScroll() {
-                var hasClass = document.body.className.match('mip-normal-scroll');
+                var hasClass = document.body.className.match('mip-i-android-scroll');
                 return !!hasClass;
             };
             viewer.patchForIframe();
