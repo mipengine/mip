@@ -23,7 +23,6 @@ define(function (require) {
         'poster',
         'width'
     ];
-    var windowInIframe = viewer.isIframed;
 
     customElem.prototype.firstInviewCallback = function () {
         this.attributes = getAttributeSet(this.element.attributes);
@@ -36,9 +35,9 @@ define(function (require) {
         // 页面https(在iframe里) + 视频http    = 跳出播放
         // 页面https(其它)   + 视频http    = 当前页播放（非mip相关页）
         // 页面http          + 视频任意    = 当前页播放
-        
+
         // 如果非iframe嵌套时，应该与协议无关 || 如果src为https ||  窗口内 + video http + 窗口http
-        if (!windowInIframe || videoProHttps || (windowInIframe && !videoProHttps && !windowProHttps)) {
+        if (!viewer.isIframed || videoProHttps || (viewer.isIframed && !videoProHttps && !windowProHttps)) {
             this.videoElement = this.renderInView();
         }
         else {
@@ -71,10 +70,11 @@ define(function (require) {
 
     // Render the `<a>` element with poster and play btn, and append to `this.element`
     customElem.prototype.renderPlayElsewhere = function () {
+        var self = this;
         var videoEl = document.createElement('div');
         videoEl.setAttribute('class', 'mip-video-poster');
-        if (this.attributes.poster) {
-            videoEl.style.backgroundImage = 'url(' + this.attributes.poster + ')';
+        if (self.attributes.poster) {
+            videoEl.style.backgroundImage = 'url(' + self.attributes.poster + ')';
             videoEl.style.backgroundSize = 'cover';
         }
         else {
@@ -84,21 +84,29 @@ define(function (require) {
         var playBtn = document.createElement('span');
         playBtn.setAttribute('class', 'mip-video-playbtn');
         videoEl.appendChild(playBtn);
-        videoEl.dataset.videoSrc = this.attributes.src;
-        videoEl.dataset.videoPoster = this.attributes.poster;
-        videoEl.addEventListener('click', sendVideoMessage, false);
-
-        function sendVideoMessage() {
-            if (windowInIframe) {
-                // mip_video_jump 为写在外层的承接方法
-                viewer.sendMessage('mip_video_jump', {
-                    poster: videoEl.dataset.videoPoster,
-                    src: videoEl.dataset.videoSrc
-                });
-            }
-        }
-        this.element.appendChild(videoEl);
+        videoEl.dataset.videoSrc = self.attributes.src;
+        videoEl.dataset.videoPoster = self.attributes.poster;
+        videoEl.addEventListener('click', function () {
+            self.sendVideoMessage(videoEl);
+        }, false);
+        self.element.appendChild(videoEl);
         return videoEl;
+    };
+
+    /**
+     * Send message
+     *
+     * @param {NamedNodeMap} attributes the attribute list, spec: https://dom.spec.whatwg.org/#interface-namednodemap
+     * @return {Object} the attribute set, legacy:
+     */
+    customElem.prototype.sendVideoMessage = function (videoEl) {
+        if (viewer.isIframed) {
+            // mip_video_jump 为写在外层的承接方法
+            viewer.sendMessage('mip_video_jump', {
+                poster: videoEl.dataset.videoPoster,
+                src: videoEl.dataset.videoSrc
+            });
+        }
     };
 
     /**
