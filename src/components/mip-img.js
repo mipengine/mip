@@ -1,6 +1,6 @@
 /**
  * @file MIP Image extension
- * @author xxx
+ * @author wangpei07
  * @modify wupeng10 2017-9-14 Refactoring code and add unit test
  */
 define(function (require) {
