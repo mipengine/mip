@@ -21,8 +21,8 @@ define(function (require) {
 
         it('getElementOffset', function () {
             var style = getComputedStyle(docEle);
-            expect(rect.getElementOffset(docEle).left).to.be.above(0);
-            expect(rect.getElementOffset(docEle).top).to.be.above(0);
+            expect(rect.getElementOffset(docEle).left).to.equal(0);
+            expect(rect.getElementOffset(docEle).top).to.equal(0);
             expect(rect.getElementOffset(docEle).width).to.be.least(Math.round(parseInt(style.width, 10)));
             expect(rect.getElementOffset(docEle).height).to.be.least(Math.round(parseInt(style.height, 10)));
         });
