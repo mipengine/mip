@@ -8,6 +8,15 @@ define(function (require) {
     'use strict';
 
     var fn = require('./utils/fn');
+    var dom = require('./dom/dom');
+    var event = require('./dom/event');
+    var rect = require('./dom/rect');
+    var css = require('./dom/css');
+    var gesture = require('./utils/gesture');
+    var eventEmitter = require('./utils/event-emitter');
+    var platform = require('./utils/platform').start();
+    var customStorage = require('./utils/customStorage');
+    var naboo = require('naboo');
 
     /**
      * Exchange a url to cache url.
@@ -72,14 +81,14 @@ define(function (require) {
         parseCacheUrl: parseCacheUrl,
         makeCacheUrl: makeCacheUrl,
         fn: fn,
-        dom: require('./dom/dom'),
-        event: require('./dom/event'),
-        rect: require('./dom/rect'),
-        css: require('./dom/css'),
-        Gesture: require('./utils/gesture'),
-        EventEmitter: require('./utils/event-emitter'),
-        platform: require('./utils/platform').start(),
-        customStorage: require('./utils/customStorage'),
-        naboo: require('naboo')
+        dom: dom,
+        event: event,
+        rect: rect,
+        css: css,
+        Gesture: gesture,
+        EventEmitter: eventEmitter,
+        platform: platform,
+        customStorage: customStorage,
+        naboo: naboo
     };
 });
