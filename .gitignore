@@ -9,3 +9,6 @@ Thumbs.db
 *.swp
 *.gz
 *.~
+
+/coverage
+/src/less/mip.css
