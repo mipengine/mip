@@ -30,7 +30,7 @@
   },
   "scripts": {
     "build": "node tools/build.js",
-    "build-mip-less": "lessc src/less/mip.less src/less/mip.css",
+    "build-mip-less": "lessc src/less/mip.less dist/mip.css",
     "dev": "node tools/build.js dev",
     "pretest": "npm run build-mip-less",
     "test": "karma start ./scripts/unit/karma.unit.conf.js --reporters mocha",

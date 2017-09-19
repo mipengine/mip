@@ -34,7 +34,7 @@ module.exports = {
             pattern: 'test/**/*.js',
             included: false
         },
-        'src/less/mip.css'
+        'dist/mip.css'
     ],
 
 
