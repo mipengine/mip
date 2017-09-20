@@ -58,12 +58,15 @@ module.exports = {
     // },
 
     coverageReporter: {
-        // specify a common output directory
-        dir: './',
+        dir: './dist/coverage',
         reporters: [
             {
-                type: 'lcov',
-                subdir: 'coverage'
+                type: 'html'
+            }, {
+                type: 'lcovonly',
+
+                // only generate a /dist/coverage/icov.info
+                subdir: '../coverage/'
             },
             {
                 type: 'text-summary'
