@@ -15,4 +15,4 @@ before_script:
 script:
   - npm run test:co && npm run test:sl
 after_script:
-  - npm install coveralls && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
+  - npm install coveralls && cat ./dist/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./dist/coverage
