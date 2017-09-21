@@ -5,6 +5,7 @@ define(function (require) {
     var viewer = require('viewer');
     var Video = require('components/mip-video');
     var video = new Video();
+    viewer.isIframed = true;
 
     describe('mip video', function () {
         it('firstInviewCallback', function () {
@@ -51,6 +52,8 @@ define(function (require) {
             video.firstInviewCallback();
             video.renderPlayElsewhere();
             var ele = video.element.querySelectorAll('.mip-video-poster');
+            ele.dataset = {};
+            video.sendVideoMessage(ele)
             expect(ele.length).to.be.at.least(1);
         });
     });
