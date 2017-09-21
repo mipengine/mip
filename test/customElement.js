@@ -9,6 +9,7 @@
 define(function (require) {
     'use strict';
 
+    var $ = require('zepto');
     var customElement = require('customElement');
     var registerElement = require('element');
     var Created = customElement.create();
@@ -22,6 +23,7 @@ define(function (require) {
 
         afterEach(function () {
             cElement = null;
+            $('.mip-element').remove();
         });
 
         it('default method validation', function () {
@@ -70,7 +72,7 @@ define(function (require) {
             Element.prototype.init = sinon.spy();
 
             var initElement = new Element();
-            expect(initElement.init).to.have.been.called;
+            expect(initElement.init).to.have.been.calledOnce;
         });
 
         it('#applyFillContent', function () {
@@ -127,10 +129,19 @@ define(function (require) {
                 ], clone);
 
                 expect(result).to.deep.equal(clone, 'the return value must be element');
-
                 expect(clone.getAttribute('data-name')).to.equal('MIP');
                 expect(clone.getAttribute('data-version')).to.equal('1.0');
                 expect(!clone.getAttribute('data-desc')).to.be.true;
+
+
+                // test object
+                var data = {};
+                var output = this.expendAttr([
+                    'data-name'
+                ], data);
+
+                expect(output).to.deep.equal(data);
+                expect(output['data-name']).to.equal('MIP');
 
                 done();
             };
