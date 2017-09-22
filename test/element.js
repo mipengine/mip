@@ -1,6 +1,6 @@
 /**
  * @file element.js test case
- * @author fe.xiaowu@gmail.com
+ * @author xuexb <fe.xiaowu@gmail.com>
  */
 
 /* global sinon */

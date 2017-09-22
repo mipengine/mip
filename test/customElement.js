@@ -1,6 +1,6 @@
 /**
  * @file customElement test case
- * @author qijian, xieyaowu
+ * @author xuexb <fe.xiaowu@gmail.com>
  */
 
 /* global sinon */
