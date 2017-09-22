@@ -21,13 +21,15 @@ define(function (require) {
             performance.start();
 
             dom.waitDocumentReady(function () {
-                expect(performance.getTiming()).to.include.all.keys([
-                    'MIPFirstScreen',
-                    'MIPStart',
-                    'MIPDomContentLoaded'
-                ]);
+                setTimeout(function () {
+                    expect(performance.getTiming()).to.include.all.keys([
+                        'MIPFirstScreen',
+                        'MIPStart',
+                        'MIPDomContentLoaded'
+                    ]);
 
-                done();
+                    done();
+                }, 500);
             });
         });
 
