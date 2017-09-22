@@ -1,6 +1,6 @@
 /**
  * @file viewer test case
- * @author fe.xiaowu@gmail.com
+ * @author xuexb <fe.xiaowu@gmail.com>
  */
 
 /* global sinon, MIP */
@@ -480,9 +480,7 @@ define(function (require) {
 
                 // Let each test before the top of the top
                 viewport.setScrollTop(0);
-                setTimeout(function () {
-                    done();
-                });
+                setTimeout(done);
             });
             afterEach(function () {
                 platform.needSpecialScroll = old;

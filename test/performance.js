@@ -1,6 +1,6 @@
 /**
  * @file performance test case
- * @author xieyaowu
+ * @author xuexb <fe.xiaowu@gmail.com>
  */
 
 /* eslint-disable max-nested-callbacks */
