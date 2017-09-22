@@ -472,73 +472,112 @@ define(function (require) {
             });
         });
 
-        // describe('._viewportScroll', function () {
-        //     var old;
+        describe('._viewportScroll', function () {
+            var old;
 
-        //     beforeEach(function () {
-        //         old = platform.needSpecialScroll;
-        //     });
-        //     afterEach(function () {
-        //         platform.needSpecialScroll = old;
-        //     });
+            beforeEach(function (done) {
+                old = platform.needSpecialScroll;
 
-        //     it('platform.needSpecialScroll', function () {
-        //         spy = sinon.spy(document.body, 'addEventListener');
+                // Let each test before the top of the top
+                viewport.setScrollTop(0);
+                setTimeout(function () {
+                    done();
+                });
+            });
+            afterEach(function () {
+                platform.needSpecialScroll = old;
+            });
 
-        //         platform.needSpecialScroll = true;
-        //         viewer._viewportScroll();
+            it('platform.needSpecialScroll', function () {
+                spy = sinon.spy(document.body, 'addEventListener');
 
-        //         expect(spy).to.have.been.calledThrice;
-        //     });
+                platform.needSpecialScroll = true;
+                viewer._viewportScroll();
 
-        //     it('platform.needSpecialScroll is false', function () {
-        //         spy = sinon.spy(window, 'addEventListener');
+                expect(spy).to.have.been.calledThrice;
+            });
 
-        //         platform.needSpecialScroll = false;
-        //         viewer._viewportScroll();
+            it('platform.needSpecialScroll is false', function () {
+                spy = sinon.spy(window, 'addEventListener');
 
-        //         expect(spy).to.have.been.calledThrice;
-        //     });
+                platform.needSpecialScroll = false;
+                viewer._viewportScroll();
 
-        //     it('bind event', function () {
-        //         platform.needSpecialScroll = false;
-        //         spy = sinon.spy(window, 'addEventListener');
-        //         viewer._viewportScroll();
+                expect(spy).to.have.been.calledThrice;
+            });
 
-        //         expect(spy).to.have.been.calledThrice;
-        //         expect(spy.getCall(0).args[0]).to.equal('touchstart');
-        //         expect(spy.getCall(0).args[1]).to.not.throw();
-        //         expect(spy.getCall(1).args[0]).to.equal('touchmove');
-        //         expect(spy.getCall(1).args[1]).to.not.throw();
-        //         expect(spy.getCall(2).args[0]).to.equal('touchend');
-        //         expect(spy.getCall(2).args[1]).to.not.throw();
-        //     });
+            it('bind event', function () {
+                platform.needSpecialScroll = false;
+                spy = sinon.spy(window, 'addEventListener');
+                viewer._viewportScroll();
 
-        //     it('trigger down', function () {
-        //         var message = sinon.spy(viewer, 'sendMessage');
-        //         platform.needSpecialScroll = false;
-        //         spy = sinon.spy(window, 'addEventListener');
-        //         viewer._viewportScroll();
-        //         sinon.stub(viewport, 'getScrollTop', function () {
-        //             return 20;
-        //         });
-        //         sinon.stub(viewport, 'getScrollHeight', function () {
-        //             return 100;
-        //         });
+                expect(spy).to.have.been.calledThrice;
+                expect(spy.getCall(0).args[0]).to.equal('touchstart');
+                expect(spy.getCall(0).args[1]).to.not.throw();
+                expect(spy.getCall(1).args[0]).to.equal('touchmove');
+                expect(spy.getCall(1).args[1]).to.not.throw();
+                expect(spy.getCall(2).args[0]).to.equal('touchend');
+                expect(spy.getCall(2).args[1]).to.not.throw();
+            });
 
-        //         // exec
-        //         spy.getCall(2).args[1]();
+            it('trigger down', function () {
+                var message = sinon.spy(viewer, 'sendMessage');
+                platform.needSpecialScroll = false;
+                spy = sinon.spy(window, 'addEventListener');
+                viewer._viewportScroll();
+                sinon.stub(viewport, 'getScrollTop', function () {
+                    return 20;
+                });
+                sinon.stub(viewport, 'getScrollHeight', function () {
+                    return 100;
+                });
 
-        //         viewport.getScrollTop.restore();
-        //         viewport.getScrollHeight.restore();
-        //         message.restore();
+                // exec
+                spy.getCall(2).args[1]();
 
-        //         expect(message).to.have.been.calledOnce;
-        //         expect(message).to.deep.have.been.calledWith('mipscroll');
-        //         expect(message.getCall(0).args[1].direct).to.be.a('number');
-        //         expect(message.getCall(0).args[1].dist).to.be.a('number');
-        //     });
-        // });
+                viewport.getScrollTop.restore();
+                viewport.getScrollHeight.restore();
+                message.restore();
+
+                expect(message).to.have.been.calledOnce;
+                expect(message).to.deep.have.been.calledWith('mipscroll');
+                expect(message.getCall(0).args[1].direct).to.be.a('number');
+                expect(message.getCall(0).args[1].dist).to.be.a('number');
+            });
+
+            it('trigger up', function () {
+                var message = sinon.spy(viewer, 'sendMessage');
+                platform.needSpecialScroll = false;
+                spy = sinon.spy(window, 'addEventListener');
+                viewer._viewportScroll();
+
+                var getScrollTop = sinon.stub(viewport, 'getScrollTop');
+                var getScrollHeight = sinon.stub(viewport, 'getScrollHeight');
+
+                // exec down
+                getScrollTop.returns(50);
+                getScrollHeight.returns(100);
+                spy.getCall(2).args[1]();
+
+                // exec down
+                getScrollTop.returns(50);
+                getScrollHeight.returns(100);
+                spy.getCall(2).args[1]();
+
+                // exec up
+                getScrollTop.returns(20);
+                getScrollHeight.returns(100);
+                spy.getCall(2).args[1]();
+
+                getScrollTop.restore();
+                getScrollHeight.restore();
+                message.restore();
+
+                expect(message).to.deep.have.been.calledWith('mipscroll');
+                expect(message.getCall(1).args[1].direct).to.be.a('number');
+                expect(message.getCall(1).args[1].dist).to.be.a('number');
+            });
+        });
     });
 });
 /* eslint-enable max-nested-callbacks */
