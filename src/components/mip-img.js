@@ -140,8 +140,8 @@ define(function (require) {
         if (/[\?&]mip_img_ori[&]*/.test(ele.search)) {
             return;
         }
-        var search = ele.search ? ele.search : '?';
-        ele.search += (/[\?&]$/.test(search) ? '' : '&') + 'mip_img_ori';
+        var search = ele.search || '?';
+        ele.search += (/[\?&]$/.test(search) || '&') + 'mip_img_ori';
         img.src = ele.href;
         img.removeEventListener('error', errorHandle);
     };
