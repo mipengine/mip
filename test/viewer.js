@@ -24,22 +24,19 @@ define(function (require) {
 
     describe('viewer', function () {
         it('patchForIframe', function () {
-            document.body.classList.remove('mip-i-android-scroll');
-            util.platform.needSpecialScroll = true;
+            util.platform.needSpecialScroll = false;
             document.body.style.cssText = '';
             document.body.style.margin = 0;
-            function normalScroll() {
-                var hasClass = document.body.className.match('mip-i-android-scroll');
-                return !!hasClass;
+            function checkHeight() {
+                return document.body.style.height === '100%';
             };
             viewer.patchForIframe();
-            var needSpecialhasNormalClass = normalScroll();
-
-            util.platform.needSpecialScroll = false;
+            var initedHeightEmpty = !checkHeight();
+            util.platform.needSpecialScroll = true;
             viewer.patchForIframe();
 
-            expect(needSpecialhasNormalClass).to.be.false;
-            expect(normalScroll()).to.be.true;
+            expect(initedHeightEmpty).to.be.true;
+            expect(checkHeight()).to.be.true;
         });
 
         it('needBackReload', function () {
