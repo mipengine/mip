@@ -1,7 +1,7 @@
 # mip-video
 
 mip-video 用来支持在 mip 中增加视频内容，是HTML `<video>`的直接包装。
-功能与兼容性与HTML5`<video>`一致。
+功能和兼容性与HTML5`<video>`一致。
 
 标题|内容
 ----|----
@@ -46,7 +46,7 @@ mip-video 用来支持在 mip 中增加视频内容，是HTML `<video>`的直接
 ## 属性
 
 下面是几个重要的`<mip-video>`属性。事实上，所有HTML5 `<video>`属性都是可用的，
-对此可参考MDN文档：<https://developer.mozilla.org/en-US/docs/Web/HTML/Element/mip-video>
+对此可参考MDN文档：<https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video>
 
 ### src
 
