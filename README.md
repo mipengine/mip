@@ -78,7 +78,6 @@ Before adding a pull request, make sure:
 
 
 ## License
-
 [MIT](./LICENSE)
 
 Copyright (c) 2015-present, Baidu Inc.
