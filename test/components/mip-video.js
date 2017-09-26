@@ -64,7 +64,7 @@ define(function (require) {
             video.element = util.dom.create(HTML);
             video.firstInviewCallback();
             video.renderPlayElsewhere();
-            // playelsewhere 时， 不创建video标签
+            // playelsewhere 时，不创建video标签
             var ele = video.element.querySelectorAll('video');
             expect(ele.length).to.be.false;
         });
