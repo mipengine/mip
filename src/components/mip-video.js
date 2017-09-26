@@ -30,12 +30,12 @@ define(function (require) {
         this.sourceDoms = this.element.querySelectorAll('source');
         this.src = this.attributes.src;
 
-        // 窗口是否是https
+        // if window is https
         var windowProHttps = !!window.location.protocol.match(/^https:/);
-        // 判断video源文件是否https
+        // if video source is https
         var sourceIsHttps = true;
-        if(!this.sourceDoms.length) {
-            var sourceIsHttps = false;
+        if (!this.sourceDoms.length) {
+            sourceIsHttps = false;
         }
         Array.prototype.slice.apply(this.sourceDoms).forEach(function (node) {
             if (!node.src.match(/^https:|^\/\//)) {
@@ -45,16 +45,15 @@ define(function (require) {
         var videoProHttps = (this.src && this.src.match(/^https:|^\/\//))
                             || (this.sourceDoms && sourceIsHttps);
 
-        // 页面https         + 视频https  = 当前页播放
-        // 页面https(在iframe里) + 视频http    = 跳出播放
-        // 页面https(其它)   + 视频http    = 当前页播放（非mip相关页）
-        // 页面http          + 视频任意    = 当前页播放
-        // 如果非iframe嵌套时，应该与协议无关 || 如果src为https ||  窗口内 + video http + 窗口http
+        // page ishttps         + video is https    = renderInView
+        // page ishttps(in iframe) + video is http    = renderPlayElsewhere
+        // page ishttps(else)   + video is http     = renderInView（not mip）
+        // page ishttp          + random video      = renderInView
+        // page not iframe || video src is https ||  video http + page http
         if (!windowInIframe || videoProHttps || (windowInIframe && !videoProHttps && !windowProHttps)) {
             this.videoElement = this.renderInView();
         }
         else {
-            // 处理在窗口内，视频或者窗口非https的情况
             this.videoElement = this.renderPlayElsewhere();
         }
         this.applyFillContent(this.videoElement, true);
@@ -106,17 +105,16 @@ define(function (require) {
             sourceList.push(obj);
         });
 
-        
-        // 如果代码
         if (!sourceList.length) {
             urlSrc = videoEl.dataset.videoSrc;
-        } else {
+        }
+        else {
             urlSrc = JSON.stringify([videoEl.dataset.videoSrc, sourceList]);
         }
 
         function sendVideoMessage() {
             if (windowInIframe) {
-                // mip_video_jump 为写在外层的承接方法
+                // mip_video_jump is written outside iframe
                 viewer.sendMessage('mip_video_jump', {
                     poster: videoEl.dataset.videoPoster,
                     src: urlSrc
