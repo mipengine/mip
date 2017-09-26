@@ -90,5 +90,14 @@ module.exports = {
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
     // 脚本调用请设为 true
-    singleRun: true
+    singleRun: true,
+
+    // browser time out
+    browserDisconnectTimeout: 10000,
+
+    // process kill time
+    processKillTimeout: 10000,
+
+    // browser no activity time
+    browserNoActivityTimeout: 300000
 }
