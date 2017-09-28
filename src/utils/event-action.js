@@ -28,7 +28,6 @@ define(function (require) {
      */
     var OPTION_KEYS = ['executeEventAction', 'parse', 'checkTarget', 'getTarget', 'attr'];
 
-
     /**
      * MIP does not support external JavaScript, so we provide EventAction to trigger events between elements.
      * TODO: refactor
@@ -37,6 +36,7 @@ define(function (require) {
      */
     function EventAction(opt) {
         opt && fn.extend(this, fn.pick(opt, OPTION_KEYS));
+        this.installAction();
     }
 
     EventAction.prototype = {
@@ -45,6 +45,42 @@ define(function (require) {
          * @type {string}
          */
         attr: 'on',
+
+        /**
+         * Attribute name to trigger events.
+         * @type {string}
+         */
+        globalTargets: {},
+
+        /**
+         * Install global action. such as on=tap:MIP.setData
+         */
+        installAction: function () {
+            this.addGlobalTarget('MIP', this.handleMIPTarget);
+        },
+
+        /**
+         * Handle global action
+         *
+         * @param {Object} action event action
+         */
+        handleMIPTarget: function (action) {
+            if (!action) {return};
+            switch (action.handler) {
+                case 'setData':
+                    MIP.setData(action.arg);
+            }
+        },
+
+        /**
+         * Add global target in order to event
+         * @param {string} name
+         * @param {Function} handler
+         */
+        addGlobalTarget: function (name, handler) {
+            if (!name) {return;}
+            this.globalTargets[name] = handler;
+        },
 
         /**
          * Execute the event-action.
@@ -69,10 +105,10 @@ define(function (require) {
                 target = dom.closest(target, attrSelector);
             } while (target);
         },
-        
+
         /**
          * Ensure the target element is a MIPElement
-         * @param {HTMLElement} target 
+         * @param {HTMLElement} target
          * @return {boolean}
          */
         checkTarget: function (target) {
@@ -105,6 +141,11 @@ define(function (require) {
         _execute: function (actions) {
             for (var i = 0; i < actions.length; i++) {
                 var action = actions[i];
+                var globalTarget = this.globalTargets[action.id];
+                if (globalTarget) {
+                    return globalTarget(action);
+                }
+
                 var target = this.getTarget(action.id);
                 if (this.checkTarget(target)) {
                     this.executeEventAction(action, target);

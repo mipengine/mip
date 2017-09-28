@@ -6,6 +6,7 @@
  */
 define(function (require) {
     var customElem = require('customElement').create();
+    var viewer = require('viewer');
     var carouselParas = {
         boxClass: 'mip-carousel-container',
         wrapBoxClass: 'mip-carousel-wrapper',
@@ -200,10 +201,14 @@ define(function (require) {
         });
 
         wrapBox.style.width = childNum * 100 + '%';
-
         carouselBox.appendChild(wrapBox);
         ele.appendChild(carouselBox);
 
+
+        var transitionend = ((onwebkittransitionend in window) && 'webkittransitionend') || 'transitionend';
+        wrapBox.addEventListener(transitionend, function (event) {
+            viewer.eventAction.execute('slideChange', event.target, event);
+        });
 
         // 初始渲染时应该改变位置到第一张图
         var initPostion = -eleWidth;
