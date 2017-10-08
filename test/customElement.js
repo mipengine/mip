@@ -26,7 +26,7 @@ define(function (require) {
             $('.mip-element').remove();
         });
 
-        it('default method validation', function () {
+        describe('default method validation', function () {
             [
                 'applyFillContent',
                 'createdCallback',
@@ -42,28 +42,9 @@ define(function (require) {
                 'executeEventAction',
                 'resourcesComplete'
             ].forEach(function (key) {
-                expect(cElement[key]).to.be.a('function', key + ' must be a method');
-            });
-
-            [
-                'createdCallback',
-                'attachedCallback',
-                'detachedCallback',
-                'attributeChangedCallback',
-                'firstInviewCallback',
-                'viewportCallback',
-                'build'
-            ].forEach(function (key) {
-                expect(cElement[key]).to.not.throw();
-            });
-        });
-
-        it('the default return value for prerenderAllowed and hasResources', function () {
-            [
-                'prerenderAllowed',
-                'hasResources'
-            ].forEach(function (key) {
-                expect(cElement[key]()).to.equal(false, key + '() the return value must be false');
+                it('.' + key, function () {
+                    expect(cElement[key]).to.be.a('function');
+                });
             });
         });
 
@@ -73,6 +54,14 @@ define(function (require) {
 
             var initElement = new Element();
             expect(initElement.init).to.have.been.calledOnce;
+        });
+
+        it('#prerenderAllowed', function () {
+            expect(cElement.prerenderAllowed()).to.equal(false, 'prerenderAllowed() the return value must be false');
+        });
+
+        it('#hasResources', function () {
+            expect(cElement.hasResources()).to.equal(false, 'hasResources() the return value must be false');
         });
 
         it('#applyFillContent', function () {
