@@ -12,6 +12,8 @@ define(function (require) {
     var Resources = require('resources');
     var viewport = require('viewport');
     var rect = require('dom/rect');
+    var customElement = require('customElement');
+    var registerElement = require('element');
 
     describe('resources', function () {
         var app;
@@ -23,6 +25,11 @@ define(function (require) {
         // reset
         afterEach(function () {
             app._gesture.cleanup();
+            app.getResourcesList().forEach(function (element) {
+                app.remove(element);
+            });
+            app._viewport.off('changed resize', app.updateState);
+            app._gesture.off('swipe', app.updateState);
             app = null;
         });
 
@@ -91,22 +98,18 @@ define(function (require) {
             });
         });
 
-        describe('#add', function () {
-            it('build call', function (done) {
-                app.add({
-                    build: done
-                });
-            });
+        it('#add', function (done) {
+            var MipTestElement = customElement.create();
+            MipTestElement.prototype.build = done;
+            MipTestElement.prototype.prerenderAllowed = function () {
+                return true;
+            };
 
-            it('updateState call', function () {
-                var spy = sinon.spy(app, 'updateState');
-                app.add({
-                    build: function () {}
-                });
+            registerElement('mip-test-resources', MipTestElement);
 
-                expect(spy).to.have.been.calledOnce;
-                expect(spy).to.have.been.calledWith();
-            });
+            var node = document.createElement('mip-test-resources');
+            document.body.appendChild(node);
+            document.body.removeChild(node);
         });
 
         describe('#remove', function () {
@@ -119,17 +122,6 @@ define(function (require) {
             //     app.add(data);
             //     expect(app.remove(data)).to.be.true;
             // });
-
-            it('return true', function () {
-                var data = {
-                    build: function () {}
-                };
-
-                // bug
-                app.add(data);
-                app.add(data);
-                expect(app.remove(data)).to.be.true;
-            });
 
             it('element', function () {
                 /* eslint-disable fecs-camelcase */
