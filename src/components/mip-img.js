@@ -141,7 +141,7 @@ define(function (require) {
             return;
         }
         var search = ele.search || '?';
-        ele.search += (/[\?&]$/.test(search) || '&') + 'mip_img_ori=1';
+        ele.search += (/[\?&]$/.test(search) ? '' : '&') + 'mip_img_ori=1';
         img.src = ele.href;
         img.removeEventListener('error', errorHandle);
     };
