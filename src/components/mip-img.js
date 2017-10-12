@@ -1,8 +1,3 @@
-/**
- * @file mip-img 图片组件
- * @author wangpei07
- */
-
 define(function (require) {
     'use strict';
 
@@ -131,7 +126,7 @@ define(function (require) {
      *
      * @param {HTMLElement} img image element
      */
-    function errorHandle (img) {
+    function errorHandle(img) {
         if (!viewer.isIframed) {
             return;
         }
@@ -144,7 +139,7 @@ define(function (require) {
         ele.search += (/[\?&]$/.test(search) ? '' : '&') + 'mip_img_ori=1';
         img.src = ele.href;
         img.removeEventListener('error', errorHandle);
-    };
+    }
 
     function firstInviewCallback() {
         var ele = this.element.querySelector('img');
