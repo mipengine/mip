@@ -122,11 +122,28 @@ define(function (require) {
 
         // Http header accept has 'image/webp', But browser don't support
         // Set image visibility hidden in order to hidden extra style
-        img.addEventListener('error', function () {
-            if (viewer.isIframed) {
-                element.classList.add('mip-hidden');
-            }
-        });
+        var errHandle = errorHandle.bind(null, img);
+        img.addEventListener('error', errHandle, false);
+    };
+
+    /**
+     * Trigger when image load error
+     *
+     * @param {HTMLElement} img image element
+     */
+    function errorHandle (img) {
+        if (!viewer.isIframed) {
+            return;
+        }
+        var ele = document.createElement('a');
+        ele.href = img.src;
+        if (/[\?&]mip_img_ori[&]*/.test(ele.search)) {
+            return;
+        }
+        var search = ele.search || '?';
+        ele.search += (/[\?&]$/.test(search) ? '' : '&') + 'mip_img_ori=1';
+        img.src = ele.href;
+        img.removeEventListener('error', errorHandle);
     };
 
     function firstInviewCallback() {
