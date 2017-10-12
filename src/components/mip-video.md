@@ -45,8 +45,6 @@ mip-video 用来支持在 mip 中增加视频内容，是HTML `<video>`的直接
 
 ### 使用多视频源 source
 
-对于不支持HTML5`<video>`的环境，`<mip-video>`同样可以显示提示信息。`<mip-video>`内部的DOM（`<source>`除外）将会在不支持`<video>`标签的浏览器中显示。
-
 ```html
 <mip-video controls loop muted
   layout="responsive" width="640" height="360">
