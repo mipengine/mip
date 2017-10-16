@@ -1,3 +1,9 @@
+/**
+ *
+ * @file fixed element
+ * @author qijian@baidu.com
+ * @modify lilangbo@baidu.com 2017-06-06 upgrade to support asycn
+ */
 define(function (require) {
     'use strict';
 
@@ -5,7 +11,7 @@ define(function (require) {
      * Save documentElement.
      * @inner
      * @type {Object}
-     */    
+     */
     var docElem = document.documentElement;
 
     /**
@@ -22,12 +28,13 @@ define(function (require) {
 
     /**
      * Support for matches. Check whether a element matches a selector.
-     * @param {HTMLElement} element
-     * @param {string} selector
+     *
+     * @param {HTMLElement} element target element
+     * @param {string} selector element selector
      * @return {boolean}
      */
     function matches(element, selector) {
-        if (!element || element.nodeType != 1) {
+        if (!element || element.nodeType !== 1) {
             return false;
         }
         return nativeMatches.call(element, selector);
@@ -35,8 +42,9 @@ define(function (require) {
 
     /**
      * Support for closest. Find the closest parent node that matches the selector.
-     * @param {HTMLElement} element
-     * @param {string} selector
+     *
+     * @param {HTMLElement} element element
+     * @param {string} selector selector
      * @return {?HTMLElement}
      */
     var closest = docElem.closest
@@ -49,14 +57,15 @@ define(function (require) {
                         return element;
                     }
                     element = element.parentNode;
-                };
+                }
                 return null;
             };
 
     /**
      * Support for contains.
-     * @param {HTMLElement} element
-     * @param {HTMLElement} child
+     *
+     * @param {HTMLElement} element parent node
+     * @param {HTMLElement} child child node
      * @return {boolean}
      */
     var contains = docElem.contains
@@ -64,20 +73,24 @@ define(function (require) {
                 return element && element.contains(child);
             }
             : function (element, child) {
+                if (element === document) {
+                    element = document.documentElement || document.body.parentElement;
+                }
                 while (child) {
                     if (element === child) {
                         return true;
                     }
                     child = child.parentElement;
-                };
+                }
                 return false;
             };
 
     /**
      * Find the nearest element that matches the selector from current element to target element.
-     * @param {HTMLElement} element
-     * @param {string} selector
-     * @param {HTMLElement} target
+     *
+     * @param {HTMLElement} element element
+     * @param {string} selector element selector
+     * @param {HTMLElement} target target element
      * @return {?HTMLElement}
      */
     function closestTo(element, selector, target) {
@@ -94,6 +107,7 @@ define(function (require) {
 
     /**
      * Create a element by string
+     *
      * @param {string} str Html string
      * @return {HTMLElement}
      */
@@ -104,15 +118,60 @@ define(function (require) {
         }
         var children = Array.prototype.slice.call(createTmpElement.children);
         createTmpElement.innerHTML = '';
-        return children.length > 1 ? children : children[0]; 
+        return children.length > 1 ? children : children[0];
     }
 
+
+    /**
+     * Waits until the Document is ready. Then the
+     * callback is executed.
+     *
+     * @param {Function} cb callback
+     */
+    function waitDocumentReady(cb) {
+        if (!!document.body) {
+            cb();
+            return;
+        }
+        var interval = window.setInterval(function () {
+            if (!!document.body) {
+                window.clearInterval(interval);
+                cb();
+            }
+        }, 5);
+    }
+
+    /**
+     * Insert dom list to a node
+     *
+     * @param  {HTMLElement} parent the node will be inserted
+     * @param {Array} children node list which will insert into parent
+     */
+    function insert(parent, children) {
+        if (!parent || !children) {
+            return;
+        }
+        var nodes = Array.prototype.slice.call(children);
+        if (nodes.length === 0) {
+            nodes.push(children);
+        }
+        for (var i = 0; i < nodes.length; i++) {
+            if (this.contains(nodes[i], parent)) {
+                continue;
+            }
+            if (nodes[i] !== parent && parent.appendChild) {
+                parent.appendChild(nodes[i]);
+            }
+        }
+    }
 
     return {
         closest: closest,
         closestTo: closestTo,
         matches: matches,
         contains: contains,
-        create: create
-    }
+        create: create,
+        insert: insert,
+        waitDocumentReady: waitDocumentReady
+    };
 });

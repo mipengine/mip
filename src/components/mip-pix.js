@@ -1,6 +1,6 @@
 /**
  * @file mip-pix 统计组件
- * @author baidu-authors<>, liangjiaying<jiaojiaomao220@163.com>
+ * @author baidu-authors, liangjiaying<jiaojiaomao220@163.com>
  */
 define(function (require) {
     var customElem = require('customElement').create();
@@ -8,15 +8,16 @@ define(function (require) {
 
     /**
      * 替换请求链接中的参数
+     *
      * @param {string} src      用户填写在mip-pix中的src
      * @param {string} paraName key, 如"title"
      * @param {string} paraVal  value, 如当前时间戳
+     * @return {string} url
      */
     function addParas(src, paraName, paraVal) {
-        if (src.indexOf('?' + paraName) > -1 || src.indexOf('&' + paraName) > -1) {
-            var reg = new RegExp(paraName + '=({\\w+})');
-            var placeholder = reg.exec(src) ? reg.exec(src)[1] : '';
-            return src.replace(placeholder, paraVal);
+        var paraNameQ = new RegExp('\\$?{' + paraName + '}', 'g');
+        if (src.search(paraNameQ) > -1) {
+            return src.replace(paraNameQ, paraVal);
         }
         src += src.indexOf('?') > -1 ? '&' : '?';
         return src + paraName + '=' + paraVal;
@@ -24,12 +25,13 @@ define(function (require) {
 
     /**
      * 从body获取mip-expeirment实验分组
+     *
      * @param  {string} attr 实验名
      * @return {string}      实验分组
      */
     function getBodyAttr(attr) {
         var body = document.getElementsByTagName('body')[0];
-        return body.getAttribute(attr) || 'default'
+        return body.getAttribute(attr) || 'default';
     }
 
     customElem.prototype.firstInviewCallback = function () {
@@ -41,17 +43,22 @@ define(function (require) {
         var time = Date.now();
 
         // 替换通用参数
-        src = addParas(src, 't', time);
-        src = addParas(src, 'title', encodeURIComponent(title));
-        src = addParas(src, 'host', encodeURIComponent(host));
+        src = addParas(src, 'TIME', time);
+        src = addParas(src, 'TITLE', encodeURIComponent(title));
+        src = addParas(src, 'HOST', encodeURIComponent(host));
 
         // 增加对<mip-experiment>支持，获取实验分组
-        var expReg = /mip-x-((\w|-|\d|_)+)/g;
+        var expReg = /MIP-X-((\w|-|\d|_)+)/g;
         var matchExpArr = src.match(expReg);
-        for (i in matchExpArr) {
+        for (var i in matchExpArr) {
             var matchExp = matchExpArr[i];
             src = addParas(src, matchExp, getBodyAttr(matchExp));
         }
+
+        // 去除匹配失败的其餘{參數}
+        src = src.replace(/\$?{.+?}/g, '');
+        // 去除其餘 '${', '{', '}' 確保輸出不包含 MIP 定义的语法
+        src = src.replace(/\$?{|}/g, '');
 
         // 创建请求img
         var image = new Image();

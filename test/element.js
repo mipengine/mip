@@ -68,7 +68,7 @@ define(function (require) {
     mipTest.setAttribute('test1', '456');
     mipTest.setAttribute('applyfillclass', 'yes');
     document.body.appendChild(mipTest);
-    
+
     var mipTestPrerender = document.createElement('mip-test');
     mipTestPrerender.style.cssText = 'visibility: hidden; position: absolute; top: -100px';
     mipTestPrerender.renderTest = true;
@@ -92,10 +92,6 @@ define(function (require) {
             }, 20);
         });
 
-        it('addEventAction', function () {
-            expect(mipTest.customElement.actionParam).to.equal('123');
-        });
-
         it('applyFillContent', function () {
             expect(mipTest.children[0].classList.contains('mip-fill-content')).to.be.true;
             expect(mipTest.children[0].classList.contains('mip-replaced-content')).to.be.true;
@@ -112,10 +108,6 @@ define(function (require) {
         it('multi build', function () {
             mipTest.build();
             expect(mipTest.customElement.count).to.equal(1);
-        });
-
-        it('multi register', function () {
-            expect(document.head.getElementsByTagName('style').length).to.equal(1);
         });
 
         it('init', function () {

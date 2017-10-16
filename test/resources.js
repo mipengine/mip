@@ -30,11 +30,18 @@ define(function () {
 
         }
     }
-    var mockElement2 = Object.assign({}, mockElement1, {
-        prerenderAllowed: function () {
-            return false;
+
+    // Mock Object assign
+    var mockElement2 = {};
+    for (var key in mockElement1) {
+        if (mockElement1.hasOwnProperty(key)) {
+            mockElement2[key] = mockElement1[key];
         }
-    });
+    }
+    mockElement2.prerenderAllowed = function () {
+        return false;
+    }
+
     var Resources = require('resources');
 
     var resources1 = new Resources();

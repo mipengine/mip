@@ -49,18 +49,22 @@ define(function () {
             }
             return Template.prototype.isPrototypeOf(obj.prototype);
         },
-        render: function (element, data) {
-            var template = this.find(element);
+        render: function (element, data, obj) {
+            var self = this;
+
+            var template = self.find(element);
             if (!template) {
                 return;
             }
             var type = template.getAttribute('type');
             var templateHTML = template.innerHTML;
-            return this._getTemplate(type).then(function (impl) {
+            return self._getTemplate(type).then(function (impl) {
                 if (!template[CACHED_ATTR]) {
                     template[CACHED_ATTR] = true;
                     impl.cache(templateHTML);
                 }
+
+                data = self.extendFun(data);
 
                 // array
                 if (Array.isArray(data)) {
@@ -71,6 +75,11 @@ define(function () {
                     return data.map(function (item) {
                         return impl.render(templateHTML, item);
                     });
+                }
+
+                // cb
+                if (obj) {
+                    return {element: element, html: impl.render(templateHTML, data)};
                 }
 
                 // html
@@ -94,6 +103,23 @@ define(function () {
                 return null;
             }
             return template;
+        },
+        extendFun: function (data) {
+            try {
+                data.escape2Html = function () {
+                    return function (text, render) {
+                        return render(text).replace(/&lt;/ig, '<')
+                            .replace(/&gt;/ig, '>').replace(/&#x2F;/ig, '/');
+                    };
+                };
+
+                data.isSF = function () {
+                    return this.urltype === 'sf';
+                };
+            } catch(e) {
+            }
+
+            return data;
         },
         inheritTemplate: function () {
             function inheritor() {

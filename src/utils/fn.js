@@ -146,6 +146,28 @@ define(function (require) {
         }
     }
 
+    /**
+     * if window has Touch event(is mobile) or not (is PC)
+     *
+     * @return {boolean} if window has Touch event(is mobile) or not (is PC)
+     */
+    function hasTouch() {
+        return ('ontouchstart' in window
+            || (window.navigator.maxTouchPoints !== undefined && window.navigator.maxTouchPoints > 0)
+            || window.DocumentTouch !== undefined);
+    }
+
+    /**
+     * Whether pageUrl is mip cache url.
+     *
+     * @param {string} pageUrl - current page url.
+     * @return {Boolean} isCacheUrl.
+     */
+    function isCacheUrl(pageUrl) {
+        return /mipcache.bdstatic.com/.test(pageUrl)
+                    ||  /^(\/\/|http:\/\/|https:\/\/)[A-Za-z0-9]{1,}-.*.mipcdn.com\/c\//.test(pageUrl);
+    }
+
     return {
         throttle: throttle,
         values: values,
@@ -153,6 +175,8 @@ define(function (require) {
         pick: pick,
         isPlainObject: isPlainObject,
         isString: isString,
-        del: del
+        del: del,
+        hasTouch: hasTouch,
+        isCacheUrl: isCacheUrl
     }
 });
