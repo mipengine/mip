@@ -111,7 +111,7 @@ define(function (require) {
          * Call the attributeChanged of custom element.
          */
         proto.attributeChangedCallback = function (attributeName, oldValue, newValue, namespace) {
-            this.customElement.attributeChangedCallback(attributeName, oldValue, newValue, namespace);
+            this.customElement.attributeChangedCallback(arguments);
         };
 
         /**

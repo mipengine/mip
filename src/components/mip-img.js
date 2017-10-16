@@ -194,8 +194,7 @@ define(function (require) {
 
     customElem.prototype.attributeChangedCallback = function (attributeName, oldValue, newValue, namespace) {
         if (attributeName === 'src' && oldValue !== newValue) {
-            var ele = this.element.querySelector('img');
-            ele.src = newValue;
+            this.element.querySelector('img').src = newValue;
         }
     };
 
