@@ -10,7 +10,7 @@ define(function (require) {
      * @inner
      * @type {RegExp}
      */
-    var PARSE_REG = /^(\w+):([\w-]+)\.([\w-]+)(?:\(([^\)]+)\))?$/;
+    var PARSE_REG = /^(\w+):([\w-]+)\.([\w-$]+)(?:\(([^\)]+)\))?$/;
 
     /**
      * Regular for checking elements.
@@ -70,8 +70,8 @@ define(function (require) {
                 case 'setData':
                     MIP.setData(action.arg);
                     break;
-                case 'setDataAndCompile':
-                    MIP.setDataAndCompile(action.arg);
+                case '$set':
+                    MIP.$set(action.arg);
                     break;
             }
         },
