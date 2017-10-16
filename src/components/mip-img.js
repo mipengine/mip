@@ -1,3 +1,8 @@
+/**
+ * @file mip-img 图片组件
+ * @author wangpei07
+ */
+
 define(function (require) {
     'use strict';
 
