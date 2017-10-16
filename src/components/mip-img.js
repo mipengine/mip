@@ -166,6 +166,14 @@ define(function (require) {
     }
 
     customElem.prototype.firstInviewCallback = firstInviewCallback;
+
+    customElem.prototype.attributeChangedCallback = function (attributeName, oldValue, newValue, namespace) {
+        if (attributeName === 'src' && oldValue !== newValue) {
+            var ele = this.element.querySelector('img');
+            ele.src = newValue;
+        }
+    };
+
     customElem.prototype.hasResources = function () {
         return true;
     };

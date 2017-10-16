@@ -133,6 +133,10 @@ define(function (require) {
                     eventAction.execute('tap', event.target, event);
                 }, false);
             }
+
+            util.event.delegate(document, 'input', 'change', function (e) {
+                eventAction.execute('change', event.target, event);
+            });
         },
 
         /**
