@@ -124,6 +124,7 @@ define(function (require) {
             var eventAction = this.eventAction = new EventAction();
             if (hasTouch) {
                 // In mobile phone, bind Gesture-tap which listen to touchstart/touchend event
+                /* istanbul ignore next */
                 this._gesture.on('tap', function (event) {
                     eventAction.execute('tap', event.target, event);
                 });
@@ -134,6 +135,7 @@ define(function (require) {
                 }, false);
             }
 
+            /* istanbul ignore next */
             util.event.delegate(document, 'input', 'change', function (e) {
                 eventAction.execute('change', event.target, event);
             });

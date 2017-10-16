@@ -2,6 +2,7 @@ define(function (require) {
     'use strict';
 
     var EventAction = require('utils/event-action');
+    var viewer = require('viewer');
 
     var mockElement = {
         executeEventAction: function (action) {
@@ -11,6 +12,27 @@ define(function (require) {
     };
 
     describe('event-action', function () {
+        it('white list', function () {
+            MIP.setData = function () {};
+            MIP.$set = function () {};
+            var action = new EventAction({
+                getTarget: function () {
+                    return mockElement;
+                }
+            });
+            action.execute('tap', {
+                getAttribute: function () {
+                    return 'tap:MIP.setData({a:1}})';
+                }
+            }, 'event');
+            action.execute('tap', {
+                getAttribute: function () {
+                    return 'tap:MIP.$set({a:1}})';
+                }
+            }, 'event');
+            expect(mockElement.arg).to.undefined;
+        });
+
         it('normal', function () {
             var action = new EventAction({
                 getTarget: function () {

@@ -65,6 +65,7 @@ define(function (require) {
          * @param {Object} action event action
          */
         handleMIPTarget: function (action) {
+            /* istanbul ignore next */
             if (!action) {return};
             switch (action.handler) {
                 case 'setData':
@@ -82,6 +83,7 @@ define(function (require) {
          * @param {Function} handler
          */
         addGlobalTarget: function (name, handler) {
+            /* istanbul ignore next */
             if (!name) {return;}
             this.globalTargets[name] = handler;
         },
@@ -149,7 +151,6 @@ define(function (require) {
                 if (globalTarget) {
                     return globalTarget(action);
                 }
-
                 var target = this.getTarget(action.id);
                 if (this.checkTarget(target)) {
                     this.executeEventAction(action, target);
