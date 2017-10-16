@@ -146,26 +146,6 @@ define(function (require) {
         img.removeEventListener('error', errorHandle);
     };
 
-    /**
-     * Trigger when image load error
-     *
-     * @param {HTMLElement} img image element
-     */
-    function errorHandle(img) {
-        if (!viewer.isIframed) {
-            return;
-        }
-        var ele = document.createElement('a');
-        ele.href = img.src;
-        if (/[\?&]mip_img_ori[&]*/.test(ele.search)) {
-            return;
-        }
-        var search = ele.search || '?';
-        ele.search += (/[\?&]$/.test(search) ? '' : '&') + 'mip_img_ori=1';
-        img.src = ele.href;
-        img.removeEventListener('error', errorHandle);
-    }
-
     function firstInviewCallback() {
         var ele = this.element.querySelector('img');
         if (ele) {
