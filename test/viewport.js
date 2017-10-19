@@ -1,66 +1,175 @@
 /**
- * @file For viewport
+ * @file viewport test case
+ * @author xuexb <fe.xiaowu@gmail.com>
  */
+
+/* global sinon */
+/* eslint-disable max-nested-callbacks */
+
 define(function (require) {
     'use strict';
+
     var viewport = require('viewport');
-    viewport.on('scroll', function () {
-        this.scrolled = true;
-    });
-    viewport.on('changed', function () {
-        this.changed = true;
-    });
-    viewport.on('resize', function () {
-        this.resized = true;
-    });
-    var docEle = document.body || document.documentElement;
-    var height = docEle.height;
+    var util = require('util');
 
     describe('viewport', function () {
-        beforeEach(function () {
-            height = docEle.height;
-            docEle.style.height = '10000px';
-        });
+        var spy;
 
         afterEach(function () {
-            docEle.style.height = height;
+            if (spy && spy.restore) {
+                spy.restore();
+            }
         });
 
-        // Getter and setter of scrollTop.
-        it('scrollTop', function () {
-            viewport.setScrollTop(1000);
-            expect(viewport.getScrollTop()).to.equal(1000);
+        it('.getScrollTop', function () {
+            spy = sinon.stub(util.rect, 'getScrollTop');
+            spy.returns(true);
+
+            expect(viewport.getScrollTop()).to.be.true;
+            expect(spy).to.have.been.calledWith();
         });
 
-        // Rect
-        it('getRect', function () {
-            var rect = viewport.getRect();
-            var width = window.innerWidth || document.documentElement.clientWidth;
-            var height = window.innerHeight || document.documentElement.clientHeight;
-            expect(width).to.above(0);
-            expect(height).to.above(0);
-            expect(width).to.equal(rect.width);
-            expect(height).to.equal(rect.height);
-            expect(rect.left).to.equal(0);
+        it('.getScrollLeft', function () {
+            spy = sinon.stub(util.rect, 'getScrollLeft');
+            spy.returns(true);
+
+            expect(viewport.getScrollLeft()).to.be.true;
+            expect(spy).to.have.been.calledWith();
         });
 
-        it('scroll width & height', function () {
-            expect(viewport.getScrollWidth()).to.equal(window.innerWidth || document.documentElement.clientWidth);
-            expect(viewport.getScrollHeight()).to.be.at.least(10000);
+        it('.getScrollWidth', function () {
+            spy = sinon.stub(util.rect, 'getScrollWidth');
+            spy.returns(true);
+
+            expect(viewport.getScrollWidth()).to.be.true;
+            expect(spy).to.have.been.calledWith();
         });
 
-        // Events
-        it('scroll&changed&resized', function (done) {
-            window.dispatchEvent(new Event('resize'));
-            viewport.setScrollTop(1001);
-            setTimeout(function () {
-                viewport.setScrollTop(1002);
-            }, 25)
-            setTimeout(function () {
-                done(viewport.scrolled && viewport.changed && viewport.resized ? null : 'viewport events check failed');
-            }, 30);
+        it('.getScrollHeight', function () {
+            spy = sinon.stub(util.rect, 'getScrollHeight');
+            spy.returns(true);
+
+            expect(viewport.getScrollHeight()).to.be.true;
+            expect(spy).to.have.been.calledWith();
         });
 
+        it('.setScrollTop', function () {
+            spy = sinon.spy(util.rect, 'setScrollTop');
+
+            expect(viewport.setScrollTop(true)).to.be.undefined;
+            expect(spy).to.have.been.calledOnce;
+            expect(spy).to.have.been.calledWith(true);
+        });
+
+        it('.getRect', function () {
+            spy = sinon.stub(util.rect, 'get');
+            spy.returns({});
+
+            expect(viewport.getRect()).to.deep.equal({});
+        });
+
+        it('.getWidth', function () {
+            var old = window.innerWidth;
+
+            window.innerWidth = true;
+            expect(viewport.getWidth()).to.be.true;
+
+            window.innerWidth = false;
+            expect(viewport.getWidth()).to.be.a('number');
+
+            window.innerWidth = old;
+        });
+
+        it('.getHeight', function () {
+            var old = window.innerHeight;
+
+            window.innerHeight = true;
+            expect(viewport.getHeight()).to.be.true;
+
+            window.innerHeight = false;
+            expect(viewport.getHeight()).to.be.a('number');
+
+            window.innerHeight = old;
+        });
+
+        describe('event', function () {
+            it('scroll', function (done) {
+                spy = sinon.stub(viewport, 'getScrollTop');
+
+                viewport.once('scroll', function (event) {
+                    expect(event).to.not.be.undefined;
+                    done();
+                });
+
+                spy.returns(10);
+                window.dispatchEvent(new Event('scroll'));
+            });
+
+            it('resize', function (done) {
+                viewport.once('resize', function (event) {
+                    expect(event).to.not.be.undefined;
+                    done();
+                });
+
+                window.dispatchEvent(new Event('resize'));
+            });
+
+            it('changed', function (done) {
+                spy = sinon.stub(viewport, 'getScrollTop');
+
+                viewport.once('changed', function (event) {
+                    expect(event).to.not.be.undefined;
+                    done();
+                });
+
+                spy.returns(10);
+                window.dispatchEvent(new Event('scroll'));
+            });
+
+            it('mock multiple scroll', function (done) {
+                spy = sinon.stub(viewport, 'getScrollTop');
+
+                var data = [
+                    {
+                        timeout: 5,
+                        scrollTop: 1
+                    },
+                    {
+                        timeout: 10,
+                        scrollTop: 10
+                    },
+                    {
+                        timeout: 15,
+                        scrollTop: 1
+                    },
+                    {
+                        timeout: 30,
+                        scrollTop: 100
+                    },
+                    {
+                        timeout: 200,
+                        scrollTop: 2000
+                    }
+                ];
+
+                var exec = function () {
+                    var current = data.shift();
+
+                    spy.returns(current.scrollTop);
+                    window.dispatchEvent(new Event('scroll'));
+
+                    if (data.length) {
+                        setTimeout(exec, current.timeout);
+                    }
+                    else {
+                        expect(data.length).to.equal(0);
+                        done();
+                    }
+                };
+
+                exec();
+            });
+        });
     });
-
 });
+/* eslint-enable max-nested-callbacks */

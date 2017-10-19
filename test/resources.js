@@ -1,93 +1,285 @@
 /**
- * @file resources tester
+ * @file resources test case
+ * @author xuexb <fe.xiaowu@gmail.com>
  */
-define(function () {
+
+/* global sinon */
+/* eslint-disable max-nested-callbacks */
+
+define(function (require) {
     'use strict';
-    var mockElement1 = {
-        testCount: 0,
-        prerenderAllowed: function () {
-            this.testCount++;
-            return true;
-        },
-        getBoundingClientRect: function () {
-            return {
-                left: 0,
-                top: -1,
-                width: 0,
-                height: 0
-            }
-        },
-        inViewport: function () {
-            return this.flag;
-        },
-        viewportCallback: function (flag) {
-            this.flag = flag;
-        },
-        build: function () {
-            this.built = true;
-        },
-        firstInviewCallback: function () {
-
-        }
-    }
-
-    // Mock Object assign
-    var mockElement2 = {};
-    for (var key in mockElement1) {
-        if (mockElement1.hasOwnProperty(key)) {
-            mockElement2[key] = mockElement1[key];
-        }
-    }
-    mockElement2.prerenderAllowed = function () {
-        return false;
-    }
 
     var Resources = require('resources');
-
-    var resources1 = new Resources();
-    var resources2 = new Resources();
-
-    resources1.add(mockElement1);
-    resources2.add(mockElement2);
-
-    setTimeout(function () {
-        resources1._viewport.trigger('changed');
-    }, 20);
-
+    var viewport = require('viewport');
+    var rect = require('dom/rect');
+    var customElement = require('customElement');
+    var registerElement = require('element');
 
     describe('resources', function () {
-        it('getResources & getResourcesList', function () {
-            expect(resources1.getResources()[mockElement1._eid]).to.equal(mockElement1);
-            expect(resources1.getResourcesList().length).to.at.least(1);
+        var app;
+
+        beforeEach(function () {
+            app = new Resources();
         });
 
-        it('setInViewport and update', function () {
-            expect(mockElement1.inViewport()).to.be.true;
+        // reset
+        afterEach(function () {
+            app._gesture.cleanup();
+            app.getResourcesList().forEach(function (element) {
+                app.remove(element);
+            });
+            app._viewport.off('changed resize', app.updateState);
+            app._gesture.off('swipe', app.updateState);
+            app = null;
         });
 
-        it('prerenderElement', function () {
-            var isFalse = mockElement2.inViewport() === false;
-            Resources.prerenderElement(mockElement2);
+        describe('#_bindEvent', function () {
+            it('changed event', function () {
+                var spy = sinon.spy(app, 'updateState');
+                app._bindEvent();
+                viewport.trigger('changed');
 
-            expect(isFalse).to.be.true;
-            expect(mockElement2.inViewport()).to.be.true;
+                expect(spy).to.have.been.calledTwice;
+            });
 
-            expect(Resources.prerenderElement.bind(Resources, {})).to.not.throw(Error);
+            it('resize event', function () {
+                var spy = sinon.spy(app, 'updateState');
+                app._bindEvent();
+                viewport.trigger('resize');
+
+                expect(spy).to.have.been.calledTwice;
+            });
+
+            // Verify that the delay event was successful
+            describe('swipe event', function () {
+                it('first call', function () {
+                    var spy = sinon.spy(app, 'updateState');
+                    app._bindEvent();
+
+                    expect(spy).to.have.been.calledOnce;
+                    expect(spy).to.have.been.calledWith();
+                });
+
+                it('velocity min', function (done) {
+                    var spy = sinon.spy(app, 'updateState');
+                    app._bindEvent();
+                    app._gesture.trigger('swipe', {}, {
+                        velocity: 0.1
+                    });
+
+                    setTimeout(function () {
+                        var count = spy.callCount;
+                        expect(spy).to.have.been.calledOnce;
+
+                        setTimeout(function () {
+                            expect(spy.callCount).to.be.above(count);
+                            done();
+                        }, 100);
+                    }, 90);
+                });
+
+                it('velocity max', function (done) {
+                    var spy = sinon.spy(app, 'updateState');
+                    app._bindEvent();
+                    app._gesture.trigger('swipe', {}, {
+                        velocity: 3
+                    });
+
+                    setTimeout(function () {
+                        var count = spy.callCount;
+                        expect(spy).to.have.been.calledOnce;
+
+                        setTimeout(function () {
+                            expect(spy.callCount).to.be.above(count);
+                            done();
+                        }, 100);
+                    }, 590);
+                });
+            });
         });
 
-        it('remove', function () {
-            expect(resources2.remove(document.body)).to.be.false;
+        it('#add', function (done) {
+            var MipTestElement = customElement.create();
+            MipTestElement.prototype.build = done;
+            MipTestElement.prototype.prerenderAllowed = function () {
+                return true;
+            };
+
+            registerElement('mip-test-resources', MipTestElement);
+
+            var node = document.createElement('mip-test-resources');
+            document.body.appendChild(node);
+            document.body.removeChild(node);
         });
 
-        it('changed', function (done) {
-            setTimeout(function () {
-                if (mockElement1.testCount < 2) {
-                    done('changed error');
-                    return;
-                }
+        describe('#remove', function () {
+            // is error
+            // it('true', function () {
+            //     var data = {
+            //         build: function () {}
+            //     };
+
+            //     app.add(data);
+            //     expect(app.remove(data)).to.be.true;
+            // });
+
+            it('element', function () {
+                /* eslint-disable fecs-camelcase */
+                expect(app.remove({
+                    _eid: 10086
+                })).to.be.false;
+
+                expect(app.remove({
+                    _eid: 'str'
+                })).to.be.false;
+                /* eslint-enable fecs-camelcase */
+            });
+
+            it('_eid', function () {
+                expect(app.remove(10086)).to.be.false;
+            });
+        });
+
+        it('#getResources', function () {
+            expect(app.getResources()).to.be.a('object').and.be.empty;
+        });
+
+        it('#getResourcesList', function () {
+            expect(app.getResourcesList()).to.be.a('array').and.be.empty;
+        });
+
+        describe('#setInViewport', function () {
+            it('inViewport', function (done) {
+                app.setInViewport({
+                    inViewport: function () {
+                        return true;
+                    },
+                    viewportCallback: function (args) {
+                        expect(args).to.be.undefined;
+                        done();
+                    }
+                });
+            });
+
+            it('not inViewport', function (done) {
+                app.setInViewport({
+                    inViewport: function () {},
+                    viewportCallback: function () {
+                        done('error');
+                    }
+                });
+
                 done();
-            }, 30);
-        })
+            });
+
+            it('repeat', function () {
+                var element = {
+                    viewportCallback: function () {},
+                    inViewport: function () {
+                        return true;
+                    }
+                };
+                var spy = sinon.spy(element, 'viewportCallback');
+
+                app.setInViewport(element);
+                app.setInViewport(element, false);
+                app.setInViewport(element, true);
+
+                expect(spy).have.been.calledTwice;
+            });
+        });
+
+        describe('#_update', function () {
+            it('not resources', function () {
+                expect(app._update()).to.be.undefined;
+            });
+
+            it('prerenderAllowed', function (done) {
+                sinon.stub(app, 'getResources', function () {
+                    return {
+                        MIP: {
+                            prerenderAllowed: function () {
+                                return true;
+                            }
+                        }
+                    };
+                });
+
+                app.setInViewport = function (element, flag) {
+                    expect(flag).to.be.true;
+                    done();
+                };
+
+                app._update();
+            });
+
+            it('overlapping', function (done) {
+                // mock
+                sinon.stub(app, 'getResources', function () {
+                    return {
+                        MIP: {
+                            prerenderAllowed: function () {
+                                return false;
+                            }
+                        }
+                    };
+                });
+                sinon.stub(rect, 'overlapping', function (getElementRect, viewportRect) {
+                    expect(getElementRect).to.equal('getElementRect');
+                    expect(viewportRect).to.be.a('object');
+                    return true;
+                });
+                sinon.stub(rect, 'getElementRect', function () {
+                    return 'getElementRect';
+                });
+
+                app.setInViewport = function (element, flag) {
+                    expect(flag).to.be.true;
+                    done();
+                };
+
+                app._update();
+                rect.overlapping.restore();
+                rect.getElementRect.restore();
+            });
+        });
+
+        describe('.prerenderElement', function () {
+            it('empty param', function () {
+                expect(function () {
+                    Resources.prerenderElement();
+                }).to.throw();
+            });
+
+            it('inViewport', function (done) {
+                Resources.prerenderElement({
+                    viewportCallback: done,
+                    inViewport: function () {
+                        return true;
+                    }
+                });
+                done();
+            });
+
+            it('not inViewport', function (done) {
+                Resources.prerenderElement({
+                    inViewport: function () {
+                        return false;
+                    }
+                });
+                Resources.prerenderElement({
+                    viewportCallback: function (flag) {
+                        expect(flag).to.be.true;
+                        done();
+                    },
+                    inViewport: function () {
+                        return false;
+                    }
+                });
+            });
+        });
     });
 
 });
+
+/* eslint-enable max-nested-callbacks */
