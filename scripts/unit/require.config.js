@@ -1,9 +1,9 @@
 /**
  * @file 测试脚本载入器
- * @author yangjun14(yangjun14@baidu.com) , xieyaowu
+ * @author yangjun14<harttle@harttle.com> , xuexb<fe.xiaowu@gmail.com>
  */
 
-var TEST_FILES = Object.keys(window.__karma__.files).filter(isTestFile);
+var TEST_FILES = Object.keys(window.__karma__.files).filter(isTestFile).map(getModuleId);
 
 // 依赖配置
 require.config({
@@ -25,8 +25,11 @@ window.__karma__.loaded = function () {};
 
 // 设置DEBUG环境
 window.DEBUG || (window.DEBUG = false);
-var mods = TEST_FILES.map(getModuleId);
-require(mods, function () {
+
+// 依赖提前加载
+require(['naboo', 'fetch', 'fetch-jsonp']);
+
+require(TEST_FILES, function () {
     window.__karma__.start();
 });
 
