@@ -5,29 +5,10 @@
 
 module.exports = {
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: '../../dist/',
+    basePath: '../../',
 
     // Important: 所有插件必须在此声明
-    plugins: [
-        // frameworks
-        'karma-mocha',
-        'karma-chai',
-        'karma-chai-as-promised',
-        //'karma-sinon',
-        'karma-chai-sinon',
-
-        // reporters
-        'karma-mocha-reporter',
-        'karma-coverage',
-        'karma-html-reporter',
-
-        // launchers
-        'karma-chrome-launcher',
-        'karma-sauce-launcher',
-
-        // coveralls
-        'karma-coveralls'
-    ],
+    plugins: ['karma-*'],
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
@@ -40,17 +21,20 @@ module.exports = {
         'deps/promise.js',
         'deps/document-register-element.max.js',
         'deps/esl.js',
-        'deps/zepto.js',
-        'test/index.js', {
+        'scripts/unit/require.config.js',
+        {
             pattern: 'src/**/*.js',
             included: false
-        }, {
+        },
+        {
             pattern: 'deps/**/*.js',
             included: false
-        }, {
+        },
+        {
             pattern: 'test/**/*.js',
             included: false
         },
+        'dist/mip.css'
     ],
 
 
@@ -69,8 +53,25 @@ module.exports = {
         'src/**/*.js': ['coverage']
     },
 
-    htmlReporter: {
-        outputDir: './dist/test-result' // relative to cwd
+    // htmlReporter: {
+    //     outputDir: './dist/test-result' // relative to cwd
+    // },
+
+    coverageReporter: {
+        dir: './dist/coverage',
+        reporters: [
+            {
+                type: 'html'
+            }, {
+                type: 'lcovonly',
+
+                // only generate a /dist/coverage/icov.info
+                subdir: '../coverage/'
+            },
+            {
+                type: 'text-summary'
+            }
+        ]
     },
 
     // enable / disable colors in the output (reporters and logs)

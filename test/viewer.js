@@ -1,158 +1,581 @@
 /**
- * Tester for viewer
+ * @file viewer test case
+ * @author xuexb <fe.xiaowu@gmail.com>
  */
+
+/* global sinon, MIP */
+/* eslint-disable max-nested-callbacks */
+
 define(function (require) {
     'use strict';
 
+    var $ = require('zepto');
     var util = require('util');
     var viewer = require('viewer');
     var viewport = require('viewport');
-
-    var docElement = document.documentElement || document.body;
-    var ele = document.createElement('a');
-    docElement.appendChild(ele);
-
-    var testLink = 'https://www.mipengine.org';
-    var expectData = {
-        messageKey: 'loadiframe',
-        messageData: {
-            url: 'https://www.mipengine.org/',
-            title: '',
-            click: '{button:1}'
-        }
-    };
+    var platform = util.platform;
+    var fn = util.fn;
 
     describe('viewer', function () {
-        it('patchForIframe', function () {
-            util.platform.needSpecialScroll = false;
-            document.body.style.cssText = '';
-            document.body.style.margin = 0;
-            function checkHeight() {
-                return document.body.style.height === '100%';
-            };
-            viewer.patchForIframe();
-            var initedHeightEmpty = !checkHeight();
-            util.platform.needSpecialScroll = true;
-            viewer.patchForIframe();
+        var spy;
 
-            expect(initedHeightEmpty).to.be.true;
-            expect(checkHeight()).to.be.true;
+        afterEach(function () {
+            if (spy && spy.restore) {
+                spy.restore();
+            }
         });
 
-        it('needBackReload', function () {
-            var stub1 = sinon.stub(util.platform, 'getOsVersion', function () {
-                return '9.1.1';
-            });
-            var stub2 = sinon.stub(util.platform, 'isSafari', function () {
-                return true;
-            });
-            viewer.patchForIframe();
-            stub1.restore();
-            stub2.restore();
+        describe('.init', function () {
+            var isIframed;
 
-            var eve = document.createEvent("HTMLEvents");
-            eve.initEvent("pageshow", true, true);
-            window.dispatchEvent(eve);
+            beforeEach(function () {
+                isIframed = viewer.isIframed;
+            });
+
+            afterEach(function () {
+                viewer.isIframed = isIframed;
+            });
+
+            it('isIframed', function () {
+                spy = sinon.spy(viewer, 'sendMessage');
+
+                viewer.isIframed = true;
+                viewer.init();
+
+                expect(spy).to.have.been.called;
+                expect(spy).to.have.been.calledWith('mippageload');
+            });
+
+            it('isIframed is false', function () {
+                spy = sinon.spy(viewer, 'sendMessage');
+
+                viewer.isIframed = false;
+                viewer.init();
+
+                expect(spy).to.not.have.been.called;
+            });
         });
 
-        it('show', function () {
+        describe('.patchForIframe', function () {
+            it('platform.needSpecialScroll', function () {
+                var needSpecialScroll = platform.needSpecialScroll;
+
+                util.css(document.body, 'height', '100px');
+                platform.needSpecialScroll = false;
+                viewer.patchForIframe();
+                expect(document.body.style.height).to.not.equal('100%');
+
+                platform.needSpecialScroll = true;
+                viewer.patchForIframe();
+                expect(document.body.style.height).to.equal('100%');
+
+                platform.needSpecialScroll = needSpecialScroll;
+            });
+
+            it('ios8 && uc', function () {
+                sinon.stub(platform, 'getOsVersion', function () {
+                    return '8.0';
+                });
+                sinon.stub(platform, 'isUc', function () {
+                    return true;
+                });
+
+                spy = sinon.spy(window, 'addEventListener');
+                viewer.patchForIframe();
+
+                platform.getOsVersion.restore();
+                platform.isUc.restore();
+
+                expect(spy).to.not.have.been.called;
+            });
+
+            it('ios9 && safari', function () {
+                sinon.stub(platform, 'getOsVersion', function () {
+                    return '9.0';
+                });
+                sinon.stub(platform, 'isSafari', function () {
+                    return true;
+                });
+                spy = sinon.spy(window, 'addEventListener');
+
+                // exec
+                viewer.patchForIframe();
+
+                platform.getOsVersion.restore();
+                platform.isSafari.restore();
+
+                expect(spy).to.have.been.calledOnce;
+                expect(spy).to.have.been.calledWith('pageshow');
+
+                // expect pageshow callback
+                expect(function () {
+                    spy.getCall(0).args[1]({});
+                }).to.not.throw();
+            });
+        });
+
+        it('.show', function () {
+            spy = sinon.spy(viewer, 'trigger');
             viewer.show();
 
-            expect(document.body.style.opacity).to.equal('1');
+            expect(spy).to.have.been.calledOnce;
+            expect(spy).to.have.been.calledWith('show');
         });
 
-        it('init', function () {
-            viewer.init();
-            expect(viewer._gesture).to.be.instanceof(util.Gesture);
+        describe('.sendMessage', function () {
+            var isIframed;
+
+            beforeEach(function () {
+                isIframed = viewer.isIframed;
+                spy = sinon.spy(window.parent, 'postMessage');
+            });
+
+            afterEach(function () {
+                viewer.isIframed = isIframed;
+            });
+
+            it('isIframed', function () {
+                viewer.isIframed = true;
+                viewer.sendMessage('name', 'MIP');
+
+                expect(spy).to.have.been.calledOnce;
+                expect(spy).to.deep.have.been.calledWith({
+                    event: 'name',
+                    data: 'MIP'
+                }, '*');
+            });
+
+            it('isIframed is false', function () {
+                viewer.isIframed = false;
+                viewer.sendMessage('name', 'MIP');
+
+                expect(spy).to.not.have.been.called;
+            });
         });
 
-        it('sroll up', function () {
-            var style = getComputedStyle(document.body);
-            var height = style.height;
-            viewer.init();
-            document.body.style.height = '10000px';
-            viewport.setScrollTop(800);
-            expect(viewport.getScrollTop()).to.equal(800);
-            document.body.style.height = height;
-        });
+        describe('.setupEventAction', function () {
+            beforeEach(function () {
+                viewer.init();
+            });
 
-        it('sendMessage', function () {
-            viewer.isIframed = false;
-            expect(viewer.sendMessage.bind(viewer)).to.not.throw(Error);
-
-            viewer.isIframed = true;
-            expect(viewer.sendMessage.bind(viewer)).to.not.throw(Error);
-        });
-
-        it('handlePreregisteredExtensions', function () {
-            window.MIP.extensions = [{
-                name: "mip-form",
-                func: function() {
-                    document.body.classList.add('handlePreregisteredExtensions');
-                }
-            }];
-            viewer.handlePreregisteredExtensions();
-            var result = window.MIP.push({
-                name: "mip-form",
-                func: function() {
-                    document.body.classList.add('handlePreregisteredExtensions');
+            afterEach(function () {
+                if (fn.hasTouch.restore) {
+                    fn.hasTouch.restore();
                 }
             });
-            expect(document.body === document.querySelector('.handlePreregisteredExtensions')).to.be.true;
-            document.body.classList.remove('handlePreregisteredExtensions');
-        });
 
-        it('bindEventCallback', function () {
-            viewer._bindEventCallback('show', function () {
-                document.body.classList.add('_bindEventCallback');
+            it('hasTouch', function () {
+                sinon.stub(fn, 'hasTouch', function () {
+                    return true;
+                });
+                spy = sinon.spy(viewer._gesture, 'on');
+
+                viewer.setupEventAction();
+
+                expect(spy).to.have.been.calledOnce;
+                expect(spy).to.have.been.calledWith('tap');
+
+                // check eventAction.execute
+                var eventAction = sinon.spy(viewer.eventAction, 'execute');
+                spy.getCall(0).args[1]({});
+                eventAction.restore();
+
+                expect(eventAction).to.have.been.calledOnce;
+                expect(eventAction).to.deep.have.been.calledWith('tap', undefined, {});
             });
-            expect(document.body === document.querySelector('._bindEventCallback')).to.be.true;
-            document.body.classList.remove('_bindEventCallback');
+
+            it('hasTouch is false', function () {
+                sinon.stub(fn, 'hasTouch', function () {
+                    return false;
+                });
+                spy = sinon.spy(document, 'addEventListener');
+
+                viewer.setupEventAction();
+
+                expect(spy).to.have.been.calledOnce;
+                expect(spy).to.have.been.calledWith('click');
+
+                // check eventAction.execute
+                var eventAction = sinon.spy(viewer.eventAction, 'execute');
+                spy.getCall(0).args[1]({});
+                eventAction.restore();
+
+                expect(eventAction).to.have.been.calledOnce;
+                expect(eventAction).to.deep.have.been.calledWith('tap', undefined, {});
+            });
         });
 
-        it('mipLinkProxy', function () {
-            // test for non href
-            ele.click();
+        describe('.handlePreregisteredExtensions', function () {
+            var old;
 
-            var mipLinkTitle = 'test title for mip-link';
+            beforeEach(function () {
+                old = window.MIP;
+            });
 
-            var childNode = document.createElement('a');
-            var parentNode = document.createElement('div');
+            beforeEach(function () {
+                window.MIP = old;
+            });
 
-            parentNode.setAttribute('title', mipLinkTitle);
-            parentNode.setAttribute('data-click', '{button:1}');
-            childNode.setAttribute('mip-link', '');
-            childNode.href = testLink;
-            expectData.messageData.title = mipLinkTitle;
+            it('window.MIP exists', function () {
+                window.MIP = {};
+                expect(viewer.handlePreregisteredExtensions).to.not.throw();
+            });
 
-            parentNode.appendChild(childNode)
-            document.body.appendChild(parentNode);
-            expect(viewer._getMessageData.call(childNode)).to.deep.equal(expectData);
+            it('window.MIP not exists', function () {
+                window.MIP = null;
+                expect(viewer.handlePreregisteredExtensions).to.not.throw();
+            });
 
-            parentNode.setAttribute('title', '');
-            var newtext=document.createTextNode("test title for non-set，just text  ");
-            parentNode.appendChild(newtext); 
-            expectData.messageData.title = newtext.textContent.trim();
-            expect(viewer._getMessageData.call(childNode)).to.deep.equal(expectData);
+            it('MIP.push', function (done) {
+                viewer.handlePreregisteredExtensions();
 
-            childNode.click();
+                expect(MIP.push).to.be.a('function');
+                expect(function () {
+                    MIP.push();
+                    MIP.push({});
+                    MIP.push({
+                        func: true
+                    });
+                }).to.not.throw();
+
+                MIP.push({
+                    func: done
+                });
+            });
+
+            it('MIP.extensions', function (done) {
+                window.MIP = {
+                    extensions: [
+                        null,
+                        '',
+                        [],
+                        {},
+                        {
+                            func: []
+                        },
+                        {
+                            func: done
+                        }
+                    ]
+                };
+
+                viewer.handlePreregisteredExtensions();
+            });
         });
-        it('dataTypeLinkProxy', function () {
-            var dataTypeTitle = 'test title for data-type';
 
-            ele.href = testLink;
-            ele.setAttribute('data-type', 'mip');
-            ele.setAttribute('data-title', dataTypeTitle);
-            ele.setAttribute('data-click', '{button:1}');
-            expectData.messageData.title = dataTypeTitle;
-            expect(viewer._getMessageData.call(ele)).to.deep.equal(expectData);
 
-            ele.setAttribute('data-title', '');
-            ele.innerText = 'test title for non-set，just text  ';
-            expectData.messageData.title = ele.innerText;
-            expect(viewer._getMessageData.call(ele)).to.deep.equal(expectData);
-            ele.click();
+        describe('._bindEventCallback', function () {
+            var old;
+
+            beforeEach(function () {
+                old = viewer.isShow;
+            });
+
+            afterEach(function () {
+                viewer.isShow = old;
+            });
+
+            it('error params', function () {
+                expect(function () {
+                    viewer._bindEventCallback();
+                    viewer._bindEventCallback('show', []);
+                    viewer._bindEventCallback('hide', function () {});
+                }).to.not.throw();
+            });
+
+            it('isShow', function () {
+                // isShow
+                viewer.isShow = true;
+                viewer._bindEventCallback('show', function (num) {
+                    expect(this).to.deep.equal(viewer);
+                    expect(num).to.be.a('number');
+                });
+            });
+
+            it('isShow is false', function () {
+                // isShow
+                viewer.isShow = false;
+                viewer._bindEventCallback('show', function (num) {
+                    throw new TypeError('viewer.isShow is error');
+                });
+            });
         });
 
+        describe('._proxyLink', function () {
+            it('empty url', function () {
+                spy = sinon.spy(util.event, 'delegate');
+                viewer._proxyLink();
+
+                expect(spy).to.have.been.calledOnce;
+                expect(spy).to.deep.have.been.calledWith(
+                    document,
+                    'a',
+                    'click'
+                );
+                expect(spy.getCall(0).args[3].call({})).to.be.undefined;
+            });
+
+            it('tel url', function (done) {
+                spy = sinon.spy(util.event, 'delegate');
+                viewer._proxyLink();
+
+                expect(spy.getCall(0).args[3].call({
+                    href: 'tel: 10010',
+                    setAttribute: function (key, value) {
+                        expect(key).to.equal('target');
+                        expect(value).to.equal('_top');
+                        done();
+                    }
+                })).to.be.undefined;
+            });
+
+            it('preventDefault', function (done) {
+                spy = sinon.spy(util.event, 'delegate');
+                viewer._proxyLink();
+
+                // mock create
+                spy.getCall(0).args[3].call({
+                    href: 'http://www.mipengine.org'
+                }, {
+                    preventDefault: done
+                });
+            });
+
+            it('mip-link', function () {
+                var message = sinon.spy(viewer, 'sendMessage');
+                sinon.stub(viewer, '_getMessageData', function () {
+                    return {};
+                });
+                spy = sinon.spy(util.event, 'delegate');
+                viewer._proxyLink();
+
+                // mock create
+                var result = spy.getCall(0).args[3].call({
+                    href: 'http://www.mipengine.org',
+                    hasAttribute: function (key) {
+                        return key === 'mip-link';
+                    }
+                }, {
+                    preventDefault: function () {}
+                });
+
+                viewer._getMessageData.restore();
+                message.restore();
+
+                expect(result).to.be.undefined;
+                expect(message).to.have.been.calledOnce;
+                expect(message).to.deep.have.been.calledWith(
+                    undefined,
+                    undefined
+                );
+            });
+
+            it('data-type is mip', function () {
+                var message = sinon.spy(viewer, 'sendMessage');
+                sinon.stub(viewer, '_getMessageData', function () {
+                    return {};
+                });
+                spy = sinon.spy(util.event, 'delegate');
+                viewer._proxyLink();
+
+                // mock create
+                var result = spy.getCall(0).args[3].call({
+                    href: 'http://www.mipengine.org',
+                    hasAttribute: function (key) {
+                        return false;
+                    },
+                    getAttribute: function (key) {
+                        return key === 'data-type' ? 'mip' : '';
+                    }
+                }, {
+                    preventDefault: function () {}
+                });
+
+                viewer._getMessageData.restore();
+                message.restore();
+
+                expect(result).to.be.undefined;
+                expect(message).to.have.been.calledOnce;
+                expect(message).to.deep.have.been.calledWith(
+                    undefined,
+                    undefined
+                );
+            });
+        });
+
+        describe('._getMessageData', function () {
+            var url = 'http://www.mipengine.org/';
+            var $node;
+
+            beforeEach(function () {
+                $node = $('<div><a href="' + url + '"></a></div>').appendTo('body');
+            });
+
+            afterEach(function () {
+                $node.remove();
+                $node = null;
+            });
+
+            it('attr has mip-link', function () {
+                $node.attr('title', 'MIP');
+                $node.attr('data-click', 'OK');
+                $node.children('a').attr('mip-link', true);
+
+                expect(viewer._getMessageData.call($node.children('a').get(0))).to.deep.equal({
+                    messageKey: 'loadiframe',
+                    messageData: {
+                        url: url,
+                        title: 'MIP',
+                        click: 'OK'
+                    }
+                });
+            });
+
+            it('attr has mip-link and innerText', function () {
+                $node.attr('data-click', 'OK');
+                $node.children('a').attr('mip-link', true).html('Hello\nMIP');
+
+                expect(viewer._getMessageData.call($node.children('a').get(0))).to.deep.equal({
+                    messageKey: 'loadiframe',
+                    messageData: {
+                        url: url,
+                        title: 'Hello',
+                        click: 'OK'
+                    }
+                });
+            });
+
+            it('attr not has mip-link', function () {
+                $node.children('a').attr('data-title', 'MIP').attr('data-click', 'OK');
+
+                expect(viewer._getMessageData.call($node.children('a').get(0))).to.deep.equal({
+                    messageKey: 'loadiframe',
+                    messageData: {
+                        url: url,
+                        title: 'MIP',
+                        click: 'OK'
+                    }
+                });
+            });
+
+            it('attr not has mip-link and innerText', function () {
+                $node.children('a').attr('data-click', 'OK').html('Hello\nMIP');
+
+                expect(viewer._getMessageData.call($node.children('a').get(0))).to.deep.equal({
+                    messageKey: 'loadiframe',
+                    messageData: {
+                        url: url,
+                        title: 'Hello',
+                        click: 'OK'
+                    }
+                });
+            });
+        });
+
+        describe('._viewportScroll', function () {
+            var old;
+
+            beforeEach(function (done) {
+                old = platform.needSpecialScroll;
+
+                // Let each test before the top of the top
+                viewport.setScrollTop(0);
+                setTimeout(done);
+            });
+            afterEach(function () {
+                platform.needSpecialScroll = old;
+            });
+
+            it('platform.needSpecialScroll', function () {
+                spy = sinon.spy(document.body, 'addEventListener');
+
+                platform.needSpecialScroll = true;
+                viewer._viewportScroll();
+
+                expect(spy).to.have.been.calledThrice;
+            });
+
+            it('platform.needSpecialScroll is false', function () {
+                spy = sinon.spy(window, 'addEventListener');
+
+                platform.needSpecialScroll = false;
+                viewer._viewportScroll();
+
+                expect(spy).to.have.been.calledThrice;
+            });
+
+            it('bind event', function () {
+                platform.needSpecialScroll = false;
+                spy = sinon.spy(window, 'addEventListener');
+                viewer._viewportScroll();
+
+                expect(spy).to.have.been.calledThrice;
+                expect(spy.getCall(0).args[0]).to.equal('touchstart');
+                expect(spy.getCall(0).args[1]).to.not.throw();
+                expect(spy.getCall(1).args[0]).to.equal('touchmove');
+                expect(spy.getCall(1).args[1]).to.not.throw();
+                expect(spy.getCall(2).args[0]).to.equal('touchend');
+                expect(spy.getCall(2).args[1]).to.not.throw();
+            });
+
+            it('trigger down', function () {
+                var message = sinon.spy(viewer, 'sendMessage');
+                platform.needSpecialScroll = false;
+                spy = sinon.spy(window, 'addEventListener');
+                viewer._viewportScroll();
+                sinon.stub(viewport, 'getScrollTop', function () {
+                    return 20;
+                });
+                sinon.stub(viewport, 'getScrollHeight', function () {
+                    return 100;
+                });
+
+                // exec
+                spy.getCall(2).args[1]();
+
+                viewport.getScrollTop.restore();
+                viewport.getScrollHeight.restore();
+                message.restore();
+
+                expect(message).to.have.been.calledOnce;
+                expect(message).to.deep.have.been.calledWith('mipscroll');
+                expect(message.getCall(0).args[1].direct).to.be.a('number');
+                expect(message.getCall(0).args[1].dist).to.be.a('number');
+            });
+
+            it('trigger up', function () {
+                var message = sinon.spy(viewer, 'sendMessage');
+                platform.needSpecialScroll = false;
+                spy = sinon.spy(window, 'addEventListener');
+                viewer._viewportScroll();
+
+                var getScrollTop = sinon.stub(viewport, 'getScrollTop');
+                var getScrollHeight = sinon.stub(viewport, 'getScrollHeight');
+
+                // exec down
+                getScrollTop.returns(50);
+                getScrollHeight.returns(100);
+                spy.getCall(2).args[1]();
+
+                // exec down
+                getScrollTop.returns(50);
+                getScrollHeight.returns(100);
+                spy.getCall(2).args[1]();
+
+                // exec up
+                getScrollTop.returns(20);
+                getScrollHeight.returns(100);
+                spy.getCall(2).args[1]();
+
+                getScrollTop.restore();
+                getScrollHeight.restore();
+                message.restore();
+
+                expect(message).to.deep.have.been.calledWith('mipscroll');
+                expect(message.getCall(1).args[1].direct).to.be.a('number');
+                expect(message.getCall(1).args[1].dist).to.be.a('number');
+            });
+        });
     });
 });
+/* eslint-enable max-nested-callbacks */

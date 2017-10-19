@@ -14,11 +14,11 @@
     "karma-chai-sinon": "^0.1.5",
     "karma-chrome-launcher": "^0.1.12",
     "karma-coverage": "^1.1.1",
-    "karma-coveralls": "^1.1.2",
     "karma-html-reporter": "^0.2.7",
     "karma-mocha": "^1.1.1",
     "karma-mocha-reporter": "^2.0.4",
     "karma-sauce-launcher": "^1.1.0",
+    "less": "^2.7.2",
     "mip-builder": "^1.2.1",
     "mip-processor": "^1.2.0",
     "mip-processor-amd": "^1.2.1",
@@ -30,10 +30,14 @@
   },
   "scripts": {
     "build": "node tools/build.js",
+    "build-mip-less": "lessc src/less/mip.less dist/mip.css",
     "dev": "node tools/build.js dev",
-    "test": "node tools/build.js test;karma start ./scripts/unit/karma.unit.conf.js",
+    "pretest": "npm run build-mip-less",
+    "test": "karma start ./scripts/unit/karma.unit.conf.js --reporters mocha",
+    "pretest:sl": "npm run build-mip-less",
     "test:sl": "karma start ./scripts/unit/karma.sauce.conf.js",
-    "test:co": "karma start ./scripts/unit/karma.cover.conf.js"
+    "test:co": "npm test -- --reporters mocha,coverage",
+    "test:watch": "npm test -- --auto-watch --no-single-run"
   },
   "repository": {
     "type": "git",

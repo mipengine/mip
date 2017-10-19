@@ -37,13 +37,6 @@ module.exports = function(config) {
         // possible values: 'dots', 'progress'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
         reporters: process.env.CI ? ['mocha', 'dots', 'saucelabs'] : ['mocha', 'progress', 'saucelabs'],
-        coverageReporter: {
-            dir: './test-coverage', // relative to basePath
-            reporters: [{
-                type: 'lcov',
-                dir: './coverage'
-            }]
-        },
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
