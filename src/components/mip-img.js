@@ -137,7 +137,7 @@ define(function (require) {
         }
         var ele = document.createElement('a');
         ele.href = img.src;
-        if (!/[\?&]mip_img_ori[&]*/.test(ele.search)) {
+        if (/(\?|&)mip_img_ori=1(&|$)/.test(ele.search)) {
             var search = ele.search || '?';
             ele.search += (/[\?&]$/.test(search) ? '' : '&') + 'mip_img_ori=1';
             img.src = ele.href;
