@@ -45,7 +45,7 @@ define(function (require) {
      */
     Hash.prototype.get = function (key) {
         var hv = this.hashTree[key];
-        return hv ? hv.value : '';
+        return hv && hv.value ? hv.value : '';
     };
 
     /**
@@ -89,34 +89,34 @@ define(function (require) {
     /**
      * get hash object from hash
      *
-     * @param  {string} hash hash
+     * @param  {string} originalHash originalHash
      * @return {Object} object of each hash
      */
-    Hash.prototype._getHashObj = function (hash) {
+    Hash.prototype._getHashObj = function (originalHash) {
         var hashObj = {};
-        if (!hash) {
+        if (!originalHash) {
             return hashObj;
         }
-        var hashString = hash.slice(hash.indexOf('#') + 1);
+        var hashString = originalHash.slice(originalHash.indexOf('#') + 1);
         var hashs = hashString.split('&');
         for (var key in hashs) {
             if (hashs.hasOwnProperty(key)) {
                 var item = hashs[key];
                 var hk = item;
                 var hv = '';
-                var index = item.indexOf('=');
+                var idx = item.indexOf('=');
                 // key invalid
-                if (index === 0) {
+                if (idx === 0) {
                     continue;
                 }
                 // key valid
-                if (index !== -1) {
-                    hk = item.substring(0, index);
-                    hv = item.slice(index + 1);
+                if (idx !== -1) {
+                    hk = item.substring(0, idx);
+                    hv = item.slice(idx + 1);
                 }
                 hashObj[hk] = {
                     value: hv,
-                    sep: index !== -1 ? '=' : ''
+                    sep: idx !== -1 ? '=' : ''
                 };
             }
         }

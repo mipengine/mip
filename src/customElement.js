@@ -1,3 +1,8 @@
+/**
+ * @file Custom Element
+ *
+ * @author xx
+ */
 define(function (require) {
     'use strict';
 
@@ -6,7 +11,8 @@ define(function (require) {
 
     /**
      * The constructor of  base class of custom element
-     * @param {MIPElement} element
+     *
+     * @param {MIPElement} element element
      * @class
      */
     function customElement(element) {
@@ -15,20 +21,21 @@ define(function (require) {
          * @public
          */
         this.element = element;
-        if (this.init){
+        if (this.init) {
             this.init();
         }
     }
 
     /**
      * Apply the fill content style to an element
-     * @param {HTMLElement} ele
-     * @param {boolean} isReplaced
+     *
+     * @param {HTMLElement} ele element
+     * @param {boolean} isReplaced whether replaced or not
      */
     customElement.prototype.applyFillContent = function (ele, isReplaced) {
         ele.classList.add('mip-fill-content');
         if (isReplaced) {
-          ele.classList.add('mip-replaced-content');
+            ele.classList.add('mip-replaced-content');
         }
     };
 
@@ -64,16 +71,22 @@ define(function (require) {
 
     /**
      * Control whether the MIPElement is rendred ahead.
-     * @return {Boolean} If the result is TRUE, the element will be rendred ahead.
+     *
+     * @return {boolean} If the result is TRUE, the element will be rendred ahead.
      */
-    customElement.prototype.prerenderAllowed = function () {return false;}
+    customElement.prototype.prerenderAllowed = function () {
+        return false;
+    };
 
     /**
      * Return the current component containing resources.
      * If it returns true, complete should be called.
-     * @return {Boolean}
+     *
+     * @return {boolean} whether has resource or not
      */
-    customElement.prototype.hasResources = function () {return false;}
+    customElement.prototype.hasResources = function () {
+        return false;
+    };
 
     /**
      * Called when the MIPElement is first inserted into the document.
@@ -82,6 +95,7 @@ define(function (require) {
 
     /**
      * Expend current element's attributes which selected by attrs to an other object.
+     *
      * @param {Array.<string>} attrs Attributes' name list
      * @param {Object} element The target element
      * @return {Object}
@@ -101,8 +115,9 @@ define(function (require) {
 
     /**
      * Add event actions such as `this.addEventAction("default open", handler)`
-     * @param {string} name
-     * @param {Function} handler
+     *
+     * @param {string} name event name
+     * @param {Function} handler event handler
      */
     customElement.prototype.addEventAction = function (/* name, handler */) {
         var evt = this._actionEvent;
@@ -116,6 +131,7 @@ define(function (require) {
 
     /**
      * Trigger the handlers had been added by `addEventAction` of an action
+     *
      * @param {string} action The action's name
      */
     customElement.prototype.executeEventAction = function (action) {
@@ -133,16 +149,18 @@ define(function (require) {
     };
 
     return {
+
         /**
          * Create a class of a new type mip element
+         *
          * @return {Function}
          */
         create: function () {
             function impl(element) {
                 customElement.call(this, element);
-            };
+            }
             impl.prototype = Object.create(customElement.prototype);
             return impl;
         }
-    }
+    };
 });

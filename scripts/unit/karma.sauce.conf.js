@@ -20,6 +20,7 @@ var customLaunchers = {
     sl_chrome: {
         base: 'SauceLabs',
         browserName: 'chrome',
+        platform: 'Windows 7'
     },
     sl_mac_safari: {
         base: 'SauceLabs',
@@ -64,11 +65,12 @@ module.exports = function(config) {
             connectOptions: {
                 'no-ssl-bump-domains': 'all' // Ignore SSL error on Android emulator
             },
-            build: buildId
-        },
+            build: buildId,
 
-        captureTimeout: 300000,
-        browserNoActivityTimeout: 300000
+            // use travis + addons.jwt to connect
+            startConnect: false,
+            tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER
+        }
     });
 
     config.set(options);
