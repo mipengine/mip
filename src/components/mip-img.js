@@ -122,8 +122,8 @@ define(function (require) {
 
         // Http header accept has 'image/webp', But browser don't support
         // Set image visibility hidden in order to hidden extra style
-        var errHandle = errorHandle.bind(null, img);
-        img.addEventListener('error', errHandle, false);
+        self.errHandle = errorHandle.bind(null, img);
+        img.addEventListener('error', self.errHandle, false);
     };
 
     /**
@@ -137,13 +137,12 @@ define(function (require) {
         }
         var ele = document.createElement('a');
         ele.href = img.src;
-        if (/[\?&]mip_img_ori[&]*/.test(ele.search)) {
-            return;
+        if (!/[\?&]mip_img_ori[&]*/.test(ele.search)) {
+            var search = ele.search || '?';
+            ele.search += (/[\?&]$/.test(search) ? '' : '&') + 'mip_img_ori=1';
+            img.src = ele.href;
         }
-        var search = ele.search || '?';
-        ele.search += (/[\?&]$/.test(search) ? '' : '&') + 'mip_img_ori=1';
-        img.src = ele.href;
-        img.removeEventListener('error', errorHandle);
+        img.removeEventListener('error', self.errHandle);
     };
 
     function firstInviewCallback() {
