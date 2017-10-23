@@ -14,6 +14,7 @@ define(function (require) {
     var naboo = require('naboo');
     var viewport = require('viewport');
     var viewer = require('viewer');
+    var errHandle;
 
     function getPopupImgPos(imgWidth, imgHeight) {
         var width = viewport.getWidth();
@@ -115,7 +116,6 @@ define(function (require) {
     }
 
     var bindEvent = function (element, img) {
-        var self = this;
         img.addEventListener('load', function () {
             element.classList.add('mip-img-loaded');
             element.customElement.resourcesComplete();
@@ -123,8 +123,8 @@ define(function (require) {
 
         // Http header accept has 'image/webp', But browser don't support
         // Set image visibility hidden in order to hidden extra style
-        self.errHandle = errorHandle.bind(null, img);
-        img.addEventListener('error', self.errHandle, false);
+        errHandle = errorHandle.bind(null, img);
+        img.addEventListener('error', errHandle, false);
     };
 
     /**
@@ -136,7 +136,6 @@ define(function (require) {
         if (!viewer.isIframed) {
             return;
         }
-        var self = this;
         var ele = document.createElement('a');
         ele.href = img.src;
         if (!/(\?|&)mip_img_ori=1(&|$)/.test(ele.search)) {
@@ -144,7 +143,7 @@ define(function (require) {
             ele.search += (/[\?&]$/.test(search) ? '' : '&') + 'mip_img_ori=1';
             img.src = ele.href;
         }
-        img.removeEventListener('error', self.errHandle);
+        img.removeEventListener('error', errHandle);
     };
 
     function firstInviewCallback() {
