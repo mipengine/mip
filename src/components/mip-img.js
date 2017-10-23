@@ -115,6 +115,7 @@ define(function (require) {
     }
 
     var bindEvent = function (element, img) {
+        var self = this;
         img.addEventListener('load', function () {
             element.classList.add('mip-img-loaded');
             element.customElement.resourcesComplete();
@@ -135,6 +136,7 @@ define(function (require) {
         if (!viewer.isIframed) {
             return;
         }
+        var self = this;
         var ele = document.createElement('a');
         ele.href = img.src;
         if (!/(\?|&)mip_img_ori=1(&|$)/.test(ele.search)) {
