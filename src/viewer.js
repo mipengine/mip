@@ -38,6 +38,13 @@ define(function (require) {
             // handle preregistered  extensions
             this.handlePreregisteredExtensions();
 
+            // add normal scroll class to body. except ios in iframe.
+            // Patch for ios+iframe is default in mip.css
+            if (!platform.needSpecialScroll) {
+                document.documentElement.classList.add('mip-i-android-scroll');
+                document.body.classList.add('mip-i-android-scroll');
+            }
+
             if (this.isIframed) {
                 this.patchForIframe();
                 // proxy links
@@ -62,14 +69,6 @@ define(function (require) {
          * Patch for iframe
          */
         patchForIframe: function () {
-            // When page in an iframe and browser is IOS,
-            // page can not be scrollable. So we need
-            // set the style to be `height: 100%; overflow: auto`
-            // to solve this problem.
-            if (!platform.needSpecialScroll) {
-                document.documentElement.classList.add('mip-i-android-scroll');
-                document.body.classList.add('mip-i-android-scroll');
-            }
 
             // Fix iphone 5s UC and ios 9 safari bug.
             // While the back button is clicked,

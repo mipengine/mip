@@ -32,11 +32,11 @@ define(function (require) {
                 var hasClass = document.body.className.match('mip-i-android-scroll');
                 return !!hasClass;
             };
-            viewer.patchForIframe();
+            viewer.init();
             var needSpecialhasNormalClass = normalScroll();
 
             util.platform.needSpecialScroll = false;
-            viewer.patchForIframe();
+            viewer.init();
 
             expect(needSpecialhasNormalClass).to.be.false;
             expect(normalScroll()).to.be.true;
