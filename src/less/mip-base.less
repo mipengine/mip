@@ -10,14 +10,14 @@ body {
     -webkit-box-sizing: border-box;
 }
 html, body {
-    height: 100%;
+    height: 100% !important;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     position: relative;
 }
 html.mip-i-android-scroll,
 body.mip-i-android-scroll {
-    height: auto;
+    height: auto !important;
     overflow-y: visible;
     -webkit-overflow-scrolling: touch;
     position: static;
@@ -129,7 +129,7 @@ imip-sizer {
 .mip-fill-content {
     display: block;
     min-width: 100%;
-    max-width: 100%; 
+    max-width: 100%;
     height: 100%;
     margin: auto;
 }
@@ -149,5 +149,5 @@ imip-sizer {
 
 .mip-hidden {
     visibility: hidden;
-    overflow: hidden;    
+    overflow: hidden;
 }
