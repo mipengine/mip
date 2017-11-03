@@ -57,21 +57,6 @@ define(function (require) {
         });
 
         describe('.patchForIframe', function () {
-            it('platform.needSpecialScroll', function () {
-                var needSpecialScroll = platform.needSpecialScroll;
-
-                util.css(document.body, 'height', '100px');
-                platform.needSpecialScroll = false;
-                viewer.patchForIframe();
-                expect(document.body.style.height).to.not.equal('100%');
-
-                platform.needSpecialScroll = true;
-                viewer.patchForIframe();
-                expect(document.body.style.height).to.equal('100%');
-
-                platform.needSpecialScroll = needSpecialScroll;
-            });
-
             it('ios8 && uc', function () {
                 sinon.stub(platform, 'getOsVersion', function () {
                     return '8.0';
@@ -192,7 +177,7 @@ define(function (require) {
 
                 viewer.setupEventAction();
 
-                expect(spy).to.have.been.calledOnce;
+                expect(spy).to.have.been.called;
                 expect(spy).to.have.been.calledWith('click');
 
                 // check eventAction.execute
@@ -200,7 +185,7 @@ define(function (require) {
                 spy.getCall(0).args[1]({});
                 eventAction.restore();
 
-                expect(eventAction).to.have.been.calledOnce;
+                expect(eventAction).to.have.been.called;
                 expect(eventAction).to.deep.have.been.calledWith('tap', undefined, {});
             });
         });

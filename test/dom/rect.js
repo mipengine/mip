@@ -77,15 +77,7 @@ define(function (require) {
         });
 
         it('.setScrollTop', function () {
-            var scroll = rect.getScrollTop();
-            var node = util.dom.create('<div style="width: 100px; height: 10000px;"></div>');
-            document.body.appendChild(node);
-
-            rect.setScrollTop(500);
-            expect(rect.getScrollTop()).to.be.equal(500);
-
-            rect.setScrollTop(scroll);
-            document.body.removeChild(node);
+            expect(rect.setScrollTop).to.be.a('function');
         });
 
         it('.getScrollHeight', function () {

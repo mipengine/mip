@@ -13,6 +13,7 @@ define(function (require) {
 
     describe('event-action', function () {
         it('white list', function () {
+            var MIP = window.MIP = window.MIP || {};
             MIP.setData = function () {};
             MIP.$set = function () {};
             var action = new EventAction({
