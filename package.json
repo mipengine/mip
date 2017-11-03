@@ -1,6 +1,6 @@
 {
   "name": "mip",
-  "version": "1.0.64",
+  "version": "1.0.68",
   "description": "mobile instant page",
   "main": "dist/mip.js",
   "dependencies": {},
@@ -41,11 +41,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:mipengine/mip.git"
+    "url": "git+https://github.com/mipengine/mip.git"
   },
   "keywords": [
     "mip"
   ],
   "author": "The authors of MIP",
-  "license": "MIT"
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mipengine/mip/issues"
+  },
+  "homepage": "https://github.com/mipengine/mip#readme"
 }

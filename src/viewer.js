@@ -38,6 +38,13 @@ define(function (require) {
             // handle preregistered  extensions
             this.handlePreregisteredExtensions();
 
+            // add normal scroll class to body. except ios in iframe.
+            // Patch for ios+iframe is default in mip.css
+            if (!platform.needSpecialScroll) {
+                document.documentElement.classList.add('mip-i-android-scroll');
+                document.body.classList.add('mip-i-android-scroll');
+            }
+
             if (this.isIframed) {
                 this.patchForIframe();
                 // proxy links
@@ -62,19 +69,12 @@ define(function (require) {
          * Patch for iframe
          */
         patchForIframe: function () {
-            // When page in an iframe and browser is IOS, page can not be scrollable. So we need
-            // set the style to be `height: 100%; overflow: auto` for solving this problem.
-            if (platform.needSpecialScroll) {
-                css([document.documentElement, document.body], {
-                    'height': '100%',
-                    'overflow-y': 'auto',
-                    '-webkit-overflow-scrolling': 'touch'
-                });
-                css(document.body, 'position', 'relative');
-            }
 
-            // Fix iphone 5s UC and ios 9 safari bug. While the back button is clicked, the cached page has some problems.
-            // So we are forced to load the page in iphone 5s UC and ios 9 safari.
+            // Fix iphone 5s UC and ios 9 safari bug.
+            // While the back button is clicked,
+            // the cached page has some problems.
+            // So we are forced to load the page in iphone 5s UC
+            // and iOS 9 safari.
             var iosVersion = platform.getOsVersion();
             iosVersion = iosVersion ? iosVersion.split('.')[0] : '';
             var needBackReload = (iosVersion == '8' && platform.isUc() && screen.width === 320)
@@ -124,6 +124,7 @@ define(function (require) {
             var eventAction = this.eventAction = new EventAction();
             if (hasTouch) {
                 // In mobile phone, bind Gesture-tap which listen to touchstart/touchend event
+                /* istanbul ignore next */
                 this._gesture.on('tap', function (event) {
                     eventAction.execute('tap', event.target, event);
                 });
@@ -133,6 +134,11 @@ define(function (require) {
                     eventAction.execute('tap', event.target, event);
                 }, false);
             }
+
+            /* istanbul ignore next */
+            util.event.delegate(document, 'input', 'change', function (e) {
+                eventAction.execute('change', event.target, event);
+            });
         },
 
         /**

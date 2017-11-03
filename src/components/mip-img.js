@@ -14,6 +14,7 @@ define(function (require) {
     var naboo = require('naboo');
     var viewport = require('viewport');
     var viewer = require('viewer');
+    var errHandle;
 
     function getPopupImgPos(imgWidth, imgHeight) {
         var width = viewport.getWidth();
@@ -122,7 +123,7 @@ define(function (require) {
 
         // Http header accept has 'image/webp', But browser don't support
         // Set image visibility hidden in order to hidden extra style
-        var errHandle = errorHandle.bind(null, img);
+        errHandle = errorHandle.bind(null, img);
         img.addEventListener('error', errHandle, false);
     };
 
@@ -137,13 +138,12 @@ define(function (require) {
         }
         var ele = document.createElement('a');
         ele.href = img.src;
-        if (/[\?&]mip_img_ori[&]*/.test(ele.search)) {
-            return;
+        if (!/(\?|&)mip_img_ori=1(&|$)/.test(ele.search)) {
+            var search = ele.search || '?';
+            ele.search += (/[\?&]$/.test(search) ? '' : '&') + 'mip_img_ori=1';
+            img.src = ele.href;
         }
-        var search = ele.search || '?';
-        ele.search += (/[\?&]$/.test(search) ? '' : '&') + 'mip_img_ori=1';
-        img.src = ele.href;
-        img.removeEventListener('error', errorHandle);
+        img.removeEventListener('error', errHandle);
     };
 
     function firstInviewCallback() {
@@ -171,6 +171,13 @@ define(function (require) {
     }
 
     customElem.prototype.firstInviewCallback = firstInviewCallback;
+
+    customElem.prototype.attributeChangedCallback = function (attributeName, oldValue, newValue, namespace) {
+        if (attributeName === 'src' && oldValue !== newValue) {
+            this.element.querySelector('img').src = newValue;
+        }
+    };
+
     customElem.prototype.hasResources = function () {
         return true;
     };
