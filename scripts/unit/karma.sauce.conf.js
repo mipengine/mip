@@ -63,7 +63,6 @@ module.exports = function(config) {
                 'no-ssl-bump-domains': 'all' // Ignore SSL error on Android emulator
             },
             build: buildId,
-            recordVideo: false,
             public: 'public',
 
             // use travis + addons.jwt to connect
