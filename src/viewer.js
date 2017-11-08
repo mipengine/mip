@@ -215,7 +215,8 @@ define(function (require) {
                         lastDirect = dist/Math.abs(dist);
                         self.sendMessage('mipscroll', { 'direct': direct, 'dist': dist});
                     }
-                }else if (scrollTop === 0) {
+                } 
+                else if (scrollTop === 0) {
                     self.sendMessage('mipscroll', { 'direct': 0 });
                 }
             }
