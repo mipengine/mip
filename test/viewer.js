@@ -552,6 +552,10 @@ define(function (require) {
                 getScrollHeight.returns(100);
                 spy.getCall(2).args[1]();
 
+                 // exec up
+                getScrollTop.returns(0);
+                spy.getCall(2).args[1]();
+
                 getScrollTop.restore();
                 getScrollHeight.restore();
                 message.restore();
