@@ -69,10 +69,10 @@ define(function (require) {
             if (!action) {return};
             switch (action.handler) {
                 case 'setData':
-                    MIP.setData(action.arg);
+                    MIP.setData(action, 1);
                     break;
                 case '$set':
-                    MIP.$set(action.arg);
+                    MIP.$set(action, 1);
                     break;
             }
         },
