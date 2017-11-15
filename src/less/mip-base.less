@@ -19,8 +19,13 @@ html.mip-i-android-scroll,
 body.mip-i-android-scroll {
     height: auto !important;
     overflow-y: visible;
-    -webkit-overflow-scrolling: touch;
     position: static;
+}
+html.mip-no-scroll,
+html.mip-no-scroll > body {
+    height: 100% !important;
+    position: relative;
+    overflow: hidden;
 }
 a {
     text-decoration : none;
