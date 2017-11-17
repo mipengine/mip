@@ -7,13 +7,13 @@
 define(function (require) {
     var customElem = require('customElement').create();
     var viewer = require('viewer');
+    var util = require('util');
 
     var videoAttributes = [
         'ads',
         'src',
         'controls',
         'loop',
-        'autoplay',
         'autoplay',
         'autobuffer',
         'crossorigin',
@@ -56,6 +56,7 @@ define(function (require) {
         else {
             this.videoElement = this.renderPlayElsewhere();
         }
+
         this.applyFillContent(this.videoElement, true);
     };
 
@@ -65,10 +66,11 @@ define(function (require) {
         for (var k in this.attributes) {
             if (this.attributes.hasOwnProperty(k) && videoAttributes.indexOf(k) > -1) {
                 videoEl.setAttribute(k, this.attributes[k]);
-                videoEl.setAttribute('playsinline', 'playsinline');
-                videoEl.setAttribute('webkit-playsinline', 'webkit-playsinline');
             }
         }
+
+        videoEl.setAttribute('playsinline', 'playsinline');
+        videoEl.setAttribute('webkit-playsinline', 'webkit-playsinline');
         Array.prototype.slice.apply(this.element.childNodes).forEach(function (node) {
             // FIXME: mip layout related, remove this!
             if (node.nodeName.toLowerCase() === 'mip-i-space') {
@@ -94,7 +96,7 @@ define(function (require) {
         playBtn.setAttribute('class', 'mip-video-playbtn');
         videoEl.appendChild(playBtn);
         videoEl.dataset.videoSrc = this.attributes.src;
-        videoEl.dataset.videoPoster = this.attributes.poster;
+        videoEl.dataset.videoPoster = util.parseCacheUrl(this.attributes.poster);
         videoEl.addEventListener('click', sendVideoMessage, false);
 
         // make sourceList, send to outer iframe
