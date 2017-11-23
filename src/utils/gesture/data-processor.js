@@ -38,7 +38,7 @@ define(function () {
             var data = {};
             var now = Date.now();
             var touches = event.touches.length ? event.touches : event.changedTouches;
-            if (event.type === 'touchstart') {
+            if (event.type === 'touchstart' || event.type === 'touchend') {
                 this.startCenter = this.getCenter(touches);
                 this.startTime = now;
                 this.startData = data;
