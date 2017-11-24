@@ -62,17 +62,14 @@ define(function(require) {
             expect(!!LocalStorage.get(name)).to.be.false;
         });
 
-        // 只针对谷歌浏览器测试
-        if (platform.isChrome() && !platform.isIos()) {
-            it('rmExpires', function(done) {
-                LocalStorage.set(expireName, expireNameValue, 1);
-                setTimeout(function() {
-                    LocalStorage.rmExpires();
-                    expect(!!LocalStorage.get(expireName)).to.be.false;
-                    done();
-                }, 50);
-            });
-        }
+        // it('rmExpires', function(done) {
+        //     LocalStorage.set(expireName, expireNameValue, 1);
+        //     setTimeout(function() {
+        //         LocalStorage.rmExpires();
+        //         expect(!!LocalStorage.get(expireName)).to.be.false;
+        //         done();
+        //     }, 50);
+        // });
 
         it('clear', function() {
             LocalStorage.clear();
