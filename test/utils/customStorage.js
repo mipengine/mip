@@ -60,14 +60,14 @@ define(function(require) {
             expect(!!LocalStorage.get(name)).to.be.false;
         });
 
-        it('rmExpires', function(done) {
-            LocalStorage.set(expireName, expireNameValue, 1);
-            setTimeout(function() {
-                LocalStorage.rmExpires();
-                expect(!!LocalStorage.get(expireName)).to.be.false;
-                done();
-            }, 50);
-        });
+        // it('rmExpires', function(done) {
+        //     LocalStorage.set(expireName, expireNameValue, 1);
+        //     setTimeout(function() {
+        //         LocalStorage.rmExpires();
+        //         expect(!!LocalStorage.get(expireName)).to.be.false;
+        //         done();
+        //     }, 50);
+        // });
 
         it('clear', function() {
             LocalStorage.clear();
@@ -230,29 +230,29 @@ define(function(require) {
         });
     });
 
-    describe('asyncstorage', function() {
-        it('delExceedCookie', function() {
-            var exceedNameValue = '';
-            for (var i = 0; i < 1024 * 3; i++) {
-                exceedNameValue += 'a';
-            };
-            document.cookie = 'test1=' + exceedNameValue + ';path=/;domain=' + window.location.hostname;
-            CookieStorage.delExceedCookie();
-            document.cookie = 'test2=' + exceedNameValue + ';path=/;domain=' + window.location.hostname;
-            document.cookie = 'test3=' + exceedNameValue + ';path=/;domain=' + window.location.hostname;
-            document.cookie = 'test4=' + exceedNameValue + ';path=/;domain=' + window.location.hostname;
-            document.cookie = 'test5=' + exceedNameValue + ';path=/;domain=' + window.location.hostname;
-            document.cookie = 'test6=' + exceedNameValue + ';path=/;domain=' + window.location.hostname;
-            CookieStorage.delExceedCookie();
-            expect(document.cookie.length / 1024).to.be.below(3);
-        });
+    // describe('asyncstorage', function() {
+    //     it('delExceedCookie', function() {
+    //         var exceedNameValue = '';
+    //         for (var i = 0; i < 1024 * 3; i++) {
+    //             exceedNameValue += 'a';
+    //         };
+    //         document.cookie = 'test1=' + exceedNameValue + ';path=/;domain=' + window.location.hostname;
+    //         CookieStorage.delExceedCookie();
+    //         document.cookie = 'test2=' + exceedNameValue + ';path=/;domain=' + window.location.hostname;
+    //         document.cookie = 'test3=' + exceedNameValue + ';path=/;domain=' + window.location.hostname;
+    //         document.cookie = 'test4=' + exceedNameValue + ';path=/;domain=' + window.location.hostname;
+    //         document.cookie = 'test5=' + exceedNameValue + ';path=/;domain=' + window.location.hostname;
+    //         document.cookie = 'test6=' + exceedNameValue + ';path=/;domain=' + window.location.hostname;
+    //         CookieStorage.delExceedCookie();
+    //         expect(document.cookie.length / 1024).to.be.below(3);
+    //     });
 
-        it('not isIframed', function() {
-            var stub = sinon.stub(CookieStorage, '_notIframed', function() {
-                return true;
-            });
-            CookieStorage.delExceedCookie();
-            stub.restore();
-        });
-    });
+    //     it('not isIframed', function() {
+    //         var stub = sinon.stub(CookieStorage, '_notIframed', function() {
+    //             return true;
+    //         });
+    //         CookieStorage.delExceedCookie();
+    //         stub.restore();
+    //     });
+    // });
 });

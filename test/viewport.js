@@ -103,6 +103,7 @@ define(function (require) {
 
                 spy.returns(10);
                 window.dispatchEvent(new Event('scroll'));
+                document.body.dispatchEvent(new Event('scroll'));
             });
 
             it('resize', function (done) {
@@ -124,6 +125,7 @@ define(function (require) {
 
                 spy.returns(10);
                 window.dispatchEvent(new Event('scroll'));
+                document.body.dispatchEvent(new Event('scroll'));
             });
 
             it('mock multiple scroll', function (done) {
