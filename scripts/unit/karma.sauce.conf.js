@@ -19,6 +19,24 @@ var customLaunchers = {
         platformVersion: '7.1',
         platformName: 'Android'
     },
+    sl_ios_10: {
+        base: 'SauceLabs',
+        browserName: 'Safari',
+        appiumVersion: '1.6.4',
+        deviceName: 'iPhone 7 Plus',
+        deviceOrientation: 'portrait',
+        platformVersion: '10.3',
+        platformName: 'iOS'
+    },
+    sl_ios_9: {
+        base: 'SauceLabs',
+        browserName: 'Safari',
+        appiumVersion: '1.6.4',
+        deviceName: 'iPhone 6 Plus',
+        deviceOrientation: 'portrait',
+        platformVersion: '9.3',
+        platformName: 'iOS'
+    },
 
     sl_microsoftedge: {
         base: 'SauceLabs',
