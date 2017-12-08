@@ -107,36 +107,39 @@ define(function (require) {
             expect(spy).to.have.been.calledWith('show');
         });
 
-        describe('.sendMessage', function () {
-            var isIframed;
+        // 只针对谷歌浏览器测试 sendMessage ，因为其他浏览器有的不支持 mock window.parent.postMessage
+        if (platform.isChrome() && !platform.isIos()) {
+            describe('.sendMessage', function () {
+                var isIframed;
 
-            beforeEach(function () {
-                isIframed = viewer.isIframed;
-                spy = sinon.spy(window.parent, 'postMessage');
+                beforeEach(function () {
+                    isIframed = viewer.isIframed;
+                    spy = sinon.spy(window.parent, 'postMessage');
+                });
+
+                afterEach(function () {
+                    viewer.isIframed = isIframed;
+                });
+
+                it('isIframed', function () {
+                    viewer.isIframed = true;
+                    viewer.sendMessage('name', 'MIP');
+
+                    expect(spy).to.have.been.calledOnce;
+                    expect(spy).to.deep.have.been.calledWith({
+                        event: 'name',
+                        data: 'MIP'
+                    }, '*');
+                });
+
+                it('isIframed is false', function () {
+                    viewer.isIframed = false;
+                    viewer.sendMessage('name', 'MIP');
+
+                    expect(spy).to.not.have.been.called;
+                });
             });
-
-            afterEach(function () {
-                viewer.isIframed = isIframed;
-            });
-
-            it('isIframed', function () {
-                viewer.isIframed = true;
-                viewer.sendMessage('name', 'MIP');
-
-                expect(spy).to.have.been.calledOnce;
-                expect(spy).to.deep.have.been.calledWith({
-                    event: 'name',
-                    data: 'MIP'
-                }, '*');
-            });
-
-            it('isIframed is false', function () {
-                viewer.isIframed = false;
-                viewer.sendMessage('name', 'MIP');
-
-                expect(spy).to.not.have.been.called;
-            });
-        });
+        }
 
         describe('.setupEventAction', function () {
             beforeEach(function () {
