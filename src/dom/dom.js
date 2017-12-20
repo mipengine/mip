@@ -122,8 +122,8 @@ define(function (require) {
     }
 
     /**
-     * Dom Ready 事件回调
-     * @param {Function} callback 回调
+     * Dom Ready Callback
+     * @param {Function} callback
      * @param {Object} doc document
      * @param {Object} win window
      */
@@ -144,7 +144,6 @@ define(function (require) {
         win.addEventListener('load', handler, false);
     }
 
-
     /**
      * Waits until the Document is ready. Then the
      * callback is executed.
@@ -152,7 +151,6 @@ define(function (require) {
      * @param {Function} cb callback
      */
     function waitDocumentReady(cb) {
-        // 由于在最开始执行，MIP.hash还没有执行
         if (location.hash.indexOf('sample=mip_async1') > -1) {
             return domready.apply(null, [].slice.call(arguments));
         }
