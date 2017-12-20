@@ -153,7 +153,7 @@ define(function (require) {
      */
     function waitDocumentReady(cb) {
         // 由于在最开始执行，MIP.hash还没有执行
-        if (location.hash.indexOf('sample=1') > -1) {
+        if (location.hash.indexOf('sample=mip_async1') > -1) {
             return domready.apply(null, [].slice.call(arguments));
         }
 

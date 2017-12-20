@@ -79,7 +79,7 @@ define(function (require) {
             var hash;
             before(function () {
                 hash = location.hash;
-                location.hash = 'sample=1';
+                location.hash = 'sample=mip_async1';
             });
             after(function () {
                 location.hash = hash;
