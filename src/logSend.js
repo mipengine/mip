@@ -1,6 +1,7 @@
 /**
  * @file logSend.js
  * @description 数据上报处理
+ * @author schoeu
  */
 
 define(function () {
