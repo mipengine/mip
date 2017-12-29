@@ -1,9 +1,10 @@
 /**
  * @file monitor.js
  * @description 监控数据监控处理
+ * @author schoeu
  */
-'use strict';
 
+'use strict';
 define(function (require) {
     var ls = require('./logSend');
     var tags = require('./coreTags');
@@ -13,7 +14,7 @@ define(function (require) {
      * MIP错误捕获处理
      * @param {Object} e 错误事件对象
      */
-    function errorHandle (e) {
+    function errorHandle(e) {
         e = e || {};
         // 报错文件请求路径, 跨域js文件中错误无信息暂不上报
         var filename = e.filename || '';
@@ -30,7 +31,7 @@ define(function (require) {
 
         // 非百度cnd域名忽略
         if (!/(c\.mipcdn|mipcache\.bdstatic)\.com\/static\/v1/.test(filename)) {
-            return
+            return;
         }
 
         var tagInfo = /\/(mip-.+)\//g.exec(filename) || [];
@@ -40,10 +41,10 @@ define(function (require) {
             tags = [];
         }
 
-        tags = tags.filter(function(it) {
+        tags = tags.filter(function (it) {
             it = it || '';
             return !!it.trim();
-            });
+        });
 
         var sampling = Math.random() <= rate;
 
@@ -57,7 +58,7 @@ define(function (require) {
                 col: colno || (window.event && window.event.errorCharacter) || 0,
                 href: window.location.href
             };
-            setTimeout(function() {
+            setTimeout(function () {
                 ls.sendLog('mip-stability', logData);
             }, 0);
             // 其他善后处理
