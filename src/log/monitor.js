@@ -59,7 +59,7 @@ define(function (require) {
                 href: window.location.href
             };
             setTimeout(function () {
-                ls.sendLog('mip-stability', logData);
+                ls.sendLog('mip-log', logData);
             }, 0);
             // 其他善后处理
         }

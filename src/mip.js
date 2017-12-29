@@ -1,6 +1,6 @@
 define(function (require) {
     // 稳定性监控
-    require('./monitor');
+    require('./log/monitor');
     require('zepto');
     require('naboo');
 
