@@ -16,7 +16,9 @@ define(function () {
         if (!type) {
             return;
         }
-        this.data.event = type;
+        msg = msg || {};
+        msg.type = type;
+        this.data.event = 'log';
         this.data.data = msg || {};
 
         if (window !== window.top) {
