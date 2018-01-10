@@ -4,8 +4,8 @@
  * @author schoeu
  */
 
-'use strict';
 define(function (require) {
+    'use strict';
     var ls = require('./logSend');
     var tags = require('./coreTags');
     var rate = 0.1;
