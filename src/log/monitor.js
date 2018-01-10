@@ -10,6 +10,15 @@ define(function (require) {
     var tags = require('./coreTags');
     var rate = 0.1;
 
+    if (!Array.isArray(tags)) {
+        tags = [];
+    }
+
+    tags = tags.filter(function (it) {
+        it = it || '';
+        return !!it.trim();
+    });
+
     /**
      * MIP错误捕获处理
      * @param {Object} e 错误事件对象
@@ -36,15 +45,6 @@ define(function (require) {
 
         var tagInfo = /\/(mip-.+)\//g.exec(filename) || [];
         var tagName = tagInfo[1] || '';
-
-        if (!Array.isArray(tags)) {
-            tags = [];
-        }
-
-        tags = tags.filter(function (it) {
-            it = it || '';
-            return !!it.trim();
-        });
 
         var sampling = Math.random() <= rate;
 
