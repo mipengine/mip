@@ -1,4 +1,6 @@
 define(function (require) {
+    // 稳定性监控
+    require('./log/monitor');
     require('zepto');
     require('naboo');
 
@@ -46,7 +48,7 @@ define(function (require) {
         var CustomStorage = require('./utils/customStorage');
         var sleepWakeModule = require('./sleepWakeModule');
 
-        
+
 
         /* mip frame */
         var layout = require('./layout');
@@ -71,11 +73,11 @@ define(function (require) {
         require('./components/mip-iframe');
         var components = require('./components/index');
 
-        
+
         Mip.css = {};
         Mip.viewer = viewer;
         Mip.viewport = viewport;
-        Mip.prerenderElement = resources.prerenderElement;    
+        Mip.prerenderElement = resources.prerenderElement;
         Mip.registerMipElement = function (name, customClass, css) {
             if (templates.isTemplateClass(customClass)) {
                 templates.register(name, customClass);
@@ -84,7 +86,7 @@ define(function (require) {
             }
         };
         MIP.hash = hash;
- 
+
 
         // Initialize sleepWakeModule
         sleepWakeModule.init();
