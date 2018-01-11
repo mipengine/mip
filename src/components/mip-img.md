@@ -67,7 +67,7 @@ mip-img 用来支持在 mip 中增加图片内容。
 ### width
 
 说明：宽度，不是实际宽度，与高度属性配合来设置图片比例，详见[组件布局](https://www.mipengine.org/doc/3-widget/11-widget-layout.html)   
-必选项：是   
+必选项：否   
 类型：数字  
 单位：无  
 默认值：无
@@ -75,7 +75,7 @@ mip-img 用来支持在 mip 中增加图片内容。
 ### height
 
 说明：高度，不是实际高度，与宽度属性配合来设置图片比例，详见[组件布局](https://www.mipengine.org/doc/3-widget/11-widget-layout.html)  
-必选项：是   
+必选项：否   
 类型：数字    
 单位：无  
 默认值：无
