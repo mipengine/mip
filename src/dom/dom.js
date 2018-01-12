@@ -145,23 +145,14 @@ define(function (require) {
     }
 
     /**
-     * 当前页面的脚本是否是 async 插入，依据的页面中第一个 <script> 标签是否有 async 属性
-     *
-     * @type {boolean}
-     */
-    var isAsync = null;
-
-    /**
      * Waits until the Document is ready. Then the
      * callback is executed.
      *
      * @param {Function} cb callback
      */
     function waitDocumentReady(cb) {
-        if (isAsync === null) {
-            isAsync = !!document.getElementsByTagName('script')[0].async;
-        }
-        if (isAsync) {
+        // 当前页面的脚本是否是 async 插入，依据的页面中第一个 <script> 标签是否有 async 属性
+        if (document.getElementsByTagName('script')[0].async) {
             return domready.apply(null, [].slice.call(arguments));
         }
 
