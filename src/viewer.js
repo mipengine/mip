@@ -242,11 +242,11 @@ define(function (require) {
                 }
                 // For mail、phone、market、app ...
                 // Safari failed when iframed. So add the `target="_top"` to fix it. except uc and tel.
+                /* istanbul ignore next */
                 if (platform.isUc() && telRegexp.test(this.href)) {
-                    this.setAttribute('target', '_self');
                     return;
                 }
-                else if (!regexp.test(this.href)) {
+                if (!regexp.test(this.href)) {
                     this.setAttribute('target', '_top');
                     return;
                 }
