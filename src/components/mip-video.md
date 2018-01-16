@@ -33,7 +33,7 @@ mip-video 用来支持在 mip 中增加视频内容，是HTML `<video>`的直接
 
 ### 失效提示
 
-对于不支持HTML5`<video>`的环境，`<mip-video>`同样可以显示提示信息。`<mip-video>`内部的DOM（`<source>`除外）将会在不支持`<video>`标签的浏览器中显示。
+对于不支持 HTML5`<video>`的环境，`<mip-video>`同样可以显示提示信息。`<mip-video>`内部的DOM（`<source>`除外）将会在不支持`<video>`标签的浏览器中显示。
 
 ```html
 <mip-video controls layout="responsive" width="640" height="360" 
@@ -70,7 +70,7 @@ mip-video 用来支持在 mip 中增加视频内容，是HTML `<video>`的直接
 说明：视频源地址，必须是https资源  
 必选项：否  
 类型：字符串  
-取值范围：URL
+取值范围：URL  
 默认值：无
 
 ### poster
