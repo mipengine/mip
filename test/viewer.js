@@ -311,7 +311,7 @@ define(function (require) {
                     href: 'tel: 10010',
                     setAttribute: function (key, value) {
                         expect(key).to.equal('target');
-                        expect(value).to.equal('_top');
+                        expect(value).to.equal('_self');
                         done();
                     }
                 })).to.be.undefined;

@@ -235,13 +235,18 @@ define(function (require) {
          _proxyLink: function () {
             var self = this;
             var regexp = /^http/;
+            var telRegexp = /^tel:/;
             util.event.delegate(document, 'a', 'click', function (e) {
                 if (!this.href) {
                     return;
                 }
                 // For mail、phone、market、app ...
                 // Safari failed when iframed. So add the `target="_top"` to fix it.
-                if (!regexp.test(this.href)) {
+                if (telRegexp.test(this.href)) {
+                    this.setAttribute('target', '_self');
+                    return;
+                }
+                else if (!regexp.test(this.href)) {
                     this.setAttribute('target', '_top');
                     return;
                 }
