@@ -241,8 +241,8 @@ define(function (require) {
                     return;
                 }
                 // For mail、phone、market、app ...
-                // Safari failed when iframed. So add the `target="_top"` to fix it.
-                if (telRegexp.test(this.href)) {
+                // Safari failed when iframed. So add the `target="_top"` to fix it. except uc and tel.
+                if (platform.isUc() && telRegexp.test(this.href)) {
                     this.setAttribute('target', '_self');
                     return;
                 }
