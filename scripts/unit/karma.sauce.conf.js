@@ -5,23 +5,72 @@
 
 var base = require('./karma.base.conf.js');
 var customLaunchers = {
-    // mobile
     sl_android_6_0: {
         base: 'SauceLabs',
         browserName: 'android',
         version: '6.0'
     },
+    sl_android_7_1: {
+        base: 'SauceLabs',
+        browserName: 'Chrome',
+        appiumVersion: '1.6.4',
+        deviceName: 'Android GoogleAPI Emulator',
+        deviceOrientation: 'portrait',
+        platformVersion: '7.1',
+        platformName: 'Android'
+    },
+    sl_ios_latest: {
+        base: 'SauceLabs',
+        browserName: 'iphone',
+        version: 'latest'
+    },
+    sl_ios_10: {
+        base: 'SauceLabs',
+        browserName: 'Safari',
+        appiumVersion: '1.6.4',
+        deviceName: 'iPhone 7 Plus',
+        deviceOrientation: 'portrait',
+        platformVersion: '10.3',
+        platformName: 'iOS'
+    },
+    sl_ios_9: {
+        base: 'SauceLabs',
+        browserName: 'Safari',
+        appiumVersion: '1.6.4',
+        deviceName: 'iPhone 6 Plus',
+        deviceOrientation: 'portrait',
+        platformVersion: '9.3',
+        platformName: 'iOS'
+    },
 
-    // the cool kids
+    sl_microsoftedge: {
+        base: 'SauceLabs',
+        browserName: 'microsoftedge',
+        platform: 'Windows 10'
+    },
+
     sl_firefox: {
         base: 'SauceLabs',
-        browserName: 'firefox'
+        browserName: 'firefox',
+        platform: 'Windows 10'
     },
+    sl_firefox_osx: {
+        base: 'SauceLabs',
+        browserName: 'firefox',
+        platform: 'OS X 10.12'
+    },
+
     sl_chrome: {
         base: 'SauceLabs',
         browserName: 'chrome',
         platform: 'Windows 7'
     },
+    sl_chrome_osx: {
+        base: 'SauceLabs',
+        browserName: 'chrome',
+        platform: 'OS X 10.12'
+    },
+
     sl_mac_safari: {
         base: 'SauceLabs',
         browserName: 'safari',

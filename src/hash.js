@@ -55,7 +55,7 @@ define(function (require) {
     Hash.prototype.bindAnchor = function () {
         var anchor = this.hashTree.mipanchor;
         if (anchor && anchor.value) {
-            if (document.readyState === 'complete') {
+            if (document.readyState !== 'loading') {
                 this.scrollToAnchor(anchor);
             }
             else {

@@ -70,6 +70,60 @@ define(function (require) {
             expect(dom.contains(dist1, move2)).to.be.true;
             expect(dom.contains(dist1, move3)).to.be.true;
         });
+
+        it('old waitDocumentReady', function (done) {
+            dom.waitDocumentReady(done);
+        });
+
+        describe('waitDocumentReady', function () {
+            var hash;
+            before(function () {
+                hash = location.hash;
+                location.hash = 'sample=mip_async1';
+            });
+            after(function () {
+                location.hash = hash;
+            });
+
+            it('loading document event', function (done) {
+                dom.waitDocumentReady(done, {
+                    readyState: 'loading',
+                    removeEventListener: function (name, callback) {
+                        expect(name).to.equal('DOMContentLoaded');
+                        expect(callback).to.be.a('function');
+                    },
+                    addEventListener: function (name, callback) {
+                        expect(name).to.equal('DOMContentLoaded');
+                        expect(callback).to.be.a('function');
+                        callback();
+                    }
+                });
+            });
+
+            it('loading window event', function (done) {
+                dom.waitDocumentReady(done, {
+                    readyState: 'loading',
+                    removeEventListener: function () {},
+                    addEventListener: function () {}
+                }, {
+                    removeEventListener: function (name, callback) {
+                        expect(name).to.equal('load');
+                        expect(callback).to.be.a('function');
+                    },
+                    addEventListener: function (name, callback) {
+                        expect(name).to.equal('load');
+                        expect(callback).to.be.a('function');
+                        callback();
+                    }
+                });
+            });
+
+            it('complete', function (done) {
+                dom.waitDocumentReady(done, {
+                    readyState: 'complete'
+                });
+            });
+        });
     });
 
 });
