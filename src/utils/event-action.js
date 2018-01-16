@@ -149,7 +149,8 @@ define(function (require) {
                 var action = actions[i];
                 var globalTarget = this.globalTargets[action.id];
                 if (globalTarget) {
-                    return globalTarget(action);
+                    globalTarget(action);
+                    continue;
                 }
                 var target = this.getTarget(action.id);
                 if (this.checkTarget(target)) {

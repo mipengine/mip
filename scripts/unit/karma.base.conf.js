@@ -96,9 +96,13 @@ module.exports = {
     // browser time out
     browserDisconnectTimeout: 10000,
 
+    browserDisconnectTolerance: 1,
+
     // process kill time
     processKillTimeout: 10000,
 
     // browser no activity time
-    browserNoActivityTimeout: 300000
+    browserNoActivityTimeout: 5 * 60 * 1000,
+
+    captureTimeout: 5 * 60 * 1000
 }
