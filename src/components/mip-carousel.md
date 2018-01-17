@@ -1,6 +1,6 @@
 # mip-carousel 多图轮播
 
-mip-carousel 用来支持 mip 中图片的一种展示方式，支出多图轮播。
+mip-carousel 用来支持 mip 中图片的一种展示方式，支持多图轮播。
 
 标题|内容
 ----|----
