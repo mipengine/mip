@@ -27,17 +27,17 @@ mip-video 用来支持在 mip 中增加视频内容，是HTML `<video>`的直接
 ```html
 <mip-video controls loop muted
   layout="responsive" width="640" height="360" 
-  src="https://gss0.bdstatic.com/-b1Caiqa0d9Bmcmop9aC2jh9h2w8e4_h7sED0YQ_t9iCPK/mda-gjkt21pkrsd8ae5y/mda-gjkt21pkrsd8ae5y.mp4">
+  src="https://mip-doc.bj.bcebos.com/sample_video.mp4">
 </mip-video>
 ```
 
 ### 失效提示
 
-对于不支持HTML5`<video>`的环境，`<mip-video>`同样可以显示提示信息。`<mip-video>`内部的DOM（`<source>`除外）将会在不支持`<video>`标签的浏览器中显示。
+对于不支持 HTML5`<video>`的环境，`<mip-video>`同样可以显示提示信息。`<mip-video>`内部的DOM（`<source>`除外）将会在不支持`<video>`标签的浏览器中显示。
 
 ```html
 <mip-video controls layout="responsive" width="640" height="360" 
-  src="https://gss0.bdstatic.com/-b1Caiqa0d9Bmcmop9aC2jh9h2w8e4_h7sED0YQ_t9iCPK/mda-gjkt21pkrsd8ae5y/mda-gjkt21pkrsd8ae5y.mp4">
+  src="https://mip-doc.bj.bcebos.com/sample_video.mp4">
   您的浏览器不支持视频播放，可以从
   <a href="http://www.baidu.com" target="_blank">这里</a> 下载该视频。
 </mip-video>
@@ -49,13 +49,13 @@ mip-video 用来支持在 mip 中增加视频内容，是HTML `<video>`的直接
 <mip-video controls loop muted
   layout="responsive" width="640" height="360">
   <source
-    src="http://mip-doc.bj.bcebos.com/sample_video.webm?authorization=bce-auth-v1%2F7f4a0856197f450aa711a2af2d14b9a0%2F2017-08-30T08%3A32%3A28Z%2F-1%2Fhost%2F6d893e30e98cb43605600acbcac043d2c05cf761e99fa1c8a932a995e0b52b48"
+    src="https://mip-doc.bj.bcebos.com/sample_video.webm"
     type="video/webm">
   <source
-    src="http://mip-doc.bj.bcebos.com/sample_video.mp4?authorization=bce-auth-v1%2F7f4a0856197f450aa711a2af2d14b9a0%2F2017-08-30T07%3A54%3A22Z%2F-1%2Fhost%2F6332958b3c12e4415fcbfa275b4557c81972010edbf0ce7399700068e6787dd9"
+    src="https://mip-doc.bj.bcebos.com/sample_video.mp4"
     type="video/mp4">
   <source
-    src="http://mip-doc.bj.bcebos.com/sample_video.ogv?authorization=bce-auth-v1%2F7f4a0856197f450aa711a2af2d14b9a0%2F2017-08-30T07%3A55%3A00Z%2F300%2Fhost%2Fe877bb7bff39bd30a82ac28c409a0cd5329a4c6a01725ac8fef1b3b2089f2a42"
+    src="https://mip-doc.bj.bcebos.com/sample_video.ogv"
     type="video/ogg">
 </mip-video>
 ```
@@ -70,7 +70,7 @@ mip-video 用来支持在 mip 中增加视频内容，是HTML `<video>`的直接
 说明：视频源地址，必须是https资源  
 必选项：否  
 类型：字符串  
-取值范围：URL
+取值范围：URL  
 默认值：无
 
 ### poster
@@ -91,7 +91,7 @@ mip-video 用来支持在 mip 中增加视频内容，是HTML `<video>`的直接
 
 ### autoplay
 
-说明：是否自动播放。  
+说明：是否自动播放。移动端部分浏览器会忽视 autoplay 参数，禁止自动播放，（[developer.apple.com 从用户体验角度的解释](https://developer.apple.com/library/content/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html)） 
 必选项：否  
 类型：字符串  
 取值范围：任何  
