@@ -1,5 +1,6 @@
 language: node_js
 dist: trusty
+sudo: required
 addons:
   chrome: stable
   sauce_connect:
@@ -8,10 +9,6 @@ addons:
     secure: "zMPcAV0BCNraKnIIeQ/0tuCdm30Z88eVBb1hCneYQ+f21F54R/sSJrRaRFIVFY9aDrk3vE3+jNeJcNsPOBUusn2FTG8SOGQhs7Bg7kxCzAo5tWgthrLF0V192591rdmajpGg9ez1UNSnhIfBIo+hLSyJMS/dyiNyRXFQzn2CS5N/8Y3Gd9awp8hVDjSdYOaC2QI1mWg4a2v8blCDTux/pSrzXHXY0pUxk2uzlYUXkVSGmEAkWrwzzm4UzDCiFEAwFbq7qH5m9fJikJSAubgzn8Cwj1sBtBjUomB4T/iXJ+SLoeF2NzHp12P8qn3nAyHR0tRlMPg/QZ4pdAXsmSLuooG44lVBfnszfIEPVoQuXuY3bCXjDUGRCn+d5VjXSbPFtZjnqsXuQwICX+z4Ng2BrRxvgvy8W3VwpmTlBV3QdBGT+adsTR4Ah5c4Flcete6Znzd4pax20D2Bntjr0c0br1vksj1pIBx0+W/myqgSWzK4/BCuaYDznSaxLy1DvT7BpfiEKqyWeYRbKTi6JCuAaW2eqCerscYwxkFlClVJ6hBILDmJ4yBnaJpZ/218JJjPMOZF8YvLp75A1aPk+RBP65UmVC6vUbMXltFCi7JkAssnP5i3xAKzUnoh4bjOQKhmFeC0peb8xnLbdNPoGmYfQDdBV+TurGQTRIi053I9ZCA="
 node_js:
   - "5"
-before_script:
-  - npm install
-  - export DISPLAY=:99.0; sh -e /etc/init.d/xvfb start +extension RANDR
-  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
 script:
   - npm run test:co && npm run test:sl
 after_script:
