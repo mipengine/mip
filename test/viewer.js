@@ -303,10 +303,13 @@ define(function (require) {
                 expect(spy.getCall(0).args[3].call({})).to.be.undefined;
             });
 
-            it('tel url', function (done) {
+
+            it('tel url not uc', function (done) {
+                sinon.stub(platform, 'isUc', function () {
+                    return false;
+                });
                 spy = sinon.spy(util.event, 'delegate');
                 viewer._proxyLink();
-
                 expect(spy.getCall(0).args[3].call({
                     href: 'tel: 10010',
                     setAttribute: function (key, value) {
@@ -315,7 +318,10 @@ define(function (require) {
                         done();
                     }
                 })).to.be.undefined;
+                platform.isUc.restore();
+                util.event.delegate.restore();
             });
+
 
             it('preventDefault', function (done) {
                 spy = sinon.spy(util.event, 'delegate');
