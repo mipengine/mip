@@ -151,7 +151,8 @@ define(function (require) {
      * @param {Function} cb callback
      */
     function waitDocumentReady(cb) {
-        if (location.hash.indexOf('sample=mip_async1') > -1) {
+        // 当前页面的脚本是否是 async 插入，依据的页面中第一个 <script> 标签是否有 async 属性
+        if (document.getElementsByTagName('script')[0].async) {
             return domready.apply(null, [].slice.call(arguments));
         }
 
