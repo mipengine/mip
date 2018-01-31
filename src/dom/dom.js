@@ -127,22 +127,22 @@ define(function (require) {
      * @param {Object} doc document
      * @param {Object} win window
      */
-    function domready(callback, doc, win) {
-        doc = doc || document;
-        win = win || window;
+    // function domready(callback, doc, win) {
+    //     doc = doc || document;
+    //     win = win || window;
 
-        if (doc.readyState !== 'loading') {
-            setTimeout(callback);
-            return;
-        }
-        var handler = function() {
-            doc.removeEventListener('DOMContentLoaded', handler, false);
-            win.removeEventListener('load', handler, false);
-            callback();
-        }
-        doc.addEventListener('DOMContentLoaded', handler, false);
-        win.addEventListener('load', handler, false);
-    }
+    //     if (doc.readyState !== 'loading') {
+    //         setTimeout(callback);
+    //         return;
+    //     }
+    //     var handler = function() {
+    //         doc.removeEventListener('DOMContentLoaded', handler, false);
+    //         win.removeEventListener('load', handler, false);
+    //         callback();
+    //     }
+    //     doc.addEventListener('DOMContentLoaded', handler, false);
+    //     win.addEventListener('load', handler, false);
+    // }
 
     /**
      * Waits until the Document is ready. Then the
@@ -151,10 +151,6 @@ define(function (require) {
      * @param {Function} cb callback
      */
     function waitDocumentReady(cb) {
-        if (location.hash.indexOf('sample=mip_async1') > -1) {
-            return domready.apply(null, [].slice.call(arguments));
-        }
-
         if (!!document.body) {
             cb();
             return;
