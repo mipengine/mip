@@ -50,14 +50,11 @@ define(function (require) {
         // add to resources
         resources[this._rid] = {};
 
-        // Reduce the frequency of updating viewport state
-        var update = this._update.bind(this);
-
         /**
          * The method to udpate state.
          * @type {Function}
          */
-        this.updateState = fn.throttle(update);
+        this.updateState = this._update.bind(this);
 
         /**
          * Viewport
