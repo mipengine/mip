@@ -23,6 +23,17 @@ define(function (require) {
         return src + paraName + '=' + paraVal;
     }
 
+    function addExperimentPara(src) {
+        var expReg = /\$?{MIP-X-(\w|-|\d|_)+}/g;
+        var matchExpArr = src.match(expReg);
+        for (i in matchExpArr) {
+            var matchStr = matchExpArr[i];
+            var matchExp = matchStr.replace(/{|}|\${/g, '');
+            src = src.replace(matchStr, getBodyAttr(matchExp));
+        }
+        return src;
+    }
+
     /**
      * 从body获取mip-expeirment实验分组
      *
@@ -48,12 +59,7 @@ define(function (require) {
         src = addParas(src, 'HOST', encodeURIComponent(host));
 
         // 增加对<mip-experiment>支持，获取实验分组
-        var expReg = /MIP-X-((\w|-|\d|_)+)/g;
-        var matchExpArr = src.match(expReg);
-        for (var i in matchExpArr) {
-            var matchExp = matchExpArr[i];
-            src = addParas(src, matchExp, getBodyAttr(matchExp));
-        }
+        src = addExperimentPara(src);
 
         // 去除匹配失败的其餘{參數}
         src = src.replace(/\$?{.+?}/g, '');
