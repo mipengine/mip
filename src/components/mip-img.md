@@ -1,16 +1,16 @@
 # mip-img 图片
 
-mip-img 用来支持在 mip 中增加图片内容。
+`<mip-img>` 用来支持在 MIP 中增加图片内容。
 
 标题|内容
 ----|----
 类型|通用
-支持布局|responsive,fixed-height,fill,container,fixed
+支持布局|responsive, fixed-height, fill, container, fixed
 所需脚本|无
 
 ## 示例
 
-[notice] `<mip-img>`需要对应闭合标签`</mip-img>`, 不支持自闭合写法。自闭合规范请见[w3.org](https://www.w3.org/TR/html/syntax.html#void-elements)。
+[notice] `<mip-img>`需要对应闭合标签`</mip-img>`，不支持自闭合写法。自闭合规范请见[w3.org](https://www.w3.org/TR/html/syntax.html#void-elements)。
 
 ### 最基本使用
 
@@ -35,7 +35,7 @@ mip-img 用来支持在 mip 中增加图片内容。
 </mip-img>
 ```
 
-### 其他布局（以fixed为例）
+### 其他布局（以 `fixed` 为例）
 
 ```html
 <mip-img 
@@ -48,7 +48,7 @@ mip-img 用来支持在 mip 中增加图片内容。
 
 ### 带图片标题
 
-图片标题可添加在`<mip-img>`后用于说明，可在`<style mip-custom>`标签下自定义样式
+图片标题可添加在 `<mip-img>` 后用于说明，可在 `<style mip-custom>` 标签下自定义样式。
 
 ```html
 <mip-img 
@@ -66,7 +66,7 @@ mip-img 用来支持在 mip 中增加图片内容。
 
 ### width
 
-说明：宽度，不是实际宽度，与高度属性配合来设置图片比例，详见[组件布局](https://www.mipengine.org/doc/3-widget/11-widget-layout.html)   
+说明：宽度，不是实际宽度，与高度属性配合来设置图片比例，详见[组件布局](/doc/3-widget/11-widget-layout.html)   
 必选项：否   
 类型：数字  
 单位：无  
@@ -74,7 +74,7 @@ mip-img 用来支持在 mip 中增加图片内容。
 
 ### height
 
-说明：高度，不是实际高度，与宽度属性配合来设置图片比例，详见[组件布局](https://www.mipengine.org/doc/3-widget/11-widget-layout.html)  
+说明：高度，不是实际高度，与宽度属性配合来设置图片比例，详见[组件布局](/doc/3-widget/11-widget-layout.html)  
 必选项：否   
 类型：数字    
 单位：无  
@@ -94,10 +94,10 @@ mip-img 用来支持在 mip 中增加图片内容。
 
 ### alt
 
-说明：与img标签的alt属性相同   
+说明：与 `<img>` 标签的 `alt` 属性相同   
 必选项：否   
 
 ### class
 
-说明：与img标签的class属性相同，用于标识元素，设置元素样式   
+说明：与 `<img>` 标签的 `class` 属性相同，用于标识元素，设置元素样式   
 必选项：否   
