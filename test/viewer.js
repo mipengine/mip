@@ -193,63 +193,63 @@ define(function (require) {
             });
         });
 
-        describe('.handlePreregisteredExtensions', function () {
-            var old;
+        // describe('.handlePreregisteredExtensions', function () {
+        //     var old;
 
-            beforeEach(function () {
-                old = window.MIP;
-            });
+        //     beforeEach(function () {
+        //         old = window.MIP;
+        //     });
 
-            beforeEach(function () {
-                window.MIP = old;
-            });
+        //     beforeEach(function () {
+        //         window.MIP = old;
+        //     });
 
-            it('window.MIP exists', function () {
-                window.MIP = {};
-                expect(viewer.handlePreregisteredExtensions).to.not.throw();
-            });
+        //     it('window.MIP exists', function () {
+        //         window.MIP = {};
+        //         expect(viewer.handlePreregisteredExtensions).to.not.throw();
+        //     });
 
-            it('window.MIP not exists', function () {
-                window.MIP = null;
-                expect(viewer.handlePreregisteredExtensions).to.not.throw();
-            });
+        //     it('window.MIP not exists', function () {
+        //         window.MIP = null;
+        //         expect(viewer.handlePreregisteredExtensions).to.not.throw();
+        //     });
 
-            it('MIP.push', function (done) {
-                viewer.handlePreregisteredExtensions();
+        //     it('MIP.push', function (done) {
+        //         viewer.handlePreregisteredExtensions();
 
-                expect(MIP.push).to.be.a('function');
-                expect(function () {
-                    MIP.push();
-                    MIP.push({});
-                    MIP.push({
-                        func: true
-                    });
-                }).to.not.throw();
+        //         expect(MIP.push).to.be.a('function');
+        //         expect(function () {
+        //             MIP.push();
+        //             MIP.push({});
+        //             MIP.push({
+        //                 func: true
+        //             });
+        //         }).to.not.throw();
 
-                MIP.push({
-                    func: done
-                });
-            });
+        //         MIP.push({
+        //             func: done
+        //         });
+        //     });
 
-            it('MIP.extensions', function (done) {
-                window.MIP = {
-                    extensions: [
-                        null,
-                        '',
-                        [],
-                        {},
-                        {
-                            func: []
-                        },
-                        {
-                            func: done
-                        }
-                    ]
-                };
+        //     it('MIP.extensions', function (done) {
+        //         window.MIP = {
+        //             extensions: [
+        //                 null,
+        //                 '',
+        //                 [],
+        //                 {},
+        //                 {
+        //                     func: []
+        //                 },
+        //                 {
+        //                     func: done
+        //                 }
+        //             ]
+        //         };
 
-                viewer.handlePreregisteredExtensions();
-            });
-        });
+        //         viewer.handlePreregisteredExtensions();
+        //     });
+        // });
 
 
         describe('._bindEventCallback', function () {
