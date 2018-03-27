@@ -227,7 +227,7 @@ define(function () {
           layout = LAYOUT.FIXED;
         }
 
-        
+
 
         // Apply UI.
         element.classList.add(this.getLayoutClass(layout));
@@ -270,6 +270,19 @@ define(function () {
         return layout;
     };
 
+    /**
+     * 初始化页面的 MIP 组件布局
+     */
+    Layout.prototype.init = function () {
+        var self = this;
+
+        // 前置处理 layout
+        [].slice.call(document.all || document.querySelectorAll('*')).forEach(function (el) {
+            if (el.tagName.toLowerCase().indexOf('mip-') === 0) {
+                self.applyLayout(el);
+            }
+        });
+    };
 
     return new Layout();
 });
