@@ -35,8 +35,6 @@ define(function (require) {
             });
 
             this.setupEventAction();
-            // handle preregistered  extensions
-            this.handlePreregisteredExtensions();
 
             // add normal scroll class to body. except ios in iframe.
             // Patch for ios+iframe is default in mip.css
@@ -142,27 +140,6 @@ define(function (require) {
         },
 
         /**
-         * Setup event-action of viewer. To handle `on="tap:xxx"`.
-         */
-        handlePreregisteredExtensions: function () {
-            window.MIP = window.MIP || {};
-            window.MIP.push = function (extensions) {
-                if (extensions && typeof extensions.func == 'function') {
-                    extensions.func();
-                }
-            };
-            var preregisteredExtensions = window.MIP.extensions;
-            if (preregisteredExtensions && preregisteredExtensions.length) {
-                for (var i = 0; i < preregisteredExtensions.length; i++) {
-                    var curExtensionObj = preregisteredExtensions[i];
-                    if (curExtensionObj && typeof curExtensionObj.func == 'function') {
-                        curExtensionObj.func();
-                    }
-                }
-            }
-        },
-
-        /**
          * Event binding callback.
          * For overridding _bindEventCallback of EventEmitter.
          *
@@ -215,7 +192,7 @@ define(function (require) {
                         lastDirect = dist/Math.abs(dist);
                         self.sendMessage('mipscroll', { 'direct': direct, 'dist': dist});
                     }
-                } 
+                }
                 else if (scrollTop === 0) {
                     self.sendMessage('mipscroll', { 'direct': 0 });
                 }
