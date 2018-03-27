@@ -17,6 +17,6 @@ define(function (require) {
             return callback();
         }
 
-        event.on(name, callback);
+        event.once(name, callback);
     };
 });
