@@ -57,7 +57,7 @@ define(function (require) {
      * @return {Object} 属性列表JSON
      * @example
      * {
-     *     "src": "http://xx.jpge"
+     *     "src": "http://xx.jpeg"
      *     "width": "720"
      * }
      */
