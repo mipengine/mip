@@ -160,6 +160,22 @@ define(function (require) {
                 expect(util.parseCacheUrl(cacheUrl)).to.equal(url);
             });
         });
+
+        describe('.getOriginalUrl', function () {
+            var stub = sinon.stub(util, "getOriginalUrl", function (str) {
+                return util.parseCacheUrl(str);
+            });
+
+            it('mip url', function () {
+                expect(util.getOriginalUrl('https://www.mipengine.com')).to.equal('https://www.mipengine.com');
+                expect(util.getOriginalUrl('http://www.mipengine.com')).to.equal('http://www.mipengine.com');
+                expect(util.getOriginalUrl('http://www.mipengine.com/c/index.html')).to.equal('http://www.mipengine.com/c/index.html');
+            });
+            it('mip-Cache url', function () {
+                expect(util.getOriginalUrl('//mipcache.bdstatic.com/c/www.mipengine.org')).to.equal('http://www.mipengine.org');
+                expect(util.getOriginalUrl('//mipcache.bdstatic.com/c/s/www.mipengine.org')).to.equal('https://www.mipengine.org');
+            });
+        })
     });
 });
 

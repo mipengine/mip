@@ -68,9 +68,19 @@ define(function (require) {
         return uri;
     }
 
+    /**
+     * 获取页面原mip url，可以将页面mip-cache url处理为原页面
+     *
+     * @return {string} 原mip页URL
+     */
+    function getOriginalUrl() {
+        return parseCacheUrl(window.location.href);
+    }
+
     return {
         parseCacheUrl: parseCacheUrl,
         makeCacheUrl: makeCacheUrl,
+        getOriginalUrl: getOriginalUrl,
         fn: fn,
         dom: require('./dom/dom'),
         event: require('./dom/event'),
