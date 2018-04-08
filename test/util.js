@@ -162,19 +162,8 @@ define(function (require) {
         });
 
         describe('.getOriginalUrl', function () {
-            var stub = sinon.stub(util, "getOriginalUrl", function (str) {
-                return util.parseCacheUrl(str);
-            });
-
-            it('mip url', function () {
-                expect(util.getOriginalUrl('https://www.mipengine.com')).to.equal('https://www.mipengine.com');
-                expect(util.getOriginalUrl('http://www.mipengine.com')).to.equal('http://www.mipengine.com');
-                expect(util.getOriginalUrl('http://www.mipengine.com/c/index.html')).to.equal('http://www.mipengine.com/c/index.html');
-            });
-            it('mip-Cache url', function () {
-                expect(util.getOriginalUrl('//mipcache.bdstatic.com/c/www.mipengine.org')).to.equal('http://www.mipengine.org');
-                expect(util.getOriginalUrl('//mipcache.bdstatic.com/c/s/www.mipengine.org')).to.equal('https://www.mipengine.org');
-            });
+            // 由于getOriginalUrl 直接获取window.location,不能 sinon.stub, 跳过
+            // 由于 hash.get 取的是 window.location 而不是传入的 url，mip-cache+hash情况单测跳过
         })
     });
 });

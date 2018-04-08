@@ -8,6 +8,7 @@ define(function (require) {
     'use strict';
 
     var fn = require('./utils/fn');
+    var hash = require('./hash');
 
     /**
      * Exchange a url to cache url.
@@ -70,11 +71,20 @@ define(function (require) {
 
     /**
      * 获取页面原mip url，可以将页面mip-cache url处理为原页面
+     * 由于cache-url可能会被改写，需要还原
      *
      * @return {string} 原mip页URL
      */
     function getOriginalUrl() {
-        return parseCacheUrl(window.location.href);
+        var parsedUrl = parseCacheUrl(window.location.href);
+        if(parsedUrl == window.location.href) {
+            // 直接打开MIP页
+            return parsedUrl;
+        }
+        // mip-cache页面
+        var urlWithoutHash = parsedUrl.split('#')[0];
+        var originHash = hash.get('mipanchor');
+        return urlWithoutHash + (originHash.length ? '#' : '') + originHash;
     }
 
     return {
