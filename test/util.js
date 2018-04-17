@@ -160,6 +160,11 @@ define(function (require) {
                 expect(util.parseCacheUrl(cacheUrl)).to.equal(url);
             });
         });
+
+        describe('.getOriginalUrl', function () {
+            // 由于getOriginalUrl 直接获取window.location,不能 sinon.stub, 跳过
+            // 由于 hash.get 取的是 window.location 而不是传入的 url，mip-cache+hash情况单测跳过
+        })
     });
 });
 

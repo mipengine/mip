@@ -215,7 +215,7 @@ define(function (require) {
                 }
                 else if (k === 'srcset') {
                     var imgSrcset = this.attributes.srcset;
-                    var reg = /[\w-/]+.(jpg|jpeg|png|gif|webp|bmp|tiff) /g;
+                    var reg = /[\w-/]+\.(jpg|jpeg|png|gif|webp|bmp|tiff) /g;
                     var srcArr = imgSrcset.replace(reg, function (url) {
                         return util.makeCacheUrl(url, 'img');
                     });
