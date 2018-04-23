@@ -99,7 +99,6 @@ var mainCombiner = new Combiner({
             'deps/promise.js',
             'deps/document-register-element.max.js',
             'deps/esl.js',
-            'deps/zepto.js',
             'src/mip.js'
         ]
     }
