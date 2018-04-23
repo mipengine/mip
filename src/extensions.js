@@ -27,6 +27,7 @@ define(function (require) {
     extensions.init = function () {
         // 拦截注册元素
         window.MIP.registerMipElement = function (name, customClass, css) {
+            // 模板提前加载，为了保证依赖，目前只有 mip-mustache 组件
             if (templates.isTemplateClass(customClass)) {
                 return templates.register(name, customClass);
             }
