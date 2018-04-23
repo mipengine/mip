@@ -9,7 +9,7 @@ define(function (require) {
     var hash = require('./hash');
     var Messenger = require('./utils/messenger');
     var isPreRender = !!hash.get('prerender');
-    var event = window.Messenger = new Messenger({
+    var event = new Messenger({
     });
 
     return function (name, callback) {
