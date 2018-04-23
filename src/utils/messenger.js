@@ -5,7 +5,7 @@
 
 define(function (require) {
     var EventEmitter = require('./event-emitter');
-    var extend = require('../util').fn.extend;
+    var extend = require('./fn').extend;
 
     var messageTypes = {
         twoWay: 'two-way'
