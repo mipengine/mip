@@ -135,6 +135,10 @@ define(function (require) {
                 }, false);
             }
 
+            document.addEventListener('click', function (event) {
+                eventAction.execute('click', event.target, event);
+            }, false);
+
             /* istanbul ignore next */
             util.event.delegate(document, 'input', 'change', function (e) {
                 eventAction.execute('change', event.target, event);
@@ -215,7 +219,7 @@ define(function (require) {
                         lastDirect = dist/Math.abs(dist);
                         self.sendMessage('mipscroll', { 'direct': direct, 'dist': dist});
                     }
-                } 
+                }
                 else if (scrollTop === 0) {
                     self.sendMessage('mipscroll', { 'direct': 0 });
                 }
