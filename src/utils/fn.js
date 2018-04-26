@@ -50,7 +50,7 @@ define(function (require) {
      * @return {boolean}
      */
     function isPlainObject(obj) {
-        return !!obj && Object.getPrototypeOf(obj) == Object.prototype;
+        return !!obj && 'object' === typeof obj && Object.getPrototypeOf(obj) == Object.prototype;
     }
 
     /**
