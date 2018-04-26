@@ -47,7 +47,18 @@ define(function (require) {
 
         it('isPlainObject', function () {
             expect(fn.isPlainObject({})).to.be.true;
+            expect(fn.isPlainObject({a: 1})).to.be.true;
             expect(fn.isPlainObject(Object.create({}))).to.be.false;
+            expect(fn.isPlainObject(1)).to.be.false;
+            expect(fn.isPlainObject(0)).to.be.false;
+            expect(fn.isPlainObject("")).to.be.false;
+            expect(fn.isPlainObject("Hello world")).to.be.false;
+            expect(fn.isPlainObject(false)).to.be.false;
+            expect(fn.isPlainObject(true)).to.be.false;
+            expect(fn.isPlainObject(null)).to.be.false;
+            expect(fn.isPlainObject(undefined)).to.be.false;
+            expect(fn.isPlainObject(NaN)).to.be.false;
+            expect(fn.isPlainObject(Infinity)).to.be.false;
         });
 
         it('pick', function () {
