@@ -153,8 +153,8 @@ define(function (require) {
          *
          * @return {boolean}
          */
-        proto.prerenderAllowed = function () {
-            return this.customElement.prerenderAllowed();
+        proto.prerenderAllowed = function (offset, viewport) {
+            return this.customElement.prerenderAllowed(offset, viewport);
         };
 
         /**
