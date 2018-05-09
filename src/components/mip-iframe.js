@@ -2,7 +2,7 @@ define(function (require) {
     var customElem = require('customElement').create();
     var util = require('util');
 
-    var attrList = ['allowfullscreen', 'allowtransparency', 'sandbox'];
+    var attrList = ['allowfullscreen', 'allowtransparency', 'sandbox', 'scrolling'];
     customElem.prototype.build = function () {
         var element = this.element;
         var src = element.getAttribute('src');
