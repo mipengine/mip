@@ -198,8 +198,18 @@ define(function (require) {
                 sinon.stub(app, 'getResources', function () {
                     return {
                         MIP: {
-                            prerenderAllowed: function () {
+                            prerenderAllowed: function (offset, viewportRect) {
+                                expect(offset).to.be.a('object').and.not.empty;
+                                expect(viewportRect).to.be.a('object').and.not.empty;
                                 return true;
+                            },
+                            getBoundingClientRect: function () {
+                                return {
+                                    left: 0,
+                                    top: 0,
+                                    width: 0,
+                                    height: 0
+                                };
                             }
                         }
                     };
