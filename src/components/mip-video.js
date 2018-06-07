@@ -71,6 +71,7 @@ define(function (require) {
 
         videoEl.setAttribute('playsinline', 'playsinline');
         videoEl.setAttribute('webkit-playsinline', 'webkit-playsinline');
+        videoEl.setAttribute('t7-video-player-type', 'inline');
         Array.prototype.slice.apply(this.element.childNodes).forEach(function (node) {
             // FIXME: mip layout related, remove this!
             if (node.nodeName.toLowerCase() === 'mip-i-space') {
