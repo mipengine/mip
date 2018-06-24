@@ -21,7 +21,11 @@ define(function (require) {
         'muted',
         'preload',
         'poster',
-        'width'
+        'width',
+        'x5-video-player-type',
+        'x5-video-player-fullscreen',
+        'x5-video-orientation'
+
     ];
     var windowInIframe = viewer.isIframed;
 
