@@ -306,5 +306,19 @@ define(function (require) {
         return true;
     };
 
+    /**
+     * Advance one screen loading
+     *
+     * @param  {Object} offset         Element offset
+     * @param  {Object} viewportOffset Window offset
+     * @return {boolean}
+     */
+    customElem.prototype.prerenderAllowed = function (offset, viewRect) {
+        var threshold = viewRect.height;
+
+        return viewRect.top + viewRect.height + threshold >= offset.top
+            && offset.top + offset.height + threshold >= viewRect.top;
+    };
+
     return customElem;
 });

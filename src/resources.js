@@ -157,8 +157,9 @@ define(function (require) {
             for (var i in resources) {
                 // Compute the viewport state of current element.
                 // If current element`s prerenderAllowed returns `true` always set the state to be `true`.
-                var inViewport = resources[i].prerenderAllowed()
-                    || rect.overlapping(rect.getElementRect(resources[i]), viewportRect);
+                var elementRect = rect.getElementRect(resources[i]);
+                var inViewport = resources[i].prerenderAllowed(elementRect, viewportRect)
+                    || rect.overlapping(elementRect, viewportRect);
                 this.setInViewport(resources[i], inViewport);
             }
         }
