@@ -68,7 +68,10 @@ define(function (require) {
 
             // Force reload mainly for MIP2
             window.addEventListener('popstate', e => {
-                window.top.location.reload()
+                // 在 SF 情况下 window.top 是跨域的，不操作即可
+                try {
+                    window.top.location.reload()
+                } catch (e) {}
             })
         },
 
