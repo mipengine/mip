@@ -17,6 +17,16 @@ define(function (require) {
      */
     var win = window;
 
+    var isInMIP2
+    try {
+        // When framed by MIP2, send message to SF (window.top) rather than MIP2 (window.parent)
+        if (window.parent.MIP.version === '2') {
+            isInMIP2 = true
+        }
+    } catch (e) {
+        isInMIP2 = false
+    }
+
     /**
      * The mip viewer.Complement native viewer, and solve the page-level problems.
      */
@@ -56,6 +66,11 @@ define(function (require) {
                     title: encodeURIComponent(document.title)
                 });
             }
+
+            // Force reload mainly for MIP2
+            window.addEventListener('popstate', e => {
+                window.top.location.reload()
+            })
         },
 
         /**
@@ -100,6 +115,14 @@ define(function (require) {
             this.isShow = true;
             this._showTiming = Date.now();
             this.trigger('show', this._showTiming);
+            try {
+                // Framed by MIP2
+                if (this.isIframed && window.parent.MIP.version === '2') {
+                    window.parent.postMessage({
+                        type: 'load-from-mip1'
+                    }, '*')
+                }
+            } catch (e) {}
         },
 
         /**
@@ -109,7 +132,8 @@ define(function (require) {
          */
         sendMessage: function (eventName, data) {
             if (this.isIframed) {
-                window.parent.postMessage({
+                let target = isInMIP2 ? window.top : window.parent
+                target.postMessage({
                     event: eventName,
                     data: data
                 }, '*');
@@ -256,6 +280,16 @@ define(function (require) {
                 }
                 e.preventDefault();
                 if (this.hasAttribute('mip-link') || this.getAttribute('data-type') === 'mip') {
+                    if (self.isIframed && isInMIP2) {
+                        try {
+                            // Framed by standalone MIP2
+                            // MIP2 framed by SF can also be dealt by sendMessage
+                            if (window.parent.MIP.standalone) {
+                                top.location.href = this.href
+                                return
+                            }
+                        } catch (e) {}
+                    }
                     var message = self._getMessageData.call(this);
                     self.sendMessage(message.messageKey, message.messageData);
                 } else {
