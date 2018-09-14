@@ -19,7 +19,6 @@ define(function (require) {
 
     var isInMIP2
     try {
-        // When framed by MIP2, send message to SF (window.top) rather than MIP2 (window.parent)
         if (window.parent.MIP.version === '2') {
             isInMIP2 = true
         }
@@ -131,6 +130,7 @@ define(function (require) {
          */
         sendMessage: function (eventName, data) {
             if (this.isIframed) {
+                // When framed by MIP2, send message to SF (window.top) rather than MIP2 (window.parent)
                 let target = isInMIP2 ? window.top : window.parent
                 target.postMessage({
                     event: eventName,
@@ -280,15 +280,14 @@ define(function (require) {
                 e.preventDefault();
                 if (this.hasAttribute('mip-link') || this.getAttribute('data-type') === 'mip') {
                     if (self.isIframed && isInMIP2) {
-                        try {
-                            // Framed by standalone MIP2
-                            // MIP2 framed by SF can also be dealt by sendMessage
-                            if (window.parent.MIP.standalone) {
-                                top.location.href = this.href
-                                return
-                            }
-                        } catch (e) {}
+                        // Framed by standalone MIP2
+                        // MIP2 framed by SF can also be dealt by sendMessage
+                        if (window.parent.MIP.standalone) {
+                            top.location.href = this.href
+                            return
+                        }
                     }
+
                     var message = self._getMessageData.call(this);
                     self.sendMessage(message.messageKey, message.messageData);
                 } else {
