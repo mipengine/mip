@@ -115,14 +115,13 @@ define(function (require) {
             this.isShow = true;
             this._showTiming = Date.now();
             this.trigger('show', this._showTiming);
-            try {
-                // Framed by MIP2
-                if (this.isIframed && window.parent.MIP.version === '2') {
-                    window.parent.postMessage({
-                        type: 'load-from-mip1'
-                    }, '*')
-                }
-            } catch (e) {}
+
+            // Framed by MIP2
+            if (this.isIframed && isInMIP2) {
+                window.parent.postMessage({
+                    type: 'load-from-mip1'
+                }, '*')
+            }
         },
 
         /**
