@@ -136,7 +136,7 @@ define(function (require) {
         sendMessage: function (eventName, data) {
             if (this.isIframed) {
                 // When framed by MIP2, send message to SF (window.top) rather than MIP2 (window.parent)
-                let target = isInMIP2 ? window.top : window.parent
+                var target = isInMIP2 ? window.top : window.parent
                 target.postMessage({
                     event: eventName,
                     data: data
