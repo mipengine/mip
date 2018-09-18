@@ -21,6 +21,8 @@ define(function (require) {
     try {
         if (window.parent.MIP.version === '2') {
             isInMIP2 = true
+        } else {
+            isInMIP2 = false
         }
     } catch (e) {
         isInMIP2 = false
