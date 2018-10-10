@@ -271,7 +271,9 @@ define(function (require) {
          */
         _getMessageData: function () {
             var messageKey = 'loadiframe';
-            var messageData = {};
+            var messageData = {
+                'nohead': true
+            };
             messageData.url = this.href;
             if (this.hasAttribute('mip-link')) {
                 var parent = this.parentNode;
