@@ -273,6 +273,9 @@ define(function (require) {
             var messageKey = 'loadiframe';
             var messageData = {};
             messageData.url = this.href;
+            if (this.hasAttribute('no-head')) {
+                messageData.nohead = true;
+            }
             if (this.hasAttribute('mip-link')) {
                 var parent = this.parentNode;
                 messageData.title = parent.getAttribute('title') || parent.innerText.trim().split('\n')[0];
