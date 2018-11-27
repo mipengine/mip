@@ -146,6 +146,20 @@ define(function (require) {
                 element.viewportCallback(inViewport);
             }
         },
+        /**
+         * Check whether elements is in viewport.
+         *
+         * @param {MIPElement} element element
+         */
+
+        isInViewport: function (element) {
+            // Compute the viewport state of current element.
+            // If current element`s prerenderAllowed returns `true` always set the state to be `true`.
+            var viewportRect = this._viewport.getRect();
+            var elementRect = rect.getElementRect(element);
+            return element.prerenderAllowed(elementRect, viewportRect)
+                || rect.overlapping(elementRect, viewportRect);
+        },
 
         /**
          * Update elements's viewport state.
@@ -153,13 +167,8 @@ define(function (require) {
          */
         _update: function () {
             var resources = this.getResources();
-            var viewportRect = this._viewport.getRect();
             for (var i in resources) {
-                // Compute the viewport state of current element.
-                // If current element`s prerenderAllowed returns `true` always set the state to be `true`.
-                var elementRect = rect.getElementRect(resources[i]);
-                var inViewport = resources[i].prerenderAllowed(elementRect, viewportRect)
-                    || rect.overlapping(elementRect, viewportRect);
+                var inViewport = this.isInViewport(resources[i]);
                 this.setInViewport(resources[i], inViewport);
             }
         }

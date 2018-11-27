@@ -3,8 +3,9 @@ define(function (require) {
 
     var util = require('./util');
     var EventEmitter = util.EventEmitter;
+    var log = require('./log/logSend');
     var viewer = require('./viewer');
-
+    var prerender = require('./clientPrerender');
     /**
      * Store first-screen elements.
      * @inner
@@ -90,9 +91,30 @@ define(function (require) {
         if (recorder.MIPFirstScreen) {
             return;
         }
-        if (fsElements.length === 0) {
-            recordTiming('MIPFirstScreen');
+        fsElements.length === 0 && recordTiming('MIPFirstScreen');
+    }
+
+    /**
+     * Lock the fsElements. No longer add fsElements.
+     */
+    function lockFirstScreen() {
+        // when is prerendering, iframe container display none,
+        // all elements are not in viewport.
+        if (prerender.isPrerendering) {
+            return;
         }
+        fsElements = fsElements.filter(function (element) {
+            if (prerender.isPrerendered) {
+                return element._resources.isInViewport(element);
+            }
+            return element.inViewport();
+        }).map(function (element) {
+            element.setAttribute('mip-firstscreen-element', '');
+            return element;
+        });
+        fsElementsLocked = true;
+        tryRecordFirstScreen();
+        log.sendFirstScreenLabelLog()
     }
 
     /**
@@ -101,12 +123,7 @@ define(function (require) {
     function domLoaded() {
         recordTiming('MIPDomContentLoaded');
         setTimeout(function () {
-            fsElements = fsElements.filter(function (ele) {
-                return ele.inViewport();
-            });
-            // Lock the fsElements. No longer add fsElements.
-            fsElementsLocked = true;
-            tryRecordFirstScreen();
+            lockFirstScreen();
         }, 10);
     }
 
@@ -145,6 +162,8 @@ define(function (require) {
         addFsElement: addFsElement,
         fsElementLoaded: fsElementLoaded,
         getTiming: getTiming,
+        recordTiming: recordTiming,
+        lockFirstScreen: lockFirstScreen,
         on: function () {
             performanceEvent.on.apply(performanceEvent, arguments);
         }

@@ -168,6 +168,27 @@ define(function (require) {
                     ||  /^(\/\/|http:\/\/|https:\/\/)[A-Za-z0-9]{1,}-.*.mipcdn.com\/c\//.test(pageUrl);
     }
 
+    /**
+     * when init messager, get container iframe's name, like iframe-shell-xxxxxx
+     * use it validate when postmessage with baidu search page container
+     */
+    function getRootName (name) {
+        if (!name) {
+            return ''
+        }
+
+        if (/^iframe-shell/.test(name)) {
+            return name
+        }
+
+        try {
+            var info = JSON.parse(name)
+            return info.rootName
+        } catch (e) {
+            return name
+        }
+    }
+
     return {
         throttle: throttle,
         values: values,
@@ -177,6 +198,7 @@ define(function (require) {
         isString: isString,
         del: del,
         hasTouch: hasTouch,
-        isCacheUrl: isCacheUrl
+        isCacheUrl: isCacheUrl,
+        getRootName: getRootName
     }
 });
