@@ -9,6 +9,7 @@ define(function (require) {
     var EventAction = require('./utils/event-action');
     var EventEmitter = require('./utils/event-emitter');
     var fn = require('./utils/fn');
+    var prerender = require('./clientPrerender');
 
     /**
      * Save window.
@@ -109,10 +110,12 @@ define(function (require) {
          */
         sendMessage: function (eventName, data) {
             if (this.isIframed) {
-                window.parent.postMessage({
-                    event: eventName,
-                    data: data
-                }, '*');
+                prerender.execute(function () {
+                    window.parent.postMessage({
+                        event: eventName,
+                        data: data
+                    }, '*');
+                });
             }
         },
 

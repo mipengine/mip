@@ -4,8 +4,12 @@
  * @author schoeu
  */
 
-define(function () {
+define(function (require) {
     'use strict';
+
+    var firstScreenLabel = require('./firstScreenLabel');
+    var viewer = require('../viewer');
+    var OUTER_MESSAGE_PERFORMANCE_ANALYSIS_LOG = 'performance-analysis-log';
 
     function MipLog() {
         this.data = {};
@@ -25,5 +29,17 @@ define(function () {
             window.parent.postMessage(this.data, '*');
         }
     };
+
+    /**
+     * send first screen label log
+     */
+    MipLog.prototype.sendFirstScreenLabelLog = function () {
+        var info = firstScreenLabel.getFirstScreenLabelInfo();
+        viewer.sendMessage(OUTER_MESSAGE_PERFORMANCE_ANALYSIS_LOG, {
+            type: 'fslabel',
+            info: info
+        });
+    }
+
     return new MipLog();
 });

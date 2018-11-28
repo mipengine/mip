@@ -9,6 +9,7 @@ define(function (require) {
     var cssLoader = require('./dom/css-loader');
     var layout = require('./layout');
     var performance = require('./performance');
+    var prerender = require('./clientPrerender');
 
     /**
      * Storage of custom elements.
@@ -95,7 +96,9 @@ define(function (require) {
             this._layout = layout.applyLayout(this);
             this.customElement.attachedCallback();
             // Add to resource manager.
-            this._resources.add(this);
+            prerender.execute(function() {
+                this._resources.add(this);
+            }.bind(this), this);
         };
 
         /**
@@ -112,7 +115,9 @@ define(function (require) {
          */
         proto.attributeChangedCallback = function (attributeName, oldValue, newValue, namespace) {
             var ele = this.customElement;
-            ele.attributeChangedCallback.apply(ele, arguments);
+            prerender.execute(function () {
+                ele.attributeChangedCallback.apply(ele, arguments);
+            });
         };
 
         /**
